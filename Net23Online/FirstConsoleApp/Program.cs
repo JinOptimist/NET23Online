@@ -8,5 +8,4 @@ Console.WriteLine("Hi I'm Valentin");
 Console.WriteLine("Hi I'm Osama");
 Console.WriteLine("I love to Learn");
 Console.WriteLine("Hello, I'm Alexander. My hobby is a waste of time");
-
 Console.WriteLine("Hello, my name's Nikita. I like reading books.");
