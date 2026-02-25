@@ -14,6 +14,9 @@ Console.WriteLine("Hello, I'm Alexander. My hobby is a waste of time");
 Console.WriteLine("Hi I'm Denis");
 Console.WriteLine("Hello, my name's Nikita. I like reading books.");
 
+Console.WriteLine("Hi I'm Pasha");
+Console.WriteLine("Hello, my name is Ira, i love my cats");
+
 Console.WriteLine("Hi I'm Sonya");
 Console.WriteLine("I love dancing");
 Console.WriteLine("I am trying again");
