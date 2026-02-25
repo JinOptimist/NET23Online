@@ -1,3 +1,3 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hi I'm Osama");
-Console.WriteLine("I Love to learn");
+Console.WriteLine("Hi I'm Stas - C++ Developer");
+
