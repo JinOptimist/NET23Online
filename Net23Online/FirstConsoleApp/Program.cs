@@ -16,3 +16,5 @@ Console.WriteLine("Hello, my name's Nikita. I like reading books.");
 
 Console.WriteLine("Hi I'm Sonya");
 Console.WriteLine("I love dancing");
+Console.WriteLine("Hi I'm Pasha");
+Console.WriteLine("Igor, I like to drive a car.");
