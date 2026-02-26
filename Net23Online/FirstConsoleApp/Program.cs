@@ -77,7 +77,7 @@ string employmentType = Console.ReadLine();
 
 Console.WriteLine("What is your average monthly income (USD)?");
 string incomeStr = Console.ReadLine();
-var income = double.Parse(incomeStr);
+var income = decimal.Parse(incomeStr);
 if (income < 100)
 {
     Console.WriteLine("You are lier");
