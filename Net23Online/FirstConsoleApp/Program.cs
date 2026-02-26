@@ -57,7 +57,12 @@ if (age < 3)
 {
     Console.WriteLine($"You are lier");
 }
-
-
 Console.WriteLine($"Hi {userName} cool you are {age} is old");
 
+Console.WriteLine("Hello. What is your name?");
+var NameOfUser =  Console.ReadLine();
+Console.WriteLine("How old are you?");
+string AgeOfUserStr = Console.ReadLine();
+var AgeOfUser = int.Parse(AgeOfUserStr);
+var DateOfBirth = currentYear - AgeOfUser;
+Console.WriteLine($"The name of this user is {NameOfUser}. {NameOfUser} was born in {DateOfBirth}.");
