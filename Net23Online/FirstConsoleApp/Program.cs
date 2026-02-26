@@ -45,19 +45,47 @@
 //Console.WriteLine(name);
 
 
-Console.WriteLine("What is you name?");
-var userName = Console.ReadLine(); // read from console
+Console.WriteLine("What is your name?");
+var userName = Console.ReadLine();
 
-Console.WriteLine("When you was born?");
-string yearOfBirthdayStr = Console.ReadLine(); // read from console
-var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
+Console.WriteLine("When were you born?");
+string yearOfBirthdayStr = Console.ReadLine();
+var yearOfBirthday = int.Parse(yearOfBirthdayStr);
 var currentYear = DateTime.Now.Year;
-var age = currentYear -  yearOfBirthday;
+var age = currentYear - yearOfBirthday;
+
 if (age < 3)
 {
-    Console.WriteLine($"You are lier");
+    Console.WriteLine("You are lier");
 }
 
 
-Console.WriteLine($"Hi {userName} cool you are {age} is old");
+Console.WriteLine("Where are you from?");
+string city = Console.ReadLine();
+
+Console.WriteLine("What is your hobby?");
+string hobby = Console.ReadLine();
+
+Console.WriteLine("What do you want to learn?");
+string goal = Console.ReadLine();
+
+Console.WriteLine("What is your job title?");
+string jobTitle = Console.ReadLine();
+
+Console.WriteLine("Are you employed full-time, part-time, or self-employed?");
+string employmentType = Console.ReadLine();
+
+Console.WriteLine("What is your average monthly income (USD)?");
+string incomeStr = Console.ReadLine();
+var income = decimal.Parse(incomeStr);
+if (income < 100)
+{
+    Console.WriteLine("You are lier");
+}
+Console.WriteLine($" Hi {userName} from {city}!");
+Console.WriteLine($"Cool, you are {age} years old.");
+Console.WriteLine($"Your hobby: {hobby}");
+Console.WriteLine($"Your goal: {goal}");
+Console.WriteLine($"Job: {jobTitle} ({employmentType})");
+Console.WriteLine($"Monthly income: ${income}");
 
