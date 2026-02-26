@@ -48,7 +48,7 @@
 Console.WriteLine("What is your name?");
 var userName = Console.ReadLine();
 
-Console.WriteLine("When was you born?");
+Console.WriteLine("When were you born?");
 string yearOfBirthdayStr = Console.ReadLine();
 var yearOfBirthday = int.Parse(yearOfBirthdayStr);
 var currentYear = DateTime.Now.Year;
