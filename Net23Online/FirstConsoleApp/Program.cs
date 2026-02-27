@@ -45,19 +45,54 @@
 //Console.WriteLine(name);
 
 
-Console.WriteLine("What is you name?");
-var userName = Console.ReadLine(); // read from console
+//Console.WriteLine("What is you name?");
+//var userName = Console.ReadLine(); // read from console
 
-Console.WriteLine("When you was born?");
-string yearOfBirthdayStr = Console.ReadLine(); // read from console
-var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
-var currentYear = DateTime.Now.Year;
-var age = currentYear -  yearOfBirthday;
-if (age < 3)
+//Console.WriteLine("When you was born?");
+//string yearOfBirthdayStr = Console.ReadLine(); // read from console
+//var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
+//var currentYear = DateTime.Now.Year;
+//var age = currentYear -  yearOfBirthday;
+//if (age < 3)
+//{
+//    Console.WriteLine($"You are lier");
+//}
+
+
+//Console.WriteLine($"Hi {userName} cool you are {age} is old");
+
+Console.WriteLine("The dark console calls to you... \nWhat is your name?");
+var userName = Console.ReadLine();
+Console.WriteLine("\nTell me any object.");
+var anyObject = Console.ReadLine();
+Console.WriteLine("\nWhat is your year of birth?");
+var yearsGiven = int.Parse(Console.ReadLine());
+Console.WriteLine("\nWhat is your lucky number?");
+var holdOutTime = int.Parse(Console.ReadLine());
+
+Console.WriteLine("\n\nThe story begin here...");
+if (holdOutTime > 0)
 {
-    Console.WriteLine($"You are lier");
+    
+    Console.WriteLine("The First Knight: The King! The army of Darkness is approuching! Our forces are running out...");
+    Console.WriteLine($"\n{userName}: There is no escape. " +
+        $"You must find the {anyObject} — only it can save us. I will give you a {yearsGiven} years. Go!");
+    Console.WriteLine("\nThe First Knight: I won't let you down!");
+    Console.WriteLine($"\n{userName}: Before you go, answer me: how long will my army hold out?");
+    Console.WriteLine($"\nThe First Knight: About {holdOutTime} seconds.");
+    Console.WriteLine($"\n{userName}: WAT?!");
+    Console.WriteLine("\nThe dark console is about win.");
 }
-
-
-Console.WriteLine($"Hi {userName} cool you are {age} is old");
-
+else if(holdOutTime == 0)
+{
+    Console.WriteLine("The First Knight: The King! The army of Darkness is approuching! Our forces are running out...");
+    Console.WriteLine($"\n{userName}: There is no escape. You must find the...");
+    Console.WriteLine("\nThe King's voice is interrupted by the doors, " +
+        "shattered by a thousand swords of the dark army. \nThe Dark Console has won.");
+}
+else
+{
+    Console.WriteLine("The First Knight: The King!");
+    Console.WriteLine("\nThe Dark Lord: ...");
+    Console.WriteLine("\nThe ex-First Knight: Forgive me, Dark Lord.I didn't realize you had already defeated us.");
+}
