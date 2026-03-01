@@ -45,19 +45,44 @@
 //Console.WriteLine(name);
 
 
+//Console.WriteLine("What is you name?");
+//var userName = Console.ReadLine(); // read from console
+
+//Console.WriteLine("When you was born?");
+//string yearOfBirthdayStr = Console.ReadLine(); // read from console
+//var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
+//var currentYear = DateTime.Now.Year;
+//var age = currentYear -  yearOfBirthday;
+//if (age < 3)
+//{
+//    Console.WriteLine($"You are lier");
+//}
+
+
+//Console.WriteLine($"Hi {userName} cool you are {age} is old");
+
 Console.WriteLine("What is you name?");
-var userName = Console.ReadLine(); // read from console
+var name = Console.ReadLine();
+
+Console.WriteLine("Where are you from?");
+string city = Console.ReadLine();
+
+Console.WriteLine("What is your favorite hobby?");
+var hobby = Console.ReadLine();
+
+Console.WriteLine("What makes you happy");
+string happiness = Console.ReadLine();
 
 Console.WriteLine("When you was born?");
 string yearOfBirthdayStr = Console.ReadLine(); // read from console
 var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
 var currentYear = DateTime.Now.Year;
-var age = currentYear -  yearOfBirthday;
+var age = currentYear - yearOfBirthday;
 if (age < 3)
 {
-    Console.WriteLine($"You are lier");
+    Console.WriteLine($"You are lier, program stops");
 }
 
+Console.WriteLine($"Hi {name}! You are from {city} and you are {age} years old. Your favorite hobby is {hobby} and {happiness} brings you joy.");
 
-Console.WriteLine($"Hi {userName} cool you are {age} is old");
 
