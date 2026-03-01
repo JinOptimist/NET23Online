@@ -1,21 +1,4 @@
-﻿//Console.WriteLine("Hi I'm Pasha I write a book");
-//Console.WriteLine("Hi I'm Alena");
-//Console.WriteLine(("Hi I am Nikolai. Hello!"));
-//Console.WriteLine("I want to work programmist!:");
-//Console.WriteLine("Hi, I'm Dmitry. I like Videogames but suck at programming!");
-//Console.WriteLine("Hello, my name is Ilya");
-//Console.WriteLine("Hi I'm Stas - C++ Developer");
-//Console.WriteLine("Hi I'm Valentin");
-//Console.WriteLine("Hi I'm Osama");
-//Console.WriteLine("I love to Learn");
-//Console.WriteLine("Hello, I'm Alexander. My hobby is a waste of time");
-//Console.WriteLine("Hi I'm Denis");
-//Console.WriteLine("Hello, my name's Nikita. I like reading books.");
-//Console.WriteLine("Hello, my name is Ira, i love my cats");
-//Console.WriteLine("Hi I'm Sonya");
-//Console.WriteLine("I love dancing");
-//Console.WriteLine("I am trying again");
-//Console.WriteLine("Igor, I like to drive a car.");
+﻿//Console.WriteLine("Igor, I like to drive a car.");
 
 //var number1 = 5;
 //var number2 = 2;
@@ -43,21 +26,49 @@
 //var condition6 = condition5 && condition4 || !condition2;
 
 //Console.WriteLine(name);
+//string yearOfBirthdayStr = Console.ReadLine(); // read from console
+//var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
+//var currentYear = DateTime.Now.Year;
+//var age = currentYear - yearOfBirthday;
+//if (age < 3)
+//{
+//    Console.WriteLine($"Proceed to cycling room");
+//}
+//
 
+Console.WriteLine("Name Yourself?");
+var userName = Console.ReadLine();
 
-Console.WriteLine("What is you name?");
-var userName = Console.ReadLine(); // read from console
-
-Console.WriteLine("When you was born?");
-string yearOfBirthdayStr = Console.ReadLine(); // read from console
-var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
-var currentYear = DateTime.Now.Year;
-var age = currentYear -  yearOfBirthday;
-if (age < 3)
+Console.WriteLine("Did you spend much time in the cell?");
+var Q1 = Console.ReadLine();
+if (Q1 != "cells")
 {
-    Console.WriteLine($"You are lier");
+    Console.WriteLine($"Proceed to cycling room");
+    return;
 }
 
+else Console.WriteLine("Have you ever been in an instituion?");
+var Q2 = Console.ReadLine();
+if (Q2 != "cells")
+{
+    Console.WriteLine($"Proceed to cycling room");
+    return;
+}
 
-Console.WriteLine($"Hi {userName} cool you are {age} is old");
+else Console.WriteLine("Do they keep you in a cell??");
+var Q3 = Console.ReadLine();
+if (Q3 != "cells")
+{
+    Console.WriteLine($"Proceed to cycling room");
+    return;
+}
 
+else Console.WriteLine("When you're not performing your duties do they keep you in a little box?");
+var Q4 = Console.ReadLine();
+if (Q4 != "cells")
+{
+    Console.WriteLine($"Proceed to cycling room");
+    return;
+}
+
+else Console.WriteLine($"We Done. {userName} you can pick up your bonus");
