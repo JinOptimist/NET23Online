@@ -61,3 +61,117 @@ if (age < 3)
 
 Console.WriteLine($"Hi {userName} cool you are {age} is old");
 
+Console.WriteLine("\n\nTask1");
+Story.shortProfile.TellStory();
+
+namespace Story
+{
+    public class shortProfile
+    {
+        public static void TellStory()
+        {
+            Console.WriteLine("\nHi, please answer a few questions so I can create a short profile.\n");
+            Console.WriteLine("What is your name?");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("\nWhen you was born?");
+
+            DateTime dateToday = DateTime.Now;
+            int dayOfBirthday;
+            int monthOfBirdthday;
+            int yearOfBirdthday;
+            DateTime dateOfBirthday;
+            int calculatedAge = 0;
+
+            while (true)
+            {
+                try
+                {
+                    dayOfBirthday = ConvertStrToInt("Input your day of birthday", 1, 31);
+                    monthOfBirdthday = ConvertStrToInt("Input your month of birthday", 1, 12);
+                    yearOfBirdthday = ConvertStrToInt("Input your year of birthday", dateToday.Year - 150, dateToday.Year);
+
+                    dateOfBirthday = new DateTime(yearOfBirdthday, monthOfBirdthday, dayOfBirthday);
+
+                    if (yearOfBirdthday > dateToday.Year)
+                    {
+                        Console.WriteLine("You haven't been born yet. Input real date");
+                        continue;
+                    }
+
+                    if (yearOfBirdthday + 150 < dateToday.Year)
+                    {
+                        Console.WriteLine("You are too old. Input real date");
+                        continue;
+                    }
+
+                    calculatedAge = dateToday.Year - dateOfBirthday.Year;
+                    if (dateOfBirthday.Month > dateToday.Month || (dateOfBirthday.Month == dateToday.Month && dateOfBirthday.Day > dateToday.Day))
+                    {
+                        calculatedAge = calculatedAge - 1;
+                    }
+
+                    //Console.WriteLine($"You was born in {dateOfBirthday.ToShortDateString()}.\n");
+                    break;
+                }
+                catch (Exception ex) { Console.WriteLine("Please input real date"); }
+            }
+            //Metod to Convertation data
+            static int ConvertStrToInt(string message = null, int minValue = int.MinValue, int maxValue = int.MaxValue)
+            {
+                if (message != null) Console.WriteLine($"{message}\nUse only numbers.");
+                int resultInt;
+                while (true)
+                {
+                    string inputStr = Console.ReadLine();
+                    if (int.TryParse(inputStr, out resultInt))//Добавить и проверку на реальность данных
+                    {
+                        if (minValue <= resultInt && resultInt <= maxValue)
+                            return resultInt;
+                        else
+                            Console.WriteLine($"Error! Values must be between {minValue} and {maxValue}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Error! The input must be numbers. {message}.");
+                    }
+                }
+            }
+            // Asking sex
+            Console.WriteLine("Are you a woman or a man?");
+            string sex;
+            while (true)
+            {
+                sex = Console.ReadLine();
+                switch (sex.ToLower())
+                {
+                    case "man":
+                        if (calculatedAge > 18)
+                            Console.WriteLine("\nCool. Let's go to a bar this weekend.");
+                        else Console.WriteLine("\nTake some candy");
+                        break;
+
+                    case "woman":
+                        if (calculatedAge > 18)
+                            Console.WriteLine("\nLet's go to a restaurant this weekend.");
+                        else Console.WriteLine("\nTake some candy");
+                        break;
+
+                    default:
+                        Console.WriteLine($"\nI dont know about {sex}. Try again.");
+                        continue;
+                }
+                break;
+            }
+
+            Console.WriteLine("\nWhere do you live?");
+            var adress = Console.ReadLine();
+            Console.WriteLine("\nWhat are your hobbies?");
+            var hobbies = Console.ReadLine();
+            Console.WriteLine("\nI have prepared your profile.");
+            Console.WriteLine($"Name: {name}\nDate of birth: {dateOfBirthday.ToShortDateString()} ({calculatedAge} y.o.)\nSex: {sex}\nAdress: {adress}\nHobbies: {hobbies}");
+            Console.WriteLine("\nI hope to see you soon, my friend!");
+        }
+    }
+}
+
