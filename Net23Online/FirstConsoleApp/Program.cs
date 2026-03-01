@@ -61,3 +61,21 @@ if (age < 3)
 
 Console.WriteLine($"Hi {userName} cool you are {age} is old");
 
+Console.WriteLine("What is you name?");
+var Name = Console.ReadLine();
+Console.WriteLine("What city were you born in?");
+var City = Console.ReadLine();
+Console.WriteLine("What is your education?");
+var educ = Console.ReadLine();
+Console.WriteLine("What is your hobby?");
+var hob = Console.ReadLine();
+Console.WriteLine("What year were you born?");
+var BirthdayString = Console.ReadLine();
+var Birthday = int.Parse(BirthdayString);
+var DateNow = DateTime.Now.Year;
+var Age1 = DateNow - Birthday;
+if (Age1 < 5)
+{
+    Console.WriteLine($"Lier");
+}
+Console.WriteLine($"Hi {Name}, you were born in {Birthday} in the city {City}. You are {Age1} years old now. Your hobby is {hob}. You have a {educ}.");
