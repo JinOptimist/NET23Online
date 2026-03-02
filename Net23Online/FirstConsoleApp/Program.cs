@@ -1,5 +1,7 @@
-﻿GuessTheNumberFromLvou(); // You can change it
+﻿using System.Security.Cryptography;
 
+//GuessTheNumberFromLvou(); // You can change it
+GuessTheNumberFromSleepaidy();
 static int GetNumberFromConsole(string messageForUser)
 {
     var isThisANumberForMax = false;
@@ -55,3 +57,50 @@ static void GuessTheNumberFromLvou()
     Console.WriteLine("The end");
 }
 
+static void GuessTheNumberFromSleepaidy()
+{
+    Console.WriteLine("Welcome to the game from sleepaidy!");
+    int lowerLimit;
+    int higherLimit;
+    var guestIsCorrect = false;
+    do
+    {
+        lowerLimit = GetNumberFromConsole("Enter the minimum number for your batch:");
+        higherLimit = GetNumberFromConsole("Enter the maximum number for your batch:");
+        if (lowerLimit < higherLimit)
+        {
+            guestIsCorrect = true;
+            Console.WriteLine("The input is correct.");
+            Console.WriteLine($"The game has begun. You have 10 attempts to guess the number between {lowerLimit} and {higherLimit}.");
+        }
+        else
+        {
+            Console.WriteLine("The input is incorrect.Try again.");
+        }
+    } while (guestIsCorrect == false);
+    var randomNumber = new Random();
+    var specifiedNumber = randomNumber.Next(lowerLimit, higherLimit);
+    for (int i = 0; i < 10; i++)
+    {
+        Console.WriteLine($"{i+1} attempt:");
+        var guessTheNumber = GetNumberFromConsole("Guess the number:");
+        if(guessTheNumber > higherLimit || guessTheNumber < lowerLimit)
+        {
+            Console.WriteLine("Your number is out of range. Try again.");
+        }
+        else if (guessTheNumber > specifiedNumber)
+        {
+            Console.WriteLine("Nice try, but my number is lower.");
+        }
+        else if (guessTheNumber < specifiedNumber)
+        {
+            Console.WriteLine("Nice try, but my number is higher.");
+        }
+        else
+        {
+            Console.WriteLine("You entered the correct number. You win!");
+            Environment.Exit(0);
+        }
+    }
+    Console.WriteLine($"You lose. The specified number was {specifiedNumber}.");
+}
