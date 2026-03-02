@@ -45,19 +45,135 @@
 //Console.WriteLine(name);
 
 
-Console.WriteLine("What is you name?");
-var userName = Console.ReadLine(); // read from console
+// Console.WriteLine("What is you name?");
+// var userName = Console.ReadLine(); // read from console
+//
+// Console.WriteLine("When you was born?");
+// string yearOfBirthdayStr = Console.ReadLine(); // read from console
+// var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
+// var currentYear = DateTime.Now.Year;
+// var age = currentYear -  yearOfBirthday;
+// if (age < 3)
+// {
+//     Console.WriteLine($"You are lier");
+// }
+//
+//
+// Console.WriteLine($"Hi {userName} cool you are {age} is old");
 
-Console.WriteLine("When you was born?");
-string yearOfBirthdayStr = Console.ReadLine(); // read from console
-var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
-var currentYear = DateTime.Now.Year;
-var age = currentYear -  yearOfBirthday;
-if (age < 3)
+class Program
 {
-    Console.WriteLine($"You are lier");
+    public static int Sum(int a, int b) => a + b;
+    public static int Minus(int a, int b) => a - b ;
+    public static int Multiply(int a, int b) => a * b;
+    public static int Divide(int a, int b)  => a / b;
+    public static void PrintWordsStartWithA()
+    {
+        Console.WriteLine("Input your string");
+        var stroka = Console.ReadLine();
+        Console.WriteLine("Words in your string started with latter A:");
+        var listOfWords = stroka.Split(' ');
+        foreach (var word in listOfWords)
+        {
+            var lowerWord = word.ToLower();
+            if (lowerWord.StartsWith("a"))
+            {
+                Console.WriteLine(word);
+            }
+        }
+    }
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Hello. What is your name?");
+        var userName = Console.ReadLine();
+
+        Console.WriteLine($"Ok, {userName}, nice to meet you.");
+
+        while (true)
+        { 
+            Console.WriteLine("Choose option:");
+            Console.WriteLine("1. Calculator");
+            Console.WriteLine("2. Outputs all words starting with the latter A");
+            Console.WriteLine("3. Exit");
+
+            var option = Console.ReadLine();
+
+            switch (option)
+            {
+                case "1":
+                {
+                    Console.WriteLine("Write the first number:");
+                    var num1Str = Console.ReadLine();
+                    var num1 = int.Parse(num1Str);
+                    Console.WriteLine("Write the second number:");
+                    var num2Str = Console.ReadLine();
+                    var num2 = int.Parse(num2Str);
+
+                    Console.WriteLine("Choose option:");
+                    Console.WriteLine("1. +");
+                    Console.WriteLine("2. -");
+                    Console.WriteLine("3. *");
+                    Console.WriteLine("4. /");
+                    Console.WriteLine("5. Exit");
+                    
+                    var answer = Console.ReadLine();
+                    switch (answer)
+                    {
+                        case "1":
+                        {
+                            var result = Sum(num1, num2);
+                            Console.WriteLine($"Your result is {result}");
+                            break;
+                        }
+                        case "2":
+                        {
+                            var result = Minus(num1, num2);
+                            Console.WriteLine($"Your result is {result}");
+                            break;
+                        }
+                        case "3":
+                        {
+                            var result = Multiply(num1, num2);
+                            Console.WriteLine($"Your result is {result}");
+                            break;
+                        }
+                        case "4":
+                        {
+                            if (num2 == 0)
+                            {
+                                Console.WriteLine("You can't divide by zero");
+                                break;
+                            }
+                            var result = Divide(num1, num2);
+                            Console.WriteLine($"Your result is {result}");
+                            break;
+                        }
+                        case "5":
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            Console.WriteLine("Invalid option");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case "2":
+                {
+                    PrintWordsStartWithA();
+                    break;
+                }
+                case "3":
+                    return;
+                default:
+                {
+                    Console.WriteLine("Invalid option");
+                    break;
+                }
+            }
+        }
+    } 
 }
-
-
-Console.WriteLine($"Hi {userName} cool you are {age} is old");
-
