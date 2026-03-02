@@ -45,19 +45,48 @@
 //Console.WriteLine(name);
 
 
-Console.WriteLine("What is you name?");
-var userName = Console.ReadLine(); // read from console
+int age;
+int height;
+bool trust = true;
 
-Console.WriteLine("When you was born?");
-string yearOfBirthdayStr = Console.ReadLine(); // read from console
-var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
-var currentYear = DateTime.Now.Year;
-var age = currentYear -  yearOfBirthday;
-if (age < 3)
+
+Console.WriteLine("We're Looking for a guy who kidnapped my dog! Tell me about yourself so I'll know it's not YOU!");
+Console.WriteLine("First of all, What's your name?");
+string name = Console.ReadLine();
+
+
+if (name == "Dmitry" || name == "Dima" || name == "Pasha" || name == "Pavel")
 {
-    Console.WriteLine($"You are lier");
+    Console.WriteLine("Wow, no way! Just like my friends! How old are you?");
+}
+else
+{
+    Console.WriteLine("Wow, A strange name! Huh, how old are you?");
 }
 
+age = int.Parse(Console.ReadLine());
 
-Console.WriteLine($"Hi {userName} cool you are {age} is old");
+if (age < 3 || age > 100)
+{
+    Console.WriteLine("Are you joking? That's not funny! How tall are you? In centimiters.");
+    trust = false;
+}
+else
+{
+    Console.WriteLine("Okay, so be it. How tall are you? Please answer in a number in centimiters");
+}
 
+height = int.Parse(Console.ReadLine());
+
+if (trust == false)
+{
+    Console.WriteLine($"It was you,{name}! There's no way you can be {age} years old! I'll punch you! Even though you're {height} centimiters tall!");
+}
+if (trust == true && height < 250 || height > 50)
+{
+    Console.WriteLine($"Seems like you tell me the truth! Thanks, {name}. You are only {age} years old and you're already {height} centimiters tall! Wow! Have a good day!");
+}
+else
+{
+    Console.WriteLine($"{name}, you're {age} years old and you're {height} centimiters tall? I dont believe you! LIAR! I'll punch you!");
+}
