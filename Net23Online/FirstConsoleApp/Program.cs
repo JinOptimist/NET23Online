@@ -65,16 +65,16 @@ Console.WriteLine("What is you name?");
 var name = Console.ReadLine();
 
 Console.WriteLine("Where are you from?");
-string city = Console.ReadLine();
+var city = Console.ReadLine();
 
 Console.WriteLine("What is your favorite hobby?");
 var hobby = Console.ReadLine();
 
 Console.WriteLine("What makes you happy");
-string happiness = Console.ReadLine();
+var happiness = Console.ReadLine();
 
 Console.WriteLine("When you was born?");
-string yearOfBirthdayStr = Console.ReadLine(); // read from console
+var yearOfBirthdayStr = Console.ReadLine(); // read from console
 var yearOfBirthday = int.Parse(yearOfBirthdayStr); // "2000" => 2000
 var currentYear = DateTime.Now.Year;
 var age = currentYear - yearOfBirthday;
