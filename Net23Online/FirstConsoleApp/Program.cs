@@ -203,7 +203,6 @@ static void GuessTheNumberFromNikita()
                 Console.WriteLine($"Maximum value must be greater than {minValue}");
             }
         } while (maxValue <= minValue);
-//var condition6 = condition5 && condition4 || !condition2;
     }
     else if (modeNumber == (int)MenuChoice.RandomRange)
     {
@@ -213,7 +212,6 @@ static void GuessTheNumberFromNikita()
     }
     var numberToGuess = random.Next(minValue, maxValue);
     var attemptCounter = 0;
-//Console.WriteLine(name);
     int userNumber;
 
     Console.WriteLine($"The secret number is between {minValue} and {maxValue}");
