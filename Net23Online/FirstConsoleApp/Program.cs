@@ -1,5 +1,96 @@
 ﻿
-GuessTheNumberFromNikita(); // You can change it
+//GuessTheNumberFromNikita(); // You can change it
+GuessNumberFromOsama();
+static void GuessNumberFromOsama()
+{
+
+    PrintGreeting();
+    while (true)
+    {
+        PlayRound();
+        if (!AskRestart()) break;
+    }
+}
+static void PrintGreeting()
+{
+    Console.WriteLine("=== Guess the Number ===");
+}
+static bool PlayRound()
+{
+    int minRange;
+    int maxRange;
+    do
+    {
+        Console.WriteLine("Enter min range:");
+        minRange = ReadNumberFromUser();
+        Console.WriteLine("Enter max range:");
+        maxRange = ReadNumberFromUser();
+    } while (!GetRange(minRange, maxRange));
+
+    return IsNumberGuessed(minRange, maxRange);
+}
+
+
+static int ReadNumberFromUser()
+{
+
+
+    string resultStr;
+    bool isNumber;
+    int resultNumber;
+    do
+    {
+        resultStr = Console.ReadLine();
+        isNumber = int.TryParse(resultStr, out resultNumber);
+        if (!isNumber)
+        {
+            Console.WriteLine("Invalid number. Try again:");
+        }
+    } while (!isNumber);
+
+    return resultNumber;
+}
+
+static bool GetRange(int min, int max)
+{
+    while (min >= max)
+    {
+
+        Console.WriteLine("Error: Min must be less than Max. Try again!.");
+        return false;
+    }
+    return true;
+}
+
+static bool IsNumberGuessed(int min, int max)
+{
+    int target = RandomNumber(min, max);
+    int MaxAttempts = 10;
+
+    for (int i = 1; i <= MaxAttempts; i++)
+    {
+        Console.WriteLine($"Attempt {i}/{MaxAttempts}. Guess:");
+        int guess = ReadNumberFromUser();
+
+        if (guess == target) { Console.WriteLine("You WIN!"); return true; }
+        Console.WriteLine(guess < target ? "Too low!" : "Too high!");
+    }
+    Console.WriteLine($"Game Over. Number was {target}.");
+
+    return false;
+}
+static int RandomNumber(int min, int max)
+{
+    var random = new Random();
+    int target = random.Next(min, max + 1);
+    return target;
+}
+static bool AskRestart()
+{
+    Console.WriteLine("Play again? (y/n)");
+    return Console.ReadLine() == "y";
+}
+
 
 static int GetNumberFromConsole(string messageForUser)
 {
