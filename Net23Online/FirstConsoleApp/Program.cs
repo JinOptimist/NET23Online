@@ -1,25 +1,97 @@
-﻿//Console.WriteLine("Hi I'm Pasha I write a book");
-//Console.WriteLine("Hi I'm Alena");
-//Console.WriteLine(("Hi I am Nikolai. Hello!"));
-//Console.WriteLine("I want to work programmist!:");
-//Console.WriteLine("Hi, I'm Dmitry. I like Videogames but suck at programming!");
-//Console.WriteLine("Hello, my name is Ilya");
-//Console.WriteLine("Hi I'm Stas - C++ Developer");
-//Console.WriteLine("Hi I'm Valentin");
-//Console.WriteLine("Hi I'm Osama");
-//Console.WriteLine("I love to Learn");
-//Console.WriteLine("Hello, I'm Alexander. My hobby is a waste of time");
-//Console.WriteLine("Hi I'm Denis");
-//Console.WriteLine("Hello, my name's Nikita. I like reading books.");
-//Console.WriteLine("Hello, my name is Ira, i love my cats");
-//Console.WriteLine("Hi I'm Sonya");
-//Console.WriteLine("I love dancing");
-//Console.WriteLine("I am trying again");
-//Console.WriteLine("Igor, I like to drive a car.");
-///////////////////////////////////////////////////////////
+﻿GuessNumberFromOsama(); // You can change it
 
-GuessTheNumberFromNikita(); // You can change it
-GuessTheNumberFromAlexZ();
+//GuessTheNumberFromNikita(); // You can change it
+static void GuessNumberFromOsama()
+{
+
+    PrintGreeting();
+    while (true)
+    {
+        PlayRound();
+        if (!AskRestart()) break;
+    }
+}
+static void PrintGreeting()
+{
+    Console.WriteLine("=== Guess the Number ===");
+}
+static bool PlayRound()
+{
+    int minRange;
+    int maxRange;
+    do
+    {
+        Console.WriteLine("Enter min range:");
+        minRange = ReadNumberFromUser();
+        Console.WriteLine("Enter max range:");
+        maxRange = ReadNumberFromUser();
+    } while (!GetRange(minRange, maxRange));
+
+    return IsNumberGuessed(minRange, maxRange);
+}
+
+
+static int ReadNumberFromUser()
+{
+
+
+    string resultStr;
+    bool isNumber;
+    int resultNumber;
+    do
+    {
+        resultStr = Console.ReadLine();
+        isNumber = int.TryParse(resultStr, out resultNumber);
+        if (!isNumber)
+        {
+            Console.WriteLine("Invalid number. Try again:");
+        }
+    } while (!isNumber);
+
+    return resultNumber;
+}
+
+static bool GetRange(int min, int max)
+{
+    while (min >= max)
+    {
+
+        Console.WriteLine("Error: Min must be less than Max. Try again!.");
+        return false;
+    }
+    return true;
+}
+
+static bool IsNumberGuessed(int min, int max)
+{
+    int target = RandomNumber(min, max);
+    int MaxAttempts = 10;
+
+    for (int i = 1; i <= MaxAttempts; i++)
+    {
+        Console.WriteLine($"Attempt {i}/{MaxAttempts}. Guess:");
+        int guess = ReadNumberFromUser();
+
+        if (guess == target) { Console.WriteLine("You WIN!"); return true; }
+        Console.WriteLine(guess < target ? "Too low!" : "Too high!");
+    }
+    Console.WriteLine($"Game Over. Number was {target}.");
+
+    return false;
+}
+static int RandomNumber(int min, int max)
+{
+    var random = new Random();
+    int target = random.Next(min, max + 1);
+    return target;
+}
+static bool AskRestart()
+{
+    Console.WriteLine("Play again? (y/n)");
+    return Console.ReadLine() == "y";
+}
+
+
 static int GetNumberFromConsole(string messageForUser)
 {
     var isThisANumberForMax = false;
@@ -73,6 +145,7 @@ static void GuessTheNumberFromLvou()
     } while (!isGuessAreRight); // isGuessAreRight == false
 
     Console.WriteLine("The end");
+
 }
 
 
@@ -129,7 +202,7 @@ static void GuessTheNumberFromNikita()
                 Console.WriteLine($"Maximum value must be greater than {minValue}");
             }
         } while (maxValue <= minValue);
-
+//var condition6 = condition5 && condition4 || !condition2;
     }
     else if (modeNumber == (int)MenuChoice.RandomRange)
     {
@@ -139,7 +212,7 @@ static void GuessTheNumberFromNikita()
     }
     var numberToGuess = random.Next(minValue, maxValue);
     var attemptCounter = 0;
-
+//Console.WriteLine(name);
     int userNumber;
 
     Console.WriteLine($"The secret number is between {minValue} and {maxValue}");
@@ -172,7 +245,7 @@ static void GuessTheNumberFromNikita()
 
     Console.WriteLine($"Sorry, you've lost :( The secret number was {numberToGuess}");
 }
-
+}
 static int ReadNumberFromConsole()
 {
     int result;
@@ -186,6 +259,7 @@ static int ReadNumberFromConsole()
 
     return result;
 }
+
 static void GuessTheNumberFromAlexZ()
 {
     var random = new Random();
@@ -256,4 +330,3 @@ enum MenuChoice
     RandomRange = 2,
     Exit = 3
 }
-
