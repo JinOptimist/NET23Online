@@ -1,4 +1,5 @@
-﻿GuessTheNumberFromLvou(); // You can change it
+﻿// GuessTheNumberFromLvou(); // You can change it
+GuessTheNumberFromDimskiy();
 
 static int GetNumberFromConsole(string messageForUser)
 {
@@ -55,3 +56,61 @@ static void GuessTheNumberFromLvou()
     Console.WriteLine("The end");
 }
 
+static void GuessTheNumberFromDimskiy()
+{
+    int minNumber;
+    int maxNumber;
+    var isGuessCorrect = false;
+    var isMaxBiggerThanMin = false;
+
+    Console.WriteLine("Welcome! Let's play a Guessing game! Please, choose a range to play within!");
+
+    do
+    {
+        minNumber = GetNumberFromConsole("Enter the minimum number: ");
+        maxNumber = GetNumberFromConsole("Enter the maximum number: ");
+        if (minNumber < maxNumber)
+        {
+            isMaxBiggerThanMin = true;
+        }
+        if (minNumber > maxNumber || maxNumber < minNumber || minNumber == maxNumber)
+        {
+            Console.WriteLine("Seems like you made a mistake. Try again!");
+        }
+    } while (!isMaxBiggerThanMin);
+
+    var random = new Random();
+    var numberToGuess = random.Next(minNumber, maxNumber);
+
+    Console.WriteLine($"Thanks for your input! Now, guess a Number from {minNumber} to {maxNumber}! You've got 10 Attempts total! Good luck!");
+
+    for (var attempt = 1; attempt <= 10 && !isGuessCorrect; attempt++)
+    {
+        var playersGuess = GetNumberFromConsole($"This is an attempt #{attempt}.");
+
+
+        if (playersGuess < numberToGuess && attempt != 10)
+        {
+            Console.WriteLine("The number is BIGGER.");
+
+        }
+
+        if (playersGuess > numberToGuess && attempt != 10)
+        {
+            Console.WriteLine("The number is LESS.");
+        }
+
+        if (playersGuess == numberToGuess)
+        {
+            Console.WriteLine("You are CORRECT!. You Win!");
+            isGuessCorrect = true;
+        }
+        
+        if (attempt == 10 && playersGuess != numberToGuess)
+        {
+            Console.WriteLine("Sorry, you're out of attempts! You lose!");
+        }
+    }
+
+    Console.WriteLine("Thanks for Playing!");
+}
