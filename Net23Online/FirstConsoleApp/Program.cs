@@ -146,6 +146,7 @@ static void GuessTheNumberFromLvou()
     } while (!isGuessAreRight); // isGuessAreRight == false
 
     Console.WriteLine("The end");
+
 }
 
 
@@ -265,17 +266,4 @@ enum MenuChoice
     OwnRange = 1,
     RandomRange = 2,
     Exit = 3
-}
-    return false;
-}
-static int RandomNumber(int min, int max)
-{
-    var random = new Random();
-    int target = random.Next(min, max + 1);
-    return target;
-}
-static bool AskRestart()
-{
-    Console.WriteLine("Play again? (y/n)");
-    return Console.ReadLine() == "y";
 }
