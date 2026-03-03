@@ -1,7 +1,6 @@
 ﻿GuessNumberFromOsama(); // You can change it
 
 //GuessTheNumberFromNikita(); // You can change it
-GuessNumberFromOsama();
 static void GuessNumberFromOsama()
 {
 
