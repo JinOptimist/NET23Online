@@ -66,7 +66,7 @@ static void GuessTheNumberFromYato()
     Console.WriteLine("\nTHE SECRET NUMBER (a game by me)");
     for(var attempt = 0; attempt < attemptsLeft; attempt++)
     {
-        Console.WriteLine($"\nBe careful! You have {10 - attempt} attempts left...");
+        Console.WriteLine($"\nBe careful! You have {attemptsLeft - attempt} attempts left...");
         var guess = GetNumberFromConsole("What number did I think of?");
         if(guess < minValue || guess > maxValue)
         {
