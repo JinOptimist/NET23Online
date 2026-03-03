@@ -1,5 +1,5 @@
 ﻿
-GuessTheNumberFromNikita(); // You can change it
+GuessTheNumberFromPrivalov(); // You can change it
 
 static int GetNumberFromConsole(string messageForUser)
 {
@@ -19,6 +19,58 @@ static int GetNumberFromConsole(string messageForUser)
     } while (!isThisANumberForMax);
 
     return number;
+}
+
+static void GuessTheNumberFromPrivalov()
+{
+    var random = new Random();
+    var minValue = random.Next(1, 50);
+    var maxValue = random.Next(20, 50);
+    var attempt = 0;
+    var maxAttempt = 10;
+    var isGuessAreRight = false;
+    if (maxValue < minValue)
+    {
+        do
+        {
+            maxValue = GetNumberFromConsole("Please enter number greater then " + minValue);
+        } while (maxValue < minValue);
+    }
+    if (maxValue - minValue < maxAttempt)
+        maxValue = maxValue + 20;
+    var theNumber = random.Next(minValue, maxValue);
+
+    do
+    {
+        attempt++;
+        var counterOfRemainAttempts = maxAttempt - attempt;
+        Console.WriteLine("Guess the number in diapason from " + minValue + " to " + maxValue);
+        var guess = GetNumberFromConsole("Enter your guess");
+
+        if (guess < theNumber)
+        {
+            Console.WriteLine("My number is bigger");
+            Console.WriteLine("Your have " + counterOfRemainAttempts + " attemts left");
+            minValue = guess;
+        }
+        if (guess > theNumber)
+        {
+            Console.WriteLine("My number is less");
+            Console.WriteLine("Your have " + counterOfRemainAttempts + " attemts left");
+            maxValue = guess;
+        }
+        if (guess == theNumber)
+        {
+            Console.WriteLine("Winner winner, chicken dinner");
+        }
+        if (maxAttempt == attempt)
+        {
+            Console.WriteLine("You lost. My number is " + theNumber);
+            return;
+        }
+        isGuessAreRight = guess == theNumber;
+    } while (!isGuessAreRight);
+
 }
 
 static void GuessTheNumberFromLvou()
