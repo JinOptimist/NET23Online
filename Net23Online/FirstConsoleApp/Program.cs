@@ -1,4 +1,4 @@
-﻿GuessTheNumberFromLvou(); // You can change it
+﻿GuessTheNumberFromYato(); // You can change it
 
 static int GetNumberFromConsole(string messageForUser)
 {
@@ -55,3 +55,42 @@ static void GuessTheNumberFromLvou()
     Console.WriteLine("The end");
 }
 
+static void GuessTheNumberFromYato()
+{
+    var minValue = GetNumberFromConsole("Enter the min value");
+    var maxValue = GetNumberFromConsole("Enter the max value");
+    var random = new Random();
+    var theSecretNumber = random.Next(minValue, maxValue);
+    var attemptsLeft = 10;
+
+    Console.WriteLine("\nTHE SECRET NUMBER (a game by me)");
+    for(var attempt = 0; attempt < attemptsLeft; attempt++)
+    {
+        Console.WriteLine($"\nBe careful! You have {10 - attempt} attempts left...");
+        var guess = GetNumberFromConsole("What number did I think of?");
+        if(guess < minValue || guess > maxValue)
+        {
+            Console.WriteLine($"\nFocus! The secret number is between {minValue} and {maxValue}!");
+        }
+        else
+        {
+            if (guess > theSecretNumber)
+            {
+                Console.WriteLine("The secret number is BIGGER!");
+            }
+            else if (guess < theSecretNumber)
+            {
+                Console.WriteLine("The secret number is LESS!");
+            }
+            else
+            {
+                Console.WriteLine("You are WIN!");
+                break;
+            }
+        }
+        if (attempt == attemptsLeft - 1)
+        {
+            Console.WriteLine("You are LOSE");
+        }
+    }
+}
