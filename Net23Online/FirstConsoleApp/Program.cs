@@ -55,3 +55,61 @@ static void GuessTheNumberFromLvou()
     Console.WriteLine("The end");
 }
 
+GuessANumber();
+
+static void GuessANumber()
+{
+    Console.WriteLine("Hello. Now we play the game \"Guess a number\". Please enter lower limit of the range.");
+    var minNumber = ReadNumber();
+    Console.WriteLine("Now enter upper limit of the range.");
+    int maxNumber;
+    do
+    {
+        maxNumber = ReadNumber();
+        if (maxNumber < minNumber)
+        {
+            Console.WriteLine("Upper limit of the range can`t be lower than lower limit of the range.");
+        }
+    } while (maxNumber < minNumber);
+    var randomizer = new Random();
+    var hidden = randomizer.Next(minNumber, maxNumber);
+    var tries = 10;
+    Console.WriteLine($"Now guess the number in {tries} tries.");
+    for (var i = 0; i < tries;)
+    {
+        Console.WriteLine($"This is your {++i} try.");
+        var number = ReadNumber();
+        if (number < hidden)
+        {
+            Console.WriteLine("Sorry, but my number is bigger.");
+        }
+        else if (number > hidden)
+        {
+            Console.WriteLine("Sorry, but my number is lower.");
+        }
+        else
+        {
+            Console.WriteLine("You guessed it. Congratulations!");
+            return;
+        }
+    }
+
+    Console.WriteLine("You lost.");
+}
+
+static int ReadNumber()
+{
+    int value;
+    bool result = false;
+    do
+    {
+        var valueString = Console.ReadLine();
+        result = int.TryParse(valueString, out value);
+        if (!result)
+        {
+            Console.WriteLine($"\"{valueString}\" is not a number. Please enter a number.");
+        }
+    }
+    while (!result);
+    return value;
+}
