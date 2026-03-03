@@ -1,6 +1,43 @@
 ﻿
 GuessTheNumberFromNikita(); // You can change it
 
+static void GuessTheNumberFromValentin()
+{
+    var minValue = GetNumberFromConsole("Enter a min value");
+    var maxValue = GetNumberFromConsole("Enter a max value");
+    var userAttemptCount = GetNumberFromConsole("Enter the number of attempts it will take you to guess the number.");
+    var attempt = 0;
+    Console.WriteLine("Game start");
+    var random = new Random();
+    var theNumber = random.Next(minValue, maxValue); // [1, 10]
+    do
+    {
+        attempt++;
+        var remainingAttempts = userAttemptCount - attempt;
+        var guess = GetNumberFromConsole("Enter your guess");
+        if (guess == theNumber)
+        {
+            Console.WriteLine("You are win");
+            break;
+        }
+        if (attempt == userAttemptCount)
+        {
+            Console.WriteLine("The number of attempts has been exhausted");
+            break;
+        }
+        if (guess < theNumber)
+        {
+            Console.WriteLine($"My number is bigger. \nYou have {remainingAttempts} attempts left.");
+        }
+        if (guess > theNumber)
+        {
+            Console.WriteLine($"My number is less \nYou have {remainingAttempts} attempts left.");
+        }
+    } while (true);
+
+    Console.WriteLine("Game end");
+}
+
 static int GetNumberFromConsole(string messageForUser)
 {
     var isThisANumberForMax = false;
@@ -55,7 +92,6 @@ static void GuessTheNumberFromLvou()
 
     Console.WriteLine("The end");
 }
-
 
 static void GuessTheNumberFromNikita()
 {
