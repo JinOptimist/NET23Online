@@ -1,4 +1,5 @@
-﻿GuessTheNumberFromLvou(); // You can change it
+﻿using static System.Net.Mime.MediaTypeNames;
+GuessTheNumberFromLvou(); // You can change it
 
 static int GetNumberFromConsole(string messageForUser)
 {
@@ -54,4 +55,49 @@ static void GuessTheNumberFromLvou()
 
     Console.WriteLine("The end");
 }
+static void GuessTheNumberForLokit()
+{
+    int min, max;
+    Console.WriteLine("Input range, For example: \'2,10'/");
+    var range = Console.ReadLine();
+    string[] split = range.Split(',');
+    min = int.Parse(split[0]);
+    max = int.Parse(split[1]);
+    Console.Write("Input count attempt:");
+    var count = Console.ReadLine();
+    if (int.TryParse(count, out int number))
+    {
+        StartGame(number, min, max);
+    }
+    static void StartGame(int count, int min, int max)
+    {
+        var ran = new Random();
+        var secretCount = ran.Next(min, max);
+        int i = 0;
+        while (count > i)
+        {
+            i++;
+            Console.Write($"Input value {i}: ");
+            var userCount = int.Parse(Console.ReadLine());
+            if (userCount > secretCount)
+            {
+                Console.WriteLine("Your value the more for me!");
+            }
+            if (userCount < secretCount)
+            {
+                Console.WriteLine("Your value the less for me!");
+            }
+            if (userCount == secretCount)
+            {
+                Console.WriteLine("You are the champion!");
+            }
+            if (count == i)
+            {
+                Console.WriteLine($"Game over your count: {secretCount}");
+            }
+        }
+    }
 
+
+
+}
