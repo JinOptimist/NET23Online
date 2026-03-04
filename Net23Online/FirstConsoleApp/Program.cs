@@ -75,9 +75,9 @@ static void GuessANumber()
     var hidden = randomizer.Next(minNumber, maxNumber);
     var tries = 10;
     Console.WriteLine($"Now guess the number in {tries} tries.");
-    for (var i = 0; i < tries;)
+    for (var i = 0; i < tries; ++i)
     {
-        Console.WriteLine($"This is your {++i} try.");
+        Console.WriteLine($"This is your {i} try.");
         var number = ReadNumber();
         if (number < hidden)
         {
@@ -100,16 +100,16 @@ static void GuessANumber()
 static int ReadNumber()
 {
     int value;
-    bool result = false;
+    var thisIsANumber = false;
     do
     {
         var valueString = Console.ReadLine();
-        result = int.TryParse(valueString, out value);
-        if (!result)
+        thisIsANumber = int.TryParse(valueString, out value);
+        if (!thisIsANumber)
         {
             Console.WriteLine($"\"{valueString}\" is not a number. Please enter a number.");
         }
     }
-    while (!result);
+    while (!thisIsANumber);
     return value;
 }
