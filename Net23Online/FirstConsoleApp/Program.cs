@@ -1,8 +1,86 @@
-﻿GuessNumberFromOsama(); // You can change it
-
+﻿//GuessNumberFromOsama(); // You can change it
+GuessTheNumberFromLaurusik();
 //GuessTheNumberFromNikita(); // You can change it
 //GuessTheNumberFromAlexZ();
-static void GuessNumberFromOsama()
+
+static int GetNumberFromConsole(string messageForUser)
+{
+    var isThisANumberForMax = false;
+    var number = 0;
+    do
+    {
+        Console.WriteLine(messageForUser);
+        var guessStr = Console.ReadLine();
+
+        isThisANumberForMax = int.TryParse(guessStr, out number);
+        if (!isThisANumberForMax)
+        {
+            Console.WriteLine("It's not a number. Please enter just a number");
+        }
+
+    } while (!isThisANumberForMax);
+
+    return number;
+}
+
+static void GuessTheNumberFromLaurusik()
+{
+    Console.WriteLine("Hi, let's play a game?");
+    Console.WriteLine("First, limit me to a range. And then, I'll guess a number from it.");
+
+    var attempt = 0;
+    var isGuessAreRight = false;
+    var minValue = GetNumberFromConsole("Enter a min value");
+    var maxValue = GetNumberFromConsole("Enter a max value");
+
+    if (maxValue > minValue)
+    {
+        var random = new Random();
+        var theNumber = random.Next(minValue, maxValue);
+
+        do
+        {
+            attempt++;
+            var guess = GetNumberFromConsole($"Enter your guess. The number is in the range [{minValue},{maxValue}]");
+
+            if (guess < theNumber)
+            {
+                Console.WriteLine("My number is bigger");
+            }
+            if (guess > theNumber)
+            {
+                Console.WriteLine("My number is less");
+            }
+            if (guess == theNumber)
+            {
+                Console.WriteLine($"Congratulations, you won! I thought of a number {theNumber}.");
+                attempt--;
+            }
+            Console.WriteLine($"This is the {attempt} attempt");
+            isGuessAreRight = guess == theNumber;
+
+            if (attempt == 10)
+            {
+                Console.WriteLine($"You lose, The number hidden was equal to {theNumber}");
+                break;
+            }
+
+        } while (!isGuessAreRight); // isGuessAreRight == false
+    }
+    else if (maxValue < minValue)
+    {
+        Console.WriteLine("The maximum is less than the minimum.");
+    }
+    else if (maxValue == minValue)
+    {
+        Console.WriteLine("The maximum and minimum values are equal.");
+    }
+    Console.WriteLine("The end");
+}
+
+
+
+/*static void GuessNumberFromOsama()
 {
 
     PrintGreeting();
@@ -91,28 +169,10 @@ static bool AskRestart()
     Console.WriteLine("Play again? (y/n)");
     return Console.ReadLine() == "y";
 }
+*/
 
 
-static int GetNumberFromConsole(string messageForUser)
-{
-    var isThisANumberForMax = false;
-    var number = 0;
-    do
-    {
-        Console.WriteLine(messageForUser);
-        var guessStr = Console.ReadLine();
-
-        isThisANumberForMax = int.TryParse(guessStr, out number);
-        if (!isThisANumberForMax)
-        {
-            Console.WriteLine("It's not a number. Please enter just a number");
-        }
-
-    } while (!isThisANumberForMax);
-
-    return number;
-}
-
+/*
 static void GuessTheNumberFromLvou()
 {
     var random = new Random();
@@ -329,3 +389,4 @@ enum MenuChoice
     RandomRange = 2,
     Exit = 3
 }
+*/
