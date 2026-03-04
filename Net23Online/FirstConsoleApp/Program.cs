@@ -1,4 +1,3 @@
-﻿using System.Security.Cryptography;
 
 //GuessTheNumberFromLvou(); // You can change it
 GuessTheNumberFromSleepaidy();
@@ -55,6 +54,7 @@ static void GuessTheNumberFromLvou()
     } while (!isGuessAreRight); // isGuessAreRight == false
 
     Console.WriteLine("The end");
+
 }
 
 static void GuessTheNumberFromSleepaidy()
