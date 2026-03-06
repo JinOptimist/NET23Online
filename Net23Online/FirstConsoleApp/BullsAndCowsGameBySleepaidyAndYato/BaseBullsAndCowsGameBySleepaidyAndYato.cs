@@ -8,12 +8,31 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
     public abstract class BaseBullsAndCowsGameBySleepaidyAndYato
     {
-        protected int TakeTheNumberFromConsoleForBullsAndCows()
+        protected string TakeTheNumberFromConsoleForBullsAndCows()
         {
-            Console.WriteLine("Please enter a four-digit number with unique digits.");
-            var NumberFromConsoleForBullsAndCows = Console.ReadLine();
-            Console.WriteLine(NumberFromConsoleForBullsAndCows);
-            return 1;
+            var numberFromConsoleForBullsAndCows = "";
+            var isPlayerEnteredCorrectDigit = false;
+            do
+            {
+                Console.WriteLine("Please enter a four-digit number with unique digits.");
+                numberFromConsoleForBullsAndCows = Console.ReadLine();
+                if (!numberFromConsoleForBullsAndCows.All(char.IsDigit) || numberFromConsoleForBullsAndCows.Length != 4)
+                {
+                    Console.WriteLine("Incorrect input. Please try again.");
+                }
+                else if (numberFromConsoleForBullsAndCows.Distinct().Count() != 4)
+                {
+                    Console.WriteLine("The input contains non-unique numbers. Please try again.");
+                }
+                else
+                {
+                    isPlayerEnteredCorrectDigit = true;
+                }    
+
+            } while (!isPlayerEnteredCorrectDigit);
+
+
+            return numberFromConsoleForBullsAndCows;
         }
     }
 }

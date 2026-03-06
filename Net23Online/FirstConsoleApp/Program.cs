@@ -1,6 +1,6 @@
-﻿using FirstConsoleApp.GuessTheNumberStuff;
+﻿using FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato;
+using FirstConsoleApp.GuessTheNumberStuff;
 
 var botGame = new GuessTheNumberGameHumanVsBot();
 botGame.Play();
-
 
