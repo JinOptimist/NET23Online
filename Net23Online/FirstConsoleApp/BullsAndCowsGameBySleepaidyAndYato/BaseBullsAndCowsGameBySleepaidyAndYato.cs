@@ -12,6 +12,8 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         {
 
         }
+
+        
         protected string TakeTheNumberFromConsoleForBullsAndCows()
         {
             var numberFromConsoleForBullsAndCows = "";

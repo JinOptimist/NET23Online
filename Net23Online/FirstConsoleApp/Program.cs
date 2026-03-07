@@ -6,6 +6,6 @@ using FirstConsoleApp.GuessTheNumberStuff;
 
 //Test of the method for generating numbers with unique digits
 var uniqueNumbers = new List<string>();
-var BullsAndCowsBotPlayerObject = new BullsAndCowsGameBotPlayer();
-BullsAndCowsBotPlayerObject.GenerateUniqueDigitNumbers(uniqueNumbers);
+var bot = new Bot();
+bot.GenerateUniqueDigitNumbers(uniqueNumbers);
 uniqueNumbers.ForEach(Console.WriteLine);
