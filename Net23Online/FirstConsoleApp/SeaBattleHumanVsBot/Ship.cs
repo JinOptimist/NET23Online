@@ -2,7 +2,7 @@
 
 public class Ship
 { 
-    public List<Cell> Coordinates { get; set; }
+    public List<Cell> Coordinates { get; set; } = new List<Cell>();
     
     int Hits { get; set; }
     

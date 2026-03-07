@@ -8,10 +8,14 @@ public class SeaBattleGame
 
     private PlayerBot _bot = new();
 
-    private Player _currentTurn = new PlayerHuman(); // Bot or Human
+    private Player _currentTurn; // Bot or Human
+
+    private Player _winner;
 
     public void StartGame()
     {
+        _currentTurn = _human;
+        
         _human.PlaceShips();
         _bot.PlaceShips();
 
@@ -20,7 +24,7 @@ public class SeaBattleGame
         SayResults();
     }
     
-    public void DicplayFields(Field playerField, Field enemyField)
+    public void ShowFields(Field playerField, Field enemyField)
     {
         Console.WriteLine("Ваше поле:              Поле противника:");
         Console.Write("  ");
@@ -84,12 +88,20 @@ public class SeaBattleGame
     {
         do
         {
-            DicplayFields(_human.Field, _bot.Field);
+            ShowFields(_human.Field, _bot.Field);
 
             Player enemy = _currentTurn == _human ? _bot : _human;
             var IslastMoveHitLucky = _currentTurn.MakeMove(enemy);
 
             ChangeTurnIfNeeded(IslastMoveHitLucky);
+
+            _isGameOver = enemy.CountOfAliveShips() == 0;
+
+            if (_isGameOver)
+            {
+                _winner = _currentTurn;
+            }
+            
         } while (!_isGameOver);
     }
     public void ChangeTurnIfNeeded(bool lastMoveHit)
@@ -106,7 +118,17 @@ public class SeaBattleGame
     /// </summary>
     public void SayResults()
     {
-        
+        if (_human == _winner)
+        {
+            Console.WriteLine("You are Win! My congratulations!");
+            Console.WriteLine("Thanks for this game");
+            Console.WriteLine("Goodbye");
+        }
+        else
+        {
+            Console.WriteLine("Bot is the winner. Thanks for this game");
+            Console.WriteLine("You always can try again");
+        }
     }
 
 }

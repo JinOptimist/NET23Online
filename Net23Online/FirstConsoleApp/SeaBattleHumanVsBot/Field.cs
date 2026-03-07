@@ -9,22 +9,20 @@ public enum ShotState
 public class Field
 {
     public Cell[,] Cells { get; set; } =  new Cell[10, 10];
-
-    public void MakeField()
+    
+    public Field()
     {
         for (int y = 0; y < 10; y++)
         {
             for (int x = 0; x < 10; x++)
             {
-                Cell cell = new Cell(x, y);
+                Cells[x, y] = new Cell(x, y);
             }
         }
     }
-
-    //public Cell GetCell(int row, int col)
-
+    
     //координата - верхняя\левая палуба корабля
-    bool CanPlaceShip(int row, int col, int size, bool horizontal, Field field)
+    public bool CanPlaceShip(int row, int col, int size, bool horizontal)
     {
         if (!horizontal)
         {
@@ -57,7 +55,6 @@ public class Field
             }
         }
 
-        //HashSet<Cell> emptyCells = new HashSet<Cell>();
         for (int c = 0; c < size; c++) //cделаем с каждой клеткой
         {
             var rows = 0;
@@ -87,7 +84,7 @@ public class Field
                         continue;
                     }
                     
-                    Cell cell =  field.Cells[rows-1, cols-1];
+                    Cell cell =  Cells[rows-1, cols-1];
 
                     if (cell.State != CellState.Empty)
                     { 
@@ -101,7 +98,7 @@ public class Field
 
    //void PlaceShip(Ship ship)
    
-   public ShotState Shot(Cell cellToShoot, Field field)
+   public ShotState Shot(Cell cellToShoot)
    {
        if (cellToShoot.State == CellState.Ship)
        {
@@ -111,8 +108,9 @@ public class Field
 
            if (cellToShoot.Ship.IsDestroyed())
            {
-               var cellsNearDestroyedShip = cellToShoot.Ship.GetNeighboringCells(field);
+               var cellsNearDestroyedShip = cellToShoot.Ship.GetNeighboringCells(this);
                MakeNeighbordingCellsMiss(cellsNearDestroyedShip);
+               
                return ShotState.Destroy;
            }
 
