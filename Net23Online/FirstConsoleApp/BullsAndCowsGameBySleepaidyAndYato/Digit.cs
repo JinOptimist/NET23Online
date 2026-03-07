@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
-    internal class Digit
+    public class Digit
     {
         enum DigitStatus
         {
