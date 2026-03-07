@@ -8,6 +8,10 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
     public abstract class BaseBullsAndCowsGameBySleepaidyAndYato
     {
+        public void Play()
+        {
+
+        }
         protected string TakeTheNumberFromConsoleForBullsAndCows()
         {
             var numberFromConsoleForBullsAndCows = "";
