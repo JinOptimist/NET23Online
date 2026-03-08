@@ -9,9 +9,27 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
     public class Bot
     {
-        private List<DigitCandidate> uniqueDigits {  get; set; }
-        private void GenerateUniqueDigitNumbers(List<string> uniqueDigitNumbers)
+        private List<string> UniqueDigitNumbers { get; set; }
+        private List<DigitCandidate> UniqueDigits {  get; set; }        
+
+        public Bot()
         {
+            GenerateUniqueDigitNumbers();
+            CreateUniqueDigitsList();
+        }
+
+        //this method created only for testing
+        public void WriteAllField()
+        {
+            UniqueDigitNumbers.ForEach(Console.WriteLine);
+            for(int i = 0; i < UniqueDigits.Count; i++)
+            {
+                UniqueDigits[i].WriteAllField();
+            }
+        }
+        private void GenerateUniqueDigitNumbers()
+        {
+            UniqueDigitNumbers = new List<string>();
             for (int firstDigit = 0; firstDigit < 10; firstDigit++)
             {
                 for (int secondDigit = 0; secondDigit < 10; secondDigit++)
@@ -32,7 +50,7 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
                             {
                                 continue;
                             }
-                            uniqueDigitNumbers.Add(firstDigit.ToString() + secondDigit.ToString() +
+                            UniqueDigitNumbers.Add(firstDigit.ToString() + secondDigit.ToString() +
                                 thirdDigit.ToString() + fourthDigit.ToString());
                         }
                     }
@@ -40,9 +58,9 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
             }
         }
 
-        public void CreateUniqueDigitsList()
+        private void CreateUniqueDigitsList()
         {
-            uniqueDigits = new List<DigitCandidate>  {   
+            UniqueDigits = new List<DigitCandidate>  {   
                                                     new DigitCandidate("0"), 
                                                     new DigitCandidate("1"), 
                                                     new DigitCandidate("2"), 

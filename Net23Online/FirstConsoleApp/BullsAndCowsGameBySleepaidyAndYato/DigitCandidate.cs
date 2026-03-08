@@ -22,5 +22,12 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
             this.Value = value;
             this.Status = DigitStatus.Unchecked;
         }
+
+        //This method only for testing
+        public void WriteAllField()
+        {
+            Console.WriteLine(Value);
+            Console.WriteLine(Status);
+        }
     }
 }
