@@ -14,20 +14,20 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
             Confirmed,
             Possible
         }
-        private DigitStatus Status { get; set; }
-        private string Value { get; set; }
+        public string Value { get; private set; }
+        private DigitStatus _status { get; set; }        
 
         public BotPlayerDigitCandidate(string value) 
         {
             this.Value = value;
-            this.Status = DigitStatus.Unchecked;
+            this._status = DigitStatus.Unchecked;
         }
 
         //This method only for testing
         public void WriteAllField()
         {
             Console.WriteLine(Value);
-            Console.WriteLine(Status);
+            Console.WriteLine(_status);
         }
     }
 }

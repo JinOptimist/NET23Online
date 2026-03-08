@@ -10,14 +10,13 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
     public class BotPlayer : Player
     {
         private List<string> _uniqueDigitNumbers { get; set; }
-        private List<BotPlayerDigitCandidate> _uniqueDigits {  get; set; }        
+        private List<BotPlayerDigitCandidate> _uniqueDigits {  get; set; }
 
-        public BotPlayer()
+        public BotPlayer(BullsAndCowsGameBotPlayer game) : base(game)
         {
             Generate_uniqueDigitNumbers();
             Create_uniqueDigitsList();
         }
-
 
         //this method created only for testing
         public void WriteAllField()
@@ -26,6 +25,41 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
             for(int i = 0; i < _uniqueDigits.Count; i++)
             {
                 _uniqueDigits[i].WriteAllField();
+            }
+        }
+
+        public override string MakeGuess()
+        {
+            switch (this._game.Round)
+            {
+                case 0:
+                    return "1234";
+                case 1:
+                    return "5678";
+                case 2:
+                    var oneFound = false;
+                    var nineFound = false;
+                    foreach (var digit in _uniqueDigits)
+                    {
+                        if (digit.Value == "9")
+                        {
+                            nineFound = true;
+                        }
+                        if (digit.Value == "1")
+                        {
+                            oneFound = true;
+                        }
+                    }
+                    if(nineFound && oneFound) 
+                    {
+                        return "9043";
+                    }
+                    else
+                    {
+                        return "9087";
+                    }
+                default:
+
             }
         }
         private void Generate_uniqueDigitNumbers()
