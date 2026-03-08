@@ -10,7 +10,7 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
     public class BotPlayer : Player
     {
         private List<string> UniqueDigitNumbers { get; set; }
-        private List<DigitCandidate> UniqueDigits {  get; set; }        
+        private List<BotPlayerDigitCandidate> UniqueDigits {  get; set; }        
 
         public BotPlayer()
         {
@@ -61,17 +61,17 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 
         private void CreateUniqueDigitsList()
         {
-            UniqueDigits = new List<DigitCandidate>  {   
-                                                    new DigitCandidate("0"), 
-                                                    new DigitCandidate("1"), 
-                                                    new DigitCandidate("2"), 
-                                                    new DigitCandidate("3"), 
-                                                    new DigitCandidate("4"), 
-                                                    new DigitCandidate("5"), 
-                                                    new DigitCandidate("6"), 
-                                                    new DigitCandidate("7"),
-                                                    new DigitCandidate("8"),
-                                                    new DigitCandidate("9"),
+            UniqueDigits = new List<BotPlayerDigitCandidate>  {   
+                                                    new BotPlayerDigitCandidate("0"), 
+                                                    new BotPlayerDigitCandidate("1"), 
+                                                    new BotPlayerDigitCandidate("2"), 
+                                                    new BotPlayerDigitCandidate("3"), 
+                                                    new BotPlayerDigitCandidate("4"), 
+                                                    new BotPlayerDigitCandidate("5"), 
+                                                    new BotPlayerDigitCandidate("6"), 
+                                                    new BotPlayerDigitCandidate("7"),
+                                                    new BotPlayerDigitCandidate("8"),
+                                                    new BotPlayerDigitCandidate("9"),
                                                 };
         }
     }
