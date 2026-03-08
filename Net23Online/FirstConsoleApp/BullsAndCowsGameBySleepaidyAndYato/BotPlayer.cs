@@ -9,28 +9,28 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
     public class BotPlayer : Player
     {
-        private List<string> UniqueDigitNumbers { get; set; }
-        private List<BotPlayerDigitCandidate> UniqueDigits {  get; set; }        
+        private List<string> _uniqueDigitNumbers { get; set; }
+        private List<BotPlayerDigitCandidate> _uniqueDigits {  get; set; }        
 
         public BotPlayer()
         {
-            GenerateUniqueDigitNumbers();
-            CreateUniqueDigitsList();
+            Generate_uniqueDigitNumbers();
+            Create_uniqueDigitsList();
         }
 
 
         //this method created only for testing
         public void WriteAllField()
         {
-            UniqueDigitNumbers.ForEach(Console.WriteLine);
-            for(int i = 0; i < UniqueDigits.Count; i++)
+            _uniqueDigitNumbers.ForEach(Console.WriteLine);
+            for(int i = 0; i < _uniqueDigits.Count; i++)
             {
-                UniqueDigits[i].WriteAllField();
+                _uniqueDigits[i].WriteAllField();
             }
         }
-        private void GenerateUniqueDigitNumbers()
+        private void Generate_uniqueDigitNumbers()
         {
-            UniqueDigitNumbers = new List<string>();
+            _uniqueDigitNumbers = new List<string>();
             for (int firstDigit = 0; firstDigit < 10; firstDigit++)
             {
                 for (int secondDigit = 0; secondDigit < 10; secondDigit++)
@@ -51,7 +51,7 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
                             {
                                 continue;
                             }
-                            UniqueDigitNumbers.Add(firstDigit.ToString() + secondDigit.ToString() +
+                            this._uniqueDigitNumbers.Add(firstDigit.ToString() + secondDigit.ToString() +
                                 thirdDigit.ToString() + fourthDigit.ToString());
                         }
                     }
@@ -59,9 +59,9 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
             }
         }
 
-        private void CreateUniqueDigitsList()
+        private void Create_uniqueDigitsList()
         {
-            UniqueDigits = new List<BotPlayerDigitCandidate>  {   
+            this._uniqueDigits = new List<BotPlayerDigitCandidate>  {   
                                                     new BotPlayerDigitCandidate("0"), 
                                                     new BotPlayerDigitCandidate("1"), 
                                                     new BotPlayerDigitCandidate("2"), 

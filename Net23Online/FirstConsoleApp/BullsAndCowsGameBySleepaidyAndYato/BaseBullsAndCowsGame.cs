@@ -8,7 +8,8 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
     public abstract class BaseBullsAndCowsGame
     {
-        protected Player player;
+        protected Player _player;
+
         public void Play()
         {
 

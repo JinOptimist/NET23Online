@@ -10,7 +10,7 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
     {
         BullsAndCowsGameBotPlayer()
         {
-            this.player = new BotPlayer();
+            this._player = new BotPlayer();
         }
     }
 }
