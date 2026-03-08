@@ -9,15 +9,19 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
     public class BotPlayer : Player
     {
+        private BullsAndCowsGame _game { get; set; }
         private List<string> _uniqueDigitNumbers { get; set; }
         private List<BotPlayerDigitBullsCandidate> _uniqueDigits {  get; set; }
         private string _lastGuess {  get; set; }
 
-        public BotPlayer(BullsAndCowsGameBotPlayer game) : base(game)
+        public BotPlayer()
         {
             GenerateUniqueDigitNumbers();
             CreateUniqueDigitsList();
-
+        }
+        public void SetGame (BullsAndCowsGame game)
+        {
+            _game = game;
         }
 
         //this method created only for testing

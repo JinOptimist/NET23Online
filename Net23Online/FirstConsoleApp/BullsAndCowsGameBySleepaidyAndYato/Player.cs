@@ -8,10 +8,9 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
     public abstract class Player
     {
-        protected BaseBullsAndCowsGame _game; 
-        public Player(BaseBullsAndCowsGame game)
+        public Player()
         {
-            this._game = game;
+           
         }
         public abstract string MakeGuess();
 
