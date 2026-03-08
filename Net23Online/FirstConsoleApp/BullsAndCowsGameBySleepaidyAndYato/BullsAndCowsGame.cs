@@ -16,7 +16,10 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         protected int amountCows { get; private set; }
         public void Play()
         {
-
+            do
+            {
+                PlayOneRound();
+            } while (amountBulls != 4);
         }
         public BullsAndCowsGame(Player player)
         {
@@ -38,6 +41,10 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
             } while (!isPlayerEnteredCorrectDigits);
             var guessedDigitsFromPlayer = _player.MakeGuess();
             SearchForBullsAndCows(enteredDigitsFromPlayer, guessedDigitsFromPlayer);
+            if(amountBulls == 4)
+            {
+                return;
+            }
             _player.ProcessGuessResult(amountBulls, amountCows);
 
         }
