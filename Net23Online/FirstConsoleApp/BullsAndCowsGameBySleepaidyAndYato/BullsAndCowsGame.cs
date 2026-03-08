@@ -59,14 +59,11 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         protected bool IsEnteredNumberCorrect(string enteredDigits)
         {
             var isPlayerEnteredCorrectDigit = false;
-            do
-            {
-
                 if (!enteredDigits.All(char.IsDigit) || enteredDigits.Length != 4)
                 {
                     Console.WriteLine("Incorrect input. Please try again.");
                 }
-                else if (enteredDigits.Distinct().Count() != 4)
+                else if(enteredDigits.Distinct().Count() != 4)
                 {
                     Console.WriteLine("The input contains non-unique numbers. Please try again.");
                 }
@@ -74,10 +71,6 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
                 {
                     isPlayerEnteredCorrectDigit = true;
                 }
-
-            } while (!isPlayerEnteredCorrectDigit);
-
-
             return isPlayerEnteredCorrectDigit;
         }
         protected void SearchForBullsAndCows(string enteredDigits, string guessedDigits)
