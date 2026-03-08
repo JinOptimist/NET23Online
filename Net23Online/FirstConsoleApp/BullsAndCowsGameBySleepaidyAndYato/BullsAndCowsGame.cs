@@ -16,7 +16,7 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         }
         public BullsAndCowsGame(Player player)
         {
-            this.Round = 0;
+            this.Round = 1;
             this._player = player;
             if (_player is BotPlayer botPlayer) 
             {

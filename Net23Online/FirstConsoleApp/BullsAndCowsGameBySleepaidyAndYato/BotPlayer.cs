@@ -11,85 +11,66 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
     {
         private BullsAndCowsGame _game { get; set; }
         private List<string> _uniqueDigitNumbers { get; set; }
-        private List<BotPlayerDigitBullsCandidate> _uniqueDigits {  get; set; }
-        private string _lastGuess {  get; set; }
+        private string _lastGuess { get; set; }
 
         public BotPlayer()
         {
             GenerateUniqueDigitNumbers();
-            CreateUniqueDigitsList();
         }
-        public void SetGame (BullsAndCowsGame game)
+        public void SetGame(BullsAndCowsGame game)
         {
             _game = game;
         }
 
-        //this method created only for testing
-        public void WriteAllField()
-        {
-            _uniqueDigitNumbers.ForEach(Console.WriteLine);
-            for(int i = 0; i < _uniqueDigits.Count; i++)
-            {
-                _uniqueDigits[i].WriteAllField();
-            }
-        }
-
         public override string MakeGuess()
         {
-            switch (this._game.Round)
+            var guessNumber = "";
+            if (this._game.Round == 1)
             {
-                case 0:
-                    return "1234";
-                case 1:
-                    return "5678";
-                case 2:
-                    var oneFound = false;
-                    var nineFound = false;
-                    foreach (var digit in _uniqueDigits)
-                    {
-                        if (digit.Value == "9")
-                        {
-                            nineFound = true;
-                        }
-                        if (digit.Value == "1")
-                        {
-                            oneFound = true;
-                        }
-                    }
-                    if(nineFound && oneFound) 
-                    {
-                        return "9043";
-                    }
-                    else
-                    {
-                        return "9087";
-                    }
-                default:
-                    
+                guessNumber = "1234";
             }
-        }
-        public override void ProcessGuessResult(int Bulls, int Cows)
-        {
-            
-            Console.WriteLine($"{Bulls}B {Cows}C.");
-            if (Bulls + Cows == 0)
+            else if (this._game.Round == 2)
             {
-                for(int i = _uniqueDigits.Count - 1; i >= 0; i--)
+                guessNumber = "5678";
+            }
+            else if (this._game.Round == 3)
+            {
+                if (_uniqueDigitNumbers[_uniqueDigitNumbers.Count].Contains("9"))
                 {
-                    if (_lastGuess.Contains(_uniqueDigits[i].Value))
-                    {
-                        _uniqueDigits.RemoveAt(i);
-                    }
+                    guessNumber = "90" + _uniqueDigitNumbers[0][0] + _uniqueDigitNumbers[0][1];
                 }
             }
-            else if (Bulls + Cows > 0)
+            else
             {
-                foreach (var digit in _uniqueDigits)
+                guessNumber = _uniqueDigitNumbers[0];
+            }
+            return guessNumber;
+        }
+        public override void ProcessGuessResult(int bullsCount, int cowsCount)
+        {
+            FilterNumberCandidates(bullsCount, cowsCount);
+        }
+
+        private void FilterNumberCandidates(int bullsCount, int cowsCount)
+        {
+            int bullsCountNumberCandidates = 0;
+            int cowsCountNumberCandidates = 0;
+            for (int indexUniqueDigitNumbers = _uniqueDigitNumbers.Count; indexUniqueDigitNumbers >= 0; indexUniqueDigitNumbers--)
+            {
+                for (int indexDigit = 0; indexDigit < _uniqueDigitNumbers[indexUniqueDigitNumbers].Length; indexDigit++)
                 {
-                    if (_lastGuess.Contains(digit.Value))
+                    if (_uniqueDigitNumbers[indexUniqueDigitNumbers][indexDigit] == this._lastGuess[indexDigit])
                     {
-                        digit.SetStatus(BotPlayerDigitBullsCandidate.DigitStatus.Possible);
+                        bullsCountNumberCandidates++;
                     }
+                    else if (_uniqueDigitNumbers[indexUniqueDigitNumbers].Contains(this._lastGuess))
+                    {
+                        cowsCountNumberCandidates++;
+                    }
+                }
+                if (bullsCountNumberCandidates != bullsCount || cowsCountNumberCandidates != cowsCount)
+                {
+                    _uniqueDigitNumbers.RemoveAt(indexUniqueDigitNumbers);
                 }
             }
         }
@@ -122,22 +103,6 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
                     }
                 }
             }
-        }
-
-        private void CreateUniqueDigitsList()
-        {
-            this._uniqueDigits = new List<BotPlayerDigitBullsCandidate>  {   
-                                                    new BotPlayerDigitBullsCandidate("0"), 
-                                                    new BotPlayerDigitBullsCandidate("1"), 
-                                                    new BotPlayerDigitBullsCandidate("2"), 
-                                                    new BotPlayerDigitBullsCandidate("3"), 
-                                                    new BotPlayerDigitBullsCandidate("4"), 
-                                                    new BotPlayerDigitBullsCandidate("5"), 
-                                                    new BotPlayerDigitBullsCandidate("6"), 
-                                                    new BotPlayerDigitBullsCandidate("7"),
-                                                    new BotPlayerDigitBullsCandidate("8"),
-                                                    new BotPlayerDigitBullsCandidate("9"),
-                                                };
         }
     }
 }
