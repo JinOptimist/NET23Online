@@ -9,6 +9,7 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
     public class Bot
     {
+        private List<DigitCandidate> uniqueDigits {  get; set; }
         private void GenerateUniqueDigitNumbers(List<string> uniqueDigitNumbers)
         {
             for (int firstDigit = 0; firstDigit < 10; firstDigit++)
@@ -39,21 +40,20 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
             }
         }
 
-        public List<Digit> CreateUniqueDigitsList()
+        public void CreateUniqueDigitsList()
         {
-            var uniqueDigits = new List<Digit>  {   
-                                                    new Digit("0"), 
-                                                    new Digit("1"), 
-                                                    new Digit("2"), 
-                                                    new Digit("3"), 
-                                                    new Digit("4"), 
-                                                    new Digit("5"), 
-                                                    new Digit("6"), 
-                                                    new Digit("7"),
-                                                    new Digit("8"),
-                                                    new Digit("9"),
+            uniqueDigits = new List<DigitCandidate>  {   
+                                                    new DigitCandidate("0"), 
+                                                    new DigitCandidate("1"), 
+                                                    new DigitCandidate("2"), 
+                                                    new DigitCandidate("3"), 
+                                                    new DigitCandidate("4"), 
+                                                    new DigitCandidate("5"), 
+                                                    new DigitCandidate("6"), 
+                                                    new DigitCandidate("7"),
+                                                    new DigitCandidate("8"),
+                                                    new DigitCandidate("9"),
                                                 };
-            return uniqueDigits;
         }
     }
 }
