@@ -44,7 +44,7 @@
 
         private void TrySetupTarget(int from, int to, char target)
         {
-            Random random = new Random();
+            var random = new Random();
             var check = true;
             do
             {
