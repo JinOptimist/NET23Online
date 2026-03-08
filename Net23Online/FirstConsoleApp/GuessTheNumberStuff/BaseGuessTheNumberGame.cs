@@ -31,6 +31,9 @@
             Console.WriteLine("The end");
         }
 
+        /// <summary>
+        /// This is a main method to enter the nubmer
+        /// </summary>
         private void PlayOneRound()
         {
             do
