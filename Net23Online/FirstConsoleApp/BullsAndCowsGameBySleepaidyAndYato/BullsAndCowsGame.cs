@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,8 +10,10 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
     public class BullsAndCowsGame
     {
-        public int Round {  get; private set; }
+        public int Round { get; private set; }
         protected Player _player { get; set; }
+        protected int amountBulls { get; private set; }
+        protected int amountCows { get; private set; }
         public void Play()
         {
 
@@ -18,46 +22,95 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         {
             this.Round = 0;
             this._player = player;
-            if (_player is BotPlayer botPlayer) 
+            if (_player is BotPlayer botPlayer)
             {
                 botPlayer.SetGame(this);
             }
         }
         private void PlayOneRound()
         {
-            //... ввод числа которое надо угадать
-            //... проверка числа на корректность
-            //далее ответ игрока (отгадывание числа)
-            var guess = _player.MakeGuess();//игрок сообщает число
-            //Сравнить числа
-            _player.ProcessGuessResult(Bulls, Cows);
+            var isPlayerEnteredCorrectDigits = false;
+            var enteredDigitsFromPlayer = "";
+            do
+            {
+                enteredDigitsFromPlayer = TakeTheNumberFromConsoleForBullsAndCows();
+                isPlayerEnteredCorrectDigits = IsEnteredNumberCorrect(enteredDigitsFromPlayer);
+            } while (!isPlayerEnteredCorrectDigits);
+            var guessedDigitsFromPlayer = _player.MakeGuess();
+            SearchForBullsAndCows(enteredDigitsFromPlayer, guessedDigitsFromPlayer);
+            _player.ProcessGuessResult(amountBulls, amountCows);
 
-        } 
+        }
+
         protected string TakeTheNumberFromConsoleForBullsAndCows()
         {
             var numberFromConsoleForBullsAndCows = "";
+            Console.WriteLine("Please enter a four-digit number with unique digits.");
+            numberFromConsoleForBullsAndCows = Console.ReadLine();
+            return numberFromConsoleForBullsAndCows;
+        }
+        protected bool IsEnteredNumberCorrect(string enteredDigits)
+        {
             var isPlayerEnteredCorrectDigit = false;
             do
             {
-                Console.WriteLine("Please enter a four-digit number with unique digits.");
-                numberFromConsoleForBullsAndCows = Console.ReadLine();
-                if (!numberFromConsoleForBullsAndCows.All(char.IsDigit) || numberFromConsoleForBullsAndCows.Length != 4)
+
+                if (!enteredDigits.All(char.IsDigit) || enteredDigits.Length != 4)
                 {
                     Console.WriteLine("Incorrect input. Please try again.");
                 }
-                else if (numberFromConsoleForBullsAndCows.Distinct().Count() != 4)
+                else if (enteredDigits.Distinct().Count() != 4)
                 {
                     Console.WriteLine("The input contains non-unique numbers. Please try again.");
                 }
                 else
                 {
                     isPlayerEnteredCorrectDigit = true;
-                }    
+                }
 
             } while (!isPlayerEnteredCorrectDigit);
 
 
-            return numberFromConsoleForBullsAndCows;
+            return isPlayerEnteredCorrectDigit;
+        }
+        protected void SearchForBullsAndCows(string enteredDigits, string guessedDigits)
+        {
+            amountBulls = 0;
+            amountCows = 0;
+
+            bool[] isPlayerEnteredDigitsMatch = new bool[enteredDigits.Length];
+            bool[] isPlayerGuessedDigitsMatch = new bool[guessedDigits.Length];
+
+            for (int i = 0; i < enteredDigits.Length; i++)
+            {
+                if (enteredDigits[i] == guessedDigits[i])
+                {
+                    amountBulls++;
+                    isPlayerEnteredDigitsMatch[i] = true;
+                    isPlayerGuessedDigitsMatch[i] = true;
+                }
+            }
+            for (int i = 0; i < enteredDigits.Length; i++)
+            {
+                if (isPlayerEnteredDigitsMatch[i])
+                {
+                    continue;
+                }
+                for (int j = 0; j < isPlayerGuessedDigitsMatch.Length; j++)
+                {
+                    if (isPlayerGuessedDigitsMatch[i])
+                    {
+                        continue;
+                    }
+                    if (isPlayerEnteredDigitsMatch[i] == isPlayerGuessedDigitsMatch[j])
+                    {
+                        amountCows++;
+                        isPlayerEnteredDigitsMatch[i] = true;
+                        isPlayerGuessedDigitsMatch[j] = true;
+                        break;
+                    }
+                }
+            }
         }
     }
 }
