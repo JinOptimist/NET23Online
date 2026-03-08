@@ -11,11 +11,13 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
     {
         private List<string> _uniqueDigitNumbers { get; set; }
         private List<BotPlayerDigitCandidate> _uniqueDigits {  get; set; }
+        private string _lastGuess {  get; set; }
 
         public BotPlayer(BullsAndCowsGameBotPlayer game) : base(game)
         {
             Generate_uniqueDigitNumbers();
             Create_uniqueDigitsList();
+
         }
 
         //this method created only for testing
@@ -59,7 +61,32 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
                         return "9087";
                     }
                 default:
-
+                    
+            }
+        }
+        public override void ProcessGuessResult(int Bulls, int Cows)
+        {
+            
+            Console.WriteLine($"{Bulls}B {Cows}C.");
+            if (Bulls + Cows == 0)
+            {
+                for(int i = _uniqueDigits.Count - 1; i >= 0; i--)
+                {
+                    if (_lastGuess.Contains(_uniqueDigits[i].Value))
+                    {
+                        _uniqueDigits.RemoveAt(i);
+                    }
+                }
+            }
+            else if (Bulls + Cows > 0)
+            {
+                foreach (var digit in _uniqueDigits)
+                {
+                    if (_lastGuess.Contains(digit.Value))
+                    {
+                        digit.SetStatus(BotPlayerDigitCandidate.DigitStatus.Possible);
+                    }
+                }
             }
         }
         private void Generate_uniqueDigitNumbers()

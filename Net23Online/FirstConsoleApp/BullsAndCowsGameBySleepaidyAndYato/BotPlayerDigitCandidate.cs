@@ -8,7 +8,7 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
     public class BotPlayerDigitCandidate
     {
-        enum DigitStatus
+        public enum DigitStatus
         {
             Unchecked,
             Confirmed,
@@ -28,6 +28,11 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         {
             Console.WriteLine(Value);
             Console.WriteLine(_status);
+        }
+
+        public void SetStatus(DigitStatus status)
+        {
+            this._status = status;
         }
     }
 }
