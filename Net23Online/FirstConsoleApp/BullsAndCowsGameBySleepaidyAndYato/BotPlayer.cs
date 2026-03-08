@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
-    public class Bot
+    public class BotPlayer : Player
     {
         private List<string> UniqueDigitNumbers { get; set; }
         private List<DigitCandidate> UniqueDigits {  get; set; }        
 
-        public Bot()
+        public BotPlayer()
         {
             GenerateUniqueDigitNumbers();
             CreateUniqueDigitsList();
         }
+
 
         //this method created only for testing
         public void WriteAllField()

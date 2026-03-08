@@ -5,5 +5,5 @@ using FirstConsoleApp.GuessTheNumberStuff;
 //botGame.Play();
 
 //Test of the method for generating numbers with unique digits
-var bot = new Bot();
+var bot = new BotPlayer();
 bot.WriteAllField();

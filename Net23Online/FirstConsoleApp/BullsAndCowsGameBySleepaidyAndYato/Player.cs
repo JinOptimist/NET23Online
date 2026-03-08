@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
-    public class BullsAndCowsGameBotPlayer : BaseBullsAndCowsGame
+    public abstract class Player
     {
-        BullsAndCowsGameBotPlayer()
-        {
-            this.player = new BotPlayer();
-        }
+        public abstract string MakeGuess();
     }
 }

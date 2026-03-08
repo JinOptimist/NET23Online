@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
-    public abstract class BaseBullsAndCowsGameBySleepaidyAndYato
+    public abstract class BaseBullsAndCowsGame
     {
+        protected Player player;
         public void Play()
         {
 
