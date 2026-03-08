@@ -10,13 +10,13 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
     public class BotPlayer : Player
     {
         private List<string> _uniqueDigitNumbers { get; set; }
-        private List<BotPlayerDigitCandidate> _uniqueDigits {  get; set; }
+        private List<BotPlayerDigitBullsCandidate> _uniqueDigits {  get; set; }
         private string _lastGuess {  get; set; }
 
         public BotPlayer(BullsAndCowsGameBotPlayer game) : base(game)
         {
-            Generate_uniqueDigitNumbers();
-            Create_uniqueDigitsList();
+            GenerateUniqueDigitNumbers();
+            CreateUniqueDigitsList();
 
         }
 
@@ -84,12 +84,12 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
                 {
                     if (_lastGuess.Contains(digit.Value))
                     {
-                        digit.SetStatus(BotPlayerDigitCandidate.DigitStatus.Possible);
+                        digit.SetStatus(BotPlayerDigitBullsCandidate.DigitStatus.Possible);
                     }
                 }
             }
         }
-        private void Generate_uniqueDigitNumbers()
+        private void GenerateUniqueDigitNumbers()
         {
             _uniqueDigitNumbers = new List<string>();
             for (int firstDigit = 0; firstDigit < 10; firstDigit++)
@@ -120,19 +120,19 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
             }
         }
 
-        private void Create_uniqueDigitsList()
+        private void CreateUniqueDigitsList()
         {
-            this._uniqueDigits = new List<BotPlayerDigitCandidate>  {   
-                                                    new BotPlayerDigitCandidate("0"), 
-                                                    new BotPlayerDigitCandidate("1"), 
-                                                    new BotPlayerDigitCandidate("2"), 
-                                                    new BotPlayerDigitCandidate("3"), 
-                                                    new BotPlayerDigitCandidate("4"), 
-                                                    new BotPlayerDigitCandidate("5"), 
-                                                    new BotPlayerDigitCandidate("6"), 
-                                                    new BotPlayerDigitCandidate("7"),
-                                                    new BotPlayerDigitCandidate("8"),
-                                                    new BotPlayerDigitCandidate("9"),
+            this._uniqueDigits = new List<BotPlayerDigitBullsCandidate>  {   
+                                                    new BotPlayerDigitBullsCandidate("0"), 
+                                                    new BotPlayerDigitBullsCandidate("1"), 
+                                                    new BotPlayerDigitBullsCandidate("2"), 
+                                                    new BotPlayerDigitBullsCandidate("3"), 
+                                                    new BotPlayerDigitBullsCandidate("4"), 
+                                                    new BotPlayerDigitBullsCandidate("5"), 
+                                                    new BotPlayerDigitBullsCandidate("6"), 
+                                                    new BotPlayerDigitBullsCandidate("7"),
+                                                    new BotPlayerDigitBullsCandidate("8"),
+                                                    new BotPlayerDigitBullsCandidate("9"),
                                                 };
         }
     }

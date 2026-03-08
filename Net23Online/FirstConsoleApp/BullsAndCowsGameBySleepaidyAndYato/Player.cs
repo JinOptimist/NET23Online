@@ -9,11 +9,11 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
     public abstract class Player
     {
         protected BaseBullsAndCowsGame _game; 
-        public abstract string MakeGuess();
         public Player(BaseBullsAndCowsGame game)
         {
             this._game = game;
         }
+        public abstract string MakeGuess();
 
         public abstract void ProcessGuessResult(int Bulls, int Cows);
     }

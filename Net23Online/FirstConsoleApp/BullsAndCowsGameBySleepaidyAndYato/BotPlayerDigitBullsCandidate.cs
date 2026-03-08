@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
-    public class BotPlayerDigitCandidate
+    public class BotPlayerDigitBullsCandidate
     {
         public enum DigitStatus
         {
@@ -17,7 +17,7 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         public string Value { get; private set; }
         private DigitStatus _status { get; set; }        
 
-        public BotPlayerDigitCandidate(string value) 
+        public BotPlayerDigitBullsCandidate(string value) 
         {
             this.Value = value;
             this._status = DigitStatus.Unchecked;
@@ -36,3 +36,6 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         }
     }
 }
+
+
+

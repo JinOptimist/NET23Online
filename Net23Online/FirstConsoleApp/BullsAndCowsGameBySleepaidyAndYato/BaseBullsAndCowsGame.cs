@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 {
-    public abstract class BaseBullsAndCowsGame
+    public class BaseBullsAndCowsGame
     {
         public int Round {  get; private set; }
         protected Player _player { get; set; }
@@ -15,7 +15,16 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 
         }
 
-        
+        private void PlayOneRound()
+        {
+            //... ввод числа которое надо угадать
+            //... проверка числа на корректность
+            //далее ответ игрока (отгадывание числа)
+            var guess = _player.MakeGuess();//игрок сообщает число
+            //Сравнить числа
+            _player.ProcessGuessResult(Bulls, Cows);
+
+        } 
         protected string TakeTheNumberFromConsoleForBullsAndCows()
         {
             var numberFromConsoleForBullsAndCows = "";
