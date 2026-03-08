@@ -12,47 +12,33 @@ public class Field
     
     public Field()
     {
-        for (int y = 0; y < 10; y++)
+        for (int x = 0; x < 10; x++)
         {
-            for (int x = 0; x < 10; x++)
+            for (int y = 0; y < 10; y++)
             {
                 Cells[x, y] = new Cell(x, y);
             }
         }
     }
     
+    
     //координата - верхняя\левая палуба корабля
-    public bool CanPlaceShip(int row, int col, int size, bool horizontal)
+    public bool CanPlaceShip(int row, int column, int size, bool horizontal)
     {
         if (!horizontal)
         {
-            if (col > 10  || col < 1) //если выходит за границы столбцов
-            {
-                return false;
-            }
+            if (column > 9  || column < 0) return false;//если выходит за границы столбцов
 
-            for (int i = 0; i < size; i++)
-            {
-                if (size == 1+i && row > 10-i && row < 1)
-                {
-                    return false;
-                }
-            }
+            if (row > 9 - size + 1 || row < 0) return false;
         }
         else
         {
-            if (row > 10 || row < 1) //если выходит за границы строк
-            {
-                return false;
-            }
+            if (row > 9 || row < 0) return false;//если выходит за границы строк
 
-            for (int i = 0; i < size; i++)
-            {
-                if (size == 1+i && col > 10-i && col < 1)
-                {
-                    return false;
-                }
-            }
+            if (column > 9 - size + 1 || column < 0)  return false;  
+            ///например: корабль длиной 4 должен начинаться
+            /// максимум с 6ой клетки (6 7 8 9),
+            /// тогда 9 - 4 + 1 = 6 
         }
 
         for (int c = 0; c < size; c++) //cделаем с каждой клеткой
@@ -63,41 +49,28 @@ public class Field
             {
                 for (int j = -1; j <= 1; j++) // в каждом столбце
                 {
-                    
                     if (!horizontal)
                     {
                         rows = row + i;
-                        cols = col + j + c;
+                        cols = column + j + c;
                     }
                     else
                     {
                         rows = row + i + c;
-                        cols = col + j;
+                        cols = column + j;
                     }
                     
-
-                    if (rows < 1 ||
-                        rows > 10 ||
-                        cols < 1 ||
-                        cols > 10)
-                    {
-                        continue;
-                    }
+                    if (rows < 0 || rows > 9 || cols < 0 || cols > 9) continue;
                     
-                    Cell cell =  Cells[rows-1, cols-1];
+                    Cell cell =  Cells[rows, cols];
 
-                    if (cell.State != CellState.Empty)
-                    { 
-                        return false;
-                    }
+                    if (cell.State != CellState.Empty) return false;
                 }
             }
         }
         return true;
     }
-
-   //void PlaceShip(Ship ship)
-   
+    
    public ShotState Shot(Cell cellToShoot)
    {
        if (cellToShoot.State == CellState.Ship)
@@ -117,6 +90,7 @@ public class Field
            return ShotState.Damaged;
        }
 
+       cellToShoot.State = CellState.Miss;
        return ShotState.Miss;
    }
 

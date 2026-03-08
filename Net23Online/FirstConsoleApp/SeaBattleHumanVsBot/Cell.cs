@@ -12,17 +12,17 @@ public class Cell
 {
     public int Row { get; }
     
-    public int Col { get; }
+    public int Column { get; }
 
     public CellState State { get; set; } 
     
-    //а что если нет корабля?
+    // если нет корабля - null
     public Ship? Ship { get; set; }
 
-    public Cell(int row, int col)
+    public Cell(int row, int column)
     {
         Row = row;
-        Col = col;
+        Column = column;
         State = CellState.Empty;
     }
 }

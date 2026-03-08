@@ -23,20 +23,42 @@ public class SeaBattleGame
 
         SayResults();
     }
+
+    public void Round()
+    {
+        do
+        {
+            Console.Clear();
+            ShowFields(_human.Field, _bot.Field);
+
+            Player enemy = _currentTurn == _human ? _bot : _human;
+            var IslastMoveHitLucky = _currentTurn.MakeMove(enemy);
+
+            ChangeTurnIfNeeded(IslastMoveHitLucky);
+
+            _isGameOver = enemy.CountOfAliveShips() == 0;
+
+            if (_isGameOver)
+            {
+                _winner = _currentTurn;
+            }
+            
+        } while (!_isGameOver);
+    }
     
-    public void ShowFields(Field playerField, Field enemyField)
+    private void ShowFields(Field playerField, Field enemyField)
     {
         Console.WriteLine("Ваше поле:              Поле противника:");
         Console.Write("  ");
         for (int j = 0; j < 10; j++)
         {
-            Console.Write(j + " ");
+            Console.Write(MakeCharFromInt(j) + " ");
         }
 
         Console.Write("      ");
         for (int j = 0; j < 10; j++)
         {
-            Console.Write(j + " ");
+            Console.Write(MakeCharFromInt(j) + " ");
         }
 
         Console.WriteLine();
@@ -84,40 +106,20 @@ public class SeaBattleGame
         }
     }
 
-    public void Round()
-    {
-        do
-        {
-            ShowFields(_human.Field, _bot.Field);
-
-            Player enemy = _currentTurn == _human ? _bot : _human;
-            var IslastMoveHitLucky = _currentTurn.MakeMove(enemy);
-
-            ChangeTurnIfNeeded(IslastMoveHitLucky);
-
-            _isGameOver = enemy.CountOfAliveShips() == 0;
-
-            if (_isGameOver)
-            {
-                _winner = _currentTurn;
-            }
-            
-        } while (!_isGameOver);
-    }
-    public void ChangeTurnIfNeeded(bool lastMoveHit)
+    private void ChangeTurnIfNeeded(bool lastMoveHit)
     {
         if (!lastMoveHit)
         {
             _currentTurn = _currentTurn == _human ? _bot : _human;
         }
     }
-
-
+    
     /// <summary>
     /// итоги игры
     /// </summary>
     public void SayResults()
     {
+        Console.Clear();
         if (_human == _winner)
         {
             Console.WriteLine("You are Win! My congratulations!");
@@ -128,6 +130,35 @@ public class SeaBattleGame
         {
             Console.WriteLine("Bot is the winner. Thanks for this game");
             Console.WriteLine("You always can try again");
+        }
+    }
+
+    private char MakeCharFromInt(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                return 'A';
+            case 1:
+                return 'B';
+            case 2:
+                return 'C';
+            case 3:
+                return 'D';
+            case 4:
+                return 'E';
+            case 5:
+                return 'F';
+            case 6:
+                return 'G';
+            case 7:
+                return 'H';
+            case 8:
+                return 'I';
+            case 9:
+                return 'J';
+            default:
+                return '?';
         }
     }
 

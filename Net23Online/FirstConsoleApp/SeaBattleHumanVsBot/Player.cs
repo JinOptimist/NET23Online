@@ -5,7 +5,7 @@ public abstract class Player
     /// <summary>
     /// ДОБАВИТЬ ТРИ ПОЛЯ
     /// LAST ROW
-    /// LAST COL
+    /// LAST COLUMN
     /// SHOT STATE MOVE INFO
     /// чтобы потом передать информацию о ходе бота
     /// </summary>
@@ -18,7 +18,40 @@ public abstract class Player
         return Ships.Count(ship => !ship.IsDestroyed());
     }
     
-    public abstract void PlaceShips();
-    
+    protected Ship PlaceShipInField(int row, int column, int size, bool isHorisontal)
+    {
+        var ship = new Ship();
+        var cellsOfShip = new List<Cell>();
+                
+        for (var i = 0; i < size; i++)
+        {
+            if (isHorisontal)
+            {
+                cellsOfShip.Add(Field.Cells[row, column + i]);
+                Field.Cells[row, column + i].Ship = ship;
+            }
+            else
+            {
+                cellsOfShip.Add(Field.Cells[row + i, column]);
+                Field.Cells[row + i, column].Ship = ship;
+            }
+        }
+        
+        ship.Coordinates = cellsOfShip;
+        Ships.Add(ship);
+        foreach (var cell in cellsOfShip)
+        {
+            cell.State = CellState.Ship;
+        }
+        
+        foreach (var cell in cellsOfShip)
+        {
+            Console.WriteLine($"Ship cell: row={cell.Row} column={cell.Column}");
+        }
+        
+        return ship;
+    }    
     public abstract bool MakeMove(Player enemy);
-}
+    public abstract void PlaceShips();
+
+} 

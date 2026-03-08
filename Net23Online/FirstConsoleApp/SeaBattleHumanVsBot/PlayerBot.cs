@@ -13,52 +13,52 @@ public class PlayerBot : Player
         _untryedToMoveCells.RemoveAll(c => c.State != CellState.Empty);
         
         var row = 0;
-        var col = 0;
+        var column = 0;
         if (_hitCellsInEnemysField.Count == 0) //если подстреленных кораблей нет
         {
             int index = _random.Next(_untryedToMoveCells.Count);
             row = _untryedToMoveCells[index].Row;
-            col = _untryedToMoveCells[index].Col;
+            column = _untryedToMoveCells[index].Column;
         }
         else if (_hitCellsInEnemysField.Count == 1) //если подстрелена только одна клетка корабля
         {
             var possibleCells = new List<Cell>();
             row = _hitCellsInEnemysField[0].Row;
-            col = _hitCellsInEnemysField[0].Col;
+            column = _hitCellsInEnemysField[0].Column;
 
             if (row + 1 < 10)
             {
-                if (enemy.Field.Cells[row + 1, col].State == CellState.Empty)
+                if (enemy.Field.Cells[row + 1, column].State == CellState.Empty)
                 {
-                    possibleCells.Add(enemy.Field.Cells[row + 1, col]);
+                    possibleCells.Add(enemy.Field.Cells[row + 1, column]);
                 }
             }
             if (row - 1 >= 0)
             {
-                if (enemy.Field.Cells[row - 1, col].State == CellState.Empty)
+                if (enemy.Field.Cells[row - 1, column].State == CellState.Empty)
                 {
-                    possibleCells.Add(enemy.Field.Cells[row - 1, col]);
+                    possibleCells.Add(enemy.Field.Cells[row - 1, column]);
                 }
             }
-            if (col + 1 < 10)
+            if (column + 1 < 10)
             {
-                if (enemy.Field.Cells[row, col + 1].State == CellState.Empty)
+                if (enemy.Field.Cells[row, column + 1].State == CellState.Empty)
                 {
-                    possibleCells.Add(enemy.Field.Cells[row, col + 1]);
+                    possibleCells.Add(enemy.Field.Cells[row, column + 1]);
                 }
             }
-            if (col - 1 >= 0)
+            if (column - 1 >= 0)
             {
-                if (enemy.Field.Cells[row, col - 1].State == CellState.Empty)
+                if (enemy.Field.Cells[row, column - 1].State == CellState.Empty)
                 {
-                    possibleCells.Add(enemy.Field.Cells[row, col - 1]);
+                    possibleCells.Add(enemy.Field.Cells[row, column - 1]);
                 }
             }
             
             int indexOfCellToShoot = _random.Next(possibleCells.Count);
             
             row = possibleCells[indexOfCellToShoot].Row;
-            col = possibleCells[indexOfCellToShoot].Col;
+            column = possibleCells[indexOfCellToShoot].Column;
         }
         else //если подстрелено 2 и больше
         {
@@ -68,14 +68,14 @@ public class PlayerBot : Player
             if (_hitCellsInEnemysField[0].Row == _hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Row)
             {
                 //для того чтобы первая клетка находилась выше последней на поле)
-                if (_hitCellsInEnemysField[0].Col > _hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Col)
+                if (_hitCellsInEnemysField[0].Column > _hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Column)
                 {
                     _hitCellsInEnemysField.Reverse();
                 }
                 
                 row = _hitCellsInEnemysField[0].Row;
-                var colFirst = _hitCellsInEnemysField[0].Col;
-                var colLast = _hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Col;
+                var colFirst = _hitCellsInEnemysField[0].Column;
+                var colLast = _hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Column;
                 
                 if (colFirst - 1 >= 0)
                 {
@@ -94,7 +94,7 @@ public class PlayerBot : Player
             }
 
             //подбит по вертикали
-            if (_hitCellsInEnemysField[0].Col == _hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Col)
+            if (_hitCellsInEnemysField[0].Column == _hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Column)
             {
                 //для того чтобы первая клетка находилась левее последней клетки на поле)
                 if (_hitCellsInEnemysField[0].Row > _hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Row)
@@ -102,22 +102,22 @@ public class PlayerBot : Player
                     _hitCellsInEnemysField.Reverse();
                 }
                 
-                col = _hitCellsInEnemysField[0].Col;
+                column = _hitCellsInEnemysField[0].Column;
                 var rowFirst = _hitCellsInEnemysField[0].Row;
                 var rowLast = _hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Row;
 
                 if (rowFirst - 1 >= 0)
                 {
-                    if (enemy.Field.Cells[rowFirst - 1, col].State == CellState.Empty)
+                    if (enemy.Field.Cells[rowFirst - 1, column].State == CellState.Empty)
                     {
-                        possibleCellsToShoot.Add(enemy.Field.Cells[rowFirst - 1, col]);
+                        possibleCellsToShoot.Add(enemy.Field.Cells[rowFirst - 1, column]);
                     }
                 }
                 if (_hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Row + 1 < 10)
                 {
-                    if (enemy.Field.Cells[rowLast + 1, col].State == CellState.Empty)
+                    if (enemy.Field.Cells[rowLast + 1, column].State == CellState.Empty)
                     {
-                        possibleCellsToShoot.Add(enemy.Field.Cells[rowLast + 1, col]);
+                        possibleCellsToShoot.Add(enemy.Field.Cells[rowLast + 1, column]);
                     }
                 }
 
@@ -126,31 +126,42 @@ public class PlayerBot : Player
             int indexOfCellToShoot = _random.Next(possibleCellsToShoot.Count);
             
             row = possibleCellsToShoot[indexOfCellToShoot].Row;
-            col = possibleCellsToShoot[indexOfCellToShoot].Col;
+            column = possibleCellsToShoot[indexOfCellToShoot].Column;
         }
 
-        var chosenCell = enemy.Field.Cells[row, col];
+        var chosenCell = enemy.Field.Cells[row, column];
         
         var shotState = enemy.Field.Shot(chosenCell);
+
+        Console.WriteLine();
+        Console.WriteLine($"Bot chosen cell: {MakeCharFromInt(column)} {row+1}");
         
+        var resultOfMove = false;
         if (shotState == ShotState.Miss)
         {
-            return false;
+            resultOfMove = false;
+            Console.WriteLine("Bot missed");
+            Console.WriteLine("Bots turn is over");
         }
         if (shotState == ShotState.Damaged)
         {
             _hitCellsInEnemysField.Add(chosenCell);
-            return true;
+            resultOfMove = true;
+            Console.WriteLine("Bot damaged your ship!");
+            Console.WriteLine("Bot turn continues");
         }
 
         if (shotState == ShotState.Destroy)
         {
             _hitCellsInEnemysField.Clear();
-            return true;
+            resultOfMove = true;
+            Console.WriteLine("Bot destroyed your ship!");
+            Console.WriteLine("Bots turn continues");
         }
         
-        Console.WriteLine("Somethimg go wrong!"); //если ни одно из значений не присвоилось к shotState
-        return false;
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey(true);
+        return resultOfMove;
     }
 
     public override void PlaceShips()
@@ -165,46 +176,25 @@ public class PlayerBot : Player
             {
                 ///рандом координаты
                 var row = 0;
-                var col = 0;
+                var column = 0;
                 int index = _random.Next(_availableCellsToPlace.Count);
                 row = _availableCellsToPlace[index].Row;
-                col = _availableCellsToPlace[index].Col;
+                column = _availableCellsToPlace[index].Column;
                 
                 //выбранная клетка для того, чтобы попробовать вставить в нее корабль
                 //верхняя/левая палуба корабля
 
                 bool isHorisontal = _random.Next(0, 2) == 1;
 
-                if (!Field.CanPlaceShip(row, col, size, isHorisontal))
+                if (!Field.CanPlaceShip(row, column, size, isHorisontal))
                 {
                     continue;
                 }
 
-                var ship = new Ship();
-                var cellsOfShip = new List<Cell>();
+                var ship = PlaceShipInField(row, column, size, isHorisontal);
                 
-                for (var i = 0; i < size; i++)
-                {
-                    if (isHorisontal)
-                    {
-                        cellsOfShip.Add(Field.Cells[row, col + i]);
-                        Field.Cells[row, col + i].Ship = ship;
-                    }
-                    else
-                    {
-                        cellsOfShip.Add(Field.Cells[row + i, col]);
-                        Field.Cells[row + i, col].Ship = ship;
-                    }
-                }
-
-                ship.Coordinates = cellsOfShip;
-                Ships.Add(ship);
-                foreach (var cell in cellsOfShip)
-                {
-                    cell.State = CellState.Ship;
-                }
                 
-                _availableCellsToPlace.RemoveAll(c => cellsOfShip.Contains(c));
+                _availableCellsToPlace.RemoveAll(c => ship.Coordinates.Contains(c));
                 foreach (var neighbor in ship.GetNeighboringCells(this.Field))
                 {
                     _availableCellsToPlace.Remove(neighbor);
@@ -217,14 +207,43 @@ public class PlayerBot : Player
         FillCells(_untryedToMoveCells);
     }
 
-    public void FillCells(List<Cell> untryedCells)
+    private void FillCells(List<Cell> untryedCells)
     {
         for (var row = 0; row < 10; row++)
         {
-            for (var col = 0; col < 10; col++)
+            for (var column = 0; column < 10; column++)
             {
-                untryedCells.Add(Field.Cells[row, col]);
+                untryedCells.Add(Field.Cells[row, column]);
             }
+        }
+    }
+
+    private char MakeCharFromInt(int column)
+    {
+        switch (column)
+        {
+            case 0:
+                return 'A';
+            case 1:
+                return 'B';
+            case 2:
+                return 'C';
+            case 3:
+                return 'D';
+            case 4:
+                return 'E';
+            case 5:
+                return 'F';
+            case 6:
+                return 'G';
+            case 7:
+                return 'H';
+            case 8:
+                return 'I';
+            case 9:
+                return 'J';
+            default:
+                return '?';
         }
     }
 }

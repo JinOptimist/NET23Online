@@ -29,22 +29,22 @@ public class Ship
                 for (int j = -1; j <= 1; j++)
                 {
                     int row = cell.Row + i;
-                    int col = cell.Col + j;
+                    int column = cell.Column + j;
 
-                    if (row == 0 && col == 0)
+                    if (i == 0 && j == 0)
                     {
                         continue;
                     }
 
                     if (row < 0 ||
                         row >= field.Cells.GetLength(0) ||
-                        col < 0 ||
-                        col >= field.Cells.GetLength(1))
+                        column < 0 ||
+                        column >= field.Cells.GetLength(1))
                     {
                         continue;
                     }
                     
-                    Cell neighbor =  field.Cells[row, col];
+                    Cell neighbor =  field.Cells[row, column];
 
                     if (neighbor.State == CellState.Empty)
                     {
