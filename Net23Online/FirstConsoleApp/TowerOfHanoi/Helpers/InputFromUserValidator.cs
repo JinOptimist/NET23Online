@@ -3,7 +3,7 @@ using static System.Console;
 
 namespace FirstConsoleApp.TowerOfHanoi.Helpers
 {
-    internal class InputFromUserValidator
+    public class InputFromUserValidator
     {
         public static bool IsNimberOfDisksValid(string inputFromUser)
             => int.TryParse(inputFromUser, out int parsedNumber) && parsedNumber > 0;
