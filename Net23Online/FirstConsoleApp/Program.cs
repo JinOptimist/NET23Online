@@ -1,4 +1,6 @@
-﻿using FirstConsoleApp.GuessTheNumberStuff;
+﻿using FirstConsoleApp.BullsAndCowsGame;
 
-var botGame = new GuessTheNumberGameHumanVsBot();
-botGame.Play();
+var settings = GameSettings.ChooseDifficulty();
+var randomNumberGenerator = new RandomNumberGenerator();
+var game = new BullsAndCowsGameHumanVsBot(settings, randomNumberGenerator);
+game.Play();
