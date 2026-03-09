@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+﻿using FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato;
+using FirstConsoleApp.GuessTheNumberStuff;
+
+//var botGame = new GuessTheNumberGameHumanVsBot();
+//botGame.Play();
+
+var botPlayer = new BotPlayer();
+var botGame = new BullsAndCowsGame(botPlayer);
+botGame.Play();
+=======
 using FirstConsoleApp.GuessTheNumberStuff;
 using FirstConsoleApp.Minesweeper;
 using FirstConsoleApp.TicTacToeHumanVsBot;
@@ -31,3 +42,4 @@ while (true)
         break;
     }
 }
+>>>>>>> main
