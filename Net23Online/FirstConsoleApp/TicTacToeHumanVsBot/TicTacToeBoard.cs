@@ -13,6 +13,7 @@ namespace FirstConsoleApp.TicTacToeHumanVsBot
         public string Cell8 { get; set; } = "8";
         public string Cell9 { get; set; } = "9";
 
+        public int MoveCount { get; set; } = 0;
 
         public void Draw()
         {
@@ -22,86 +23,82 @@ namespace FirstConsoleApp.TicTacToeHumanVsBot
             Console.WriteLine("---+---+---");
             Console.WriteLine($" {Cell7} | {Cell8} | {Cell9} ");
         }
-        public bool TryMakeMove(int position, string playerMark)
+        public void TryMakeMove(int position, string playerMark)
         {
+
+            playerMark = playerMark.ToLower();
             if (position == 1 && Cell1 == "1")
             {
                 Cell1 = playerMark;
-                return true;
             }
-            if (position == 2 && Cell2 == "2")
+            else if (position == 2 && Cell2 == "2")
             {
                 Cell2 = playerMark;
-                return true;
             }
-            if (position == 3 && Cell3 == "3")
+            else if (position == 3 && Cell3 == "3")
             {
                 Cell3 = playerMark;
-                return true;
             }
-            if (position == 4 && Cell4 == "4")
+            else if (position == 4 && Cell4 == "4")
             {
                 Cell4 = playerMark;
-                return true;
             }
-            if (position == 5 && Cell5 == "5")
+            else if (position == 5 && Cell5 == "5")
             {
                 Cell5 = playerMark;
-                return true;
             }
-            if (position == 6 && Cell6 == "6")
+            else if (position == 6 && Cell6 == "6")
             {
                 Cell6 = playerMark;
-                return true;
             }
-            if (position == 7 && Cell7 == "7")
+            else if (position == 7 && Cell7 == "7")
             {
                 Cell7 = playerMark;
-                return true;
             }
-            if (position == 8 && Cell8 == "8")
+            else if (position == 8 && Cell8 == "8")
             {
                 Cell8 = playerMark;
-                return true;
             }
-            if (position == 9 && Cell9 == "9")
+            else if (position == 9 && Cell9 == "9")
             {
                 Cell9 = playerMark;
-                return true;
             }
-            return false;
+
+            MoveCount++;
         }
-        public bool IsGameOver (string mark)
+        public bool IsGameOver (string playerMark)
         {
-            if (Cell1 == mark && Cell2 == mark && Cell3 == mark)
+            playerMark = playerMark.ToLower();
+            
+            if (Cell1 == playerMark && Cell2 == playerMark && Cell3 == playerMark)
             {
                 return true; 
             }
-            if (Cell4 == mark && Cell5 == mark && Cell6 == mark)
+            if (Cell4 == playerMark && Cell5 == playerMark && Cell6 == playerMark)
             {
                 return true;
             }
-            if (Cell7 == mark && Cell8 == mark && Cell9 == mark)
+            if (Cell7 == playerMark && Cell8 == playerMark && Cell9 == playerMark)
             {
                 return true;
             }
-            if (Cell1 == mark && Cell4 == mark && Cell7 == mark)
+            if (Cell1 == playerMark && Cell4 == playerMark && Cell7 == playerMark)
             {
                 return true;
             }
-            if (Cell2 == mark && Cell5 == mark && Cell8 == mark)
+            if (Cell2 == playerMark && Cell5 == playerMark && Cell8 == playerMark)
             {
                 return true;
             }
-            if (Cell3 == mark && Cell6 == mark && Cell9 == mark)
+            if (Cell3 == playerMark && Cell6 == playerMark && Cell9 == playerMark)
             { 
                 return true;
             }
-            if (Cell1 == mark && Cell5 ==mark && Cell9 == mark)
+            if (Cell1 == playerMark && Cell5 ==playerMark && Cell9 == playerMark)
             {
                 return true;
             }
-            if (Cell3 == mark && Cell5 == mark && Cell7 == mark)
+            if (Cell3 == playerMark && Cell5 == playerMark && Cell7 == playerMark)
             {
                 return true;
             }
