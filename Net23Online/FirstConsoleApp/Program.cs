@@ -2,7 +2,7 @@ using FirstConsoleApp.MazeStuff;
 
 var mazeBuilder = new MazeBuilder();
 
-var maze = mazeBuilder.Build(9, 4);
+var maze = mazeBuilder.Build(24, 12);
 
 var mazeDrawer = new MazeDrawer();
 
