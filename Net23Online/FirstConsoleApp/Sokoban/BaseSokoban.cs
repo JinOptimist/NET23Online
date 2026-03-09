@@ -72,6 +72,11 @@
                 {
                     var goalBoxX = goalX + dx;
                     var goalBoxY = goalY + dy;
+                    if (_settings.Map[goalBoxX, goalBoxY] == 'X')
+                    {
+                        continue;
+                    }
+
                     if (goalBoxX >= _settings.Size || goalBoxY >= _settings.Size || goalBoxX < 0 || goalBoxY < 0)
                     {
                         continue;
