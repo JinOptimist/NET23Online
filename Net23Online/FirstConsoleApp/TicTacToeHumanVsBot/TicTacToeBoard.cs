@@ -12,7 +12,6 @@ namespace FirstConsoleApp.TicTacToeHumanVsBot
         public string Cell7 { get; set; } = "7";
         public string Cell8 { get; set; } = "8";
         public string Cell9 { get; set; } = "9";
-
         public int MoveCount { get; set; } = 0;
 
         public void Draw()
@@ -23,88 +22,72 @@ namespace FirstConsoleApp.TicTacToeHumanVsBot
             Console.WriteLine("---+---+---");
             Console.WriteLine($" {Cell7} | {Cell8} | {Cell9} ");
         }
-        public void TryMakeMove(int position, string playerMark)
+        public void Clear()
         {
-
-            playerMark = playerMark.ToLower();
+            Cell1 = "1";
+            Cell2 = "2";
+            Cell3 = "3";
+            Cell4 = "4";
+            Cell5 = "5";
+            Cell6 = "6";
+            Cell7 = "7";
+            Cell8 = "8";
+            Cell9 = "9";
+            MoveCount = 0;
+        }
+        public bool TryMakeMove(int position, string playerMark)
+        {
+            playerMark = playerMark.ToUpper();
             if (position == 1 && Cell1 == "1")
             {
                 Cell1 = playerMark;
+                return true;
             }
-            else if (position == 2 && Cell2 == "2")
+            if (position == 2 && Cell2 == "2")
             {
                 Cell2 = playerMark;
+                return true;
             }
-            else if (position == 3 && Cell3 == "3")
+            if (position == 3 && Cell3 == "3")
             {
                 Cell3 = playerMark;
+                return true;
             }
-            else if (position == 4 && Cell4 == "4")
+            if (position == 4 && Cell4 == "4")
             {
                 Cell4 = playerMark;
+                return true;
             }
-            else if (position == 5 && Cell5 == "5")
+            if (position == 5 && Cell5 == "5")
             {
                 Cell5 = playerMark;
+                return true;
             }
-            else if (position == 6 && Cell6 == "6")
+            if (position == 6 && Cell6 == "6")
             {
                 Cell6 = playerMark;
+                return true;
             }
-            else if (position == 7 && Cell7 == "7")
+            if (position == 7 && Cell7 == "7")
             {
                 Cell7 = playerMark;
+                return true;
             }
-            else if (position == 8 && Cell8 == "8")
+            if (position == 8 && Cell8 == "8")
             {
                 Cell8 = playerMark;
+                return true;
             }
-            else if (position == 9 && Cell9 == "9")
+            if (position == 9 && Cell9 == "9")
             {
                 Cell9 = playerMark;
-            }
-
-            MoveCount++;
-        }
-        public bool IsGameOver (string playerMark)
-        {
-            playerMark = playerMark.ToLower();
-            
-            if (Cell1 == playerMark && Cell2 == playerMark && Cell3 == playerMark)
-            {
-                return true; 
-            }
-            if (Cell4 == playerMark && Cell5 == playerMark && Cell6 == playerMark)
-            {
-                return true;
-            }
-            if (Cell7 == playerMark && Cell8 == playerMark && Cell9 == playerMark)
-            {
-                return true;
-            }
-            if (Cell1 == playerMark && Cell4 == playerMark && Cell7 == playerMark)
-            {
-                return true;
-            }
-            if (Cell2 == playerMark && Cell5 == playerMark && Cell8 == playerMark)
-            {
-                return true;
-            }
-            if (Cell3 == playerMark && Cell6 == playerMark && Cell9 == playerMark)
-            { 
-                return true;
-            }
-            if (Cell1 == playerMark && Cell5 ==playerMark && Cell9 == playerMark)
-            {
-                return true;
-            }
-            if (Cell3 == playerMark && Cell5 == playerMark && Cell7 == playerMark)
-            {
                 return true;
             }
             return false;
         }
+    
 
     }
 
 }
+
