@@ -1,6 +1,8 @@
 using FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato;
 using FirstConsoleApp.GuessTheNumberStuff;
 using FirstConsoleApp.Minesweeper;
+using FirstConsoleApp.Sokoban;
+using FirstConsoleApp.TicTacToeHumanVsBot;
 
 //var botGame = new GuessTheNumberGameHumanVsBot();
 //botGame.Play();
@@ -8,14 +10,9 @@ using FirstConsoleApp.Minesweeper;
 //var botGame = new GuessTheNumberGameHumanVsBot();
 //botGame.Play();
 
-var botPlayer = new BotPlayer();
+var botPlayer = new FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato.BotPlayer();
 var botGame = new BullsAndCowsGame(botPlayer);
 botGame.Play();
-=======
-using FirstConsoleApp.GuessTheNumberStuff;
-using FirstConsoleApp.Minesweeper;
-using FirstConsoleApp.TicTacToeHumanVsBot;
-using FirstConsoleApp.Sokoban;
 //var botGame = new GuessTheNumberGameHumanVsBot();
 //botGame.Play();
 //using FirstConsoleApp.GuessTheNumberStuff;
@@ -24,8 +21,8 @@ var miner = new HardMode();
 miner.PlayMinesweeper();
 
 
-var botGame = new GuessTheNumberGameHumanVsBot();
-//botGame.Play();
+var botGameGuess = new GuessTheNumberGameHumanVsBot();
+botGameGuess.Play();
 
 var sokoban = new SokobanHumanVSBot();
 sokoban.Play();
@@ -45,4 +42,3 @@ while (true)
         break;
     }
 }
->>>>>>> main
