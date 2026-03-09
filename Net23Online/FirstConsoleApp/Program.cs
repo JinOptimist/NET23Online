@@ -1,6 +1,9 @@
-<<<<<<< HEAD
-﻿using FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato;
+using FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato;
 using FirstConsoleApp.GuessTheNumberStuff;
+using FirstConsoleApp.Minesweeper;
+
+//var botGame = new GuessTheNumberGameHumanVsBot();
+//botGame.Play();
 
 //var botGame = new GuessTheNumberGameHumanVsBot();
 //botGame.Play();
