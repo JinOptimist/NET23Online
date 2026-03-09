@@ -14,6 +14,7 @@
 
         private void StartTheGame()
         {
+            var standInGoal = false;
             while (true)
             {
                 var key = Console.ReadKey(true).Key;
@@ -35,6 +36,10 @@
                 {
                     dy = 1;
                 }
+                else
+                {
+                    continue;
+                }
 
                 var goalX = _settings.PlayerX + dx;
                 var goalY = _settings.PlayerY + dy;
@@ -42,8 +47,7 @@
                 {
                     continue;
                 }
-
-                var standInGoal = false;
+                
                 if (_settings.Map[goalX, goalY] == '.' || _settings.Map[goalX, goalY] == 'O')
                 {
                     if (standInGoal)
