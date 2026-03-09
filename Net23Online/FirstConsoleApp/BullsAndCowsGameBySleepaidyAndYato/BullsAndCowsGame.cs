@@ -52,10 +52,10 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
 
         protected string GetTextFromConsole(string text)
         {
-            var numberFromConsoleForBullsAndCows = "";
+            var textFromConsole = "";
             Console.WriteLine(text);
-            numberFromConsoleForBullsAndCows = Console.ReadLine();
-            return numberFromConsoleForBullsAndCows;
+            textFromConsole = Console.ReadLine();
+            return textFromConsole;
         }
         protected bool IsEnteredNumberCorrect(string enteredDigits)
         {
