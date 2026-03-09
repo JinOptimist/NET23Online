@@ -17,7 +17,6 @@ public class PlayerHuman : Player
         Console.WriteLine();
         Console.WriteLine("COORDINATES");
         var (row, column) = GetCoordinateFromConsole();
-        Console.WriteLine("-----------------------------------------");
         
         var resultOfMove = enemy.Field.Shot(enemy.Field.Cells[row, column]);
 
@@ -61,27 +60,24 @@ public class PlayerHuman : Player
         {
             do
             {
-                Console.WriteLine();
+                Field.ShowMyFieldWhenPlaceShips();
                 Console.WriteLine($"SIZE - {size}");
-                Console.WriteLine("-----------------------------------------");
-
-                Console.WriteLine();
                 Console.WriteLine("DIRECTION");
-                Console.WriteLine("Enter '1' if horisontal and '0' if vertical");
+                Console.WriteLine("'1' if horisontal ");
+                Console.WriteLine("'0' if vertical");
                 var direction = GetNumFromConsole(0, 1);
                 var isHorisontal = direction == 1;
-                Console.WriteLine("-----------------------------------------");
 
                 Console.WriteLine();
                 Console.WriteLine("COORDINATES");
-                Console.WriteLine("Let`s enter the first position of the ship");
+                Console.WriteLine("Let`s enter the FIRST position of the ship");
                 if (isHorisontal)
                 {
-                    Console.WriteLine("The first position - is the left side of the ship");
+                    Console.WriteLine("It`s the left side of the ship");
                 }
                 else
                 {
-                    Console.WriteLine("The first position - is the highest side of the ship");
+                    Console.WriteLine("It`s the highest side of the ship");
                 }
                 
                 var (row, column) = GetCoordinateFromConsole();
@@ -89,15 +85,20 @@ public class PlayerHuman : Player
 
                 if (!Field.CanPlaceShip(row, column, size, isHorisontal))
                 {
+                    Console.Clear();
+                    Console.WriteLine("-----------------------------------------");
+                    Console.WriteLine("You can`t place your ship hear");
                     Console.WriteLine("Please try again");
                     Console.WriteLine("-----------------------------------------");
                     continue;
                 }
                 
                 var ship = PlaceShipInField(row, column, size, isHorisontal);
+                Console.Clear();
                 break;
             } while (true);
         }
+        
     }
 
     private (int row, int column) GetCoordinateFromConsole()
@@ -106,9 +107,16 @@ public class PlayerHuman : Player
         var column = 0;
         do
         {
-            Console.WriteLine("Format A1, J10");
+            Console.WriteLine("Format A1");
             Console.Write("Cell: ");
             var cellCoordinate = Console.ReadLine();
+            
+            if (string.IsNullOrWhiteSpace(cellCoordinate) || cellCoordinate.Trim().Length < 2)
+            {
+                Console.WriteLine("Invalid input. Try again");
+                continue;
+            }
+            
             cellCoordinate = cellCoordinate.ToUpper().Trim();
 
             var columnStr = cellCoordinate[0].ToString();

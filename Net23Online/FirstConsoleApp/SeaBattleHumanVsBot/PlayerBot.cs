@@ -10,7 +10,19 @@ public class PlayerBot : Player
 
     public override bool MakeMove(Player enemy)
     {
-        _untryedToMoveCells.RemoveAll(c => c.State != CellState.Empty);
+        // Инициализируем один раз клетки в которые есть смысл стрелять
+        if (_untryedToMoveCells.Count == 0)
+        {
+            for (var r = 0; r < 10; r++)
+            {
+                for (var c = 0; c < 10; c++)
+                {
+                    _untryedToMoveCells.Add(enemy.Field.Cells[r, c]);
+                }
+            }
+        }
+        
+        _untryedToMoveCells.RemoveAll(c => c.State != CellState.Empty && c.State != CellState.Ship);
         
         var row = 0;
         var column = 0;
@@ -28,28 +40,32 @@ public class PlayerBot : Player
 
             if (row + 1 < 10)
             {
-                if (enemy.Field.Cells[row + 1, column].State == CellState.Empty)
+                if (enemy.Field.Cells[row + 1, column].State == CellState.Empty
+                    || enemy.Field.Cells[row + 1, column].State == CellState.Ship)
                 {
                     possibleCells.Add(enemy.Field.Cells[row + 1, column]);
                 }
             }
             if (row - 1 >= 0)
             {
-                if (enemy.Field.Cells[row - 1, column].State == CellState.Empty)
+                if (enemy.Field.Cells[row - 1, column].State == CellState.Empty
+                    || enemy.Field.Cells[row - 1, column].State == CellState.Ship)
                 {
                     possibleCells.Add(enemy.Field.Cells[row - 1, column]);
                 }
             }
             if (column + 1 < 10)
             {
-                if (enemy.Field.Cells[row, column + 1].State == CellState.Empty)
+                if (enemy.Field.Cells[row, column + 1].State == CellState.Empty
+                    || enemy.Field.Cells[row, column + 1].State == CellState.Ship)
                 {
                     possibleCells.Add(enemy.Field.Cells[row, column + 1]);
                 }
             }
             if (column - 1 >= 0)
             {
-                if (enemy.Field.Cells[row, column - 1].State == CellState.Empty)
+                if (enemy.Field.Cells[row, column - 1].State == CellState.Empty
+                    || enemy.Field.Cells[row, column - 1].State == CellState.Ship)
                 {
                     possibleCells.Add(enemy.Field.Cells[row, column - 1]);
                 }
@@ -79,14 +95,16 @@ public class PlayerBot : Player
                 
                 if (colFirst - 1 >= 0)
                 {
-                    if (enemy.Field.Cells[row, colFirst - 1].State == CellState.Empty)
+                    if (enemy.Field.Cells[row, colFirst - 1].State == CellState.Empty
+                        || enemy.Field.Cells[row, colFirst - 1].State == CellState.Ship)
                     {
                         possibleCellsToShoot.Add(enemy.Field.Cells[row, colFirst - 1]);
                     }
                 }
                 if (colLast + 1 < 10)
                 {
-                    if (enemy.Field.Cells[row, colLast + 1].State == CellState.Empty)
+                    if (enemy.Field.Cells[row, colLast + 1].State == CellState.Empty
+                        || enemy.Field.Cells[row, colLast + 1].State == CellState.Ship)
                     {
                         possibleCellsToShoot.Add(enemy.Field.Cells[row, colLast + 1]);
                     }
@@ -108,14 +126,16 @@ public class PlayerBot : Player
 
                 if (rowFirst - 1 >= 0)
                 {
-                    if (enemy.Field.Cells[rowFirst - 1, column].State == CellState.Empty)
+                    if (enemy.Field.Cells[rowFirst - 1, column].State == CellState.Empty
+                        || enemy.Field.Cells[rowFirst - 1, column].State == CellState.Ship)
                     {
                         possibleCellsToShoot.Add(enemy.Field.Cells[rowFirst - 1, column]);
                     }
                 }
                 if (_hitCellsInEnemysField[_hitCellsInEnemysField.Count - 1].Row + 1 < 10)
                 {
-                    if (enemy.Field.Cells[rowLast + 1, column].State == CellState.Empty)
+                    if (enemy.Field.Cells[rowLast + 1, column].State == CellState.Empty
+                        || enemy.Field.Cells[rowLast + 1, column].State == CellState.Ship)
                     {
                         possibleCellsToShoot.Add(enemy.Field.Cells[rowLast + 1, column]);
                     }
@@ -203,8 +223,6 @@ public class PlayerBot : Player
                 
             } while (true);
         }
-        
-        FillCells(_untryedToMoveCells);
     }
 
     private void FillCells(List<Cell> untryedCells)

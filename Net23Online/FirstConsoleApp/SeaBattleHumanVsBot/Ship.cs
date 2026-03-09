@@ -56,5 +56,4 @@ public class Ship
         return cells.ToList();
     }
     
-    
 }

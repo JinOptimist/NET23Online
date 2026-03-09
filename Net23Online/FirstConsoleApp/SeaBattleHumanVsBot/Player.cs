@@ -2,13 +2,6 @@
 
 public abstract class Player
 { 
-    /// <summary>
-    /// ДОБАВИТЬ ТРИ ПОЛЯ
-    /// LAST ROW
-    /// LAST COLUMN
-    /// SHOT STATE MOVE INFO
-    /// чтобы потом передать информацию о ходе бота
-    /// </summary>
     public Field Field { get; set; } = new Field();
 
     public List<Ship> Ships { get; set; } = new List<Ship>();

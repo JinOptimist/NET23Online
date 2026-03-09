@@ -25,4 +25,5 @@ public class Cell
         Column = column;
         State = CellState.Empty;
     }
+    
 }

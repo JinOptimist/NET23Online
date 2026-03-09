@@ -8,13 +8,13 @@ public class SeaBattleGame
 
     private PlayerBot _bot = new();
 
-    private Player _currentTurn; // Bot or Human
+    private Player _currentPlayer; // Bot or Human
 
     private Player _winner;
 
     public void StartGame()
     {
-        _currentTurn = _human;
+        _currentPlayer = _human;
         
         _human.PlaceShips();
         _bot.PlaceShips();
@@ -28,34 +28,32 @@ public class SeaBattleGame
     {
         do
         {
-            Console.Clear();
             ShowFields(_human.Field, _bot.Field);
 
-            Player enemy = _currentTurn == _human ? _bot : _human;
-            var IslastMoveHitLucky = _currentTurn.MakeMove(enemy);
+            Player enemy = _currentPlayer == _human ? _bot : _human;
+            var IslastMoveHitLucky = _currentPlayer.MakeMove(enemy);
 
             ChangeTurnIfNeeded(IslastMoveHitLucky);
 
             _isGameOver = enemy.CountOfAliveShips() == 0;
 
-            if (_isGameOver)
-            {
-                _winner = _currentTurn;
-            }
+            if (_isGameOver) _winner = _currentPlayer;
+            
+            Console.Clear();
             
         } while (!_isGameOver);
     }
     
     private void ShowFields(Field playerField, Field enemyField)
     {
-        Console.WriteLine("Ваше поле:              Поле противника:");
-        Console.Write("  ");
+        Console.WriteLine("Yout field:              Bot`s field:");
+        Console.Write("   ");
         for (int j = 0; j < 10; j++)
         {
             Console.Write(MakeCharFromInt(j) + " ");
         }
 
-        Console.Write("      ");
+        Console.Write("       ");
         for (int j = 0; j < 10; j++)
         {
             Console.Write(MakeCharFromInt(j) + " ");
@@ -63,12 +61,22 @@ public class SeaBattleGame
 
         Console.WriteLine();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 1; i <= 10; i++)
         {
-            Console.Write(i + " ");
+            
+            //чтобы при числе 10 (из двух цифр) не смещалась строка в матрице
+            if (i == 10)
+            {
+                Console.Write(i + " ");
+            }
+            else
+            {
+                Console.Write(" " + i + " ");
+            }
+            
             for (int j = 0; j < 10; j++)
             {
-                var cell = playerField.Cells[i, j];
+                var cell = playerField.Cells[i - 1, j];
 
                 var symbol = ' ';
                 if (cell.State == CellState.Empty)
@@ -76,7 +84,7 @@ public class SeaBattleGame
                 if (cell.State == CellState.Hit)
                     symbol = 'x';
                 if (cell.State == CellState.Miss)
-                    symbol = '•';
+                    symbol = '*';
                 if (cell.State == CellState.Ship)
                     symbol = '▄';
                 Console.Write(symbol + " ");
@@ -84,11 +92,19 @@ public class SeaBattleGame
 
             Console.Write("    ");
 
-            Console.Write(i + " ");
-
+            //чтобы при числе 10 (из двух цифр) не смещалась строка в матрице
+            if (i == 10)
+            {
+                Console.Write(i + " ");
+            }
+            else
+            {
+                Console.Write(" " + i + " ");
+            }            
+            
             for (int j = 0; j < 10; j++)
             {
-                var cell = enemyField.Cells[i, j];
+                var cell = enemyField.Cells[i - 1, j];
 
                 var symbol = ' ';
                 if (cell.State == CellState.Empty)
@@ -96,7 +112,7 @@ public class SeaBattleGame
                 if (cell.State == CellState.Hit)
                     symbol = 'x';
                 if (cell.State == CellState.Miss)
-                    symbol = '•';
+                    symbol = '*';
                 if (cell.State == CellState.Ship)
                     symbol = '~';
                 Console.Write(symbol + " ");
@@ -110,7 +126,7 @@ public class SeaBattleGame
     {
         if (!lastMoveHit)
         {
-            _currentTurn = _currentTurn == _human ? _bot : _human;
+            _currentPlayer = _currentPlayer == _human ? _bot : _human;
         }
     }
     
