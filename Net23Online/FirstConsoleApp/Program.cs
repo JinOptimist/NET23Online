@@ -1,4 +1,11 @@
-﻿using FirstConsoleApp.GuessTheNumberStuff;
+using FirstConsoleApp.GuessTheNumberStuff;
+using FirstConsoleApp.Minesweeper;
+
+//var botGame = new GuessTheNumberGameHumanVsBot();
+//botGame.Play();
+
+var miner = new HardMode();
+miner.PlayMinesweeper();
 using FirstConsoleApp.Sokoban;
 
 var botGame = new GuessTheNumberGameHumanVsBot();
