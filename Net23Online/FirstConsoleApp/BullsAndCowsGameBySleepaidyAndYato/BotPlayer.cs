@@ -33,12 +33,9 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
             {
                 guessNumber = "5678";
             }
-            else if (this._game.Round == 3)
+            else if (this._game.Round == 3 && _uniqueDigitNumbers[_uniqueDigitNumbers.Count - 1].Contains("9"))
             {
-                if (_uniqueDigitNumbers[_uniqueDigitNumbers.Count - 1].Contains("9"))
-                {
                     guessNumber = "9" + _uniqueDigitNumbers[0][0] + _uniqueDigitNumbers[0][1] + _uniqueDigitNumbers[0][2];
-                }
             }
             else
             {
