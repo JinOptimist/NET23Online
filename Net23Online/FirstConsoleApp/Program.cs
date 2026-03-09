@@ -1,8 +1,9 @@
-﻿using FirstConsoleApp.GuessTheNumberStuff;
-using FirstConsoleApp.SeaBattleHumanVsBot;
+using FirstConsoleApp.MazeStuff;
 
-var botGame = new GuessTheNumberGameHumanVsBot();
-//botGame.Play();
+var mazeBuilder = new MazeBuilder();
 
-var seaBattleGame = new SeaBattleGame();
-seaBattleGame.StartGame();
+var maze = mazeBuilder.Build(24, 12);
+
+var mazeDrawer = new MazeDrawer();
+
+mazeDrawer.Draw(maze);
