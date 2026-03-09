@@ -8,7 +8,7 @@ namespace FirstConsoleApp.TicTacToeGame
 {
     internal class Game
     {
-        private Board board; //обязательно обращаться к пространству имен?
+        private Board board;
         private Player player1;
         private Player player2;
         private Player currentPlayer;
@@ -22,6 +22,7 @@ namespace FirstConsoleApp.TicTacToeGame
         }
         public void Start()
         {
+            Console.WriteLine("Star the game.");
             Console.WriteLine($"{player1.Name}, used {player1.Mark} VS {player2.Name}, used {player2.Mark}");
             while (true)
             {

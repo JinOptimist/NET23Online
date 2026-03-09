@@ -9,10 +9,9 @@ namespace FirstConsoleApp.TicTacToeGame
     internal class Board
     {
 
-        private char[,] _field; //Можно ли это поле записать в свойство get set?
+        private char[,] _field;
         private int _size = 3;
         private char _emptyField = '-';
-        //public char EmptyField { get; set; }
 
         public Board()
         {
