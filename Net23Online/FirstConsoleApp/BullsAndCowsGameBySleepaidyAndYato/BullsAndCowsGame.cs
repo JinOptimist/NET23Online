@@ -12,14 +12,24 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
     {
         public int Round { get; private set; }
         protected Player _player { get; set; }
-        protected int amountBulls { get; private set; }
-        protected int amountCows { get; private set; }
+        private string _secretNumber { get; set; }
+        private int _amountBulls;
+        private int _amountCows;
         public void Play()
         {
+            var isEnteredUniqueDigitsNumbers = false;
+            var enteredNumberFromGameMaster = "";
+            Console.WriteLine("Game Master, select a secret number!");
+            do
+            {
+                enteredNumberFromGameMaster = GetTextFromConsole("Please enter a four-digit number with unique digits.");
+                isEnteredUniqueDigitsNumbers = IsEnteredNumberCorrect(enteredNumberFromGameMaster);
+            } while (!isEnteredUniqueDigitsNumbers);
+            _secretNumber = enteredNumberFromGameMaster;
             do
             {
                 PlayOneRound();
-            } while (amountBulls != 4);
+            } while (_amountBulls != 4);
         }
         public BullsAndCowsGame(Player player)
         {
@@ -32,83 +42,50 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         }
         private void PlayOneRound()
         {
-            var isPlayerEnteredCorrectDigits = false;
-            var enteredDigitsFromPlayer = "";
-            do
-            {
-                enteredDigitsFromPlayer = TakeTheNumberFromConsoleForBullsAndCows();
-                isPlayerEnteredCorrectDigits = IsEnteredNumberCorrect(enteredDigitsFromPlayer);
-            } while (!isPlayerEnteredCorrectDigits);
-            var guessedDigitsFromPlayer = _player.MakeGuess();
-            SearchForBullsAndCows(enteredDigitsFromPlayer, guessedDigitsFromPlayer);
-            if(amountBulls == 4)
-            {
-                return;
-            }
-            _player.ProcessGuessResult(amountBulls, amountCows);
-
+            var guessedNumberFromPlayer = _player.MakeGuess();
+            SearchForBullsAndCows(_secretNumber, guessedNumberFromPlayer, out _amountBulls, out _amountCows);
+            _player.ProcessGuessResult(_amountBulls, _amountCows);
+            Console.WriteLine($"The player guesses {guessedNumberFromPlayer}!");
+            Round++;
         }
 
-        protected string TakeTheNumberFromConsoleForBullsAndCows()
+        protected string GetTextFromConsole(string text)
         {
             var numberFromConsoleForBullsAndCows = "";
-            Console.WriteLine("Please enter a four-digit number with unique digits.");
+            Console.WriteLine(text);
             numberFromConsoleForBullsAndCows = Console.ReadLine();
             return numberFromConsoleForBullsAndCows;
         }
         protected bool IsEnteredNumberCorrect(string enteredDigits)
         {
             var isPlayerEnteredCorrectDigit = false;
-                if (!enteredDigits.All(char.IsDigit) || enteredDigits.Length != 4)
-                {
-                    Console.WriteLine("Incorrect input. Please try again.");
-                }
-                else if(enteredDigits.Distinct().Count() != 4)
-                {
-                    Console.WriteLine("The input contains non-unique numbers. Please try again.");
-                }
-                else
-                {
-                    isPlayerEnteredCorrectDigit = true;
-                }
+            if (!enteredDigits.All(char.IsDigit) || enteredDigits.Length != 4)
+            {
+                Console.WriteLine("Incorrect input. Please try again.");
+            }
+            else if (enteredDigits.Distinct().Count() != 4)
+            {
+                Console.WriteLine("The input contains non-unique numbers. Please try again.");
+            }
+            else
+            {
+                isPlayerEnteredCorrectDigit = true;
+            }
             return isPlayerEnteredCorrectDigit;
         }
-        protected void SearchForBullsAndCows(string enteredDigits, string guessedDigits)
+        public void SearchForBullsAndCows(string targetNumber, string candidateNumber, out int bulls, out int cows)
         {
-            amountBulls = 0;
-            amountCows = 0;
-
-            bool[] isPlayerEnteredDigitsMatch = new bool[enteredDigits.Length];
-            bool[] isPlayerGuessedDigitsMatch = new bool[guessedDigits.Length];
-
-            for (int i = 0; i < enteredDigits.Length; i++)
+            bulls = 0;
+            cows = 0;
+            for (int indexDigit = 0; indexDigit < targetNumber.Length; indexDigit++)
             {
-                if (enteredDigits[i] == guessedDigits[i])
+                if (targetNumber[indexDigit] == candidateNumber[indexDigit])
                 {
-                    amountBulls++;
-                    isPlayerEnteredDigitsMatch[i] = true;
-                    isPlayerGuessedDigitsMatch[i] = true;
+                    bulls++;
                 }
-            }
-            for (int i = 0; i < enteredDigits.Length; i++)
-            {
-                if (isPlayerEnteredDigitsMatch[i])
+                else if (targetNumber.Contains(candidateNumber[indexDigit]))
                 {
-                    continue;
-                }
-                for (int j = 0; j < isPlayerGuessedDigitsMatch.Length; j++)
-                {
-                    if (isPlayerGuessedDigitsMatch[i])
-                    {
-                        continue;
-                    }
-                    if (isPlayerEnteredDigitsMatch[i] == isPlayerGuessedDigitsMatch[j])
-                    {
-                        amountCows++;
-                        isPlayerEnteredDigitsMatch[i] = true;
-                        isPlayerGuessedDigitsMatch[j] = true;
-                        break;
-                    }
+                    cows++;
                 }
             }
         }

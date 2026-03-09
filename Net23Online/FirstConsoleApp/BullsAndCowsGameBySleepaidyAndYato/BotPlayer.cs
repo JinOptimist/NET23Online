@@ -35,15 +35,16 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
             }
             else if (this._game.Round == 3)
             {
-                if (_uniqueDigitNumbers[_uniqueDigitNumbers.Count].Contains("9"))
+                if (_uniqueDigitNumbers[_uniqueDigitNumbers.Count - 1].Contains("9"))
                 {
-                    guessNumber = "90" + _uniqueDigitNumbers[0][0] + _uniqueDigitNumbers[0][1];
+                    guessNumber = "9" + _uniqueDigitNumbers[0][0] + _uniqueDigitNumbers[0][1] + _uniqueDigitNumbers[0][2];
                 }
             }
             else
             {
                 guessNumber = _uniqueDigitNumbers[0];
             }
+            _lastGuess = guessNumber;
             return guessNumber;
         }
         public override void ProcessGuessResult(int bullsCount, int cowsCount)
@@ -55,19 +56,9 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         {
             int bullsCountNumberCandidates = 0;
             int cowsCountNumberCandidates = 0;
-            for (int indexUniqueDigitNumbers = _uniqueDigitNumbers.Count; indexUniqueDigitNumbers >= 0; indexUniqueDigitNumbers--)
+            for (int indexUniqueDigitNumbers = _uniqueDigitNumbers.Count - 1; indexUniqueDigitNumbers >= 0; indexUniqueDigitNumbers--)
             {
-                for (int indexDigit = 0; indexDigit < _uniqueDigitNumbers[indexUniqueDigitNumbers].Length; indexDigit++)
-                {
-                    if (_uniqueDigitNumbers[indexUniqueDigitNumbers][indexDigit] == this._lastGuess[indexDigit])
-                    {
-                        bullsCountNumberCandidates++;
-                    }
-                    else if (_uniqueDigitNumbers[indexUniqueDigitNumbers].Contains(this._lastGuess))
-                    {
-                        cowsCountNumberCandidates++;
-                    }
-                }
+                this._game.SearchForBullsAndCows(_uniqueDigitNumbers[indexUniqueDigitNumbers], this._lastGuess, out bullsCountNumberCandidates, out cowsCountNumberCandidates);
                 if (bullsCountNumberCandidates != bullsCount || cowsCountNumberCandidates != cowsCount)
                 {
                     _uniqueDigitNumbers.RemoveAt(indexUniqueDigitNumbers);
