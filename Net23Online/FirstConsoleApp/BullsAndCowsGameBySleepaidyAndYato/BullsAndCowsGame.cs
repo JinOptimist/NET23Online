@@ -15,6 +15,15 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
         private string _secretNumber { get; set; }
         private int _amountBulls;
         private int _amountCows;
+        public BullsAndCowsGame(Player player)
+        {
+            this.Round = 1;
+            this._player = player;
+            if (_player is BotPlayer botPlayer)
+            {
+                botPlayer.SetGame(this);
+            }
+        }
         public void Play()
         {
             var isEnteredUniqueDigitsNumbers = false;
@@ -31,15 +40,7 @@ namespace FirstConsoleApp.BullsAndCowsGameBySleepaidyAndYato
                 PlayOneRound();
             } while (_amountBulls != 4);
         }
-        public BullsAndCowsGame(Player player)
-        {
-            this.Round = 1;
-            this._player = player;
-            if (_player is BotPlayer botPlayer)
-            {
-                botPlayer.SetGame(this);
-            }
-        }
+
         private void PlayOneRound()
         {
             var guessedNumberFromPlayer = _player.MakeGuess();
