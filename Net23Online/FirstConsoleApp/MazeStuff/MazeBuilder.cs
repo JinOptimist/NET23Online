@@ -19,6 +19,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateGround();// Genrate path
             GenerateCoins();
             // Generate other cells
+            GenerateIce(5);
 
             return _maze;
         }
@@ -77,6 +78,27 @@ namespace FirstConsoleApp.MazeStuff
                     _maze.Cells.Add(wall);
                 }
             }
+        }
+
+        private void GenerateIce(int countIce = 3) //delete input parameter?
+        {
+            countIce = Math.Min(8, countIce);
+            var random = new Random();
+
+            for (int i = 0; i < countIce; i++)
+            {
+                var x = random.Next(0, _maze.Width);
+                var y = random.Next(0, _maze.Height);
+
+                var ice = new Ice(_maze)
+                {
+                    X = x,
+                    Y = y,
+                };
+
+                ReplaceCell(ice);
+            }
+
         }
     }
 }
