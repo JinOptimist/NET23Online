@@ -1,4 +1,4 @@
-﻿using FirstConsoleApp.Interfaces;
+﻿using FirstConsoleApp.BullsAndCowsGame.Interfaces;
 
 namespace FirstConsoleApp.BullsAndCowsGame
 {
@@ -6,11 +6,12 @@ namespace FirstConsoleApp.BullsAndCowsGame
     {
         public BullsAndCowsGameHumanVsBot(IGameSettings gameSettings, IRandomNumberGenerator randomNumberGenerator) : base(gameSettings, randomNumberGenerator)
         {
-            ShowWelcomeMessage();
+            
         }
 
         public override void Play()
         {
+            ShowWelcomeMessage();
             var playing = true;
 
             while (playing)

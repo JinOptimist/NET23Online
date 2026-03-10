@@ -1,4 +1,4 @@
-﻿using FirstConsoleApp.Interfaces;
+﻿using FirstConsoleApp.BullsAndCowsGame.Interfaces;
 
 namespace FirstConsoleApp.BullsAndCowsGame
 {
@@ -19,32 +19,40 @@ namespace FirstConsoleApp.BullsAndCowsGame
 
             var guessResult = new GuessResult();
 
-            var hiddenNumberCount = new int[10];
-            var guessNumberCount = new int[10];
-
-            for (var i = 0; i < Value.Length; i++)
-            {
-                var hiddenDigit = Value[i] - '0';
-                var guessDigit = guess[i] - '0';
-
-                if (hiddenDigit == guessDigit)
-                {
-                    guessResult.Bulls++;
-                }
-                else
-                {
-                    hiddenNumberCount[hiddenDigit]++;
-                    guessNumberCount[guessDigit]++;
-                }
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                guessResult.Cows += Math.Min(hiddenNumberCount[i], guessNumberCount[i]);
-            }
-
+            guessResult.Bulls = CountBulls(Value, guess);
+            guessResult.Cows = CountCows(Value, guess);
 
             return guessResult;
+        }
+
+        private int CountBulls(string hiddenNumber, string guessNumber)
+        {
+            var bulls = 0;
+
+            for (var i = 0; i < hiddenNumber.Length; i++)
+            {
+                if (hiddenNumber[i] == guessNumber[i])
+                {
+                    bulls++;
+                }
+            }
+
+            return bulls;
+        }
+
+        private int CountCows(string hiddenNumber, string guessNumber)
+        {
+            var cows = 0;
+
+            for (var i = 0; i < hiddenNumber.Length; i++)
+            {
+                if (hiddenNumber[i] != guessNumber[i] && hiddenNumber.Contains(guessNumber[i]))
+                {
+                    cows++;
+                }
+            }
+
+            return cows;
         }
 
         private void ValidateGuess(string guess)
@@ -53,7 +61,7 @@ namespace FirstConsoleApp.BullsAndCowsGame
             {
                 throw new ArgumentException($"Number must contain {Settings.NumberLength} digits.");
             }
-                
+
             if (!guess.All(char.IsDigit))
             {
                 throw new ArgumentException("Input must contain only digits.");
@@ -63,12 +71,12 @@ namespace FirstConsoleApp.BullsAndCowsGame
             {
                 throw new ArgumentException("First digit cannot be zero.");
             }
-                
+
             if (guess.Distinct().Count() != guess.Length)
             {
                 throw new ArgumentException("Digits must not repeat.");
             }
-                
+
         }
     }
 }

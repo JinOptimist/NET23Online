@@ -1,4 +1,4 @@
-﻿using FirstConsoleApp.Interfaces;
+﻿using FirstConsoleApp.BullsAndCowsGame.Interfaces;
 
 namespace FirstConsoleApp.BullsAndCowsGame
 {

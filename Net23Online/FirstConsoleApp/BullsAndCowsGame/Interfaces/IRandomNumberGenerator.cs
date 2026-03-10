@@ -1,5 +1,4 @@
-﻿
-namespace FirstConsoleApp.Interfaces
+﻿namespace FirstConsoleApp.BullsAndCowsGame.Interfaces
 {
     public interface IRandomNumberGenerator
     {
