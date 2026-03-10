@@ -1,7 +1,9 @@
-﻿using FirstConsoleApp.BullsAndCowsGame;
+using FirstConsoleApp.MazeStuff;
 
-var settingsFactory = new GameSettingsFactory();
-var settings = settingsFactory.ChooseGameSettings();
-var randomNumberGenerator = new RandomNumberGenerator();
-var game = new BullsAndCowsGameHumanVsBot(settings, randomNumberGenerator);
-game.Play();
+var mazeBuilder = new MazeBuilder();
+
+var maze = mazeBuilder.Build(24, 12);
+
+var mazeDrawer = new MazeDrawer();
+
+mazeDrawer.Draw(maze);
