@@ -11,5 +11,6 @@ namespace FirstConsoleApp.MazeStuff.Characters
         public string Name { get; set; }
         public int Hp {  get; set; }
         public int Coins { get; set; }
+        public int SpeedPotions { get; set; }
     }
 }

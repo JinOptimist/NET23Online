@@ -18,6 +18,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateWall();
             GenerateGround();// Genrate path
             GenerateCoins();
+            GenerateSpeedPotions();
             // Generate other cells
 
             return _maze;
@@ -77,6 +78,15 @@ namespace FirstConsoleApp.MazeStuff
                     _maze.Cells.Add(wall);
                 }
             }
+        }
+        private void GenerateSpeedPotions()
+        {
+            var speedPotion = new SpeedPotion(_maze)
+            {
+                X = 6,
+                Y = 6,
+            };
+            ReplaceCell(speedPotion);
         }
     }
 }
