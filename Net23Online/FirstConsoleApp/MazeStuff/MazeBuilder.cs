@@ -18,9 +18,24 @@ namespace FirstConsoleApp.MazeStuff
             GenerateWall();
             GenerateGround();// Genrate path
             GenerateCoins();
+            GenerateMimics();
             // Generate other cells
 
             return _maze;
+        }
+
+        private void GenerateMimics()
+        {
+            var freeCells = _maze.Cells.FindAll(m => m.Symbol == '.');
+            var randomizer = new Random();
+            var randomCellIndex = randomizer.Next(0, freeCells.Count - 1);
+            var randomCell = freeCells.ElementAt(randomCellIndex);
+            var mimic = new Mimic(_maze)
+            {
+                X = randomCell.X,
+                Y = randomCell.Y,
+            };
+            ReplaceCell(mimic);
         }
 
         private void GenerateCoins()
