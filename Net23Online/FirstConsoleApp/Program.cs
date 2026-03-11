@@ -1,9 +1,9 @@
-﻿////using FirstConsoleApp.GuessTheNumberStuff;
+using FirstConsoleApp.MazeStuff;
 
-////var botGame = new GuessTheNumberGameHumanVsBot();
-////botGame.Play();
+var mazeBuilder = new MazeBuilder();
 
-using FirstConsoleApp.BattleShipGame;
+var maze = mazeBuilder.Build(24, 12);
 
-var playTest = new BattleshipGame();
-playTest.Play();
+var mazeDrawer = new MazeDrawer();
+
+mazeDrawer.Draw(maze);
