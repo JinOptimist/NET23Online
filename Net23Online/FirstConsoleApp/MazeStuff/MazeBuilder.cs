@@ -18,6 +18,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateWall();
             GenerateGround();// Genrate path
             GenerateCoins();
+            GenerateFlowers();
             // Generate other cells
 
             return _maze;
@@ -77,6 +78,17 @@ namespace FirstConsoleApp.MazeStuff
                     _maze.Cells.Add(wall);
                 }
             }
+        }
+
+        private void GenerateFlowers()
+        {
+            var flowers = new Flowers(_maze)
+            {
+                X = 17,
+                Y = 3,
+            };
+            ReplaceCell(flowers);
+
         }
     }
 }
