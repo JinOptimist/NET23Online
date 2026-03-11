@@ -12,14 +12,15 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
+            Maze.EventHistory.Add("Look, it's a coin");
             character.Coins++;
 
-            Maze.Cells.Remove(this);
+            Maze.Surface.Remove(this);
             var ground = new Ground(Maze) { 
                 X = X,
                 Y = Y,
             };
-            Maze.Cells.Add(ground);
+            Maze.Surface.Add(ground);
 
             return true;
         }
