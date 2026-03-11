@@ -1,67 +1,167 @@
-﻿
-using FirstConsoleApp.MazeStuff.Cells;
+﻿using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Characters;
+using System;
 
 namespace FirstConsoleApp.MazeStuff
 {
     public class MazeBuilder
     {
         private Maze _maze;
+        private Random _random;
 
-        public Maze Build(int width, int height)
+        public Maze Build(int width, int height, int? seed = null)
         {
             _maze = new Maze
             {
                 Width = width,
                 Height = height,
+                Seed = seed ?? DateTime.Now.Millisecond
             };
 
+            _random = new Random(_maze.Seed);
+
+            var hero = GenerateHero();
+            _maze.Hero = hero;
+
             GenerateWall();
-            GenerateGround();// Genrate path
+            GenerateGround(hero.X, hero.Y);// Genrate path
             GenerateCoins();
+            GenerateTrap();
+            GeneratePortals();
+            GenerateRest();
+            GenerateDoors();
+            GenerateMimics();
             GenerateSlowdown();
             // Generate other cells
 
             return _maze;
         }
 
-        private void GenerateCoins()
+        private Hero GenerateHero()
         {
-            var coin = new Coin(_maze)
+            return new Hero(_maze)
             {
-                X = 1,
-                Y = 1,
+                X = 0,
+                Y = 0,
             };
-            ReplaceCell(coin);
         }
 
-        private void ReplaceCell(BaseCell newCell) // coin [1,1]
+        private void GenerateDoors()
         {
-            var oldCell = _maze
-                .Cells
-                .First(c => c.X == newCell.X && c.Y == newCell.Y);
-            _maze.Cells.Remove(oldCell);
 
-            _maze.Cells.Add(newCell); // replace
-        }
-
-        private void GenerateGround()
-        {
-            for (int y = 0; y < _maze.Height; y++)
+            var doorCount = 0;
+            for (int y = 1; y < _maze.Height; y++)
             {
-                for (var x = 0; x < _maze.Width; x++)
+                for (var x = 1; x < _maze.Width; x++)
                 {
-                    if (x % 2 == 0 || y % 2 == 0)
+                    if (doorCount == 2)
                     {
-                        var ground = new Ground(_maze)
-                        {
-                            X = x,
-                            Y = y,
-                        };
-
-                        ReplaceCell(ground);
+                        break;
                     }
+                    else
+                    {
+                        if (x % 3 == 0 && y % 3 == 0)
+                        {
+                            var door = new Doors(_maze)
+                            {
+                                X = x,
+                                Y = y,
+                            };
+
+                            ReplaceCell(door);
+                            doorCount++;
+                        }
+                    }
+
+
+
+                }
+                if (doorCount == 2)
+                {
+                    break;
                 }
             }
+        }
+
+        private void GenerateMimics()
+        {
+            var freeCells = _maze.Surface.Where(cell => cell is Ground).ToList();
+            var randomCellIndex = _random.Next(0, freeCells.Count() - 1);
+            var randomCell = freeCells[randomCellIndex];
+            var mimic = new Mimic(_maze)
+            {
+                X = randomCell.X,
+                Y = randomCell.Y,
+            };
+            ReplaceCell(mimic);
+        }
+
+        private void GenerateCoins(int maxCoinCount = 3)
+        {
+            var deadends = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Ground>(x).Count() == 1)
+                .ToList();
+
+            for (int i = 0; i < maxCoinCount; i++)
+            {
+                var deadend = deadends[i];
+                var coin = new Coin(_maze)
+                {
+                    X = deadend.X,
+                    Y = deadend.Y,
+                };
+                ReplaceCell(coin);
+            }
+        }
+
+        private void GenerateGround(int startX = 0, int startY = 0)
+        {
+            var miner = _maze[startX, startY];
+
+            var wallsToDestroy = new List<BaseCell>();
+
+            do
+            {
+                ReplaceCellToGround(miner); // Destoy wall 
+
+                var nears = GetNearCells<Wall>(miner);
+
+                wallsToDestroy.AddRange(nears);
+
+                wallsToDestroy = wallsToDestroy
+                    // .Where(cell => AllowToDestroy(cell))
+                    .Where(AllowToDestroy)
+                    .ToList();
+                if (wallsToDestroy.Any())
+                {
+                    miner = GetRandomCell(wallsToDestroy);
+                }
+            } while (wallsToDestroy.Any());
+        }
+
+        private BaseCell GetRandomCell(List<BaseCell> wallsToDestroy)
+        {
+            var randomIndex = _random.Next(wallsToDestroy.Count);
+            return wallsToDestroy[randomIndex];
+        }
+
+        private bool AllowToDestroy(BaseCell cell)
+        {
+            return _maze[cell.X, cell.Y] is Wall
+                 && GetNearCells<Ground>(cell)
+                .Count() < 2;
+        }
+
+        private IEnumerable<BaseCell> GetNearCells<TypeOfOurCell>(BaseCell miner)
+            where TypeOfOurCell : BaseCell
+        {
+            return _maze.Surface
+                .Where(cell => cell is TypeOfOurCell)
+                .Where(cell =>
+                    cell.Y == miner.Y && Math.Abs(cell.X - miner.X) == 1
+                    || cell.X == miner.X && Math.Abs(cell.Y - miner.Y) == 1);
         }
 
         private void GenerateWall()
@@ -75,30 +175,76 @@ namespace FirstConsoleApp.MazeStuff
                         X = x,
                         Y = y
                     };
-                    _maze.Cells.Add(wall);
+                    _maze.Surface.Add(wall);
                 }
             }
         }
 
-        private void GenerateSlowdown()
+        private void GenerateTrap()
         {
-            Random random = new Random();
-
-            var countCellsSlowdown = 3;
-
-            for (int i = 0; i < countCellsSlowdown; i++)
+            var trap = new Trap(_maze)
             {
-                var randomCellsSlowdownX = random.Next(1, _maze.Width - 1);
-                var randomCellsSlowdownY = random.Next(1, _maze.Height - 1);
+                X = 2,
+                Y = 2,
+            };
+            ReplaceCell(trap);
+        }
 
-                var slowdown = new Slowdown(_maze)
+        private void GeneratePortals()
+        {
+            var groundCells = _maze
+                .Surface
+                .Where(c => c is Ground)
+                .ToList();
+
+            for (var i = 0; i < groundCells.Count; i++)
+            {
+                var cellCurrent = groundCells[i];
+
+                if (cellCurrent.X % 5 == 0)
                 {
-                    X = randomCellsSlowdownX,
-                    Y = randomCellsSlowdownY
-                };
-              
-                ReplaceCell(slowdown);
+                    var portal = new Portal(_maze)
+                    {
+                        X = cellCurrent.X,
+                        Y = cellCurrent.Y,
+
+                    };
+
+                    ReplaceCell(portal);
+                }
             }
+        }
+        private void GenerateRest()
+        {
+            var rest = new Rest(_maze)
+            {
+                X = 3,
+                Y = 3,
+            };
+            ReplaceCell(rest);
+        }
+
+        private void ReplaceCell(BaseCell newCell) // coin [1,1]
+        {
+            var oldCell = _maze
+                .Surface
+                .First(c => c.X == newCell.X && c.Y == newCell.Y);
+            _maze.Surface.Remove(oldCell);
+
+            _maze.Surface.Add(newCell); // replace
+        }
+
+        private void ReplaceCellToGround(BaseCell oldCell)
+        {
+            _maze.Surface.Remove(oldCell);
+
+            var ground = new Ground(_maze)
+            {
+                X = oldCell.X,
+                Y = oldCell.Y,
+            };
+
+            _maze.Surface.Add(ground);
         }
     }
 }

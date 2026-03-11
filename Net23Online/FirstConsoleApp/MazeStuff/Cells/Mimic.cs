@@ -2,18 +2,17 @@
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
-    public class Wall : BaseCell
+    public class Mimic : BaseCell
     {
-        public Wall(Maze maze) : base(maze)
+        public Mimic(Maze maze) : base(maze)
         {
         }
 
-        public override char Symbol => '#';
+        public override char Symbol => 'M';
 
         public override bool Interaction(BaseCharacter character)
         {
-            Maze.EventHistory.Add("Boom. It's a wall");
-            return false;
+            return true;
         }
     }
 }
