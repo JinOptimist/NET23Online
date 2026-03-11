@@ -82,25 +82,23 @@ namespace FirstConsoleApp.MazeStuff
         private void GeneratePortals()
         {
             var groundCells = _maze.Cells
-                .Where(c => c.GetType() == typeof(Ground))
+                .Where(c => c is Ground)
                 .ToList();
 
-            for (var y = 0; y < _maze.Height; y++)
+            for (var i = 0; i < groundCells.Count; i++)
             {
-                for (var x = 0; x < _maze.Width; x++)
+                var cellCurrent = groundCells[i];
+
+                if (cellCurrent.X % 5 == 0)
                 {
-                    var currentCell = groundCells.FirstOrDefault(c => c.X == x && c.Y == y);
-
-                    if (currentCell != null && x % 5 == 0 )
+                    var portal = new Portal(_maze)
                     {
-                        var portal = new Portal(_maze)
-                        {
-                            X = x,
-                            Y = y,
-                        };
+                        X = cellCurrent.X,
+                        Y = cellCurrent.Y,
 
-                        ReplaceCell(portal);
-                    }
+                    };
+
+                    ReplaceCell(portal);
                 }
             }
         }
