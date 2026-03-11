@@ -30,6 +30,5 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             return true;
         }
-
     }   
 }
