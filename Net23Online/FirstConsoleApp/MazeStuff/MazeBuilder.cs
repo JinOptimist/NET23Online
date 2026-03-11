@@ -17,11 +17,64 @@ namespace FirstConsoleApp.MazeStuff
             GenerateWall();
             GenerateGround();// Genrate path
             GenerateCoins();
+            GenerateTrap();
             GeneratePortals();
             GenerateRest();
+            GenerateDoors();
+            GenerateMimics();
             // Generate other cells
 
             return _maze;
+        }
+
+        private void GenerateDoors()
+        {
+
+            var doorCount = 0;
+            for (int y = 1; y < _maze.Height; y++)
+            {
+                for (var x = 1; x < _maze.Width; x++)
+                {
+                    if (doorCount == 2)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        if (x % 3 == 0 && y % 3 == 0 )
+                        {
+                            var door = new Doors(_maze)
+                            {
+                                X = x,
+                                Y = y,
+                            };
+
+                            ReplaceCell(door);
+                            doorCount++;
+                        }
+                    }
+
+
+
+                }
+                if (doorCount == 2)
+                {
+                    break;
+                }
+            }
+        }
+        private void GenerateMimics()
+        {
+            var freeCells = _maze.Cells.Where(cell => cell is Ground).ToList();
+            var randomizer = new Random();
+            var randomCellIndex = randomizer.Next(0, freeCells.Count() - 1);
+            var randomCell = freeCells[randomCellIndex];
+            var mimic = new Mimic(_maze)
+            {
+                X = randomCell.X,
+                Y = randomCell.Y,
+            };
+            ReplaceCell(mimic);
         }
 
         private void GenerateCoins()
@@ -33,6 +86,7 @@ namespace FirstConsoleApp.MazeStuff
             };
             ReplaceCell(coin);
         }
+
 
         private void ReplaceCell(BaseCell newCell) // coin [1,1]
         {
@@ -79,6 +133,16 @@ namespace FirstConsoleApp.MazeStuff
                 }
             }
         }
+
+        private void GenerateTrap()
+        {
+            var trap = new Trap(_maze)
+            {
+                X = 2,
+                Y = 2,
+            };
+            ReplaceCell(trap);
+        } 
 
         private void GeneratePortals()
         {
