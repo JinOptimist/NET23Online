@@ -1,5 +1,6 @@
 ﻿
 using FirstConsoleApp.MazeStuff.Cells;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -18,6 +19,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateWall();
             GenerateGround();// Genrate path
             GenerateCoins();
+            GenerateLava();
             // Generate other cells
 
             return _maze;
@@ -78,5 +80,31 @@ namespace FirstConsoleApp.MazeStuff
                 }
             }
         }
+        private void GenerateLava()
+        {
+            FindCenterOfField(out int startX, out int startY, out int squareSize);
+
+            for (var y = startY; y < startY + squareSize; y++)
+            {
+                for (var x = startX; x < startX + squareSize; x++)
+                {
+                    var lava = new Lava(_maze)
+                    {
+                        X = x,
+                        Y = y
+                    };
+
+                    ReplaceCell(lava);
+                }
+            }
+        }
+        private void FindCenterOfField(out int startX, out int startY, out int squareSize)
+        {
+            squareSize = Math.Max(1, Math.Min(_maze.Width, _maze.Height) / 5);
+
+            startX = (_maze.Width - squareSize) / 2;
+            startY = (_maze.Height - squareSize) / 2;
+        }
     }
+
 }
