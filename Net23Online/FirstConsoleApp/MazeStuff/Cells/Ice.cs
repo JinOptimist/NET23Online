@@ -20,13 +20,13 @@ namespace FirstConsoleApp.MazeStuff.Cells
             character.Hp -= 1; // Need a new method in Character for logic. (Other cells can change hp, speed)
             character.Speed -= 1;
             
-            Maze.Cells.Remove(this);
+            Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
             {
-                X = X, //ground.X = this.X
+                X = X,
                 Y = Y,
             };
-            Maze.Cells.Add(ground);
+            Maze.Surface.Add(ground);
 
             return true;
         }

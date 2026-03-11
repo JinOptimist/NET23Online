@@ -248,16 +248,14 @@ namespace FirstConsoleApp.MazeStuff
             _maze.Surface.Add(ground);
         }
 
-
         private void GenerateIce(int countIce = 5)
         {
             countIce = Math.Min(MAX_ICE, countIce);
-            var random = new Random();
 
             for (int i = 0; i < countIce; i++)
             {
-                var x = random.Next(0, _maze.Width);
-                var y = random.Next(0, _maze.Height);
+                var x = _random.Next(0, _maze.Width);
+                var y = _random.Next(0, _maze.Height);
 
                 var ice = new Ice(_maze)
                 {
