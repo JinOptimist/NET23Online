@@ -1,8 +1,5 @@
-﻿
-using FirstConsoleApp.MazeStuff.Cells;
+﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
-using FirstConsoleApp.SeaBattleHumanVsBot;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -25,6 +22,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateGround(hero.X, hero.Y);// Genrate path
             GenerateCoins();
             GenerateTrap();
+            GeneratePortals();
             GenerateRest();
             GenerateDoors();
             GenerateMimics();
@@ -176,8 +174,32 @@ namespace FirstConsoleApp.MazeStuff
                 Y = 2,
             };
             ReplaceCell(trap);
-        }
+        } 
 
+        private void GeneratePortals()
+        {
+            var groundCells = _maze
+                .Surface
+                .Where(c => c is Ground)
+                .ToList();
+
+            for (var i = 0; i < groundCells.Count; i++)
+            {
+                var cellCurrent = groundCells[i];
+
+                if (cellCurrent.X % 5 == 0)
+                {
+                    var portal = new Portal(_maze)
+                    {
+                        X = cellCurrent.X,
+                        Y = cellCurrent.Y,
+
+                    };
+
+                    ReplaceCell(portal);
+                }
+            }
+        }
         private void GenerateRest()
         {
             var rest = new Rest(_maze)
