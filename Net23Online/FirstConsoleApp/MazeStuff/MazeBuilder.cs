@@ -31,6 +31,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateRest();
             GenerateDoors();
             GenerateMimics();
+            GenerateSlowdown();
             // Generate other cells
 
             return _maze;
@@ -245,6 +246,5 @@ namespace FirstConsoleApp.MazeStuff
 
             _maze.Surface.Add(ground);
         }
-
     }
 }
