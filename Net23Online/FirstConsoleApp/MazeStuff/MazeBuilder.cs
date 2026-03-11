@@ -18,6 +18,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateWall();
             GenerateGround();// Genrate path
             GenerateCoins();
+            GenerateSlowdown();
             // Generate other cells
 
             return _maze;
@@ -76,6 +77,27 @@ namespace FirstConsoleApp.MazeStuff
                     };
                     _maze.Cells.Add(wall);
                 }
+            }
+        }
+
+        private void GenerateSlowdown()
+        {
+            Random random = new Random();
+
+            var countCellsSlowdown = 3;
+
+            for (int i = 0; i < countCellsSlowdown; i++)
+            {
+                var randomCellsSlowdownX = random.Next(1, _maze.Width - 1);
+                var randomCellsSlowdownY = random.Next(1, _maze.Height - 1);
+
+                var slowdown = new Slowdown(_maze)
+                {
+                    X = randomCellsSlowdownX,
+                    Y = randomCellsSlowdownY
+                };
+              
+                ReplaceCell(slowdown);
             }
         }
     }
