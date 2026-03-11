@@ -19,6 +19,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateGround();// Genrate path
             GenerateCoins();
             GenerateRest();
+            GenerateExplosives();
             // Generate other cells
 
             return _maze;
@@ -87,6 +88,16 @@ namespace FirstConsoleApp.MazeStuff
                 Y = 3,
             };
             ReplaceCell(rest);
+        }
+
+        private void GenerateExplosives()
+        {
+            var explosives = new Explosives(_maze)
+            {
+                X = 23,
+                Y = 2,
+            };
+            ReplaceCell(explosives);
         }
     }
 }
