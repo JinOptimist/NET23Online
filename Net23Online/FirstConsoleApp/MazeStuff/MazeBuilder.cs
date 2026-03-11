@@ -18,6 +18,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateWall();
             GenerateGround();// Genrate path
             GenerateCoins();
+            GenerateRest();
             GenerateDoors();
 
             // Generate other cells
@@ -115,6 +116,15 @@ namespace FirstConsoleApp.MazeStuff
                     _maze.Cells.Add(wall);
                 }
             }
+        }
+        private void GenerateRest()
+        {
+            var rest = new Rest(_maze)
+            {
+                X = 3,
+                Y = 3,
+            };
+            ReplaceCell(rest);
         }
     }
 }
