@@ -12,6 +12,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
+            Maze.EventHistory.Add("Boom. It's a wall");
             return false;
         }
     }

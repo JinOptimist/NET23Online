@@ -20,13 +20,13 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public override bool Interaction(BaseCharacter character)
         {
             character.Hp++;
-            Maze.Cells.Remove(this);
+            Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
             {
                 X = X,
                 Y = Y,
             };
-            Maze.Cells.Add(ground);
+            Maze.Surface.Add(ground);
 
             return true;
         }
