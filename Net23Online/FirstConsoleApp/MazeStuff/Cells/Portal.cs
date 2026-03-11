@@ -12,7 +12,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }
