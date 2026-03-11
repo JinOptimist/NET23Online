@@ -19,11 +19,49 @@ namespace FirstConsoleApp.MazeStuff
             GenerateGround();// Genrate path
             GenerateCoins();
             GenerateRest();
+            GenerateDoors();
+
             // Generate other cells
 
             return _maze;
         }
 
+        private void GenerateDoors()
+        {
+
+            var doorCount = 0;
+            for (int y = 1; y < _maze.Height; y++)
+            {
+                for (var x = 1; x < _maze.Width; x++)
+                {
+                    if (doorCount == 2)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        if (x % 3 == 0 && y % 3 == 0 )
+                        {
+                            var door = new Doors(_maze)
+                            {
+                                X = x,
+                                Y = y,
+                            };
+
+                            ReplaceCell(door);
+                            doorCount++;
+                        }
+                    }
+
+
+
+                }
+                if (doorCount == 2)
+                {
+                    break;
+                }
+            }
+        }
         private void GenerateCoins()
         {
             var coin = new Coin(_maze)
