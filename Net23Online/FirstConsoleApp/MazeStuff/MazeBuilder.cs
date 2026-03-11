@@ -18,6 +18,8 @@ namespace FirstConsoleApp.MazeStuff
             GenerateWall();
             GenerateGround();// Genrate path
             GenerateCoins();
+            GenerateTrap();
+
             // Generate other cells
 
             return _maze;
@@ -32,6 +34,7 @@ namespace FirstConsoleApp.MazeStuff
             };
             ReplaceCell(coin);
         }
+
 
         private void ReplaceCell(BaseCell newCell) // coin [1,1]
         {
@@ -77,6 +80,16 @@ namespace FirstConsoleApp.MazeStuff
                     _maze.Cells.Add(wall);
                 }
             }
+        }
+
+        private void GenerateTrap()
+        {
+            var trap = new Trap(_maze)
+            {
+                X = 2,
+                Y = 2,
+            };
+            ReplaceCell(trap);
         }
     }
 }
