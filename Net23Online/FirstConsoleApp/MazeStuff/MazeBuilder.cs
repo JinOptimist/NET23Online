@@ -6,6 +6,8 @@ namespace FirstConsoleApp.MazeStuff
     public class MazeBuilder
     {
         private Maze _maze;
+        private const int MAX_ICE = 8;
+
 
         public Maze Build(int width, int height)
         {
@@ -19,7 +21,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateGround();// Genrate path
             GenerateCoins();
             // Generate other cells
-            GenerateIce(5);
+            GenerateIce();
 
             return _maze;
         }
@@ -80,9 +82,9 @@ namespace FirstConsoleApp.MazeStuff
             }
         }
 
-        private void GenerateIce(int countIce = 3) //delete input parameter?
+        private void GenerateIce(int countIce = 5)
         {
-            countIce = Math.Min(8, countIce);
+            countIce = Math.Min(MAX_ICE, countIce);
             var random = new Random();
 
             for (int i = 0; i < countIce; i++)
@@ -98,7 +100,6 @@ namespace FirstConsoleApp.MazeStuff
 
                 ReplaceCell(ice);
             }
-
         }
     }
 }
