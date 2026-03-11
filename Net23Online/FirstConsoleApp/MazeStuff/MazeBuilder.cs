@@ -18,6 +18,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateGround();// Genrate path
             GenerateCoins();
             GeneratePortals();
+            GenerateRest();
             // Generate other cells
 
             return _maze;
@@ -101,6 +102,15 @@ namespace FirstConsoleApp.MazeStuff
                     ReplaceCell(portal);
                 }
             }
+        }
+        private void GenerateRest()
+        {
+            var rest = new Rest(_maze)
+            {
+                X = 3,
+                Y = 3,
+            };
+            ReplaceCell(rest);
         }
     }
 }
