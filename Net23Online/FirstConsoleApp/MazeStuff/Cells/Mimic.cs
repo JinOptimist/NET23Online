@@ -12,6 +12,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
+            character.Hp--;
             return true;
         }
     }
