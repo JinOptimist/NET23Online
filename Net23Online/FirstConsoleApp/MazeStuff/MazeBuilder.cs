@@ -21,6 +21,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateRest();
             GenerateDoors();
 
+            GenerateMimics();
             // Generate other cells
 
             return _maze;
@@ -62,6 +63,20 @@ namespace FirstConsoleApp.MazeStuff
                 }
             }
         }
+        private void GenerateMimics()
+        {
+            var freeCells = _maze.Cells.Where(cell => cell is Ground).ToList();
+            var randomizer = new Random();
+            var randomCellIndex = randomizer.Next(0, freeCells.Count() - 1);
+            var randomCell = freeCells[randomCellIndex];
+            var mimic = new Mimic(_maze)
+            {
+                X = randomCell.X,
+                Y = randomCell.Y,
+            };
+            ReplaceCell(mimic);
+        }
+
         private void GenerateCoins()
         {
             var coin = new Coin(_maze)
