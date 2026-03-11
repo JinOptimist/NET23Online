@@ -1,8 +1,4 @@
-﻿
-using System.Globalization;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace FirstConsoleApp.MazeStuff
+﻿namespace FirstConsoleApp.MazeStuff
 {
     public class MazeController
     {

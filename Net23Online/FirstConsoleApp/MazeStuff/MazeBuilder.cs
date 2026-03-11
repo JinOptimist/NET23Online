@@ -1,19 +1,24 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
+using System;
 
 namespace FirstConsoleApp.MazeStuff
 {
     public class MazeBuilder
     {
         private Maze _maze;
+        private Random _random;
 
-        public Maze Build(int width, int height)
+        public Maze Build(int width, int height, int? seed = null)
         {
             _maze = new Maze
             {
                 Width = width,
                 Height = height,
+                Seed = seed ?? DateTime.Now.Millisecond
             };
+
+            _random = new Random(_maze.Seed);
 
             var hero = GenerateHero();
             _maze.Hero = hero;
@@ -80,8 +85,7 @@ namespace FirstConsoleApp.MazeStuff
         private void GenerateMimics()
         {
             var freeCells = _maze.Surface.Where(cell => cell is Ground).ToList();
-            var randomizer = new Random();
-            var randomCellIndex = randomizer.Next(0, freeCells.Count() - 1);
+            var randomCellIndex = _random.Next(0, freeCells.Count() - 1);
             var randomCell = freeCells[randomCellIndex];
             var mimic = new Mimic(_maze)
             {
@@ -91,14 +95,24 @@ namespace FirstConsoleApp.MazeStuff
             ReplaceCell(mimic);
         }
 
-        private void GenerateCoins()
+        private void GenerateCoins(int maxCoinCount = 3)
         {
-            var coin = new Coin(_maze)
+            var deadends = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Ground>(x).Count() == 1)
+                .ToList();
+
+            for (int i = 0; i < maxCoinCount; i++)
             {
-                X = 1,
-                Y = 1,
-            };
-            ReplaceCell(coin);
+                var deadend = deadends[i];
+                var coin = new Coin(_maze)
+                {
+                    X = deadend.X,
+                    Y = deadend.Y,
+                };
+                ReplaceCell(coin);
+            }
         }
 
         private void GenerateGround(int startX = 0, int startY = 0)
@@ -128,8 +142,7 @@ namespace FirstConsoleApp.MazeStuff
 
         private BaseCell GetRandomCell(List<BaseCell> wallsToDestroy)
         {
-            var random = new Random();
-            var randomIndex = random.Next(wallsToDestroy.Count);
+            var randomIndex = _random.Next(wallsToDestroy.Count);
             return wallsToDestroy[randomIndex];
         }
 
@@ -174,7 +187,7 @@ namespace FirstConsoleApp.MazeStuff
                 Y = 2,
             };
             ReplaceCell(trap);
-        } 
+        }
 
         private void GeneratePortals()
         {

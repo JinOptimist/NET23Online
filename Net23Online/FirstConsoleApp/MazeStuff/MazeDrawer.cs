@@ -53,6 +53,12 @@ namespace FirstConsoleApp.MazeStuff
 
             DrawHeroStats();
             DrawEventHsitory();
+            DrawSeed();
+        }
+
+        private void DrawSeed()
+        {
+            Console.WriteLine($"Seed {_maze.Seed}");
         }
 
         private void DrawHeroStats()
