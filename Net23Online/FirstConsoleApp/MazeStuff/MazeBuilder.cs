@@ -269,7 +269,7 @@ namespace FirstConsoleApp.MazeStuff
         }
             private void GenerateSpeedPotions(int maxSpeedPotionsCount = 3)
         {
-            var deadends = _maze
+            var deadendsWallsAround = _maze
                 .Surface
                 .Where(x => x is Ground)
                 .Where(x => GetNearCells<Wall>(x).Count() == 3)
@@ -277,11 +277,11 @@ namespace FirstConsoleApp.MazeStuff
 
             for (int i = 0; i < maxSpeedPotionsCount; i++)
             {
-                var deadend = deadends[i];
+                var deadendWallsAround = deadendsWallsAround[i];
                 var speedPotion = new SpeedPotions(_maze)
                 {
-                    X = deadend.X,
-                    Y = deadend.Y,
+                    X = deadendWallsAround.X,
+                    Y = deadendWallsAround.Y,
                 };
                 ReplaceCell(speedPotion);
             }
