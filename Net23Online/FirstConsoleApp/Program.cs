@@ -1,5 +1,4 @@
-﻿using FirstConsoleApp.GuessTheNumberStuff;
+using FirstConsoleApp.MazeStuff;
 
-var botGame = new GuessTheNumberGameHumanVsBot();
-botGame.Play();
-Console.WriteLine("Hi I'm Olga");
+var mazeController = new MazeController();
+mazeController.Play();
