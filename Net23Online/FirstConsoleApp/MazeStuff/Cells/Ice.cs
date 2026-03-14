@@ -18,7 +18,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
         {
             character.Hp -= 1; // Need a new method in Character for logic. (Other cells can change hp, speed)
             character.Speed -= 1;
-            
+
+            Maze.EventHistory.Add("You are freezing!");
+
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
             {

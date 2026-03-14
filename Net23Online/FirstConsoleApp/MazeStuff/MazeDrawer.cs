@@ -64,7 +64,7 @@ namespace FirstConsoleApp.MazeStuff
         private void DrawHeroStats()
         {
             var hero = _maze.Hero;
-            Console.WriteLine($"Hp: {hero.Hp} Coins: {hero.Coins}");
+            Console.WriteLine($"Hp: {hero.Hp} Coins: {hero.Coins} Speed: {hero.Speed}");
         }
 
         private void DrawEventHsitory()
