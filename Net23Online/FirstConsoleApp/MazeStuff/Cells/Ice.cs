@@ -10,7 +10,6 @@ namespace FirstConsoleApp.MazeStuff.Cells
     public class Ice : BaseCell
     {
         public override char Symbol => 'i';
-
         public Ice(Maze maze) : base(maze)
         {
         }
@@ -19,6 +18,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         {
             character.Hp -= 1; // Need a new method in Character for logic. (Other cells can change hp, speed)
             character.Speed -= 1;
+            
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
             {

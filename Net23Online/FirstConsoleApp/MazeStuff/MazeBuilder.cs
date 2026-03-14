@@ -7,7 +7,7 @@ namespace FirstConsoleApp.MazeStuff
     public class MazeBuilder
     {
         private Maze _maze;
-        private const int MAX_ICE = 8;
+        private const int MAX_ICE = 15;
         private Random _random;
 
         public Maze Build(int width, int height, int? seed = null)
@@ -33,7 +33,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateDoors();
             GenerateMimics();
             // Generate other cells
-            GenerateIce();
+            GenerateIce(10);
 
             return _maze;
         }
@@ -248,23 +248,79 @@ namespace FirstConsoleApp.MazeStuff
             _maze.Surface.Add(ground);
         }
 
+        //Может ли быть метод дженерик, ограничение с new()?
+        private void ReplaceCellToIce(BaseCell oldCell)
+        {
+            _maze.Surface.Remove(oldCell);
+
+            var ice = new Ice(_maze)
+            {
+                X = oldCell.X,
+                Y = oldCell.Y,
+            };
+
+            _maze.Surface.Add(ice);
+        }
+
+        private List<BaseCell> GetCellsOfType<CellsType>() //Можно ли передать список типов в CellsType чтобы мог принимать разное количество 
+         where CellsType : BaseCell
+        {
+            return _maze.Surface.Where(cell => cell is CellsType).ToList();
+        }
+
         private void GenerateIce(int countIce = 5)
         {
             countIce = Math.Min(MAX_ICE, countIce);
 
-            for (int i = 0; i < countIce; i++)
+            // добавить проверку на существование ячеек разных типов,потом строить
+            // - не подходит тк метод может вызываться раньше
+
+            var OtherCells = _maze.Surface //вместо friendlyCells //Type of coins List<BaseCell>?
+                .Where(cell => cell is Doors || cell is Rest || cell is Portal || cell is Coin)
+                .ToList();
+
+            var nearFriendlyCells = new List<BaseCell>();
+            var friendlyCells = _maze.Surface.Where(cell => cell.IsFriendCell == true).ToList(); //Логика разбросана по каждым классам, если нужно поменять то придется заходить во все классы
+
+            for (int i = 0; i < /*OtherCells*/friendlyCells.Count; i++)
             {
-                var x = _random.Next(0, _maze.Width);
-                var y = _random.Next(0, _maze.Height);
-
-                var ice = new Ice(_maze)
-                {
-                    X = x,
-                    Y = y,
-                };
-
-                ReplaceCell(ice);
+                var nearOtherCell = GetNearCells<BaseCell>(/*OtherCells*/friendlyCells[i]).ToList(); //type - List<BaseCell>?
+                nearFriendlyCells.AddRange(nearOtherCell);
             }
+
+            var maxCountIce = Math.Min(nearFriendlyCells.Count, countIce);
+            var randomCount = _random.Next(1, maxCountIce);
+
+            for (int i = 0; i < randomCount; i++)
+            {
+                var oldCell = GetRandomCell(nearFriendlyCells); // выбирает одну рандомную ячейку, а нужно несколько
+                //var allIce = nearFriendlyCells[i];
+                ReplaceCellToIce(oldCell/*allIce*/);
+            }
+
         }
+
+        //private void GenerateIce2(int countIce = 5)
+        //{
+        //    countIce = Math.Min(MAX_ICE, countIce);
+
+        //    var coins = GetCellsOfType<Coin>();
+        //    var nearCoins = new List<BaseCell>();
+
+        //    for (int i = 0; i < coins.Count; i++)
+        //    {
+        //        var nearCoin = GetNearCells<BaseCell>(coins[i]).ToList();
+        //        nearCoins.AddRange(nearCoin);
+        //    }
+
+        //    var maxCountIce = Math.Min(nearCoins.Count, countIce);
+        //    var randomCount = _random.Next(1, maxCountIce);
+
+        //    for (int i = 0; i < randomCount; i++)
+        //    {
+        //        var oldCell = GetRandomCell(nearCoins);
+        //        ReplaceCellToIce(oldCell);
+        //    }
+        //}
     }
 }
