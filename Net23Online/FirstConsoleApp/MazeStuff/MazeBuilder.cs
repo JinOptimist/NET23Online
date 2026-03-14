@@ -2,6 +2,7 @@
 using FirstConsoleApp.MazeStuff.Characters;
 using FirstConsoleApp.SeaBattleHumanVsBot;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -35,7 +36,6 @@ namespace FirstConsoleApp.MazeStuff
             GenerateMimics();
             // Generate other cells
             GenerateIce(10);
-
             return _maze;
         }
 
@@ -263,7 +263,11 @@ namespace FirstConsoleApp.MazeStuff
             _maze.Surface.Add(ice);
         }
 
-        private List<BaseCell> GetCellsOfType<CellsType>() //Можно ли передать список типов в CellsType чтобы мог принимать разное количество 
+        //Получает список указанного CellsType
+        //Можно ли передать список типов в CellsType чтобы он мог принимать разное количество типов и возвращать список
+        //Я решил использовать сортировку через IsFriendCell
+
+        private List<BaseCell> GetCellsOfType<CellsType>()
          where CellsType : BaseCell
         {
             return _maze.Surface.Where(cell => cell is CellsType).ToList();
@@ -273,95 +277,91 @@ namespace FirstConsoleApp.MazeStuff
         {
             countIce = Math.Min(MAX_ICE, countIce);
 
-            //var otherCells = _maze.Surface //вместо friendlyCells, можно ли написать метод принимающий несколько типов
+            //вместо сорировки с пом. otherCells, можно ли написать метод принимающий несколько типов
+            //var otherCells = _maze.Surface
             //    .Where(cell => cell is Doors || cell is Rest || cell is Portal || cell is Coin)
             //    .ToList();
 
-            var friendlyCells = _maze.Surface.Where(cell => cell.IsFriendCell == true).ToList(); //IsFriendCell разбросана по классам, если нужно поменять логику то придется заходить во все классы
-            var nearFriendlyCells = new List<BaseCell>();
+            //IsFriendCell разбросана по классам, если нужно поменять логику то придется заходить во все классы
+            var friendlyCells = _maze.Surface.Where(cell => cell.IsFriendCell == true).ToList();
 
-            for (int i = 0; i < friendlyCells.Count; i++) //foreach
-            {
-                var nearFriendlyCell = GetNearCells<BaseCell>(friendlyCells[i]).ToList();
 
-                foreach (var cell in nearFriendlyCell)
-                {
-                    bool dublicates = nearFriendlyCells.Any(c => c.X == cell.X && c.Y == cell.Y);
-                    if (!dublicates)
-                    {
-                        nearFriendlyCells.Add(/*nearFriendlyCell*/cell); //Исключение дубликатов
-                    }
-                }
-            }
+            var nearCellsFromList = GetNearCellsFromList(friendlyCells);
+            var uniqueCellsFromList = GetUniqueCellsFromList(nearCellsFromList);
 
-            var maxCountIce = Math.Min(nearFriendlyCells.Count, countIce);
+            //Разложил по методам(см. выше, сами методы внизу)
+            //var nearFriendlyCells = new List<BaseCell>();
+
+            //for (int i = 0; i < friendlyCells.Count; i++)
+            //{
+            //    var nearFriendlyCell = GetNearCells<BaseCell>(friendlyCells[i]).ToList();
+
+            //    foreach (var cell in nearFriendlyCell)
+            //    {
+            //        bool dublicates = nearFriendlyCells.Any(c => c.X == cell.X && c.Y == cell.Y);
+            //        if (!dublicates)
+            //        {
+            //            nearFriendlyCells.Add(cell);
+            //        }
+            //    }
+            //}
+
+            var maxCountIce = Math.Min(uniqueCellsFromList.Count, countIce);
             var randomCount = _random.Next(1, maxCountIce);
 
             for (int i = 0; i < randomCount; i++)
             {
-                var oldCell = GetRandomCell(nearFriendlyCells);
-                //var allIce = nearFriendlyCells[i];
-                ReplaceCellToIce(oldCell/*allIce*/);
+                var oldCell = GetRandomCell(uniqueCellsFromList);
+                ReplaceCellToIce(oldCell);
             }
 
-            var nearHero = GetNearCells<BaseCell>(_maze.Hero).ToList();
-        }
-
-        //var inputCellList = _maze.Surface.Where(cell => cell.IsFriendCell == true).ToList();
-        public List<BaseCell> GetUniqueCells0(List<BaseCell> inputCellList)
-        {
-            var uniqueCells = new List<BaseCell>();
-
-            foreach (var friendlyCell in inputCellList)
-            {
-                var nearCell = GetNearCells<BaseCell>(friendlyCell).ToList();
-
-                foreach (var cell in nearCell)
-                {
-                    bool isDublicates = uniqueCells.Any(c => c.X == cell.X && c.Y == cell.Y);
-                    if (!isDublicates)
-                    {
-                        uniqueCells.Add(cell); //Исключение дубликатов
-                    }
-                }
-            }
-
-            return uniqueCells;
         }
 
 
-        //Получаем лист смежных ячеек вокруг ячеек из входящего листа 
+        /// <summary>
+        /// Получаем лист смежных ячеек вокруг ячеек из входящего листа 
+        /// </summary>
+        /// <returns></returns>
         public List<BaseCell> GetNearCellsFromList(List<BaseCell> inputCellList)
         {
             var outputNearCells = new List<BaseCell>();
 
             foreach (var cell in inputCellList)
             {
-                 var nearOneCell = GetNearCells<BaseCell>(cell).ToList();
+                var nearOneCell = GetNearCells<BaseCell>(cell).ToList();
                 outputNearCells.AddRange(nearOneCell);
             }
 
             return outputNearCells;
         }
-        //Уникальные ячейки из листа
+
+        /// <summary>
+        /// Get list with unique cells from List
+        /// </summary>
+        /// <returns></returns>
         public List<BaseCell> GetUniqueCellsFromList(List<BaseCell> inputCellList)
         {
             var uniqueCells = new List<BaseCell>();
-                        
-                foreach (var cell in inputCellList)
+
+            foreach (var cell in inputCellList)
+            {
+                bool isDublicates = uniqueCells.Any(c => c.X == cell.X && c.Y == cell.Y);
+                if (!isDublicates)
                 {
-                    bool isDublicates = uniqueCells.Any(c => c.X == cell.X && c.Y == cell.Y);
-                    if (!isDublicates)
-                    {
-                        uniqueCells.Add(cell);
-                    }
+                    uniqueCells.Add(cell);
                 }
-            
+            }
             return uniqueCells;
         }
 
-
-
-
+        public void GenerateIceNearHero()
+        {
+            List<BaseCell> heroList = GetCellsOfType<Hero>();
+            var nearHero = GetNearCellsFromList(heroList.TakeLast(1).ToList());
+            //nearHero.Clear();
+            var randomIceNearHero = GetRandomCell(nearHero);
+            
+            ReplaceCellToGround(randomIceNearHero);
+        }
     }
 }
