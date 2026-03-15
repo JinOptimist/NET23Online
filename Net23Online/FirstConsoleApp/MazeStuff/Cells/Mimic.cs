@@ -26,7 +26,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             Maze.EventHistory.Add("You encounteder a mimic");
             if (character.Hp < 1)
             {
-                Maze.EventHistory.Add("You must be dead.");
+                Maze.EventHistory.Add("You are too tired (0 HP) to fight.");
                 return false;
             }
 

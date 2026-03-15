@@ -1,6 +1,5 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
-using System;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -91,7 +90,10 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateRandomMimic(int maxMimicCount = 4)
         {
-            var freeCells = _maze.Surface.Where(cell => cell is Ground).ToList();
+            var freeCells = _maze
+                .Surface
+                .Where(cell => cell is Ground)
+                .ToList();
             TryReplaceMimic(maxMimicCount, freeCells);
         }
 
@@ -102,7 +104,6 @@ namespace FirstConsoleApp.MazeStuff
                 .Where(x => x is Ground)
                 .Where(x => GetNearCells<Ground>(x).Count() == 1)
                 .ToList();
-
             TryReplaceMimic(maxMimicCount, deadends);
         }
 
@@ -113,7 +114,6 @@ namespace FirstConsoleApp.MazeStuff
                 .Where(x => x is Ground)
                 .Where(x => GetNearCells<Ground>(x).Count() > 1)
                 .ToList();
-
             TryReplaceMimic(maxMimicCount, crossroads);
         }
 
