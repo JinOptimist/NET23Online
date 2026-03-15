@@ -249,7 +249,7 @@ namespace FirstConsoleApp.MazeStuff
             _maze.Surface.Add(ground);
         }
 
-        //Может ли быть метод дженерик, ограничение с new()?
+        // [1] Можно ли сделать дженерик метод, ограничение с new()? (или метод должен принимать несколько типов через параметры)
         private void ReplaceCellToIce(BaseCell oldCell)
         {
             _maze.Surface.Remove(oldCell);
@@ -263,9 +263,9 @@ namespace FirstConsoleApp.MazeStuff
             _maze.Surface.Add(ice);
         }
 
-        //Получает список указанного CellsType
-        //Можно ли передать список типов в CellsType чтобы он мог принимать разное количество типов и возвращать список
-        //Я решил использовать сортировку через IsFriendCell
+        // [2] Возвращает список типа клеток CellsType
+        //Можно ли передать несколько типов (неопределенное количество) в CellsType, чтобы метод возвращал общий список ячеек
+        //Я решил использовать сортировку через IsFriendCell см.[3]
 
         private List<BaseCell> GetCellsOfType<CellsType>()
          where CellsType : BaseCell
@@ -277,34 +277,17 @@ namespace FirstConsoleApp.MazeStuff
         {
             countIce = Math.Min(MAX_ICE, countIce);
 
-            //вместо сорировки с пом. otherCells, можно ли написать метод принимающий несколько типов
+            //см. GetCellsOfType [2]
             //var otherCells = _maze.Surface
             //    .Where(cell => cell is Doors || cell is Rest || cell is Portal || cell is Coin)
             //    .ToList();
 
-            //IsFriendCell разбросана по классам, если нужно поменять логику то придется заходить во все классы
+            //Инициализация IsFriendCell разбросана по классам, если нужно поменять логику то придется заходить во все классы
+            //см. [2], [3]
             var friendlyCells = _maze.Surface.Where(cell => cell.IsFriendCell == true).ToList();
-
 
             var nearCellsFromList = GetNearCellsFromList(friendlyCells);
             var uniqueCellsFromList = GetUniqueCellsFromList(nearCellsFromList);
-
-            //Разложил по методам(см. выше, сами методы внизу)
-            //var nearFriendlyCells = new List<BaseCell>();
-
-            //for (int i = 0; i < friendlyCells.Count; i++)
-            //{
-            //    var nearFriendlyCell = GetNearCells<BaseCell>(friendlyCells[i]).ToList();
-
-            //    foreach (var cell in nearFriendlyCell)
-            //    {
-            //        bool dublicates = nearFriendlyCells.Any(c => c.X == cell.X && c.Y == cell.Y);
-            //        if (!dublicates)
-            //        {
-            //            nearFriendlyCells.Add(cell);
-            //        }
-            //    }
-            //}
 
             var maxCountIce = Math.Min(uniqueCellsFromList.Count, countIce);
             var randomCount = _random.Next(1, maxCountIce);
@@ -314,12 +297,11 @@ namespace FirstConsoleApp.MazeStuff
                 var oldCell = GetRandomCell(uniqueCellsFromList);
                 ReplaceCellToIce(oldCell);
             }
-
         }
 
 
         /// <summary>
-        /// Получаем лист смежных ячеек вокруг ячеек из входящего листа 
+        /// Get near cells from cells in input List 
         /// </summary>
         /// <returns></returns>
         public List<BaseCell> GetNearCellsFromList(List<BaseCell> inputCellList)
@@ -356,12 +338,20 @@ namespace FirstConsoleApp.MazeStuff
 
         public void GenerateIceNearHero()
         {
-            List<BaseCell> heroList = GetCellsOfType<Hero>();
-            var nearHero = GetNearCellsFromList(heroList.TakeLast(1).ToList());
-            //nearHero.Clear();
-            var randomIceNearHero = GetRandomCell(nearHero);
-            
-            ReplaceCellToGround(randomIceNearHero);
+            var cellsNearHero = GetNearCells<BaseCell>(_maze.Hero).ToList();
+            var availableCells = cellsNearHero.Where(cell => cell is Ground).ToList();
+
+            if (!availableCells.Any())
+            {
+                return;
+            }
+
+            var randomIceNearHero = GetRandomCell(availableCells);
+
+            if (randomIceNearHero != null)
+            {
+                ReplaceCellToIce(randomIceNearHero);
+            }
         }
     }
 }
