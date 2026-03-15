@@ -1,7 +1,4 @@
-﻿
-using System.Xml.Linq;
-
-namespace FirstConsoleApp.TicTacToeHumanVsBot;
+﻿namespace FirstConsoleApp.TicTacToeHumanVsBot;
 
 
 public abstract class BasePlayers

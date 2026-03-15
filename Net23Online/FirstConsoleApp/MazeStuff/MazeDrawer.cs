@@ -1,6 +1,4 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
-using FirstConsoleApp.MazeStuff.Characters;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FirstConsoleApp.MazeStuff
 {

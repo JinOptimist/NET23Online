@@ -1,6 +1,5 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
-using System;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -86,15 +85,53 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateMimics()
         {
-            var freeCells = _maze.Surface.Where(cell => cell is Ground).ToList();
-            var randomCellIndex = _random.Next(0, freeCells.Count() - 1);
-            var randomCell = freeCells[randomCellIndex];
-            var mimic = new Mimic(_maze)
+            GenerateRandomMimic();
+            GenerateCoinLikeMimic(4);
+            GenerateDoorLikeMimic(2);
+        }
+
+        private void GenerateRandomMimic(int maxMimicCount = 4)
+        {
+            var freeCells = _maze
+                .Surface
+                .Where(cell => cell is Ground)
+                .ToList();
+            TryReplaceMimic(maxMimicCount, freeCells);
+        }
+
+        private void GenerateCoinLikeMimic(int maxMimicCount = 2)
+        {
+            var deadends = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Ground>(x).Count() == 1)
+                .ToList();
+            TryReplaceMimic(maxMimicCount, deadends);
+        }
+
+        private void GenerateDoorLikeMimic(int maxMimicCount = 3)
+        {
+            var crossroads = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Ground>(x).Count() > 1)
+                .ToList();
+            TryReplaceMimic(maxMimicCount, crossroads);
+        }
+
+        private void TryReplaceMimic(int maxMimicCount, List<BaseCell> cells)
+        {
+            for (int i = 0; i < maxMimicCount; i++)
             {
-                X = randomCell.X,
-                Y = randomCell.Y,
-            };
-            ReplaceCell(mimic);
+                var randomIndex = _random.Next(cells.Count());
+                var randomCell = cells[randomIndex];
+                var mimic = new Mimic(_maze)
+                {
+                    X = randomCell.X,
+                    Y = randomCell.Y,
+                };
+                ReplaceCell(mimic);
+            }
         }
 
         private void GenerateCoins(int maxCoinCount = 3)
