@@ -8,7 +8,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         {
         }
 
-        public override char Symbol => '#';
+        public override char Symbol => '█';
 
         public override bool Interaction(BaseCharacter character)
         {
