@@ -1,22 +1,28 @@
 ﻿using FirstConsoleApp.MazeStuff.Characters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
-    internal class Coin : BaseCell
+    internal class Rest : BaseCell
     {
-        public Coin(Maze maze) : base(maze)
+
+
+        public Rest(Maze maze) : base(maze)
         {
         }
 
-        public override char Symbol => 'c';
+        public override char Symbol => 'Q';
 
         public override bool Interaction(BaseCharacter character)
         {
-            Maze.EventHistory.Add("Look, it's a coin");
-            character.Coins++;
-
+            character.Hp++;
             Maze.Surface.Remove(this);
-            var ground = new Ground(Maze) { 
+            var ground = new Ground(Maze)
+            {
                 X = X,
                 Y = Y,
             };
@@ -24,5 +30,6 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             return true;
         }
-    }
+
+    }   
 }
