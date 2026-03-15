@@ -34,6 +34,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateMimics();
             // Generate other cells
             GenerateIce();
+            GenerateGhost();
 
             return _maze;
         }
@@ -264,6 +265,29 @@ namespace FirstConsoleApp.MazeStuff
                 };
 
                 ReplaceCell(ice);
+            }
+        }
+        private void GenerateGhost()
+        {
+            var cellToGenerateGhost = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Coin>(x).Count() == 1)
+                .ToList();
+
+            for (int i = 0; i < cellToGenerateGhost.Count; i++)
+            {
+                if(cellToGenerateGhost[i] is Ground)
+                {
+                    var cellToReplace = cellToGenerateGhost[i];
+                    var ghost = new Ghost(_maze)
+                    {
+                        X = cellToReplace.X,
+                        Y = cellToReplace.Y,
+                    };
+                    ReplaceCell(ghost);
+                }
+                
             }
         }
     }
