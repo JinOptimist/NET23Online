@@ -8,6 +8,7 @@ namespace FirstConsoleApp.MazeStuff
     {
         private Maze _maze;
         private const int MAX_ICE = 8;
+        private const int MAX_COINT = 1;
         private Random _random;
 
         public Maze Build(int width, int height, int? seed = null)
@@ -34,7 +35,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateMimics();
             // Generate other cells
             GenerateIce();
-
+            GeneratDoubleCoin();
             return _maze;
         }
 
@@ -247,7 +248,21 @@ namespace FirstConsoleApp.MazeStuff
 
             _maze.Surface.Add(ground);
         }
-
+        private void GeneratDoubleCoin()
+        {
+            var count = Math.Min(MAX_COINT, 1);
+            for (int i = 0; i < count; i++)
+            {
+                var x = _random.Next(0, _maze.Width);
+                var y = _random.Next(0, _maze.Height);
+                var doubleCoun= new DoubleCoins(_maze)
+                {
+                    X=x,
+                    Y=y,
+                };
+                ReplaceCell(doubleCoun);
+            }
+        }
         private void GenerateIce(int countIce = 5)
         {
             countIce = Math.Min(MAX_ICE, countIce);
