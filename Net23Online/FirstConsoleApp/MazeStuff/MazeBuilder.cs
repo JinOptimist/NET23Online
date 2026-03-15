@@ -82,7 +82,10 @@ namespace FirstConsoleApp.MazeStuff
         }
         private void GenerateLava()
         {
-            FindCenterOfField(out int startX, out int startY, out int squareSize);
+            var squareSize = Math.Max(1, Math.Min(_maze.Width, _maze.Height) / 5);
+
+            var startX = (_maze.Width - squareSize) / 2;
+            var startY = (_maze.Height - squareSize) / 2;
 
             for (var y = startY; y < startY + squareSize; y++)
             {
@@ -98,13 +101,5 @@ namespace FirstConsoleApp.MazeStuff
                 }
             }
         }
-        private void FindCenterOfField(out int startX, out int startY, out int squareSize)
-        {
-            squareSize = Math.Max(1, Math.Min(_maze.Width, _maze.Height) / 5);
-
-            startX = (_maze.Width - squareSize) / 2;
-            startY = (_maze.Height - squareSize) / 2;
-        }
     }
-
 }
