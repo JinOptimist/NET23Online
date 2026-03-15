@@ -8,6 +8,7 @@ namespace FirstConsoleApp.MazeStuff
     {
         private Maze _maze;
         private const int MAX_ICE = 8;
+        private const int MAX_FIRE = 6;
         private Random _random;
 
         public Maze Build(int width, int height, int? seed = null)
@@ -34,6 +35,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateMimics();
             // Generate other cells
             GenerateIce();
+            GenerateFire();
 
             return _maze;
         }
@@ -264,6 +266,24 @@ namespace FirstConsoleApp.MazeStuff
                 };
 
                 ReplaceCell(ice);
+            }
+        }
+
+        private void GenerateFire()
+        {           
+
+            for (int i = 0; i < MAX_FIRE; i++)
+            {
+                var x = _random.Next(0, _maze.Width);
+                var y = _random.Next(0, _maze.Height);
+
+                var fire = new Fire(_maze)
+                {
+                    X = x,
+                    Y = y,
+                };
+
+                ReplaceCell(fire);
             }
         }
     }
