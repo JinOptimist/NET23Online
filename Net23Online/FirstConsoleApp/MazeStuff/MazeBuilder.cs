@@ -1,6 +1,7 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
 using System;
+using System.Diagnostics.Metrics;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -267,25 +268,49 @@ namespace FirstConsoleApp.MazeStuff
                 ReplaceCell(ice);
             }
         }
-        private void GenerateLava()
+        private void GenerateLava(int maxLavaCount = 2)
         {
-            var squareSize = Math.Max(1, Math.Min(_maze.Width, _maze.Height) / 5);
+            var walls = _maze.Surface
+                .OfType<Wall>()
+                .ToList();
 
-            var startX = (_maze.Width - squareSize) / 2;
-            var startY = (_maze.Height - squareSize) / 2;
+            var lavaLake = walls
+                .Where(cell =>
+                    walls.Any(x => x.X == cell.X + 1 && x.Y == cell.Y) &&
+                    walls.Any(x => x.X == cell.X && x.Y == cell.Y + 1) &&
+                    walls.Any(x => x.X == cell.X + 1 && x.Y == cell.Y + 1))
+                .ToList();
 
-            for (var y = startY; y < startY + squareSize; y++)
+            if (lavaLake.Count > 0)
             {
-                for (var x = startX; x < startX + squareSize; x++)
+                for (int i = 0; i < maxLavaCount && i < lavaLake.Count; i++)
                 {
-                    var lava = new Lava(_maze)
-                    {
-                        X = x,
-                        Y = y
-                    };
+                    var corner = lavaLake[i];
 
-                    ReplaceCell(lava);
+                    ReplaceCell(new Lava(_maze) { X = corner.X, Y = corner.Y });
+                    ReplaceCell(new Lava(_maze) { X = corner.X + 1, Y = corner.Y });
+                    ReplaceCell(new Lava(_maze) { X = corner.X, Y = corner.Y + 1 });
+                    ReplaceCell(new Lava(_maze) { X = corner.X + 1, Y = corner.Y + 1 });
                 }
+
+                return;
+            }
+
+            var surroundedWalls = walls
+                .Where(x => GetNearCells<Ground>(x).Count() == 4)
+                .ToList();
+
+            for (int i = 0; i < maxLavaCount && i < surroundedWalls.Count; i++)
+            {
+                var wall = surroundedWalls[i];
+
+                var lava = new Lava(_maze)
+                {
+                    X = wall.X,
+                    Y = wall.Y,
+                };
+
+                ReplaceCell(lava);
             }
         }
     }

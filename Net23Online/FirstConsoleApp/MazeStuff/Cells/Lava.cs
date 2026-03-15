@@ -12,7 +12,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
+            Maze.EventHistory.Add("This 'hot pot' too hot for you.");
             character.Hp--;
+            character.Burning++;
 
             return true;
         }
