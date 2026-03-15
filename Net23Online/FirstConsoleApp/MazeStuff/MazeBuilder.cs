@@ -1,14 +1,16 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.SeaBattleHumanVsBot;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FirstConsoleApp.MazeStuff
 {
     public class MazeBuilder
     {
         private Maze _maze;
-        private const int MAX_ICE = 8;
         private Random _random;
+        private const int MAX_ICE = 15;
 
         public Maze Build(int width, int height, int? seed = null)
         {
@@ -33,8 +35,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateDoors();
             GenerateMimics();
             // Generate other cells
-            GenerateIce();
-
+            GenerateIce(10);
             return _maze;
         }
 
@@ -248,22 +249,108 @@ namespace FirstConsoleApp.MazeStuff
             _maze.Surface.Add(ground);
         }
 
+        // [1] Можно ли сделать дженерик метод, ограничение с new()? (или метод должен принимать несколько типов через параметры)
+        private void ReplaceCellToIce(BaseCell oldCell)
+        {
+            _maze.Surface.Remove(oldCell);
+
+            var ice = new Ice(_maze)
+            {
+                X = oldCell.X,
+                Y = oldCell.Y,
+            };
+
+            _maze.Surface.Add(ice);
+        }
+
+        // [2] Возвращает список типа клеток CellsType
+        //Можно ли передать несколько типов (неопределенное количество) в CellsType, чтобы метод возвращал общий список ячеек
+        //Я решил использовать сортировку через IsFriendCell см.[3]
+
+        private List<BaseCell> GetCellsOfType<CellsType>()
+         where CellsType : BaseCell
+        {
+            return _maze.Surface.Where(cell => cell is CellsType).ToList();
+        }
+
         private void GenerateIce(int countIce = 5)
         {
             countIce = Math.Min(MAX_ICE, countIce);
 
-            for (int i = 0; i < countIce; i++)
+            //см. GetCellsOfType [2]
+            //var otherCells = _maze.Surface
+            //    .Where(cell => cell is Doors || cell is Rest || cell is Portal || cell is Coin)
+            //    .ToList();
+
+            //Инициализация IsFriendCell разбросана по классам, если нужно поменять логику то придется заходить во все классы
+            //см. [2], [3]
+            var friendlyCells = _maze.Surface.Where(cell => cell.IsFriendCell == true).ToList();
+
+            var nearCellsFromList = GetNearCellsFromList(friendlyCells);
+            var uniqueCellsFromList = GetUniqueCellsFromList(nearCellsFromList);
+
+            var maxCountIce = Math.Min(uniqueCellsFromList.Count, countIce);
+            var randomCount = _random.Next(1, maxCountIce);
+
+            for (int i = 0; i < randomCount; i++)
             {
-                var x = _random.Next(0, _maze.Width);
-                var y = _random.Next(0, _maze.Height);
+                var oldCell = GetRandomCell(uniqueCellsFromList);
+                ReplaceCellToIce(oldCell);
+            }
+        }
 
-                var ice = new Ice(_maze)
+
+        /// <summary>
+        /// Get near cells from cells in input List 
+        /// </summary>
+        /// <returns></returns>
+        public List<BaseCell> GetNearCellsFromList(List<BaseCell> inputCellList)
+        {
+            var outputNearCells = new List<BaseCell>();
+
+            foreach (var cell in inputCellList)
+            {
+                var nearOneCell = GetNearCells<BaseCell>(cell).ToList();
+                outputNearCells.AddRange(nearOneCell);
+            }
+
+            return outputNearCells;
+        }
+
+        /// <summary>
+        /// Get list with unique cells from List
+        /// </summary>
+        /// <returns></returns>
+        public List<BaseCell> GetUniqueCellsFromList(List<BaseCell> inputCellList)
+        {
+            var uniqueCells = new List<BaseCell>();
+
+            foreach (var cell in inputCellList)
+            {
+                bool isDublicates = uniqueCells.Any(c => c.X == cell.X && c.Y == cell.Y);
+                if (!isDublicates)
                 {
-                    X = x,
-                    Y = y,
-                };
+                    uniqueCells.Add(cell);
+                }
+            }
+            return uniqueCells;
+        }
 
-                ReplaceCell(ice);
+        public void GenerateIceNearHero()
+        {
+            var cellsNearHero = GetNearCells<BaseCell>(_maze.Hero).ToList();
+            var availableCells = cellsNearHero.Where(cell => cell is Ground).ToList();
+
+            if (!availableCells.Any())
+            {
+                return;
+            }
+
+            var randomIceNearHero = GetRandomCell(availableCells);
+
+            if (randomIceNearHero != null)
+            {
+                ReplaceCellToIce(randomIceNearHero);
             }
         }
     }
