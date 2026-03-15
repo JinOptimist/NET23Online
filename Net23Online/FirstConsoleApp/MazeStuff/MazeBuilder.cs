@@ -32,6 +32,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateRest();
             GenerateDoors();
             GenerateMimics();
+            GenerateLava();
             // Generate other cells
             GenerateIce();
 
@@ -264,6 +265,27 @@ namespace FirstConsoleApp.MazeStuff
                 };
 
                 ReplaceCell(ice);
+            }
+        }
+        private void GenerateLava()
+        {
+            var squareSize = Math.Max(1, Math.Min(_maze.Width, _maze.Height) / 5);
+
+            var startX = (_maze.Width - squareSize) / 2;
+            var startY = (_maze.Height - squareSize) / 2;
+
+            for (var y = startY; y < startY + squareSize; y++)
+            {
+                for (var x = startX; x < startX + squareSize; x++)
+                {
+                    var lava = new Lava(_maze)
+                    {
+                        X = x,
+                        Y = y
+                    };
+
+                    ReplaceCell(lava);
+                }
             }
         }
     }
