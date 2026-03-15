@@ -15,7 +15,7 @@ public class SuperPower : BaseCell
     {
         if (character is Hero hero && hero.Coins >= 2)
         {
-            Maze.EventHistory.Add("SuperPower! Break the wall.");
+            Maze.EventHistory.Add("SuperPower! +Hp. You can break the wall.");
             
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze) { 
@@ -23,8 +23,9 @@ public class SuperPower : BaseCell
                 Y = Y,
             };
             Maze.Surface.Add(ground);
-            
-            hero.SuperPower ++;
+
+            hero.Hp++;
+            hero.SuperPower++;
             hero.Coins -= 2;
         }
 

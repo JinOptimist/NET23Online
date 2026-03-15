@@ -99,7 +99,7 @@ namespace FirstConsoleApp.MazeStuff
             ReplaceCell(mimic);
         }
 
-        private void GenerateCoins(int maxCoinCount = 3)
+        private void GenerateCoins(int maxCoinCount = 4)
         {
             var deadends = _maze
                 .Surface
