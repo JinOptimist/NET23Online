@@ -12,7 +12,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public override char Symbol => 'a';
         public DoubleCoins(Maze maze):base(maze)
         {
-                
+           
         }  
 
         public override bool Interaction(BaseCharacter character)
