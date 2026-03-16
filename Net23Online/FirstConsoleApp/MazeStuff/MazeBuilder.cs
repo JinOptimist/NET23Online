@@ -1,13 +1,16 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
 using System;
+using System.Diagnostics.Metrics;
 
 namespace FirstConsoleApp.MazeStuff
 {
     public class MazeBuilder
     {
         private Maze _maze;
+        private const int MAX_ICE = 8;
         private Random _random;
+        private const int _MAX_DOORS_COUNT = 5;
 
         public Maze Build(int width, int height, int? seed = null)
         {
@@ -31,7 +34,10 @@ namespace FirstConsoleApp.MazeStuff
             GenerateRest();
             GenerateDoors();
             GenerateMimics();
+            GenerateLava();
             // Generate other cells
+            GenerateIce();
+            GenerateSpeedPotions();
 
             return _maze;
         }
@@ -47,39 +53,85 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateDoors()
         {
-
-            var doorCount = 0;
-            for (int y = 1; y < _maze.Height; y++)
+            var doorAvailableCells = _maze.Surface
+                .Where(cell => cell is Ground)
+                .Where(cell => IsSuitableDoorPosition(cell.X, cell.Y))
+                .ToList();
+            var maxAvailableDoorsCount = doorAvailableCells.Count;
+            if (maxAvailableDoorsCount <= 0)
             {
-                for (var x = 1; x < _maze.Width; x++)
-                {
-                    if (doorCount == 2)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        if (x % 3 == 0 && y % 3 == 0)
-                        {
-                            var door = new Doors(_maze)
-                            {
-                                X = x,
-                                Y = y,
-                            };
-
-                            ReplaceCell(door);
-                            doorCount++;
-                        }
-                    }
-
-
-
-                }
-                if (doorCount == 2)
-                {
-                    break;
-                }
+                return;
             }
+            if (maxAvailableDoorsCount > _MAX_DOORS_COUNT)
+            {
+                maxAvailableDoorsCount = _MAX_DOORS_COUNT;
+            }
+            var selectedCells = SelectRandomDoorPositions(doorAvailableCells, maxAvailableDoorsCount);
+
+            GenerateKeysForDoors(selectedCells.Count);
+
+            for (int i = 0; i < selectedCells.Count; i++)
+            {
+                var cell = selectedCells[i];
+                var door = new Doors(_maze)
+                {
+                    X = cell.X,
+                    Y = cell.Y,
+                };
+
+                ReplaceCell(door);
+            }
+
+        }
+
+
+        private bool IsSuitableDoorPosition(int x, int y)
+        {
+            var isHorizontalPassage = IsWallOrBoundary(x - 1, y) && IsWallOrBoundary(x + 1, y);
+
+            var isVerticalPassage = IsWallOrBoundary(x, y - 1) && IsWallOrBoundary(x, y + 1);
+
+            return isHorizontalPassage || isVerticalPassage;
+        }
+        private bool IsWallOrBoundary(int x, int y)
+        {
+            if (x < 0 || x >= _maze.Width || y < 0 || y >= _maze.Height)
+            {
+                return true;
+            }
+
+            return _maze[x, y] is Wall;
+        }
+
+        private List<BaseCell> SelectRandomDoorPositions(List<BaseCell> doorAvailablePositions, int maxDoorsCount)
+
+        {
+            var shuffledDoors = doorAvailablePositions
+                .OrderBy(_ => _random.Next())
+                .Take(maxDoorsCount)
+                .ToList();
+            return shuffledDoors;
+        }
+
+        private void GenerateKeysForDoors(int doorCount)
+        {
+            var availablePositions = _maze.Surface
+                .Where(cell => cell is Ground)
+                .OrderBy(_ => _random.Next())
+                .Take(doorCount)
+                .ToList();
+
+            for (int i = 0; i < availablePositions.Count; i++)
+            {
+                var position = availablePositions[i];
+                var key = new Key(_maze)
+                {
+                    X = position.X,
+                    Y = position.Y,
+                };
+                ReplaceCell(key);
+            }
+
         }
 
         private void GenerateMimics()
@@ -181,12 +233,24 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateTrap()
         {
-            var trap = new Trap(_maze)
+            var nearcoins = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Coin>(x).Count() == 1)
+                .ToList();
+
+            int goldcoins = _maze.Surface.OfType<Coin>().Count();
+
+            for (int i = 0; i < goldcoins; i++)
             {
-                X = 2,
-                Y = 2,
-            };
-            ReplaceCell(trap);
+                var nearcoin = nearcoins[i];
+                var trap = new Trap(_maze)
+                {
+                    X = nearcoin.X,
+                    Y = nearcoin.Y,
+                };
+                ReplaceCell(trap);
+            }
         }
 
         private void GeneratePortals()
@@ -213,14 +277,23 @@ namespace FirstConsoleApp.MazeStuff
                 }
             }
         }
-        private void GenerateRest()
+        private void GenerateRest(int maxRestCount = 5)
         {
-            var rest = new Rest(_maze)
+            var deadends = _maze
+      .Surface
+      .Where(x => x is Ground)
+      .Where(x => GetNearCells<Ground>(x).Count() >= 3)
+      .ToList();
+            for (int i = 0; i < maxRestCount; i++)
             {
-                X = 3,
-                Y = 3,
-            };
-            ReplaceCell(rest);
+                var deadend = deadends[i];
+                var rest = new Rest(_maze)
+                {
+                    X = deadend.X,
+                    Y = deadend.Y,
+                };
+                ReplaceCell(rest);
+            }
         }
 
         private void ReplaceCell(BaseCell newCell) // coin [1,1]
@@ -246,5 +319,88 @@ namespace FirstConsoleApp.MazeStuff
             _maze.Surface.Add(ground);
         }
 
+        private void GenerateIce(int countIce = 5)
+        {
+            countIce = Math.Min(MAX_ICE, countIce);
+
+            for (int i = 0; i < countIce; i++)
+            {
+                var x = _random.Next(0, _maze.Width);
+                var y = _random.Next(0, _maze.Height);
+
+                var ice = new Ice(_maze)
+                {
+                    X = x,
+                    Y = y,
+                };
+
+                ReplaceCell(ice);
+            }
+        }
+        private void GenerateLava(int maxLavaCount = 2)
+        {
+            var walls = _maze.Surface
+                .OfType<Wall>()
+                .ToList();
+
+            var lavaLake = walls
+                .Where(cell =>
+                    walls.Any(x => x.X == cell.X + 1 && x.Y == cell.Y) &&
+                    walls.Any(x => x.X == cell.X && x.Y == cell.Y + 1) &&
+                    walls.Any(x => x.X == cell.X + 1 && x.Y == cell.Y + 1))
+                .ToList();
+
+            if (lavaLake.Count > 0)
+            {
+                for (int i = 0; i < maxLavaCount && i < lavaLake.Count; i++)
+                {
+                    var corner = lavaLake[i];
+
+                    ReplaceCell(new Lava(_maze) { X = corner.X, Y = corner.Y });
+                    ReplaceCell(new Lava(_maze) { X = corner.X + 1, Y = corner.Y });
+                    ReplaceCell(new Lava(_maze) { X = corner.X, Y = corner.Y + 1 });
+                    ReplaceCell(new Lava(_maze) { X = corner.X + 1, Y = corner.Y + 1 });
+                }
+
+                return;
+            }
+
+            var surroundedWalls = walls
+                .Where(x => GetNearCells<Ground>(x).Count() == 4)
+                .ToList();
+
+            for (int i = 0; i < maxLavaCount && i < surroundedWalls.Count; i++)
+            {
+                var wall = surroundedWalls[i];
+
+                var lava = new Lava(_maze)
+                {
+                    X = wall.X,
+                    Y = wall.Y,
+                };
+
+                ReplaceCell(lava);
+            }
+        }
+            private void GenerateSpeedPotions(int maxSpeedPotionsCount = 3)
+        {
+            var deadendsWallsAround = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Wall>(x).Count() == 3)
+                .ToList();
+
+            for (int i = 0; i < maxSpeedPotionsCount; i++)
+            {
+                var deadendWallsAround = deadendsWallsAround[i];
+                var speedPotion = new SpeedPotions(_maze)
+                {
+                    X = deadendWallsAround.X,
+                    Y = deadendWallsAround.Y,
+                };
+                ReplaceCell(speedPotion);
+            }
+        }
     }
 }
+

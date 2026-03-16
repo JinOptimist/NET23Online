@@ -15,7 +15,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         //        return '.';
         //    }
         //}
-        public override char Symbol => '.';
+        public override char Symbol => '░';
 
         public override bool Interaction(BaseCharacter character)
         {
