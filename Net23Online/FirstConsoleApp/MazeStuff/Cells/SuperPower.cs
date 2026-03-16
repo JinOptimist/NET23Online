@@ -14,7 +14,7 @@ public class SuperPower : BaseCell
     {
         if (character is not Hero hero || hero.Coins < 2)
         {
-            return false;
+            return true;
         }
 
         Maze.EventHistory.Add("SuperPower! +Hp. You can break the wall.");
