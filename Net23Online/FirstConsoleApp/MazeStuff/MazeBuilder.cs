@@ -29,6 +29,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateWall();
             GenerateGround(hero.X, hero.Y);// Genrate path
             GenerateCoins();
+            GenerateSuperPower();
             GenerateTrap();
             GeneratePortals();
             GenerateRest();
@@ -147,7 +148,7 @@ namespace FirstConsoleApp.MazeStuff
             ReplaceCell(mimic);
         }
 
-        private void GenerateCoins(int maxCoinCount = 3)
+        private void GenerateCoins(int maxCoinCount = 4)
         {
             var deadends = _maze
                 .Surface
@@ -164,6 +165,81 @@ namespace FirstConsoleApp.MazeStuff
                     Y = deadend.Y,
                 };
                 ReplaceCell(coin);
+            }
+        }
+        
+        private void GenerateSuperPower(int maxSuperPowerCount = 2)
+        {
+            /*
+             размещение клеток супер силы:
+             взяла все клетки, расстояние до которых 50% и выше от максимального расстояния
+             нашла в них тупики
+             выбрала рандомные клетки
+             если тупиков нет, то выбрала рандомно две клетки среди отдаленных от начала лабиринта на 50%
+             */
+
+            
+            var queue = new Queue<BaseCell>();
+            var dictionaryCellsAndDistance = new Dictionary<BaseCell, int>();
+            
+            queue.Enqueue(_maze[0, 0]);
+            dictionaryCellsAndDistance.Add(_maze[0, 0], 0);
+            
+            while (queue.Any())
+            {
+                var cell = queue.Dequeue();
+                var groundNearCurrentCell = GetNearCells<Ground>(cell);
+
+                foreach (var nearCell in groundNearCurrentCell)
+                {
+                    if (!dictionaryCellsAndDistance.ContainsKey(nearCell))
+                    {
+                        queue.Enqueue(nearCell);
+                        var distance = dictionaryCellsAndDistance[cell];
+                        dictionaryCellsAndDistance.Add(nearCell, distance + 1);
+                    }
+                }
+            }
+            
+            var maxDistance = dictionaryCellsAndDistance
+                .Values
+                .Max();
+            
+            var minDistanceToGenerate = maxDistance * 0.5;
+
+            var suitableCellsToGenerate = dictionaryCellsAndDistance
+                .Keys
+                .Where(cell => dictionaryCellsAndDistance[cell] >= minDistanceToGenerate)
+                .ToList();
+
+            var suitableDeadends = suitableCellsToGenerate
+                .Where(cell => GetNearCells<Ground>(cell).Count() == 1)
+                .ToList();
+
+            BaseCell chosenCell;
+
+            
+            for (int i = 0; i < maxSuperPowerCount; i++)
+            {
+                if (suitableDeadends.Any())
+                {
+                    chosenCell = GetRandomCell(suitableDeadends);
+                }
+                else
+                {
+                    chosenCell = GetRandomCell(suitableCellsToGenerate);
+                }
+            
+                var superPower = new SuperPower(_maze)
+                {
+                    X = chosenCell.X,
+                    Y = chosenCell.Y,
+                };
+                
+                ReplaceCell(superPower); 
+                
+                suitableCellsToGenerate.Remove(chosenCell);
+                suitableDeadends.Remove(chosenCell);
             }
         }
 
