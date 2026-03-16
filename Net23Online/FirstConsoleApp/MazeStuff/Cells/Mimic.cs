@@ -15,7 +15,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         {
             get
             {
-                var mimicMasks = new List<char> { 'c', 'D' };
+                var mimicMasks = new List<char> { Coin.SYMBOL, Doors.SYMBOL };
                 var index = _random.Next(mimicMasks.Count);
                 return mimicMasks[index];
             }

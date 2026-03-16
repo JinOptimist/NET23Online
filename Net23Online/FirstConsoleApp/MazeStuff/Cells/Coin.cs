@@ -4,11 +4,12 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     internal class Coin : BaseCell
     {
+        public const char SYMBOL = 'c';
         public Coin(Maze maze) : base(maze)
         {
         }
 
-        public override char Symbol => 'c';
+        public override char Symbol => SYMBOL;
 
         public override bool Interaction(BaseCharacter character)
         {
