@@ -105,6 +105,11 @@ namespace FirstConsoleApp.MazeStuff
 
         private void TryReplaceMimic(int maxMimicCount, List<BaseCell> cells)
         {
+            if (!cells.Any())
+            {
+                return;
+            }
+
             for (int i = 0; i < maxMimicCount; i++)
             {
                 var randomIndex = _random.Next(cells.Count());
