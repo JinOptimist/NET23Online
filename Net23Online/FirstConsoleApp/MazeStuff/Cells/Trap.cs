@@ -18,7 +18,8 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
-
+            Maze.EventHistory.Add("Look out, it's a trap");
+            character.Hp--;
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
             {

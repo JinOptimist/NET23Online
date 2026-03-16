@@ -185,12 +185,24 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateTrap()
         {
-            var trap = new Trap(_maze)
+            var nearcoins = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Coin>(x).Count() == 1)
+                .ToList();
+
+            int goldcoins = _maze.Surface.OfType<Coin>().Count();
+
+            for (int i = 0; i < goldcoins; i++)
             {
-                X = 2,
-                Y = 2,
-            };
-            ReplaceCell(trap);
+                var nearcoin = nearcoins[i];
+                var trap = new Trap(_maze)
+                {
+                    X = nearcoin.X,
+                    Y = nearcoin.Y,
+                };
+                ReplaceCell(trap);
+            }
         }
 
         private void GeneratePortals()
