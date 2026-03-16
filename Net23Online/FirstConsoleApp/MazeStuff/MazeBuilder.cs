@@ -35,6 +35,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateLava();
             // Generate other cells
             GenerateIce();
+            GenerateSpeedPotions();
 
             return _maze;
         }
@@ -288,5 +289,25 @@ namespace FirstConsoleApp.MazeStuff
                 }
             }
         }
+            private void GenerateSpeedPotions(int maxSpeedPotionsCount = 3)
+        {
+            var deadendsWallsAround = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Wall>(x).Count() == 3)
+                .ToList();
+
+            for (int i = 0; i < maxSpeedPotionsCount; i++)
+            {
+                var deadendWallsAround = deadendsWallsAround[i];
+                var speedPotion = new SpeedPotions(_maze)
+                {
+                    X = deadendWallsAround.X,
+                    Y = deadendWallsAround.Y,
+                };
+                ReplaceCell(speedPotion);
+            }
+        }
     }
 }
+
