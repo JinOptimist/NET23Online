@@ -83,38 +83,22 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateMimics()
         {
-            GenerateRandomMimic();
-            GenerateCoinLikeMimic(4);
-            GenerateDoorLikeMimic(2);
+            GenerateMimic(0);
+            GenerateMimic(1, 4);
+            GenerateMimic(2, 2);
+            //GenerateRandomMimic();
+            //GenerateCoinLikeMimic(4);
+            //GenerateDoorLikeMimic(2);
         }
 
-        private void GenerateRandomMimic(int maxMimicCount = 4)
+        private void GenerateMimic(int type, int maxMimicCount = 2)
         {
             var freeCells = _maze
                 .Surface
                 .Where(cell => cell is Ground)
+                .Where(x => type == 0 || type == 1 && GetNearCells<Ground>(x).Count() == 1 || type == 2 && GetNearCells<Ground>(x).Count() > 1)
                 .ToList();
             TryReplaceMimic(maxMimicCount, freeCells);
-        }
-
-        private void GenerateCoinLikeMimic(int maxMimicCount = 2)
-        {
-            var deadends = _maze
-                .Surface
-                .Where(x => x is Ground)
-                .Where(x => GetNearCells<Ground>(x).Count() == 1)
-                .ToList();
-            TryReplaceMimic(maxMimicCount, deadends);
-        }
-
-        private void GenerateDoorLikeMimic(int maxMimicCount = 3)
-        {
-            var crossroads = _maze
-                .Surface
-                .Where(x => x is Ground)
-                .Where(x => GetNearCells<Ground>(x).Count() > 1)
-                .ToList();
-            TryReplaceMimic(maxMimicCount, crossroads);
         }
 
         private void TryReplaceMimic(int maxMimicCount, List<BaseCell> cells)
