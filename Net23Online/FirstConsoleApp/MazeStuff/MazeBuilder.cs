@@ -9,6 +9,7 @@ namespace FirstConsoleApp.MazeStuff
         private Maze _maze;
         private const int MAX_ICE = 8;
         private Random _random;
+        private const int _MAX_DOORS_COUNT = 5;
 
         public Maze Build(int width, int height, int? seed = null)
         {
@@ -49,40 +50,61 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateDoors()
         {
-
-            var doorCount = 0;
-            for (int y = 1; y < _maze.Height; y++)
+            var doorAvailableCells = _maze.Surface
+                .Where(cell => cell is Ground)
+                .Where(cell => IsSuitableDoorPosition(cell.X, cell.Y))
+                .ToList();
+            var maxAvailableDoorsCount = doorAvailableCells.Count;
+            if (maxAvailableDoorsCount <= 0)
             {
-                for (var x = 1; x < _maze.Width; x++)
+                return;
+            }
+            if (maxAvailableDoorsCount > _MAX_DOORS_COUNT)
+            {
+                maxAvailableDoorsCount = _MAX_DOORS_COUNT;
+            }
+            var selectedCells = SelectRandomDoorPositions(doorAvailableCells, maxAvailableDoorsCount);
+            for (int i = 0; i < selectedCells.Count; i++)
+            {
+                var cell = selectedCells[i];
+                var door = new Doors(_maze)
                 {
-                    if (doorCount == 2)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        if (x % 3 == 0 && y % 3 == 0)
-                        {
-                            var door = new Doors(_maze)
-                            {
-                                X = x,
-                                Y = y,
-                            };
+                    X = cell.X,
+                    Y = cell.Y,
+                };
 
-                            ReplaceCell(door);
-                            doorCount++;
-                        }
-                    }
-
-
-
-                }
-                if (doorCount == 2)
-                {
-                    break;
-                }
+                ReplaceCell(door);
             }
         }
+        private bool IsSuitableDoorPosition(int x, int y)
+        {
+            bool isHorizontalPassage = IsWallOrBoundary(x - 1, y) && IsWallOrBoundary(x + 1, y);
+
+            bool isVerticalPassage = IsWallOrBoundary(x, y - 1) && IsWallOrBoundary(x, y + 1);
+
+            return isHorizontalPassage || isVerticalPassage;
+        }
+        private bool IsWallOrBoundary(int x, int y)
+        {
+            if (x < 0 || x >= _maze.Width || y < 0 || y >= _maze.Height)
+            {
+                return true;
+            }
+
+            return _maze[x, y] is Wall;
+        }
+
+        private List<BaseCell> SelectRandomDoorPositions(List<BaseCell> doorAvailablePositions, int maxDoorsCount)
+
+        {
+            var shuffledDoors = doorAvailablePositions
+                .OrderBy(_ => _random.Next())
+                .Take(maxDoorsCount)
+                .ToList();
+            return shuffledDoors;
+        }
+
+
 
         private void GenerateMimics()
         {
