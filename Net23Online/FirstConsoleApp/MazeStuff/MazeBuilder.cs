@@ -7,6 +7,9 @@ namespace FirstConsoleApp.MazeStuff
     {
         private Maze _maze;
         private Random _random;
+        public const int RANDOM_MIMIC_CODE = 0;
+        public const int COIN_LIKE_MIMIC_CODE = 1;
+        public const int DOOR_LIKE_MIMIC_CODE = 2;
 
         public Maze Build(int width, int height, int? seed = null)
         {
@@ -83,9 +86,9 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateMimics()
         {
-            GenerateMimic(0);
-            GenerateMimic(1, 4);
-            GenerateMimic(2, 2);
+            GenerateMimic(RANDOM_MIMIC_CODE);
+            GenerateMimic(COIN_LIKE_MIMIC_CODE, 4);
+            GenerateMimic(DOOR_LIKE_MIMIC_CODE, 2);
         }
 
         private void GenerateMimic(int type, int maxMimicCount = 2)
@@ -93,7 +96,9 @@ namespace FirstConsoleApp.MazeStuff
             var freeCells = _maze
                 .Surface
                 .Where(cell => cell is Ground)
-                .Where(x => type == 0 || type == 1 && GetNearCells<Ground>(x).Count() == 1 || type == 2 && GetNearCells<Ground>(x).Count() > 1)
+                .Where(x => type == RANDOM_MIMIC_CODE || 
+                    type == COIN_LIKE_MIMIC_CODE && GetNearCells<Ground>(x).Count() == 1 || 
+                    type == DOOR_LIKE_MIMIC_CODE && GetNearCells<Ground>(x).Count() > 1)
                 .ToList();
             TryReplaceMimic(maxMimicCount, freeCells);
         }
