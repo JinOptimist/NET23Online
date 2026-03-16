@@ -1,4 +1,5 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
+using System.Reflection.Metadata.Ecma335;
 
 namespace FirstConsoleApp.MazeStuff.Characters
 {
@@ -14,10 +15,13 @@ namespace FirstConsoleApp.MazeStuff.Characters
         public int Speed { get; set; }
         public int Keys { get; set; }
 
-        // Temporary Added here. Need an abstract class Obstacle
         public bool HasKey()
         {
-            return Keys > 0;
+            if (Keys > 0)
+            {
+                return true;
+            }
+            return false;
         }
         public void UseKey(int amount)
         {
@@ -27,6 +31,10 @@ namespace FirstConsoleApp.MazeStuff.Characters
         public void SpendCoins(int amount)
         {
             Coins -= amount;
+        }
+        public void CollectKey()
+        {
+            Keys++;
         }
     }
 }

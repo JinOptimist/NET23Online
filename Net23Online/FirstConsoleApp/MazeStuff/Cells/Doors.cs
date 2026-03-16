@@ -11,11 +11,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
         private const int _COIN_COST = 1;
         public Doors(Maze maze) : base(maze)
         {
-            _isOpen = false;
-            DoorType = "Unknown";
         }
 
-        public override char Symbol => _isOpen ? '.' : 'D';
+        public override char Symbol => 'D';
         public override bool Interaction(BaseCharacter character)
         {
             const int MINCHOISES = 1;
@@ -25,7 +23,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             {
                 return true;
             }
-            Console.WriteLine($"\n {DoorType} Door is locked!");
+            Console.WriteLine($"\n  Door is locked!");
             Console.WriteLine("Choose how to open it:");
             Console.WriteLine("1. Use Key");
             Console.WriteLine($"2. Pay {_COIN_COST} coins");
@@ -35,20 +33,21 @@ namespace FirstConsoleApp.MazeStuff.Cells
             {
                 var choice = ReadMenuChoice(MINCHOISES, MAXCHOISES);
                 if (choice == cancle)
-                { 
+                {
                     return false;
                 }
-                var howToOPenDoor = choice switch
+                var isOpenDoor = choice switch
                 {
                     1 => TryOpenWithKey(character, _COIN_COST),
                     2 => TryOpenWithCoins(character, _COIN_COST),
                     _ => false
                 };
-                if (!howToOPenDoor)
+                if (!isOpenDoor)
                 {
                     continue;
                 }
-                return howToOPenDoor;
+
+                return isOpenDoor;
             }
 
         }
@@ -95,7 +94,13 @@ namespace FirstConsoleApp.MazeStuff.Cells
         }
         private void Open()
         {
-            _isOpen = true;
+            Maze.Surface.Remove(this);
+            var ground = new Ground(Maze)
+            {
+                X = X,
+                Y = Y,
+            };
+            Maze.Surface.Add(ground);
         }
     }
 }

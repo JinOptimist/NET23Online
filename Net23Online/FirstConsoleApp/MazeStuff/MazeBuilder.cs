@@ -64,6 +64,9 @@ namespace FirstConsoleApp.MazeStuff
                 maxAvailableDoorsCount = _MAX_DOORS_COUNT;
             }
             var selectedCells = SelectRandomDoorPositions(doorAvailableCells, maxAvailableDoorsCount);
+
+            GenerateKeysForDoors(selectedCells.Count);
+
             for (int i = 0; i < selectedCells.Count; i++)
             {
                 var cell = selectedCells[i];
@@ -75,12 +78,15 @@ namespace FirstConsoleApp.MazeStuff
 
                 ReplaceCell(door);
             }
+
         }
+
+
         private bool IsSuitableDoorPosition(int x, int y)
         {
-            bool isHorizontalPassage = IsWallOrBoundary(x - 1, y) && IsWallOrBoundary(x + 1, y);
+            var isHorizontalPassage = IsWallOrBoundary(x - 1, y) && IsWallOrBoundary(x + 1, y);
 
-            bool isVerticalPassage = IsWallOrBoundary(x, y - 1) && IsWallOrBoundary(x, y + 1);
+            var isVerticalPassage = IsWallOrBoundary(x, y - 1) && IsWallOrBoundary(x, y + 1);
 
             return isHorizontalPassage || isVerticalPassage;
         }
@@ -104,7 +110,26 @@ namespace FirstConsoleApp.MazeStuff
             return shuffledDoors;
         }
 
+        private void GenerateKeysForDoors(int doorCount)
+        {
+            var availablePositions = _maze.Surface
+                .Where(cell => cell is Ground)
+                .OrderBy(_ => _random.Next())
+                .Take(doorCount)
+                .ToList();
 
+            for (int i = 0; i < availablePositions.Count; i++)
+            {
+                var position = availablePositions[i];
+                var key = new Key(_maze)
+                {
+                    X = position.X,
+                    Y = position.Y,
+                };
+                ReplaceCell(key);
+            }
+
+        }
 
         private void GenerateMimics()
         {
