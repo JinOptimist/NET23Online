@@ -122,15 +122,6 @@ namespace FirstConsoleApp.MazeStuff
         private void GenerateSuperPower(int maxSuperPowerCount = 2)
         {
             /*
-             как лучше?
-             - вынести в начало MazeBuilder и написать капсом
-             - ввести в скобочках GenereateSuperPower
-             - добавить здесь строку const int mavCount = 1;
-
-
-             сделала максимальное количество монет 4 в GenerateCoins!
-
-            
              размещение клеток супер силы:
              взяла все клетки, расстояние до которых 50% и выше от максимального расстояния
              нашла в них тупики

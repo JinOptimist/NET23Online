@@ -26,6 +26,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
                 Maze.EventHistory.Add("You break the wall");
                 return true;
             }
+            
             Maze.EventHistory.Add("Boom. It's a wall");
             return false;
         }
