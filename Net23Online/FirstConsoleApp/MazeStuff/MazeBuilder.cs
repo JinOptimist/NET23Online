@@ -229,14 +229,23 @@ namespace FirstConsoleApp.MazeStuff
                 }
             }
         }
-        private void GenerateRest()
+        private void GenerateRest(int maxRestCount = 5)
         {
-            var rest = new Rest(_maze)
+            var deadends = _maze
+      .Surface
+      .Where(x => x is Ground)
+      .Where(x => GetNearCells<Ground>(x).Count() >= 3)
+      .ToList();
+            for (int i = 0; i < maxRestCount; i++)
             {
-                X = 3,
-                Y = 3,
-            };
-            ReplaceCell(rest);
+                var deadend = deadends[i];
+                var rest = new Rest(_maze)
+                {
+                    X = deadend.X,
+                    Y = deadend.Y,
+                };
+                ReplaceCell(rest);
+            }
         }
 
         private void ReplaceCell(BaseCell newCell) // coin [1,1]
