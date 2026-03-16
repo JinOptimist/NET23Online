@@ -1,4 +1,6 @@
-﻿namespace FirstConsoleApp.MazeStuff
+﻿using FirstConsoleApp.MazeStuff.Cells;
+
+namespace FirstConsoleApp.MazeStuff
 {
     public class MazeController
     {
@@ -30,7 +32,7 @@
         {
             var destenationX = _maze.Hero.X;
             var destenationY = _maze.Hero.Y;
-            var key = Console.ReadKey();
+            var key = Console.ReadKey(true);
 
             switch (key.Key)
             {

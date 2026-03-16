@@ -1,5 +1,6 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Extensions;
 using System;
 
 namespace FirstConsoleApp.MazeStuff
@@ -8,6 +9,10 @@ namespace FirstConsoleApp.MazeStuff
     {
         private Maze _maze;
         private const int MAX_ICE = 8;
+        private const int MIN_PORTAL_PAIRS = 2;
+        private const int MAX_PORTAL_PAIRS = 5;
+        private const double SINGLE_USE_PORTAL_CHANCE = 0.3;
+        
         private Random _random;
 
         public Maze Build(int width, int height, int? seed = null)
@@ -99,11 +104,7 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateCoins(int maxCoinCount = 3)
         {
-            var deadends = _maze
-                .Surface
-                .Where(x => x is Ground)
-                .Where(x => GetNearCells<Ground>(x).Count() == 1)
-                .ToList();
+            var deadends = GetDeadends();
 
             for (int i = 0; i < maxCoinCount; i++)
             {
@@ -191,30 +192,108 @@ namespace FirstConsoleApp.MazeStuff
             ReplaceCell(trap);
         }
 
+
         private void GeneratePortals()
         {
-            var groundCells = _maze
-                .Surface
-                .Where(c => c is Ground)
+            var deadends = GetDeadends();
+            var intersections = GetIntersections();
+            var corners = GetAvailableCorners();
+
+            var potentialCellsForPortals = new List<BaseCell>();
+            potentialCellsForPortals.AddRange(deadends);
+            potentialCellsForPortals.AddRange(intersections);
+            potentialCellsForPortals.AddRange(corners);
+
+            potentialCellsForPortals = potentialCellsForPortals // или этот
+                .Distinct()
                 .ToList();
 
-            for (var i = 0; i < groundCells.Count; i++)
+            //potentialPortals = potentialPortals  //какой вариант использовать?
+            //    .GroupBy(c => (c.X, c.Y))
+            //    .Select(c => c.First())
+            //    .ToList();
+
+            var requestedPortalPairsCount = _random.Next(MIN_PORTAL_PAIRS, MAX_PORTAL_PAIRS + 1);
+            var maxPortalPairsCount = potentialCellsForPortals.Count / 2;
+            var pairsCount = Math.Min(requestedPortalPairsCount, maxPortalPairsCount);
+
+            if (pairsCount == 0)
             {
-                var cellCurrent = groundCells[i];
+                return;
+            }
 
-                if (cellCurrent.X % 5 == 0)
+            var totalPortals = pairsCount * 2;
+
+            potentialCellsForPortals.Shuffle(_random);
+            var selectedCells = potentialCellsForPortals
+                .Take(totalPortals)
+                .ToList();
+
+            var portals = new List<Portal>();
+
+            foreach (var cell in selectedCells)
+            {
+                var portal = new Portal(_maze)
                 {
-                    var portal = new Portal(_maze)
-                    {
-                        X = cellCurrent.X,
-                        Y = cellCurrent.Y,
+                    X = cell.X,
+                    Y = cell.Y,
+                    IsSingleUse = _random.NextDouble() < SINGLE_USE_PORTAL_CHANCE
+                };
 
-                    };
+                ReplaceCell(portal);
+                portals.Add(portal);
+            }
 
-                    ReplaceCell(portal);
-                }
+            LinkPortals(portals);
+        }
+
+        private void LinkPortals(List<Portal> portals)
+        {
+            for (var i = 0; i < portals.Count; i += 2)
+            {
+                var currentPortal = portals[i];
+                var linkedPortal = portals[i + 1];
+
+                currentPortal.LinkedPortal = linkedPortal;
+                linkedPortal.LinkedPortal = currentPortal;
             }
         }
+
+        private List<BaseCell> GetIntersections()
+        {
+            var intersections = _maze
+                 .Surface
+                 .Where(c => c is Ground)
+                 .Where(c => GetNearCells<Ground>(c).Count() >= 3)
+                 .ToList();
+
+            return intersections;
+        }
+
+        private List<BaseCell> GetAvailableCorners()
+        {
+            var corners = _maze.Surface
+               .Where(cell => cell is Ground)
+               .Where(cell =>
+                   (cell.X == _maze.Width - 1 && cell.Y == 0)
+                   || (cell.X == 0 && cell.Y == _maze.Height - 1)
+                   || (cell.X == _maze.Width - 1 && cell.Y == _maze.Height - 1))
+               .ToList();
+
+            return corners;
+        }
+
+        private List<BaseCell> GetDeadends()
+        {
+            var deadends = _maze
+                .Surface
+                .Where(c => c is Ground)
+                .Where(c => GetNearCells<Ground>(c).Count() == 1)
+                .ToList();
+
+            return deadends;
+        }
+
         private void GenerateRest()
         {
             var rest = new Rest(_maze)
