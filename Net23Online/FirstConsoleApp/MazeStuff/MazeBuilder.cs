@@ -35,6 +35,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateLava();
             // Generate other cells
             GenerateIce();
+            GenerateSkipingMove();
 
             return _maze;
         }
@@ -164,6 +165,27 @@ namespace FirstConsoleApp.MazeStuff
                 .Where(cell =>
                     cell.Y == miner.Y && Math.Abs(cell.X - miner.X) == 1
                     || cell.X == miner.X && Math.Abs(cell.Y - miner.Y) == 1);
+        }
+
+        private void GenerateSkipingMove(int maxPitCount = 5)
+        {
+            var grounds = _maze
+            .Surface
+            .Where(x => x is Ground)
+            .ToList();
+
+            for (int i = 0; i < maxPitCount; i++)
+            {
+                var freeCell = grounds[_random.Next(grounds.Count)];
+
+                var pit = new SkipingMove(_maze)
+                {
+                    X = freeCell.X,
+                    Y = freeCell.Y,
+                };
+
+                ReplaceCell(pit);
+            }
         }
 
         private void GenerateWall()
