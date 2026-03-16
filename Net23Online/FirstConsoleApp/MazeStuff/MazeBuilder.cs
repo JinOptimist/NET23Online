@@ -86,9 +86,6 @@ namespace FirstConsoleApp.MazeStuff
             GenerateMimic(0);
             GenerateMimic(1, 4);
             GenerateMimic(2, 2);
-            //GenerateRandomMimic();
-            //GenerateCoinLikeMimic(4);
-            //GenerateDoorLikeMimic(2);
         }
 
         private void GenerateMimic(int type, int maxMimicCount = 2)
