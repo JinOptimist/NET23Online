@@ -6,7 +6,6 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Doors : BaseCell
     {
-        private bool _isOpen;
         public string DoorType { get; set; }
         private const int _COIN_COST = 1;
         public Doors(Maze maze) : base(maze)
@@ -16,13 +15,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public override char Symbol => 'D';
         public override bool Interaction(BaseCharacter character)
         {
-            const int MINCHOISES = 1;
-            const int MAXCHOISES = 3;
-            var cancle = MAXCHOISES;
-            if (_isOpen)
-            {
-                return true;
-            }
+            var minChoices = 1;
+            var maxChoices = 3;
+           
             Console.WriteLine($"\n  Door is locked!");
             Console.WriteLine("Choose how to open it:");
             Console.WriteLine("1. Use Key");
@@ -31,8 +26,8 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             while (true)
             {
-                var choice = ReadMenuChoice(MINCHOISES, MAXCHOISES);
-                if (choice == cancle)
+                var choice = ReadMenuChoice(minChoices, maxChoices);
+                if (choice == maxChoices)
                 {
                     return false;
                 }

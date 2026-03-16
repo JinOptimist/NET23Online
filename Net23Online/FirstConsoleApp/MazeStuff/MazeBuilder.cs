@@ -33,8 +33,10 @@ namespace FirstConsoleApp.MazeStuff
             GenerateRest();
             GenerateDoors();
             GenerateMimics();
+            GenerateLava();
             // Generate other cells
             GenerateIce();
+            GenerateSpeedPotions();
 
             return _maze;
         }
@@ -230,12 +232,24 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateTrap()
         {
-            var trap = new Trap(_maze)
+            var nearcoins = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Coin>(x).Count() == 1)
+                .ToList();
+
+            int goldcoins = _maze.Surface.OfType<Coin>().Count();
+
+            for (int i = 0; i < goldcoins; i++)
             {
-                X = 2,
-                Y = 2,
-            };
-            ReplaceCell(trap);
+                var nearcoin = nearcoins[i];
+                var trap = new Trap(_maze)
+                {
+                    X = nearcoin.X,
+                    Y = nearcoin.Y,
+                };
+                ReplaceCell(trap);
+            }
         }
 
         private void GeneratePortals()
@@ -262,14 +276,23 @@ namespace FirstConsoleApp.MazeStuff
                 }
             }
         }
-        private void GenerateRest()
+        private void GenerateRest(int maxRestCount = 5)
         {
-            var rest = new Rest(_maze)
+            var deadends = _maze
+      .Surface
+      .Where(x => x is Ground)
+      .Where(x => GetNearCells<Ground>(x).Count() >= 3)
+      .ToList();
+            for (int i = 0; i < maxRestCount; i++)
             {
-                X = 3,
-                Y = 3,
-            };
-            ReplaceCell(rest);
+                var deadend = deadends[i];
+                var rest = new Rest(_maze)
+                {
+                    X = deadend.X,
+                    Y = deadend.Y,
+                };
+                ReplaceCell(rest);
+            }
         }
 
         private void ReplaceCell(BaseCell newCell) // coin [1,1]
@@ -313,5 +336,46 @@ namespace FirstConsoleApp.MazeStuff
                 ReplaceCell(ice);
             }
         }
+        private void GenerateLava()
+        {
+            var squareSize = Math.Max(1, Math.Min(_maze.Width, _maze.Height) / 5);
+
+            var startX = (_maze.Width - squareSize) / 2;
+            var startY = (_maze.Height - squareSize) / 2;
+
+            for (var y = startY; y < startY + squareSize; y++)
+            {
+                for (var x = startX; x < startX + squareSize; x++)
+                {
+                    var lava = new Lava(_maze)
+                    {
+                        X = x,
+                        Y = y
+                    };
+
+                    ReplaceCell(lava);
+                }
+            }
+        }
+            private void GenerateSpeedPotions(int maxSpeedPotionsCount = 3)
+        {
+            var deadendsWallsAround = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Wall>(x).Count() == 3)
+                .ToList();
+
+            for (int i = 0; i < maxSpeedPotionsCount; i++)
+            {
+                var deadendWallsAround = deadendsWallsAround[i];
+                var speedPotion = new SpeedPotions(_maze)
+                {
+                    X = deadendWallsAround.X,
+                    Y = deadendWallsAround.Y,
+                };
+                ReplaceCell(speedPotion);
+            }
+        }
     }
 }
+

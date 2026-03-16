@@ -2,18 +2,19 @@
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
-    public class Wall : BaseCell
+    internal class Lava : BaseCell
     {
-        public Wall(Maze maze) : base(maze)
+        public Lava(Maze maze) : base(maze)
         {
         }
 
-        public override char Symbol => '█';
+        public override char Symbol => 'L';
 
         public override bool Interaction(BaseCharacter character)
         {
-            Maze.EventHistory.Add("Boom. It's a wall");
-            return false;
+            character.Hp--;
+
+            return true;
         }
     }
 }
