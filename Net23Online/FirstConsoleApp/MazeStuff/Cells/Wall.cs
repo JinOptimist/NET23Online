@@ -12,6 +12,8 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("wall_sound");
             if (character is Hero hero && hero.SuperPower > 0)
             {
                 Maze.Surface.Remove(this);

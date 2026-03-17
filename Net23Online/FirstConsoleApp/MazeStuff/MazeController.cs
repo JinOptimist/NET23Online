@@ -8,7 +8,7 @@
         {
 
             var soundPlayer = new MazeSoundPlayer();
-            soundPlayer.PlayMusic("maze_background_music.wav", 0.3f, true);
+            soundPlayer.PlayMusic("maze_soundtrack.wav", 0.3f, true);
 
             var mazeBuilder = new MazeBuilder();
 

@@ -9,10 +9,14 @@
 
   <ItemGroup>
     <None Remove="MazeStuff\Sounds\maze_background_music.wav" />
+    <None Remove="MazeStuff\Sounds\wall_sound.wav" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="MazeStuff\Sounds\maze_soundtrack.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MazeStuff\Sounds\wall_sound.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
