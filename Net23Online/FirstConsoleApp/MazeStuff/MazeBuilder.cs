@@ -263,31 +263,14 @@ namespace FirstConsoleApp.MazeStuff
             _maze.Surface.Add(ice);
         }
 
-        // [2] Возвращает список типа клеток CellsType
-        //Можно ли передать несколько типов (неопределенное количество) в CellsType, чтобы метод возвращал общий список ячеек
-        //Я решил использовать сортировку через IsFriendCell см.[3]
-
-        private List<BaseCell> GetCellsOfType<CellsType>()
-         where CellsType : BaseCell
-        {
-            return _maze.Surface.Where(cell => cell is CellsType).ToList();
-        }
-
         private void GenerateIce(int countIce = 5)
         {
             countIce = Math.Min(MAX_ICE, countIce);
 
-            //см. GetCellsOfType [2]
-            //var otherCells = _maze.Surface
-            //    .Where(cell => cell is Doors || cell is Rest || cell is Portal || cell is Coin)
-            //    .ToList();
-
-            //Инициализация IsFriendCell разбросана по классам, если нужно поменять логику то придется заходить во все классы
-            //см. [2], [3]
-            var friendlyCells = _maze.Surface.Where(cell => cell.IsFriendCell == true).ToList();
+            var friendlyCells = _maze.Surface.Where(cell => cell.IsBonusCell).ToList();
 
             var nearCellsFromList = GetNearCellsFromList(friendlyCells);
-            var uniqueCellsFromList = GetUniqueCellsFromList(nearCellsFromList);
+            var uniqueCellsFromList = GetUniqueCellsFromList(nearCellsFromList.ToList());
 
             var maxCountIce = Math.Min(uniqueCellsFromList.Count, countIce);
             var randomCount = _random.Next(1, maxCountIce);
@@ -299,12 +282,11 @@ namespace FirstConsoleApp.MazeStuff
             }
         }
 
-
         /// <summary>
         /// Get near cells from cells in input List 
         /// </summary>
         /// <returns></returns>
-        public List<BaseCell> GetNearCellsFromList(List<BaseCell> inputCellList)
+        public List<BaseCell> GetNearCellsFromListTEST(List<BaseCell> inputCellList)
         {
             var outputNearCells = new List<BaseCell>();
 
@@ -317,11 +299,23 @@ namespace FirstConsoleApp.MazeStuff
             return outputNearCells;
         }
 
+        public IEnumerable<BaseCell> GetNearCellsFromList(List<BaseCell> inputCellList)
+        {
+            foreach (var cell in inputCellList)
+            {
+                var nearOneCell = GetNearCells<BaseCell>(cell);
+                foreach (var oneCell in nearOneCell)
+                {
+                    yield return oneCell;
+                }
+            }
+        }
+
         /// <summary>
         /// Get list with unique cells from List
         /// </summary>
         /// <returns></returns>
-        public List<BaseCell> GetUniqueCellsFromList(List<BaseCell> inputCellList)
+        public List<BaseCell> GetUniqueCellsFromList0(List<BaseCell> inputCellList)
         {
             var uniqueCells = new List<BaseCell>();
 
@@ -334,6 +328,11 @@ namespace FirstConsoleApp.MazeStuff
                 }
             }
             return uniqueCells;
+        }
+
+        public List<BaseCell> GetUniqueCellsFromList(List<BaseCell> inputCellList)
+        {
+            return inputCellList.Distinct().ToList();
         }
 
         public void GenerateIceNearHero()

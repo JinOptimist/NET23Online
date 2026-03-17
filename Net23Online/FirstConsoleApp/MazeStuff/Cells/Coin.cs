@@ -4,7 +4,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     internal class Coin : BaseCell
     {
-        public override bool IsFriendCell { get; init; } = true;
+        public override bool IsBonusCell { get; init; } = true;
 
         public Coin(Maze maze) : base(maze)
         {

@@ -5,7 +5,7 @@
         private Maze _maze;
 
         private MazeBuilder _mazeBuilder; //To call _mazeBuilder.GenerateIceNearHero()
-        private int countSteps = 0;
+        private int _countSteps = 0;
         private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
 
         public void Play()
@@ -76,9 +76,9 @@
                 _maze.Hero.X = destenationX;
                 _maze.Hero.Y = destenationY;
 
-                countSteps++;
+                _countSteps++;
 
-                if (countSteps % STEPS_TO_ICE == 0)
+                if (_countSteps % STEPS_TO_ICE == 0)
                 {
                     _mazeBuilder.GenerateIceNearHero();
                 }

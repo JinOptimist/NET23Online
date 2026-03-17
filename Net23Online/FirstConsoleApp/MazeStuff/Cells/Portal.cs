@@ -5,7 +5,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
     public class Portal : BaseCell
     {
         public override char Symbol => '%';
-        public override bool IsFriendCell { get; init; } = true;
+        public override bool IsBonusCell { get; init; } = true;
 
         public Portal(Maze maze) : base(maze)
         {

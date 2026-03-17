@@ -16,7 +16,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         }
 
         public override char Symbol => 'Q';
-        public override bool IsFriendCell { get; init; } = true;
+        public override bool IsBonusCell { get; init; } = true;
 
 
         public override bool Interaction(BaseCharacter character)

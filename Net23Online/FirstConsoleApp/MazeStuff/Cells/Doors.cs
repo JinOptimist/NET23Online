@@ -5,7 +5,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Doors : BaseCell
     {
-        public override bool IsFriendCell { get; init; } = true;
+        public override bool IsBonusCell { get; init; } = true;
 
         public Doors(Maze maze) : base(maze)
         {
