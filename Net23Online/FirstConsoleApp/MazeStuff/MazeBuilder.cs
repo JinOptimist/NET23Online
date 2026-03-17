@@ -1,7 +1,7 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
-using FirstConsoleApp.SeaBattleHumanVsBot;
 using System;
+using System.Diagnostics.Metrics;
 
 namespace FirstConsoleApp.MazeStuff
 {
