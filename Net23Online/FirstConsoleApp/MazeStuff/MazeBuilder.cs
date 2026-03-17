@@ -11,7 +11,7 @@ namespace FirstConsoleApp.MazeStuff
         private const int MIN_PORTAL_PAIRS = 2;
         private const int MAX_PORTAL_PAIRS = 5;
         private const double SINGLE_USE_PORTAL_CHANCE = 0.3;
-        
+
         private Random _random;
 
         public Maze Build(int width, int height, int? seed = null)
@@ -203,14 +203,9 @@ namespace FirstConsoleApp.MazeStuff
             potentialCellsForPortals.AddRange(intersections);
             potentialCellsForPortals.AddRange(corners);
 
-            potentialCellsForPortals = potentialCellsForPortals // или этот
+            potentialCellsForPortals = potentialCellsForPortals
                 .Distinct()
                 .ToList();
-
-            //potentialPortals = potentialPortals  //какой вариант использовать?
-            //    .GroupBy(c => (c.X, c.Y))
-            //    .Select(c => c.First())
-            //    .ToList();
 
             var requestedPortalPairsCount = _random.Next(MIN_PORTAL_PAIRS, MAX_PORTAL_PAIRS + 1);
             var maxPortalPairsCount = potentialCellsForPortals.Count / 2;
@@ -248,14 +243,36 @@ namespace FirstConsoleApp.MazeStuff
 
         private void LinkPortals(List<Portal> portals)
         {
-            for (var i = 0; i < portals.Count; i += 2)
-            {
-                var currentPortal = portals[i];
-                var linkedPortal = portals[i + 1];
+            var remainingPortals = new List<Portal>(portals);
 
-                currentPortal.LinkedPortal = linkedPortal;
-                linkedPortal.LinkedPortal = currentPortal;
+            while (remainingPortals.Count >= 2)
+            {
+                var currentPortal = remainingPortals[0];
+                remainingPortals.RemoveAt(0);
+
+                Portal farthestPortal = null;
+                var maxDistance = 0;
+
+                foreach (var portal in remainingPortals)
+                {
+                    var distance = GeManhattanDistance(currentPortal, portal);
+                    if (distance > maxDistance)
+                    {
+                        maxDistance = distance;
+                        farthestPortal = portal;
+                    }
+                }
+
+                remainingPortals.Remove(farthestPortal);
+
+                currentPortal.LinkedPortal = farthestPortal;
+                farthestPortal.LinkedPortal = currentPortal;
             }
+        }
+
+        private int GeManhattanDistance(BaseCell a, BaseCell b)
+        {
+            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
         }
 
         private List<BaseCell> GetIntersections()
