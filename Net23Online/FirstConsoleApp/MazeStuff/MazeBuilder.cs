@@ -417,7 +417,6 @@ namespace FirstConsoleApp.MazeStuff
             _maze.Surface.Add(ground);
         }
 
-        // [1] Можно ли сделать дженерик метод, ограничение с new()? (или метод должен принимать несколько типов через параметры)
         private void ReplaceCellToIce(BaseCell oldCell)
         {
             _maze.Surface.Remove(oldCell);
