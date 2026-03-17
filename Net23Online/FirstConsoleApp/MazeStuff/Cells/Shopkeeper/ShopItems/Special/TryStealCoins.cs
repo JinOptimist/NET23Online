@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper
+namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Special
 {
-    internal class ShopMenuDrawer
+    internal class TryStealCoins
     {
     }
 }
