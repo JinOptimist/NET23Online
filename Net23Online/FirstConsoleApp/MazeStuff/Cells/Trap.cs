@@ -18,6 +18,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("trap_sound.wav");
+
             Maze.EventHistory.Add("Look out, it's a trap");
             character.Hp--;
             Maze.Surface.Remove(this);
