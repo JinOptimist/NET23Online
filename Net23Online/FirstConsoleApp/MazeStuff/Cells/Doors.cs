@@ -8,6 +8,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
     {
         public string DoorType { get; set; }
         private const int _COIN_COST = 1;
+
+        public override bool IsBonusCell { get; init; } = true;
+
         public Doors(Maze maze) : base(maze)
         {
         }

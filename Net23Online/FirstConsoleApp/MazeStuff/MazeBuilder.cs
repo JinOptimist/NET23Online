@@ -8,9 +8,9 @@ namespace FirstConsoleApp.MazeStuff
     public class MazeBuilder
     {
         private Maze _maze;
-        private const int MAX_ICE = 8;
         private Random _random;
         private const int _MAX_DOORS_COUNT = 5;
+        private const int MAX_ICE = 15;
 
         public Maze Build(int width, int height, int? seed = null)
         {
@@ -37,7 +37,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateMimics();
             GenerateLava();
             // Generate other cells
-            GenerateIce();
+            GenerateIce(10);
             GenerateSpeedPotions();
             GenerateSkipingMove();
 
@@ -417,22 +417,106 @@ namespace FirstConsoleApp.MazeStuff
             _maze.Surface.Add(ground);
         }
 
+        private void ReplaceCellToIce(BaseCell oldCell)
+        {
+            _maze.Surface.Remove(oldCell);
+
+            var ice = new Ice(_maze)
+            {
+                X = oldCell.X,
+                Y = oldCell.Y,
+            };
+
+            _maze.Surface.Add(ice);
+        }
+
         private void GenerateIce(int countIce = 5)
         {
             countIce = Math.Min(MAX_ICE, countIce);
 
-            for (int i = 0; i < countIce; i++)
+            var friendlyCells = _maze.Surface.Where(cell => cell.IsBonusCell).ToList();
+
+            var nearCellsFromList = GetNearCellsFromList(friendlyCells);
+            var uniqueCellsFromList = GetUniqueCellsFromList(nearCellsFromList.ToList());
+
+            var maxCountIce = Math.Min(uniqueCellsFromList.Count, countIce);
+            var randomCount = _random.Next(1, maxCountIce);
+
+            for (int i = 0; i < randomCount; i++)
             {
-                var x = _random.Next(0, _maze.Width);
-                var y = _random.Next(0, _maze.Height);
+                var oldCell = GetRandomCell(uniqueCellsFromList);
+                ReplaceCellToIce(oldCell);
+            }
+        }
 
-                var ice = new Ice(_maze)
+        /// <summary>
+        /// Get near cells from cells in input List 
+        /// </summary>
+        /// <returns></returns>
+        public List<BaseCell> GetNearCellsFromListTEST(List<BaseCell> inputCellList)
+        {
+            var outputNearCells = new List<BaseCell>();
+
+            foreach (var cell in inputCellList)
+            {
+                var nearOneCell = GetNearCells<BaseCell>(cell).ToList();
+                outputNearCells.AddRange(nearOneCell);
+            }
+
+            return outputNearCells;
+        }
+
+        public IEnumerable<BaseCell> GetNearCellsFromList(List<BaseCell> inputCellList)
+        {
+            foreach (var cell in inputCellList)
+            {
+                var nearOneCell = GetNearCells<BaseCell>(cell);
+                foreach (var oneCell in nearOneCell)
                 {
-                    X = x,
-                    Y = y,
-                };
+                    yield return oneCell;
+                }
+            }
+        }
 
-                ReplaceCell(ice);
+        /// <summary>
+        /// Get list with unique cells from List
+        /// </summary>
+        /// <returns></returns>
+        public List<BaseCell> GetUniqueCellsFromList0(List<BaseCell> inputCellList)
+        {
+            var uniqueCells = new List<BaseCell>();
+
+            foreach (var cell in inputCellList)
+            {
+                bool isDublicates = uniqueCells.Any(c => c.X == cell.X && c.Y == cell.Y);
+                if (!isDublicates)
+                {
+                    uniqueCells.Add(cell);
+                }
+            }
+            return uniqueCells;
+        }
+
+        public List<BaseCell> GetUniqueCellsFromList(List<BaseCell> inputCellList)
+        {
+            return inputCellList.Distinct().ToList();
+        }
+
+        public void GenerateIceNearHero()
+        {
+            var cellsNearHero = GetNearCells<BaseCell>(_maze.Hero).ToList();
+            var availableCells = cellsNearHero.Where(cell => cell is Ground).ToList();
+
+            if (!availableCells.Any())
+            {
+                return;
+            }
+
+            var randomIceNearHero = GetRandomCell(availableCells);
+
+            if (randomIceNearHero != null)
+            {
+                ReplaceCellToIce(randomIceNearHero);
             }
         }
         private void GenerateLava(int maxLavaCount = 2)
