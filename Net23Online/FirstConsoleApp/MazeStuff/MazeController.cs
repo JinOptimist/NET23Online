@@ -4,11 +4,16 @@ namespace FirstConsoleApp.MazeStuff
     public class MazeController
     {
         private Maze _maze;
+
+        private MazeBuilder _mazeBuilder;
+        private int _countSteps = 0;
+        private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
+
         public void Play()
         {
-            var mazeBuilder = new MazeBuilder();
+            _mazeBuilder = new MazeBuilder();
 
-            _maze = mazeBuilder.Build(24, 12);
+            _maze = _mazeBuilder.Build(24, 12);
 
             var mazeDrawer = new MazeDrawer();
 
@@ -71,6 +76,13 @@ namespace FirstConsoleApp.MazeStuff
             {
                 _maze.Hero.X = destenationX;
                 _maze.Hero.Y = destenationY;
+
+                _countSteps++;
+
+                if (_countSteps % STEPS_TO_ICE == 0)
+                {
+                    _mazeBuilder.GenerateIceNearHero();
+                }
             }
 
             return true;

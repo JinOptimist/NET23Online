@@ -1,10 +1,16 @@
 ﻿
 using FirstConsoleApp.MazeStuff.Characters;
+using System.Reflection.Metadata.Ecma335;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Doors : BaseCell
     {
+        public string DoorType { get; set; }
+        private const int _COIN_COST = 1;
+
+        public override bool IsBonusCell { get; init; } = true;
+
         public Doors(Maze maze) : base(maze)
         {
         }
@@ -12,7 +18,87 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public override char Symbol => 'D';
         public override bool Interaction(BaseCharacter character)
         {
+            var minChoices = 1;
+            var maxChoices = 3;
+           
+            Console.WriteLine($"\n  Door is locked!");
+            Console.WriteLine("Choose how to open it:");
+            Console.WriteLine("1. Use Key");
+            Console.WriteLine($"2. Pay {_COIN_COST} coins");
+            Console.WriteLine("3. Cancle");
+
+            while (true)
+            {
+                var choice = ReadMenuChoice(minChoices, maxChoices);
+                if (choice == maxChoices)
+                {
+                    return false;
+                }
+                var isOpenDoor = choice switch
+                {
+                    1 => TryOpenWithKey(character, _COIN_COST),
+                    2 => TryOpenWithCoins(character, _COIN_COST),
+                    _ => false
+                };
+                if (!isOpenDoor)
+                {
+                    continue;
+                }
+
+                return isOpenDoor;
+            }
+
+        }
+        private bool TryOpenWithKey(BaseCharacter character, int cost)
+        {
+            if (!character.HasKey())
+            {
+                Console.WriteLine(" You don't have a key!");
+                return false;
+            }
+
+            character.UseKey(cost);
+            Open();
+            Console.WriteLine(" Door unlocked with key!");
             return true;
+        }
+
+        private bool TryOpenWithCoins(BaseCharacter character, int cost)
+        {
+            if (character.Coins < cost)
+            {
+                Console.WriteLine($" Not enough coins! Need {cost}, you have {character.Coins}");
+                return false;
+            }
+
+            character.SpendCoins(cost);
+            Open();
+            Console.WriteLine($" Paid {cost} coins. Door is now open.");
+            return true;
+        }
+
+        private static int ReadMenuChoice(int min, int max)
+        {
+            while (true)
+            {
+                Console.Write($"Your choice ({min}-{max}): ");
+                if (int.TryParse(Console.ReadLine(), out var choice) && choice >= min && choice <= max)
+                {
+                    return choice;
+                }
+                Console.WriteLine("Invalid choice. Try again.");
+            }
+
+        }
+        private void Open()
+        {
+            Maze.Surface.Remove(this);
+            var ground = new Ground(Maze)
+            {
+                X = X,
+                Y = Y,
+            };
+            Maze.Surface.Add(ground);
         }
     }
 }
