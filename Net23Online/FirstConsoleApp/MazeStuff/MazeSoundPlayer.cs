@@ -1,23 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NAudio.Wave;
+﻿using NAudio.Wave;
+using System;
+using System.IO;
 
-namespace FirstConsoleApp.MazeStuff
+public class MazeSoundPlayer
 {
-    public class MazeSoundPlayer
-    {
-        public void PlayTheSound(string pathToTheSound, float volumeOfTheSound)
-        {
-            var currentlyPlayingSound = new AudioFileReader(pathToTheSound);
-            currentlyPlayingSound.Volume = volumeOfTheSound;
-            var outputDevice = new WaveOutEvent();
-            outputDevice.Init(currentlyPlayingSound);
-            outputDevice.Play();
+    private WaveOutEvent outputDevice;
+    private AudioFileReader audioFile;
 
+    public void PlayMusic(string fileName, float volume = 0.3f, bool isNeedToLoop = false)
+    {
+        string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"MazeStuff\Sounds", fileName);
+
+        outputDevice = new WaveOutEvent();
+        audioFile = new AudioFileReader(fullPath);
+
+        audioFile.Volume = Math.Clamp(volume, 0f, 1f);
+
+        if (isNeedToLoop)
+        {
+            var loopStream = new LoopStream(audioFile);
+            outputDevice.Init(loopStream);
+        }
+        else
+        {
+            outputDevice.Init(audioFile);
         }
 
+        outputDevice.Play();
+
+    }
+
+    public class LoopStream : WaveStream
+    {
+        private readonly WaveStream sourceStream;
+
+        public LoopStream(WaveStream sourceStream)
+        {
+            this.sourceStream = sourceStream;
+        }
+
+        public override WaveFormat WaveFormat => sourceStream.WaveFormat;
+        public override long Length => sourceStream.Length;
+
+        public override long Position
+        {
+            get => sourceStream.Position;
+            set => sourceStream.Position = value;
+        }
+
+        public override int Read(byte[] buffer, int offset, int count)
+        {
+            int bytesRead = sourceStream.Read(buffer, offset, count);
+
+            if (bytesRead == 0)
+            {
+                sourceStream.Position = 0;
+                bytesRead = sourceStream.Read(buffer, offset, count);
+            }
+
+            return bytesRead;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                sourceStream?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

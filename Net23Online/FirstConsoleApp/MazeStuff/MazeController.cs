@@ -4,9 +4,12 @@
     {
         private Maze _maze;
 
-        private MazeSoundPlayer _backgroundMusic;
         public void Play()
         {
+
+            var soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("maze_background_music.wav", 0.3f, true);
+
             var mazeBuilder = new MazeBuilder();
 
             _maze = mazeBuilder.Build(24, 12);
@@ -22,7 +25,6 @@
                 mazeDrawer.Draw(_maze);
             }
 
-            _backgroundMusic.PlayTheSound("Sounds/maze_background_music.wav", 0.2f);
         }
 
         /// <summary>

@@ -8,13 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="MazeStuff\Sounds\maze_background_music.mp3" />
+    <None Remove="MazeStuff\Sounds\maze-background-music.wav" />
     <None Remove="MazeStuff\Sounds\maze_background_music.wav" />
-    <None Remove="MazeStuff\Sounds\maze_background_sound.mp3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="MazeStuff\Sounds\maze_background_music.wav">
+    <Content Include="MazeStuff\Sounds\maze-background-music.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
