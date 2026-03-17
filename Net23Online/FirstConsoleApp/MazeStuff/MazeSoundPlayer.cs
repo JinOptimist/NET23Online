@@ -9,7 +9,7 @@ public class MazeSoundPlayer
 
     public void PlayMusic(string fileName, float volume = 0.3f, bool isNeedToLoop = false)
     {
-        string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"MazeStuff\Sounds", fileName);
+        var fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"MazeStuff\Sounds", fileName);
 
         outputDevice = new WaveOutEvent();
         audioFile = new AudioFileReader(fullPath);
@@ -50,7 +50,7 @@ public class MazeSoundPlayer
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            int bytesRead = sourceStream.Read(buffer, offset, count);
+            var bytesRead = sourceStream.Read(buffer, offset, count);
 
             if (bytesRead == 0)
             {
