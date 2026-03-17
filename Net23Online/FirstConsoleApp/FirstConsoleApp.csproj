@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="MazeStuff\Sounds\maze_background_music.wav" />
     <None Remove="MazeStuff\Sounds\pit_sound.wav" />
+    <None Remove="MazeStuff\Sounds\rest_sound.wav" />
     <None Remove="MazeStuff\Sounds\speedpotion_sound.flac" />
     <None Remove="MazeStuff\Sounds\superpower_sound.wav" />
     <None Remove="MazeStuff\Sounds\trap_sound.wav" />
@@ -21,6 +22,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MazeStuff\Sounds\pit_sound.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MazeStuff\Sounds\rest_sound.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MazeStuff\Sounds\speedpotion_sound.flac">
