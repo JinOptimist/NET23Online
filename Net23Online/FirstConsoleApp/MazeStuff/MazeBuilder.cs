@@ -2,8 +2,6 @@
 using FirstConsoleApp.MazeStuff.Characters;
 using FirstConsoleApp.SeaBattleHumanVsBot;
 using System;
-using static System.Net.Mime.MediaTypeNames;
-using System.Diagnostics.Metrics;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -40,7 +38,6 @@ namespace FirstConsoleApp.MazeStuff
             GenerateLava();
             // Generate other cells
             GenerateIce(10);
-            GenerateIce();
             GenerateSpeedPotions();
             GenerateSkipingMove();
 
