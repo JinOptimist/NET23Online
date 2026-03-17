@@ -7,4 +7,20 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="MazeStuff\Sounds\maze_background_music.mp3" />
+    <None Remove="MazeStuff\Sounds\maze_background_music.wav" />
+    <None Remove="MazeStuff\Sounds\maze_background_sound.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="MazeStuff\Sounds\maze_background_music.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.3.0" />
+  </ItemGroup>
+
 </Project>

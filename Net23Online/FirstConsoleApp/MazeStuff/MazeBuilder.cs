@@ -480,7 +480,7 @@ namespace FirstConsoleApp.MazeStuff
                 ReplaceCell(lava);
             }
         }
-            private void GenerateSpeedPotions(int maxSpeedPotionsCount = 3)
+        private void GenerateSpeedPotions(int maxSpeedPotionsCount = 3)
         {
             var deadendsWallsAround = _maze
                 .Surface
@@ -499,6 +499,10 @@ namespace FirstConsoleApp.MazeStuff
                 ReplaceCell(speedPotion);
             }
         }
+
+
+        
+    
     }
 }
 

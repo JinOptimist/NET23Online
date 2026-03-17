@@ -3,6 +3,8 @@
     public class MazeController
     {
         private Maze _maze;
+
+        private MazeSoundPlayer _backgroundMusic;
         public void Play()
         {
             var mazeBuilder = new MazeBuilder();
@@ -19,6 +21,8 @@
                 continuewGame = DoOneStep();
                 mazeDrawer.Draw(_maze);
             }
+
+            _backgroundMusic.PlayTheSound("Sounds/maze_background_music.wav", 0.2f);
         }
 
         /// <summary>
