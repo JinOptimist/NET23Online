@@ -21,6 +21,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         {
             MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
             soundPlayer.PlayMusic("rest_sound.wav");
+
             character.Hp++;
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
