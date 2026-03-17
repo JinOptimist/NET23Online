@@ -19,7 +19,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {            
-            character.Hp -= 1; // Need a new method in Character for logic. (Other cells can change hp)
+            character.Hp -= 1; 
 
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
