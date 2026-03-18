@@ -20,6 +20,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
             var key = Console.ReadKey(true).Key;
             if (key != ConsoleKey.Y)
             {
+                MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+                soundPlayer.PlayMusic("portal_sound.wav");
+
                 Maze.EventHistory.Add("You decided not to use the portal");
                 return true;
             }

@@ -18,6 +18,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public override char Symbol => 's';
         public override bool Interaction(BaseCharacter character)
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("speedpotion_sound.flac");
+
             Maze.EventHistory.Add("You drank the speed potion! Now you move faster.");
             character.Speed++;
 
