@@ -5,16 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Special
+namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Services
 {
-    internal class TryStealCoins : ShopItem
+    internal class ShopkeeperServiceRestoreHP : ShopkeeperService
     {
-        private const int TRY_STEAL_COINS_CHANCE = 10;
-        public TryStealCoins()
+        public ShopkeeperServiceRestoreHP(int unitPrice) : base(unitPrice)
         {
-            _name = "Try steal coins from Shopkeeper.";
+            _name = "Restore HP";
         }
-
         public override void Execute(BaseCharacter character)
         {
             throw new NotImplementedException();

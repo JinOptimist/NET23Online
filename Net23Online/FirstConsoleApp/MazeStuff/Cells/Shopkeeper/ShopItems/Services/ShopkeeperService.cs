@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Services
 {
-    internal abstract class Service : ShopItem
+    internal abstract class ShopkeeperService : ShopItem
     {
-        public int Price { get; set; }
+        protected int _unitPrice;
+        protected ShopkeeperService(int unitPrice)
+        {
+            _unitPrice = unitPrice;
+        }
     }
 }
