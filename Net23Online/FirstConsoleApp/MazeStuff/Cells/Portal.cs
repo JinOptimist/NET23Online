@@ -21,7 +21,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             if (key != ConsoleKey.Y)
             {
                 MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-                soundPlayer.PlayMusic("rest_sound.wav");
+                soundPlayer.PlayMusic("portal_sound.wav");
 
                 Maze.EventHistory.Add("You decided not to use the portal");
                 return true;
