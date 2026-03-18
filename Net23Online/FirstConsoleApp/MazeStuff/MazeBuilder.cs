@@ -338,15 +338,12 @@ namespace FirstConsoleApp.MazeStuff
                 .Where(x => GetNearCells<Coin>(x).Count() == 1)
                 .ToList();
 
-            int goldcoins = _maze.Surface.OfType<Coin>().Count();
-
-            for (int i = 0; i < goldcoins; i++)
+            foreach (var nearCoin in nearcoins)
             {
-                var nearcoin = nearcoins[i];
                 var trap = new Trap(_maze)
                 {
-                    X = nearcoin.X,
-                    Y = nearcoin.Y,
+                    X = nearCoin.X,
+                    Y = nearCoin.Y,
                 };
                 ReplaceCell(trap);
             }
