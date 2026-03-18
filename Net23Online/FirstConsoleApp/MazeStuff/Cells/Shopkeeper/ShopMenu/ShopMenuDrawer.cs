@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems;
+using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.TradeGoods;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,18 +15,28 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
         public void Draw(ShopMenu shopMenu)
         {
             _shopMenu = shopMenu;
-            for (var menuItemIndex = 0; menuItemIndex < _shopMenu.MenuItems.Count; menuItemIndex++)
+
+            for (var menuItemIndex = 0; menuItemIndex < shopMenu.MenuItems.Count(); menuItemIndex++)
             {
-                Console.Write(_shopMenu.MenuItems[menuItemIndex]);
-                if(_shopMenu._cursorPosition == menuItemIndex)
+                var currentMenuItem = shopMenu.MenuItems[menuItemIndex];
+                Console.Write($"{menuItemIndex + 1}. ");
+                if(currentMenuItem is TradeGoods)
                 {
-                    Console.WriteLine($" {_shopMenu._cursor}");
+                    Console.Write("Buy ");
+                }
+
+                Console.Write($"{currentMenuItem._name}");
+                
+                if(shopMenu._cursorPosition == menuItemIndex)
+                {
+                    Console.WriteLine($"{shopMenu._cursor}");
                 }
                 else
                 {
                     Console.WriteLine();
                 }
             }
+            Console.WriteLine($"{_shopMenu.MenuItems.Count}. Leave");
             DrawShopMenuHistory();
         }
         private void DrawShopMenuHistory()

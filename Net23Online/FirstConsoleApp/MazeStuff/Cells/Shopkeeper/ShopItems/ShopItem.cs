@@ -9,7 +9,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems
 {
     internal abstract class ShopItem
     {
-        protected string _name { get; set; }
+        public string _name { get; set; }
         public abstract void Execute(BaseCharacter character);
     }
 }

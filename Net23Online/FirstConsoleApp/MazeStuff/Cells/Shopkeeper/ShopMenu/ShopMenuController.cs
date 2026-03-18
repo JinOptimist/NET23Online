@@ -17,7 +17,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
         public void StartShopMenu()
         {
             var shopMenuBuilder = new ShopMenuBuilder();
-            _shopMenu = shopMenuBuilder.Build(_shopkeeper._goods, '<');
+            _shopMenu = shopMenuBuilder.Build(_shopkeeper.GoodsAndServices, '<');
 
             var shopMenuDrawer = new ShopMenuDrawer();
             shopMenuDrawer.Draw(_shopMenu);
@@ -32,23 +32,29 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
         }
         private bool DoOneMenuAction()
         {
-            var newCursorPosition = _shopMenu._cursorPosition;
+            var currentCursorPosition = _shopMenu._cursorPosition;
             var key = Console.ReadKey();
             switch (key.Key)
             {
                 case ConsoleKey.W:
                     {
-                        newCursorPosition--;
+                        if (currentCursorPosition != 0)
+                        {
+                            currentCursorPosition--;
+                        }
                         break;
                     }
                 case ConsoleKey.S:
                     {
-                        newCursorPosition++;
+                        if (currentCursorPosition != _shopMenu.MenuItems.Count)
+                        {
+                            currentCursorPosition++;
+                        }
                         break;
                     }
                 case ConsoleKey.Enter:
                     {
-                        ProcessMen(newCursorPosition);
+                        _shopMenu.MenuItems.Execute();
                         break;
                     }
                 case ConsoleKey.Escape:
@@ -56,49 +62,8 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
                         return false;
                     }
             }
-            if (newCursorPosition >= 0 && newCursorPosition < _shopkeeper.wares.count())
-            {
-                shopdrawer.cursorposition = newCursorPosition;
-                return true;
-            }
             return true;
         }
-        private bool buytheware(int cursorposition)
-        {
-            var action = (shopaction)cursorposition;
-            switch (action)
-            {
-                case shopaction.heal:
-                    {
-                        _shopkeeper._character.hp++;
-                        break;
-                    }
-                case shopaction.buypotion:
-                    {
-                        _shopkeeper._character.speed++;
-                        break;
-                    }
-                case shopaction.buycourse:
-                    {
-                        _shopkeeper._character.coins--;
-                        break;
-                    }
-                case shopaction.stealcoin:
-                    {
-                        var trysteal = _shopkeeper._random.next(1, 100);
-                        if (trysteal < 10)
-                        {
-                            console.writeline("you stole one coin from the stupid shopkeeper!");
-                            _shopkeeper._character.coins++;
-                        }
-                        else
-                        {
-                            console.writeline("the crazy shopkeeper beat you up and refuses to do business with you anymore!");
-                            _shopkeeper._character.hp--;
-                        }
-                        break;
-                    }
-            }
-        }
+       
     }
 }

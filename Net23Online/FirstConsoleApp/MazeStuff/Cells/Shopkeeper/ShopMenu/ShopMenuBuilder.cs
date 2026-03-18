@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,19 +10,14 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
     internal class ShopMenuBuilder
     {
         private ShopMenu _shopMenu;
-        public ShopMenu Build(List<string> goods, char cursor = '<')
+        public ShopMenu Build(List<ShopItem> goodsAndServices, char cursor = '<')
         {
-            var menuItems = new List<string>();
-            for(int i = 0; i < goods.Count; i++)
+            var menuItems = new List<ShopItem>();
+            foreach (ShopItem shopItem in goodsAndServices)
             {
-                menuItems.Add($"{i + 1}. Buy a " + goods[i]);
+                menuItems.Add(shopItem);
             }
-            menuItems.AddRange(new List<string>
-            {
-                $"{menuItems.Count}. Restore 1 HP.",
-                $"{menuItems.Count + 1}. Try to steal a coin from the Shopkeeper. (10%)",
-                $"{menuItems.Count + 2}. Leave"
-            });
+
             _shopMenu = new ShopMenu
             {
                 MenuItems = menuItems,
