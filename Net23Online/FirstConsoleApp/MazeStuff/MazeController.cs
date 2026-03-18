@@ -1,9 +1,11 @@
 ﻿
+using FirstConsoleApp.MazeStuff.Interfaces;
+
 namespace FirstConsoleApp.MazeStuff
 {
     public class MazeController
     {
-        private Maze _maze;
+        private IMaze _maze;
 
         private MazeBuilder _mazeBuilder;
         private int _countSteps = 0;

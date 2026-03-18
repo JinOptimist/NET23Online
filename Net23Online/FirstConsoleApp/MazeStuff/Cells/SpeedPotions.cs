@@ -1,9 +1,5 @@
-﻿using FirstConsoleApp.MazeStuff.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
@@ -12,11 +8,11 @@ namespace FirstConsoleApp.MazeStuff.Cells
     /// </summary>
     internal class SpeedPotions : BaseCell
     {
-        public SpeedPotions(Maze maze) : base(maze)
+        public SpeedPotions(IMaze maze) : base(maze)
         {
         }
         public override char Symbol => 's';
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
             Maze.EventHistory.Add("You drank the speed potion! Now you move faster.");
             character.Speed++;

@@ -1,20 +1,16 @@
-﻿using FirstConsoleApp.MazeStuff.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Ice : BaseCell
     {
         public override char Symbol => 'i';
-        public Ice(Maze maze) : base(maze)
+        public Ice(IMaze maze) : base(maze)
         {
         }
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
             character.Hp -= 1; // Need a new method in Character for logic. (Other cells can change hp, speed)
             character.Speed -= 1;

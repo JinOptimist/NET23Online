@@ -1,13 +1,14 @@
-﻿using FirstConsoleApp.MazeStuff.Cells;
+﻿using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff
 {
     public class MazeDrawer
     {
-        private Maze _maze;
+        private IMaze _maze;
         private const int EVENT_HISTORY_LENGTH = 5;
 
-        public void Draw(Maze maze)
+        public void Draw(IMaze maze)
         {
             _maze = maze;
             Console.Clear();
@@ -18,7 +19,7 @@ namespace FirstConsoleApp.MazeStuff
 
                 for (int x = 0; x < maze.Width; x++)
                 {
-                    BaseCell currentCell;
+                    IBaseCell currentCell;
 
                     if (maze.Hero.X == x && maze.Hero.Y == y)
                     {

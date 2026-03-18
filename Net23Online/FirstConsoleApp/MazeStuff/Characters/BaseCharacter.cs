@@ -1,11 +1,12 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
-using System.Reflection.Metadata.Ecma335;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Characters
 {
-    public abstract class BaseCharacter : BaseCell
+    public abstract class BaseCharacter : BaseCell, IBaseCharacter
     {
-        protected BaseCharacter(Maze maze) : base(maze)
+        protected BaseCharacter(IMaze maze) : base(maze)
         {
         }
 

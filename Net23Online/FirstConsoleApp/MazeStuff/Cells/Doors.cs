@@ -1,5 +1,7 @@
 ﻿
 using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 using System.Reflection.Metadata.Ecma335;
 
 namespace FirstConsoleApp.MazeStuff.Cells
@@ -11,12 +13,12 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool IsBonusCell { get; init; } = true;
 
-        public Doors(Maze maze) : base(maze)
+        public Doors(IMaze maze) : base(maze)
         {
         }
 
         public override char Symbol => 'D';
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
             var minChoices = 1;
             var maxChoices = 3;
@@ -49,7 +51,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             }
 
         }
-        private bool TryOpenWithKey(BaseCharacter character, int cost)
+        private bool TryOpenWithKey(IBaseCharacter character, int cost)
         {
             if (!character.HasKey())
             {
@@ -63,7 +65,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             return true;
         }
 
-        private bool TryOpenWithCoins(BaseCharacter character, int cost)
+        private bool TryOpenWithCoins(IBaseCharacter character, int cost)
         {
             if (character.Coins < cost)
             {
