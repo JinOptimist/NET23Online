@@ -1,6 +1,4 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
-using FirstConsoleApp.MazeStuff.Characters;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -64,7 +62,7 @@ namespace FirstConsoleApp.MazeStuff
         private void DrawHeroStats()
         {
             var hero = _maze.Hero;
-            Console.WriteLine($"Hp: {hero.Hp} Coins: {hero.Coins} Keys: {hero.Keys} SuperPower: {hero.SuperPower}");
+            Console.WriteLine($"Hp: {hero.Hp} Coins: {hero.Coins} Keys: {hero.Keys} SuperPower: {hero.SuperPower} Speed: {hero.Speed}");
         }
 
         private void DrawEventHsitory()

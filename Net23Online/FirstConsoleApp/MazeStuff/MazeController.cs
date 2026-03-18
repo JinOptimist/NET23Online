@@ -1,18 +1,24 @@
-﻿namespace FirstConsoleApp.MazeStuff
+﻿
+namespace FirstConsoleApp.MazeStuff
 {
     public class MazeController
     {
         private Maze _maze;
 
+        private MazeBuilder _mazeBuilder;
+        private int _countSteps = 0;
+        private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
+
         public void Play()
         {
+            _mazeBuilder = new MazeBuilder();
 
             var soundPlayer = new MazeSoundPlayer();
             soundPlayer.PlayMusic("maze_soundtrack.wav", 0.3f, true);
 
             var mazeBuilder = new MazeBuilder();
 
-            _maze = mazeBuilder.Build(24, 12);
+            _maze = _mazeBuilder.Build(24, 12);
 
             var mazeDrawer = new MazeDrawer();
 
@@ -36,7 +42,7 @@
         {
             var destenationX = _maze.Hero.X;
             var destenationY = _maze.Hero.Y;
-            var key = Console.ReadKey();
+            var key = Console.ReadKey(true);
 
             switch (key.Key)
             {
@@ -76,6 +82,13 @@
             {
                 _maze.Hero.X = destenationX;
                 _maze.Hero.Y = destenationY;
+
+                _countSteps++;
+
+                if (_countSteps % STEPS_TO_ICE == 0)
+                {
+                    _mazeBuilder.GenerateIceNearHero();
+                }
             }
 
             return true;

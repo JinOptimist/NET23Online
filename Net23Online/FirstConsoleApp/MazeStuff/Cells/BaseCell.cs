@@ -8,6 +8,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public int Y { get; set; }
         public Maze Maze { get; set; }
         public abstract char Symbol { get; }
+        public virtual bool IsBonusCell { get; init; } = false;
 
         public BaseCell(Maze maze)
         {
