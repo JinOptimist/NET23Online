@@ -14,6 +14,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(IBaseCharacter character)
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("mimic_sound.mp3");
+
             return true;
         }
     }

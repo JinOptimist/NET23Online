@@ -12,6 +12,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(IBaseCharacter character)
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("ice_sound.wav");
+
             character.Hp -= 1; // Need a new method in Character for logic. (Other cells can change hp, speed)
             character.Speed -= 1;
 

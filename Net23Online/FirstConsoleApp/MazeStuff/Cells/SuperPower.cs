@@ -14,10 +14,14 @@ public class SuperPower : BaseCell
 
     public override bool Interaction(IBaseCharacter character)
     {
+
         if (character is not Hero hero || hero.Coins < 2)
         {
             return true;
         }
+
+        MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+        soundPlayer.PlayMusic("superpower_sound.wav");
 
         Maze.EventHistory.Add("SuperPower! +Hp. You can break the wall.");
             

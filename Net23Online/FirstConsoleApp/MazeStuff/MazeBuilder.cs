@@ -677,6 +677,10 @@ namespace FirstConsoleApp.MazeStuff
                 ReplaceCell(speedPotion);
             }
         }
+
+
+        
+    
     }
 }
 

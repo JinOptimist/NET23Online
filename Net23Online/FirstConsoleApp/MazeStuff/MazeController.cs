@@ -15,6 +15,11 @@ namespace FirstConsoleApp.MazeStuff
         {
             _mazeBuilder = new MazeBuilder();
 
+            var soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("maze_soundtrack.wav", 0.3f, true);
+
+            var mazeBuilder = new MazeBuilder();
+
             _maze = _mazeBuilder.Build(24, 12);
 
             var mazeDrawer = new MazeDrawer();
@@ -27,6 +32,7 @@ namespace FirstConsoleApp.MazeStuff
                 continuewGame = DoOneStep();
                 mazeDrawer.Draw(_maze);
             }
+
         }
 
         /// <summary>
