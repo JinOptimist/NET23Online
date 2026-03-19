@@ -164,7 +164,7 @@ namespace FirstConsoleApp.MazeStuff
             TryReplaceMimic(maxMimicCount, freeCells);
         }
 
-        private void TryReplaceMimic(int maxMimicCount, List<BaseCell> cells)
+        private void TryReplaceMimic(int maxMimicCount, List<IBaseCell> cells)
         {
             if (!cells.Any())
             {

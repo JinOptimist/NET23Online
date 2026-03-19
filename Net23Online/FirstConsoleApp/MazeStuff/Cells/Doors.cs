@@ -19,9 +19,6 @@ namespace FirstConsoleApp.MazeStuff.Cells
         }
 
         public override char Symbol => SYMBOL;
-        public override bool Interaction(BaseCharacter character)
-        {
-        public override char Symbol => 'D';
         public override bool Interaction(IBaseCharacter character)
         {
             var minChoices = 1;
