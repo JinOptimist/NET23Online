@@ -4,13 +4,14 @@ using FirstConsoleApp.MazeStuff.Characters;
 
 public class Key : BaseCell
 {
+    private const int _KEY_COLLECT = 1;
     public Key(Maze maze) : base(maze) { }
 
     public override char Symbol => 'K';
 
     public  bool Collect(BaseCharacter character)
     {
-        character.CollectKey();
+        character.CollectKey(_KEY_COLLECT);
         return true; 
     }
     public override bool Interaction(BaseCharacter character)

@@ -6,7 +6,6 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Doors : BaseCell
     {
-        public string DoorType { get; set; }
         private const int _COIN_COST = 1;
 
         public override bool IsBonusCell { get; init; } = true;
@@ -20,12 +19,11 @@ namespace FirstConsoleApp.MazeStuff.Cells
         {
             var minChoices = 1;
             var maxChoices = 3;
-           
             Console.WriteLine($"\n  Door is locked!");
             Console.WriteLine("Choose how to open it:");
             Console.WriteLine("1. Use Key");
             Console.WriteLine($"2. Pay {_COIN_COST} coins");
-            Console.WriteLine("3. Cancle");
+            Console.WriteLine("3.Cancle");
 
             while (true)
             {
@@ -51,7 +49,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         }
         private bool TryOpenWithKey(BaseCharacter character, int cost)
         {
-            if (!character.HasKey())
+            if (!character.HasKey(cost))
             {
                 Console.WriteLine(" You don't have a key!");
                 return false;
@@ -59,7 +57,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             character.UseKey(cost);
             Open();
-            Console.WriteLine(" Door unlocked with key!");
+            Maze.EventHistory.Add(" Door unlocked with key!");
             return true;
         }
 
@@ -73,7 +71,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             character.SpendCoins(cost);
             Open();
-            Console.WriteLine($" Paid {cost} coins. Door is now open.");
+           Maze.EventHistory.Add($" Paid {cost} coins. Door is now open.");
             return true;
         }
 

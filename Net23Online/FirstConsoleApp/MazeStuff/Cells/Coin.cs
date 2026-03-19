@@ -5,7 +5,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
     internal class Coin : BaseCell
     {
         public override bool IsBonusCell { get; init; } = true;
-
+        private const int _COINS_COLLECT = 1;
         public Coin(Maze maze) : base(maze)
         {
         }
@@ -15,7 +15,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public override bool Interaction(BaseCharacter character)
         {
             Maze.EventHistory.Add("Look, it's a coin");
-            character.Coins++;
+            character.CollectCoin(_COINS_COLLECT);
 
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze) { 

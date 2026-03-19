@@ -1,4 +1,6 @@
 ﻿
+using FirstConsoleApp.MazeStuff.Characters;
+
 namespace FirstConsoleApp.MazeStuff
 {
     public class MazeController
@@ -20,7 +22,7 @@ namespace FirstConsoleApp.MazeStuff
             mazeDrawer.Draw(_maze);
 
             var continuewGame = true;
-            while (continuewGame)
+            while (continuewGame || !_maze.Hero.IsDead)
             {
                 continuewGame = DoOneStep();
                 mazeDrawer.Draw(_maze);
@@ -65,7 +67,10 @@ namespace FirstConsoleApp.MazeStuff
                         return false;
                     }
             }
-
+            if (_maze.Hero.IsDead )
+            {
+                return false;
+            }
             var destenationCell = _maze[destenationX, destenationY];
             if (destenationCell == null)
             {

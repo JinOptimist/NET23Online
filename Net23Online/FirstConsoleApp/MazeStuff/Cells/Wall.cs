@@ -4,6 +4,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Wall : BaseCell
     {
+        private const int _SUPERPOWER_COST = 1;
         public Wall(Maze maze) : base(maze)
         {
         }
@@ -22,7 +23,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
                 };
                 Maze.Surface.Add(ground);
                 
-                hero.SuperPower--;
+                character.SpendSuperPower(_SUPERPOWER_COST);
                 Maze.EventHistory.Add("You break the wall");
                 return true;
             }

@@ -10,7 +10,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
     internal class Rest : BaseCell
     {
 
-
+        private const int _HP_COLLECT = 1;
         public Rest(Maze maze) : base(maze)
         {
         }
@@ -21,7 +21,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
-            character.Hp++;
+            character.CollectHp(_HP_COLLECT);
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
             {
