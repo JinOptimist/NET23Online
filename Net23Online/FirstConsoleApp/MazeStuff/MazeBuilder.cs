@@ -18,6 +18,9 @@ namespace FirstConsoleApp.MazeStuff
 
         private IMaze _maze;
         private Random _random;
+        public const int RANDOM_MIMIC_CODE = 0;
+        public const int COIN_LIKE_MIMIC_CODE = 1;
+        public const int DOOR_LIKE_MIMIC_CODE = 2;
 
         public IMaze Build(int width, int height, int? seed = null)
         {
@@ -144,15 +147,41 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateMimics()
         {
-            var freeCells = _maze.Surface.Where(cell => cell is Ground).ToList();
-            var randomCellIndex = _random.Next(0, freeCells.Count() - 1);
-            var randomCell = freeCells[randomCellIndex];
-            var mimic = new Mimic(_maze)
+            GenerateMimic(RANDOM_MIMIC_CODE);
+            GenerateMimic(COIN_LIKE_MIMIC_CODE, 4);
+            GenerateMimic(DOOR_LIKE_MIMIC_CODE, 2);
+        }
+
+        private void GenerateMimic(int type, int maxMimicCount = 2)
+        {
+            var freeCells = _maze
+                .Surface
+                .Where(cell => cell is Ground)
+                .Where(x => type == RANDOM_MIMIC_CODE || 
+                    type == COIN_LIKE_MIMIC_CODE && GetNearCells<Ground>(x).Count() == 1 || 
+                    type == DOOR_LIKE_MIMIC_CODE && GetNearCells<Ground>(x).Count() > 1)
+                .ToList();
+            TryReplaceMimic(maxMimicCount, freeCells);
+        }
+
+        private void TryReplaceMimic(int maxMimicCount, List<IBaseCell> cells)
+        {
+            if (!cells.Any())
             {
-                X = randomCell.X,
-                Y = randomCell.Y,
-            };
-            ReplaceCell(mimic);
+                return;
+            }
+
+            for (int i = 0; i < maxMimicCount; i++)
+            {
+                var randomIndex = _random.Next(cells.Count());
+                var randomCell = cells[randomIndex];
+                var mimic = new Mimic(_maze)
+                {
+                    X = randomCell.X,
+                    Y = randomCell.Y,
+                };
+                ReplaceCell(mimic);
+            }
         }
 
         private void GenerateCoins(int maxCoinCount = 4)

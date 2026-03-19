@@ -8,6 +8,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Doors : BaseCell
     {
+        public const char SYMBOL = 'D';
         public string DoorType { get; set; }
         private const int _COIN_COST = 1;
 
@@ -17,7 +18,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         {
         }
 
-        public override char Symbol => 'D';
+        public override char Symbol => SYMBOL;
         public override bool Interaction(IBaseCharacter character)
         {
             var minChoices = 1;

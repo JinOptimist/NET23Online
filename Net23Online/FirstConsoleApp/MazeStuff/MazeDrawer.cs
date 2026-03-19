@@ -1,4 +1,5 @@
-﻿using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+﻿using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Cells.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff

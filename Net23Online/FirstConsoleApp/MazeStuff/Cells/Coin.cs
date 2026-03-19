@@ -5,13 +5,14 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Coin : BaseCell
     {
+        public const char SYMBOL = 'c';
         public override bool IsBonusCell { get; init; } = true;
 
         public Coin(IMaze maze) : base(maze)
         {
         }
 
-        public override char Symbol => 'c';
+        public override char Symbol => SYMBOL;
 
         public override bool Interaction(IBaseCharacter character)
         {

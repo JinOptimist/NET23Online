@@ -1,7 +1,4 @@
-﻿using FirstConsoleApp.GuessTheNumberStuff;
-using System.Numerics;
-
-namespace FirstConsoleApp.TicTacToeHumanVsBot;
+﻿namespace FirstConsoleApp.TicTacToeHumanVsBot;
 
 public class GameManagement
 {

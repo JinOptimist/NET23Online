@@ -1,5 +1,4 @@
 ﻿namespace FirstConsoleApp.SeaBattleHumanVsBot;
-using System.Threading;
 
 public class PlayerHuman : Player
 {
