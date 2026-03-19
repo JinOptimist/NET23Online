@@ -15,8 +15,9 @@ namespace FirstConsoleApp.MazeStuff
         private const double SINGLE_USE_PORTAL_CHANCE = 0.3;
         private const int _MAX_DOORS_COUNT = 5;
         private const int MAX_ICE = 15;
+        private const int MAX_FIRE = 5;
 
-        private IMaze _maze;
+        private IMaze _maze;  
         private Random _random;
         public const int RANDOM_MIMIC_CODE = 0;
         public const int COIN_LIKE_MIMIC_CODE = 1;
@@ -50,6 +51,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateIce(10);
             GenerateSpeedPotions();
             GenerateSkipingMove();
+            GenerateFire();
 
             return _maze;
         }
@@ -707,9 +709,23 @@ namespace FirstConsoleApp.MazeStuff
             }
         }
 
+        private void GenerateFire()
+        {           
 
-        
-    
+            for (int i = 0; i < MAX_FIRE; i++)
+            {
+                var x = _random.Next(0, _maze.Width);
+                var y = _random.Next(0, _maze.Height);
+
+                var fire = new Fire(_maze)
+                {
+                    X = x,
+                    Y = y,
+                };
+
+                ReplaceCell(fire);
+            }
+        }
     }
 }
 
