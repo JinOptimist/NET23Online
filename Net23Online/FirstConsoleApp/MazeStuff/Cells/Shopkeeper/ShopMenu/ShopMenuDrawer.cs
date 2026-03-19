@@ -36,7 +36,6 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
                     Console.WriteLine();
                 }
             }
-            Console.WriteLine($"{_shopMenu.MenuItems.Count}. Leave");
             DrawShopMenuHistory();
         }
         private void DrawShopMenuHistory()

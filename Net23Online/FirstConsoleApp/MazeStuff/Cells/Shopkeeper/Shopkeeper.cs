@@ -10,7 +10,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper
 {
     internal class Shopkeeper : BaseCell
     {
-        private BaseCharacter _character;
+        public BaseCharacter _character;
         public List<ShopItem> GoodsAndServices { get; set; }
         private Random _random;
         private bool _wantToTrade;

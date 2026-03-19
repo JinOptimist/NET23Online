@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FirstConsoleApp.MazeStuff.Characters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,12 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
     internal class ShopMenuController
     {
         private ShopMenu _shopMenu;
+        private BaseCharacter _character;
         private Shopkeeper _shopkeeper { get; set; }
         public ShopMenuController(Shopkeeper shopkeeper)
         {
             _shopkeeper = shopkeeper;
+            _character = shopkeeper._character;
         }
         public void StartShopMenu()
         {
@@ -46,7 +49,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
                     }
                 case ConsoleKey.S:
                     {
-                        if (currentCursorPosition != _shopMenu.MenuItems.Count)
+                        if (currentCursorPosition != (_shopMenu.MenuItems.Count - 1))
                         {
                             currentCursorPosition++;
                         }
@@ -54,7 +57,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
                     }
                 case ConsoleKey.Enter:
                     {
-                        _shopMenu.MenuItems.Execute();
+                        _shopMenu.MenuItems[currentCursorPosition].Execute(_character);
                         break;
                     }
                 case ConsoleKey.Escape:
