@@ -5,17 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
+namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
 {
     internal class ShopMenuController
     {
         private ShopMenu _shopMenu;
-        private BaseCharacter _character;
         private Shopkeeper _shopkeeper { get; set; }
         public ShopMenuController(Shopkeeper shopkeeper)
         {
             _shopkeeper = shopkeeper;
-            _character = shopkeeper._character;
         }
         public void StartShopMenu()
         {
@@ -36,6 +34,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
         private bool DoOneMenuAction()
         {
             var currentCursorPosition = _shopMenu._cursorPosition;
+            var currentMenuItem = _shopMenu.MenuItems[currentCursorPosition];
             var key = Console.ReadKey();
             switch (key.Key)
             {
@@ -57,7 +56,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
                     }
                 case ConsoleKey.Enter:
                     {
-                        _shopMenu.MenuItems[currentCursorPosition].Execute(_character);
+                        currentMenuItem.Execute(_shopkeeper.Character);
                         break;
                     }
                 case ConsoleKey.Escape:

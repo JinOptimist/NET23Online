@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
+namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
 {
     internal class ShopMenuDrawer
     {
@@ -20,7 +20,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenu
             {
                 var currentMenuItem = shopMenu.MenuItems[menuItemIndex];
                 Console.Write($"{menuItemIndex + 1}. ");
-                if(currentMenuItem is TradeGoods)
+                if(currentMenuItem is BaseTradeGoods)
                 {
                     Console.Write("Buy ");
                 }

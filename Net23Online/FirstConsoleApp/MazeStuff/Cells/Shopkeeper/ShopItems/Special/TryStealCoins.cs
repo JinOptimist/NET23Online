@@ -1,4 +1,5 @@
-﻿using FirstConsoleApp.MazeStuff.Characters;
+﻿using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem;
+using FirstConsoleApp.MazeStuff.Characters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Special
 {
-    internal class TryStealCoins : ShopItem
+    internal class TryStealCoins : BaseShopItem
     {
         private const int TRY_STEAL_COINS_CHANCE = 10;
         public TryStealCoins()
