@@ -1,4 +1,6 @@
 ﻿using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
-    internal class Fire: BaseCell
+    public class Fire: BaseCell
     {
-        public Fire (Maze maze) : base(maze)
+        public Fire (IMaze maze) : base(maze)
         {
             
         }
@@ -17,7 +19,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public override char Symbol => '^';
 
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {            
             character.Hp -= 1; 
 
