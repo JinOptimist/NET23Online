@@ -2,7 +2,6 @@
 using FirstConsoleApp.MazeStuff.Characters;
 using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
-using System.Reflection.Metadata.Ecma335;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
