@@ -1,18 +1,24 @@
 ﻿using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
     internal class Trap : BaseCell
     {
-        public Trap(Maze maze) : base(maze)
+        public Trap(IMaze maze) : base(maze)
         {
         }
 
         public override char Symbol => '▣';
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("trap_sound.wav");
 
+            Maze.EventHistory.Add("Look out, it's a trap");
+            character.Hp--;
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
             {

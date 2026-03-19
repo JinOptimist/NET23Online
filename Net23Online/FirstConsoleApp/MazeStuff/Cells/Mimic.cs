@@ -1,12 +1,13 @@
 ﻿using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Mimic : BaseCell
     {
         Random _random;
-
-        public Mimic(Maze maze) : base(maze)
+        public Mimic(IMaze maze) : base(maze)
         {
             _random = new Random();
         }
@@ -21,8 +22,11 @@ namespace FirstConsoleApp.MazeStuff.Cells
             }
         }
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("mimic_sound.mp3");
+
             Maze.EventHistory.Add("You encounteder a mimic");
             if (character.Hp < 1)
             {

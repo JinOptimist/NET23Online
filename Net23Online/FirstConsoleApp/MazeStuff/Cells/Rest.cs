@@ -1,4 +1,11 @@
 ﻿using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
@@ -6,14 +13,19 @@ namespace FirstConsoleApp.MazeStuff.Cells
     {
 
 
-        public Rest(Maze maze) : base(maze)
+        public Rest(IMaze maze) : base(maze)
         {
         }
 
         public override char Symbol => 'Q';
+        public override bool IsBonusCell { get; init; } = true;
 
-        public override bool Interaction(BaseCharacter character)
+
+        public override bool Interaction(IBaseCharacter character)
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("rest_sound.wav");
+
             character.Hp++;
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
