@@ -15,6 +15,7 @@ namespace FirstConsoleApp.MazeStuff
         private const double SINGLE_USE_PORTAL_CHANCE = 0.3;
         private const int _MAX_DOORS_COUNT = 5;
         private const int MAX_ICE = 15;
+        private const int MAX_FIRE = 5;
 
         private IMaze _maze;  
         private Random _random;
