@@ -1,19 +1,25 @@
 ﻿
 using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 using System.Reflection.Metadata.Ecma335;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Doors : BaseCell
     {
+        public const char SYMBOL = 'D';
         public string DoorType { get; set; }
         private const int _COIN_COST = 1;
-        public Doors(Maze maze) : base(maze)
+
+        public override bool IsBonusCell { get; init; } = true;
+
+        public Doors(IMaze maze) : base(maze)
         {
         }
 
-        public override char Symbol => 'D';
-        public override bool Interaction(BaseCharacter character)
+        public override char Symbol => SYMBOL;
+        public override bool Interaction(IBaseCharacter character)
         {
             var minChoices = 1;
             var maxChoices = 3;
@@ -46,7 +52,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             }
 
         }
-        private bool TryOpenWithKey(BaseCharacter character, int cost)
+        private bool TryOpenWithKey(IBaseCharacter character, int cost)
         {
             if (!character.HasKey())
             {
@@ -60,7 +66,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             return true;
         }
 
-        private bool TryOpenWithCoins(BaseCharacter character, int cost)
+        private bool TryOpenWithCoins(IBaseCharacter character, int cost)
         {
             if (character.Coins < cost)
             {
@@ -89,6 +95,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
         }
         private void Open()
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("door_sound.mp3", 0.7f);
+
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
             {

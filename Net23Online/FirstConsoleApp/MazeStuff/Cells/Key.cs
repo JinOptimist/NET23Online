@@ -1,20 +1,22 @@
-﻿using FirstConsoleApp.MazeStuff;
-using FirstConsoleApp.MazeStuff.Cells;
-using FirstConsoleApp.MazeStuff.Characters;
+﻿using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 public class Key : BaseCell
 {
-    public Key(Maze maze) : base(maze) { }
+    public Key(IMaze maze) : base(maze) { }
 
     public override char Symbol => 'K';
 
-    public  bool Collect(BaseCharacter character)
+    public  bool Collect(IBaseCharacter character)
     {
         character.CollectKey();
         return true; 
     }
-    public override bool Interaction(BaseCharacter character)
+    public override bool Interaction(IBaseCharacter character)
     {
+        MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+        soundPlayer.PlayMusic("key_sound.wav", 0.6f);
         Maze.EventHistory.Add("Look, it's a key");
         Collect(character);
         ReplaceKeyToGround();

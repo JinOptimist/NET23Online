@@ -1,21 +1,27 @@
 ﻿using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells;
 
 public class SuperPower : BaseCell
 {
-    public SuperPower(Maze maze) : base(maze)
+    public SuperPower(IMaze maze) : base(maze)
     {
     }
     
     public override char Symbol => 'P';
 
-    public override bool Interaction(BaseCharacter character)
+    public override bool Interaction(IBaseCharacter character)
     {
+
         if (character is not Hero hero || hero.Coins < 2)
         {
             return true;
         }
+
+        MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+        soundPlayer.PlayMusic("superpower_sound.wav");
 
         Maze.EventHistory.Add("SuperPower! +Hp. You can break the wall.");
             

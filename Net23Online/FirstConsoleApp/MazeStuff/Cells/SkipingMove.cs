@@ -1,9 +1,5 @@
-﻿using FirstConsoleApp.MazeStuff.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
@@ -11,13 +7,16 @@ namespace FirstConsoleApp.MazeStuff.Cells
     {
         public override char Symbol => 'O';
 
-        public SkipingMove(Maze maze) : base(maze)
+        public SkipingMove(IMaze maze) : base(maze)
         {
 
         }
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("pit_sound.wav");
+
             Maze.EventHistory.Add("opps! yuo in pit");
 
             character.Hp -= 10;
@@ -26,7 +25,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             return true;
         }
 
-        public bool HasFallenIntoPit(BaseCharacter character)
+        public bool HasFallenIntoPit(IBaseCharacter character)
         {
             const int CHANCE_OUT_PERCENT = 75;
             const int MAX_VALUE_PERCENT = 100;
