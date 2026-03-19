@@ -16,7 +16,7 @@ namespace FirstConsoleApp.MazeStuff
         private const int _MAX_DOORS_COUNT = 5;
         private const int MAX_ICE = 15;
 
-        private IMaze _maze;
+        private IMaze _maze;  
         private Random _random;
         public const int RANDOM_MIMIC_CODE = 0;
         public const int COIN_LIKE_MIMIC_CODE = 1;
