@@ -3,7 +3,7 @@ using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
-    internal class Trap : BaseCell
+    public class Trap : BaseCell
     {
         public Trap(IMaze maze) : base(maze)
         {
