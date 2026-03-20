@@ -19,11 +19,9 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
         {
             var shopMenuBuilder = new ShopMenuBuilder();
             _shopMenu = shopMenuBuilder.Build(_shopkeeper.GoodsAndServices, '<');
-
             var shopMenuDrawer = new ShopMenuDrawer();
             shopMenuDrawer.Draw(_shopMenu);
-
-            Console.WriteLine("A kind shopkeeper shows you his goods.");
+            
             var continueShoping = true;
             do
             {
@@ -63,6 +61,11 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
                     {
                         return false;
                     }
+            }
+            _shopMenu._cursorPosition = currentCursorPosition;
+            if(!_shopkeeper._wantToTrade)
+            {
+                return false;
             }
             return true;
         }

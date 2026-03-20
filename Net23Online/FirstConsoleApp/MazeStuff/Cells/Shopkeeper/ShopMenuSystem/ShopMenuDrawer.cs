@@ -15,7 +15,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
         public void Draw(ShopMenu shopMenu)
         {
             _shopMenu = shopMenu;
-
+            Console.Clear();
             for (var menuItemIndex = 0; menuItemIndex < shopMenu.MenuItems.Count(); menuItemIndex++)
             {
                 var currentMenuItem = shopMenu.MenuItems[menuItemIndex];
@@ -36,6 +36,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
                     Console.WriteLine();
                 }
             }
+            Console.WriteLine("\nShop History:");
             DrawShopMenuHistory();
         }
         private void DrawShopMenuHistory()

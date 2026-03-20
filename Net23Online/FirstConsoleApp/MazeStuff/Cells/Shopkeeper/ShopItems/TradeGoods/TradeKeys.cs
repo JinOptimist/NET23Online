@@ -25,7 +25,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.TradeGoods
                 if (character.Coins > 0 && keysCount > 0)
                 {
                     character.Coins--;
-                    character.Key++;
+//                    character.Key++;
                     _shopMenu.ShopHistory.Add("You bought 1 Key");
                 }
                 else

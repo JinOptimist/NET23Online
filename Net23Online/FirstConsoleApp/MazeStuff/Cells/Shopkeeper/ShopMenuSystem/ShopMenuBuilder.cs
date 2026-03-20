@@ -21,7 +21,8 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
             _shopMenu = new ShopMenu
             {
                 MenuItems = menuItems,
-                _cursor = cursor
+                _cursor = cursor,
+                ShopHistory = new List<string> {"A kind shopkeeper shows you his goods."}
             };
 
             foreach (var item in _shopMenu.MenuItems)

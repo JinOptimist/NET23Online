@@ -17,16 +17,16 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.TradeGoods
 
         public override void Execute(BaseCharacter character)
         {
-            var SpeedPotionsCount = _shopMenu.MenuItems
-                .OfType<TradeSpeedPotions>()
+            var superPowerCount = _shopMenu.MenuItems
+                .OfType<TradeSuperPower>()
                 .FirstOrDefault()?._count;
-            if (SpeedPotionsCount != null)
+            if (superPowerCount != null)
             {
-                if (character.Coins > 0 && SpeedPotionsCount > 0)
+                if (character.Coins > 0 && superPowerCount > 0)
                 {
                     character.Coins--;
-                    character.Speed++;
-                    _shopMenu.ShopHistory.Add("You bought 1 Speed Potion");
+   //                 character.SuperPower++;
+                    _shopMenu.ShopHistory.Add("You bought 1 SuperPower");
                 }
                 else
                 {

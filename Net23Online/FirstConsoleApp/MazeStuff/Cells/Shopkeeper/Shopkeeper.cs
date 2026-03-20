@@ -13,23 +13,34 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper
     {
         public BaseCharacter Character;
         private Random _random;
-        private bool _wantToTrade;
+        public bool _wantToTrade;
         public List<BaseShopItem> GoodsAndServices { get; set; }
         public Shopkeeper(Maze maze, Random random) : base(maze)
         {
             _random = random;
+            _wantToTrade = true;
         }
         public override char Symbol => '$';
         public override bool Interaction(BaseCharacter character)
         {
-            Maze.EventHistory.Add("Shopkeeper here!");
+            Character = character;
+            Console.Clear();
+            if (_wantToTrade)
+            {
+                Maze.EventHistory.Add("Shopkeeper here!");
+            }
+            else
+            {
+                Maze.EventHistory.Add("Shopkeeper ignore you!");
+                return true;
+            }
             GoodsAndServices = new List<BaseShopItem>
             {
                 new TradeKeys(unitPrice: 2, count: 1),
                 new TradeSpeedPotions(unitPrice: 1, count: 3),
                 new TradeSuperPower(unitPrice: 3, count: 1),
                 new ShopkeeperServiceRestoreHP(unitPrice: 2),
-                new TryStealCoins()
+                new TryStealCoins(this, _random)
             };
             var shopMenuController = new ShopMenuController(this);
             shopMenuController.StartShopMenu();

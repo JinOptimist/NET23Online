@@ -17,12 +17,12 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.TradeGoods
 
         public override void Execute(BaseCharacter character)
         {
-            var SpeedPotionsCount = _shopMenu.MenuItems
+            var speedPotionsCount = _shopMenu.MenuItems
                 .OfType<TradeSpeedPotions>()
                 .FirstOrDefault()?._count;
-            if (SpeedPotionsCount != null)
+            if (speedPotionsCount != null)
             {
-                if (character.Coins > 0 && SpeedPotionsCount > 0)
+                if (character.Coins > 0 && speedPotionsCount > 0)
                 {
                     character.Coins--;
                     character.Speed++;

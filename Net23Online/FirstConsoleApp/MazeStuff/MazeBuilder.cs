@@ -1,4 +1,5 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Cells.Shopkeeper;
 using FirstConsoleApp.MazeStuff.Characters;
 using System;
 
@@ -34,7 +35,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateMimics();
             // Generate other cells
             GenerateIce();
-
+            GenerateShopKeeper();
             return _maze;
         }
 
@@ -265,6 +266,25 @@ namespace FirstConsoleApp.MazeStuff
 
                 ReplaceCell(ice);
             }
+        }
+
+        private void GenerateShopKeeper()
+        {
+            var doorsCells = _maze
+                .Surface
+                .Where(cell => cell is Doors)
+                .ToList();
+            var indexRandomDoor = _random.Next(0, doorsCells.Count - 1);
+            var groundsNearDoor = GetNearCells<Ground>(doorsCells[indexRandomDoor]).ToList();
+            var indexRandomGroundNearDoor = _random.Next(0, doorsCells.Count - 1);
+            var x = groundsNearDoor[indexRandomGroundNearDoor].X;
+            var y = groundsNearDoor [indexRandomGroundNearDoor].Y;
+            var shopKeeper = new Shopkeeper(_maze, _random)
+            {
+                X = x,
+                Y = y,
+            };
+            ReplaceCell(shopKeeper);
         }
     }
 }
