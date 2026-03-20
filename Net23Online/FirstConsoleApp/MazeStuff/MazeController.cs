@@ -1,4 +1,5 @@
 ﻿
+using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff
@@ -6,7 +7,8 @@ namespace FirstConsoleApp.MazeStuff
     public class MazeController
     {
         private IMaze _maze;
-
+        private Random _random;
+        private bool _isStrangerAppeared;
         private MazeBuilder _mazeBuilder;
         private int _countSteps = 0;
         private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
@@ -25,7 +27,8 @@ namespace FirstConsoleApp.MazeStuff
             var mazeDrawer = new MazeDrawer();
 
             mazeDrawer.Draw(_maze);
-
+            _random = new Random();
+            _isStrangerAppeared = false;
             var continuewGame = true;
             while (continuewGame)
             {
@@ -86,6 +89,12 @@ namespace FirstConsoleApp.MazeStuff
                 _maze.Hero.Y = destenationY;
 
                 _countSteps++;
+                int randomNumber = _random.Next(100);
+                if (randomNumber < 30)
+                {
+                    Stranger stranger = new Stranger(_maze);
+                    stranger.Interaction(_maze.Hero);
+                }
 
                 if (_countSteps % STEPS_TO_ICE == 0)
                 {
