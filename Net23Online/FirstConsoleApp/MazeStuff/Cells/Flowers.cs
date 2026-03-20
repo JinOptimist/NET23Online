@@ -9,13 +9,13 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     internal class Flowers : BaseCell
     {
-        public Flowers(Maze maze) : base(maze)
+        public Flowers(IMaze maze) : base(maze)
         {
         }
 
         public override char Symbol => 'Y';
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
             if (character.Hp > 3)
             {
