@@ -1,9 +1,10 @@
-﻿using FirstConsoleApp.MazeStuff.Cells;
+﻿using FirstConsoleApp.MazeStuff.Cells.Interfaces;
 using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff
 {
-    public class Maze
+    public class Maze : IMaze
     {
         public int Width { get; set; }
         public int Height { get; set; }
@@ -15,11 +16,11 @@ namespace FirstConsoleApp.MazeStuff
         // ground == '.'
         // wall '#'
         // coin 'c'
-        public List<BaseCell> Surface { get; set; } = new();
+        public IList<IBaseCell> Surface { get; set; } = new List<IBaseCell>();
 
-        public List<string> EventHistory { get; set; } = new();
+        public IList<string> EventHistory { get; set; } = new List<string>();
 
-        public BaseCell? this[int x, int y]
+        public IBaseCell? this[int x, int y]
         {
             get
             {
