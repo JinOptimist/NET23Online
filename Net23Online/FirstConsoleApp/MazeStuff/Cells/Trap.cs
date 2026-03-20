@@ -5,15 +5,17 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Trap : BaseCell
     {
+        public IMazeSoundPlayer soundPlayer = new MazeSoundPlayer();//delete?
         public Trap(IMaze maze) : base(maze)
         {
+           
         }
 
         public override char Symbol => '▣';
 
         public override bool Interaction(IBaseCharacter character)
         {
-            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            //MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
             soundPlayer.PlayMusic("trap_sound.wav");
 
             Maze.EventHistory.Add("Look out, it's a trap");

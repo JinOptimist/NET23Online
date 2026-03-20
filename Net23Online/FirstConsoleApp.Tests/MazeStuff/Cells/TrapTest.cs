@@ -1,5 +1,6 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+using FirstConsoleApp.MazeStuff.Characters;
 using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using Moq;
@@ -24,12 +25,12 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             var baseCell = _baseCellMock.Object;
             var maze = _mazeMock.Object;
 
-            _baseCharacterMock.SetupProperty(character => character.Hp); //Настройка свойства (геттеры, сеттеры)
+            _baseCharacterMock.SetupProperty(character => character.Hp);
             _mazeMock.Setup(x => x.EventHistory.Add(It.IsAny<string>()));
             _mazeMock.Setup(x => x.Surface.Add(It.IsAny<IBaseCell>()));
             _mazeMock.Setup(x => x.Surface.Remove(It.IsAny<IBaseCell>()));
 
-            //Переопределять soundPlayer.PlayMusic не нужно тк объект MazeSoundPlayer создвается внутри метода (MazeSoundPlayer soundPlayer = new MazeSoundPlayer();)
+            //Переопределять soundPlayer.PlayMusic не нужно тк объект MazeSoundPlayer создвается внутри метода (MazeSoundPlayer soundPlayer = new MazeSoundPlayer();)?
 
             _trap = new Trap(maze);
 
@@ -46,16 +47,50 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             var baseCharacter = _baseCharacterMock.Object;
             baseCharacter.Hp = startHP;
 
-            //Act
-            //- ХП меняется при взаимодействии с методом Interaction класса Trap => нам нужно этот метод вызвать
-            _trap.Interaction(baseCharacter); //Метод выполнил какие-то свои действия. Результаты выполнения действий (или сам факт выполнения действий) мы проверяем в Assert.
-                                              //baseCharacter.Hp уже должно поменяться на resultHP мы это и будем проверять.
-                                              //Метод может выполнять действия, которые будут зависеть от других классов (их объектов), а у нас этих объектов
-                                              //(т.е ссылка null) нужно переопределить эти методы, чтобы они не зависили от null
-                                              //(Метод пытается положить вызвать Add для Event History в Maze, а у нас maze null)  
+            // Act
+            _trap.Interaction(baseCharacter);  
 
-            //Assert
+            // Assert
             Assert.That(baseCharacter.Hp, Is.EqualTo(resultHP), $"HP start = {startHP} must decreases by 1. Result: {resultHP}");
+        }
+
+        [Test]
+        public void Interaction_TrapWasReplacedByGround()
+        {
+            // Preapere
+
+            //Act
+            _trap.Interaction(_baseCharacterMock.Object);
+
+            // Assert
+            _mazeMock.Verify(x => x.Surface.Remove(_trap), Times.Once());
+            _mazeMock.Verify(x => x.Surface.Add(It.IsAny<Ground>()), Times.Once());
+        }
+
+        public void Inetraction_CanStepOnTrap()
+        {
+            // Act
+            var result = _trap.Interaction(_baseCharacterMock.Object);
+
+            // Assert
+
+            Assert.That(result, Is.EqualTo(true));
+        }
+
+        public void Interaction_IsMusicPlaying()
+        {
+            //Prepare
+
+            var soundPlayerMock = new Mock<IMazeSoundPlayer>(); //У нас создается в методе Interaction создавался реальный объект
+            _trap.soundPlayer = soundPlayerMock.Object;
+
+            // Act
+            _trap.Interaction(_baseCharacterMock.Object);
+
+            // Assert
+
+            soundPlayerMock.Verify(x => x.PlayMusic("trap_sound.wav", It.IsAny<float>(), It.IsAny<bool>()), Times.Once());
+
         }
     }
 }
