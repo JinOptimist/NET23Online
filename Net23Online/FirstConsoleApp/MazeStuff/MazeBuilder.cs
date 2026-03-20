@@ -52,8 +52,6 @@ namespace FirstConsoleApp.MazeStuff
             GenerateSpeedPotions();
             GenerateSkipingMove();
             GenerateFire();
-            GenerateIce();
-            GenerateFlowers();
 
             return _maze;
         }
@@ -727,27 +725,6 @@ namespace FirstConsoleApp.MazeStuff
 
                 ReplaceCell(fire);
             }
-        }
-        private void GenerateFlowers(int maxCountFlowers = 3)
-        {
-            var flowerBeds = _maze
-                .Surface
-                .Where(x => x is Ground)
-                .Where(x => GetNearCells<Wall>(x).Count()==2)
-                .Where(x => GetNearCells<Coin>(x).Count()<1)
-                .ToList();
-
-            for (int i = 0; i < maxCountFlowers; i++)
-            {
-                var flowerBed = flowerBeds[i];
-                var flower = new Flowers(_maze)
-                {
-                    X = flowerBed.X,
-                    Y = flowerBed.Y,
-                };
-                ReplaceCell(flower);
-            }
-            
         }
     }
 }
