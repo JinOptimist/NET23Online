@@ -17,6 +17,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
+            //Console.WriteLine();
             character.Coins =+2;
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
