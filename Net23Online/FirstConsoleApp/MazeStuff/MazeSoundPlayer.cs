@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-public class MazeSoundPlayer
+public class MazeSoundPlayer : IMazeSoundPlayer
 {
     private WaveOutEvent outputDevice;
     private AudioFileReader audioFile;
