@@ -52,6 +52,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateSpeedPotions();
             GenerateSkipingMove();
             GenerateFire();
+            GenerateSlotMachine();
 
             return _maze;
         }
@@ -724,6 +725,27 @@ namespace FirstConsoleApp.MazeStuff
                 };
 
                 ReplaceCell(fire);
+            }
+        }
+        private void GenerateSlotMachine(int maxSlotMachineCount = 1)
+        {
+            var walls = _maze.Surface
+              .Where(wall => wall is Wall)
+              .Where(wall => GetNearCells<Ground>(wall).Count() >= 2)
+              .ToList();
+
+            for (int i = 0; i < maxSlotMachineCount; i++)
+            {
+                var randomIndex = _random.Next(0, walls.Count);
+                var randomPlace = walls[randomIndex];
+                     
+           
+                var slotMachine = new SlotMachine(_maze)
+                {
+                    X = randomPlace.X,
+                    Y = randomPlace.Y,
+                };
+                ReplaceCell(slotMachine);
             }
         }
     }
