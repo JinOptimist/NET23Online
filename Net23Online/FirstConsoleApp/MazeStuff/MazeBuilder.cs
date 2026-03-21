@@ -53,8 +53,6 @@ namespace FirstConsoleApp.MazeStuff
             GenerateSpeedPotions();
             GenerateSkipingMove();
             GenerateFire();
-
-            GenerateIce();
             GenerateShopKeeper();
             return _maze;
         }
