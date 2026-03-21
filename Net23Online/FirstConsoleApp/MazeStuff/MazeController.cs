@@ -1,5 +1,6 @@
 ﻿
 using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Characters;
 using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using Microsoft.VisualBasic;
@@ -13,21 +14,20 @@ namespace FirstConsoleApp.MazeStuff
         private MazeBuilder _mazeBuilder;
         private int _countSteps = 0;
         private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
-
-        //private bool _isSecretMaze;
-
-        public void Play(int width = 24, int height = 12, bool isSecretMaze = false)
+        
+        
+        public void Play(int width = 24, int height = 12, bool isSecretMaze = false, Hero hero=null)
         {
-            _mazeBuilder = new MazeBuilder();
 
+            _mazeBuilder = new MazeBuilder();
+                        
             var soundPlayer = new MazeSoundPlayer();
             soundPlayer.PlayMusic("maze_soundtrack.wav", 0.3f, true);
 
-            var mazeBuilder = new MazeBuilder();
+            //var mazeBuilder = new MazeBuilder();
 
-            //_maze.IsSecretMaze = isSecretMaze;
-
-            _maze = _mazeBuilder.Build(width, height, this, isSecretMaze: isSecretMaze);
+            Hero heroFromMaze = _mazeBuilder.heroFromMaze;
+            _maze = _mazeBuilder.Build(width, height, /*this,*/ isSecretMaze: isSecretMaze, inputHero: heroFromMaze);
 
             var mazeDrawer = new MazeDrawer();
 
@@ -104,9 +104,8 @@ namespace FirstConsoleApp.MazeStuff
 
                 if (destenationCell is ExitSecretRoom)
                 {
-                    return /*true*/destenationCell.Interaction(_maze.Hero);
+                    return /*false*/destenationCell.Interaction(_maze.Hero);//Выход из комнаты
                 }
-
             }
 
             return true;

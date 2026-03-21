@@ -19,32 +19,45 @@ namespace FirstConsoleApp.MazeStuff
         private IMaze _maze;
         private Random _random;
 
-        private MazeController _mazeController;
+        public Hero heroFromMaze {  get; set; }
 
-        public IMaze Build(int width, int height, MazeController mazeController, int? seed = null, bool isSecretMaze = false)
+        //private MazeController _mazeController;
+
+        public IMaze Build(int width, int height, /*MazeController mazeController,*/ int? seed = null, bool isSecretMaze = false, Hero inputHero = null)
         {
-            _mazeController = mazeController;
+            //_mazeController = mazeController;
             _maze = new Maze
             {
                 Width = width,
                 Height = height,
                 Seed = seed ?? DateTime.Now.Millisecond,
+
                 IsSecretMaze = isSecretMaze
             };
 
             _random = new Random(_maze.Seed);
-
-            var hero = GenerateHero();
-            _maze.Hero = hero;
+            
+            if (inputHero == null)
+            {
+                var hero = GenerateHero();
+                _maze.Hero = hero;
+            }
+            else
+            {
+                _maze.Hero = inputHero;
+            }
 
             if (isSecretMaze)
             {
                 GenerateSecretMaze();
+
                 return _maze;
             }
 
+            heroFromMaze = GetHeroFromMaze(_maze);
+
             GenerateWall();
-            GenerateGround(hero.X, hero.Y);// Genrate path
+            GenerateGround(_maze.Hero.X, _maze.Hero.Y);// Genrate path
             GenerateCoins();
             GenerateSuperPower();
             GenerateTrap();
@@ -60,6 +73,10 @@ namespace FirstConsoleApp.MazeStuff
             GenerateSecretRoom();
 
             return _maze;
+        }
+        public Hero GetHeroFromMaze(IMaze maze)
+        {
+            return _maze.Hero;
         }
 
         private Hero GenerateHero()
@@ -674,7 +691,7 @@ namespace FirstConsoleApp.MazeStuff
 
                     if (x == 0 && y == 1)
                     {
-                        cell = new ExitSecretRoom(_maze, _mazeController)
+                        cell = new ExitSecretRoom(_maze)
                         {
                             X = x,
                             Y = y
@@ -696,12 +713,19 @@ namespace FirstConsoleApp.MazeStuff
                             Y = y
                         };
                     }
+
                     _maze.Surface.Add(cell);
+
                 }
+
             }
 
+            var exitSecretRoomCell = _maze.Surface.OfType<ExitSecretRoom>().FirstOrDefault();
+            _maze.Hero.X = exitSecretRoomCell.X;
+            _maze.Hero.Y = exitSecretRoomCell.Y;
+
         }
-        private void GenerateSecretRoom()
+        private void GenerateSecretRoom(int countSecretRoom = 3)
         {
 
             var secretRoom = new SecretRoom(_maze)
@@ -711,7 +735,6 @@ namespace FirstConsoleApp.MazeStuff
             };
             ReplaceCell(secretRoom);
         }
-
     }
 }
 

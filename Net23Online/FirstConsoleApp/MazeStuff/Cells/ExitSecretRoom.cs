@@ -10,25 +10,23 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class ExitSecretRoom : BaseCell
     {
-        private readonly MazeController _mazeController;
+        //private readonly MazeController _mazeController;
 
-        public ExitSecretRoom(IMaze maze, MazeController mazeController) : base(maze)
+        public ExitSecretRoom(IMaze maze) : base(maze)
         {
-            _mazeController = mazeController;
+
         }
 
         public override char Symbol => 'E';
-        private int _countInteraction=0;
-        private const int MAX_INTERACTION = 4;
+        private int _countInteraction = 0;
+        private const int MAX_INTERACTION = 2;
 
         public override bool Interaction(IBaseCharacter character)
         {
             _countInteraction++;
             if (_countInteraction >= MAX_INTERACTION)
             {
-                Maze.EventHistory.Add("Вы вышли из секретной комнаты");
-
-                //_mazeController.Play(); Убтрать _mazeController из этого класса?
+                Maze.EventHistory.Add("You left the secret room.");
 
                 _countInteraction = 0;
 
