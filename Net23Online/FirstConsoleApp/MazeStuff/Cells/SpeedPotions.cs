@@ -13,6 +13,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
     internal class SpeedPotions : BaseCell
     {
         private const int _SPEED_COLLECT = 1;
+        private const int _MAX_SPEED = 5;
         public SpeedPotions(Maze maze) : base(maze)
         {
         }
@@ -20,7 +21,11 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public override bool Interaction(BaseCharacter character)
         {
             Maze.EventHistory.Add("You drank the speed potion! Now you move faster.");
-            character.CollectSpeed(_SPEED_COLLECT);
+            if (character.Speed + _SPEED_COLLECT <= _MAX_SPEED)
+            {
+                character.CollectSpeed(_SPEED_COLLECT);
+            }
+            
 
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
