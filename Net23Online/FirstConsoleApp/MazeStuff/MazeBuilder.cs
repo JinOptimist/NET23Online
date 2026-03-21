@@ -727,34 +727,26 @@ namespace FirstConsoleApp.MazeStuff
                 ReplaceCell(fire);
             }
         }
-
-
         private void GenerateSlotMachine(int maxSlotMachineCount = 1)
         {
-            
+            var walls = _maze.Surface
+              .Where(wall => wall is Wall)
+              .Where(wall => GetNearCells<Ground>(wall).Count() >= 2)
+              .ToList();
 
             for (int i = 0; i < maxSlotMachineCount; i++)
             {
-                
+                var randomIndex = _random.Next(0, walls.Count);
+                var randomPlace = walls[randomIndex];
+                     
+           
                 var slotMachine = new SlotMachine(_maze)
                 {
-                    X = 1,
-                    Y = 0,
+                    X = randomPlace.X,
+                    Y = randomPlace.Y,
                 };
                 ReplaceCell(slotMachine);
             }
-
-            // private void ReplaceCell(IBaseCell newCell) // coin [1,1]
-            //{
-            //var oldCell = _maze
-            //    .Surface
-            //    .First(c => c.X == newCell.X && c.Y == newCell.Y);
-            //_maze.Surface.Remove(oldCell);
-
-            //_maze.Surface.Add(newCell); // replace
-            //}
-
-
         }
     }
 }
