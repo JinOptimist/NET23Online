@@ -732,19 +732,37 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateShopKeeper()
         {
-            var doorsCells = _maze
+            var doorsMaze = _maze
                 .Surface
                 .Where(cell => cell is Doors)
                 .ToList();
-            var indexRandomDoor = _random.Next(0, doorsCells.Count - 1);
-            var groundsNearDoor = GetNearCells<Ground>(doorsCells[indexRandomDoor]).ToList();
-            var indexRandomGroundNearDoor = _random.Next(0, doorsCells.Count - 1);
-            var x = groundsNearDoor[indexRandomGroundNearDoor].X;
-            var y = groundsNearDoor [indexRandomGroundNearDoor].Y;
+
+            var cellsNearDoors = GetNearCellsFromList(doorsMaze);
+            var groundsNearDoors = cellsNearDoors.Where(cell => cell is Ground);
+            var firstGroundNearDoors = groundsNearDoors.FirstOrDefault();
+            var x = new int();
+            var y = new int();
+            if(firstGroundNearDoors != null)
+            {
+                x = firstGroundNearDoors.X;
+                y = firstGroundNearDoors.Y;
+            }
+            else
+            {
+                var startHeroAreaX = 5;
+                var startHeroAreaY = 5;
+                var groundsMaze = _maze.Surface
+                    .Where(cell => cell is Ground)
+                    .Where(cell => cell.X >= startHeroAreaX && cell.Y >= startHeroAreaY).ToList();
+                var indexRandomGround = _random.Next(0, groundsMaze.Count() - 1);
+                x = groundsMaze[indexRandomGround].X;
+                y = groundsMaze[indexRandomGround].Y;
+            }
+
             var shopKeeper = new Shopkeeper(_maze, _random)
             {
                 X = x,
-                Y = y,
+                Y = y
             };
             ReplaceCell(shopKeeper);
         }

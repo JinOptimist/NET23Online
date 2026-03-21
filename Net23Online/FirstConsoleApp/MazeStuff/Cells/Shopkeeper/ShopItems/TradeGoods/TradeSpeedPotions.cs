@@ -1,5 +1,6 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem;
 using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,12 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.TradeGoods
     {
         public TradeSpeedPotions(int unitPrice, int count) : base(unitPrice, count)
         {
-            _name = "Speed Potion";
+            Name = "Speed Potion";
         }
 
-        public override void Execute(BaseCharacter character)
+        public override void Execute(IBaseCharacter character)
         {
-            var speedPotionsCount = _shopMenu.MenuItems
+            var speedPotionsCount = MenuForShop.MenuItems
                 .OfType<TradeSpeedPotions>()
                 .FirstOrDefault()?._count;
             if (speedPotionsCount != null)
@@ -26,11 +27,11 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.TradeGoods
                 {
                     character.Coins--;
                     character.Speed++;
-                    _shopMenu.ShopHistory.Add("You bought 1 Speed Potion");
+                    MenuForShop.ShopHistory.Add("You bought 1 Speed Potion");
                 }
                 else
                 {
-                    _shopMenu.ShopHistory.Add("You don't have any coin");
+                    MenuForShop.ShopHistory.Add("You don't have any coin");
                 }
             }
         }

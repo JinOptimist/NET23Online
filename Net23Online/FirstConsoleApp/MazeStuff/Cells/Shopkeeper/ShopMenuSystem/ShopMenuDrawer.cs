@@ -25,7 +25,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
                     Console.Write("Buy ");
                 }
 
-                Console.Write($"{currentMenuItem._name}");
+                Console.Write($"{currentMenuItem.Name}");
                 
                 if(shopMenu._cursorPosition == menuItemIndex)
                 {

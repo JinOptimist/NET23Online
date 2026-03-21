@@ -1,5 +1,6 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem;
 using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +16,18 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Special
         private Shopkeeper _shopKeeper;
         public TryStealCoins(Shopkeeper shopKeeper, Random random)
         {
-            _name = "Try steal coins from Shopkeeper.";
+            Name = "Try steal coins from Shopkeeper.";
             _shopKeeper = shopKeeper;
             _random = random;
         }
 
-        public override void Execute(BaseCharacter character)
+        public override void Execute(IBaseCharacter character)
         {
             var tryStealCoinsResult = _random.Next(1, 100) < TRY_STEAL_COINS_CHANCE;
             if(tryStealCoinsResult)
             {
                 character.Coins++;
-                _shopMenu.ShopHistory.Add("The dumb shopkeeper lost his coins");
+                MenuForShop.ShopHistory.Add("The dumb shopkeeper lost his coins");
             }
             else
             {

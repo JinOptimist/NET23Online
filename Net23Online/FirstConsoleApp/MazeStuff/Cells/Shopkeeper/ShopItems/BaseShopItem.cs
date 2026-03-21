@@ -1,5 +1,7 @@
-﻿using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem;
+﻿using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Interfaces;
+using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem;
 using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems
 {
-    internal abstract class BaseShopItem
+    internal abstract class BaseShopItem : IBaseShopItem
     {
-        public ShopMenu _shopMenu {  get; internal set; }
-        public string _name { get; set; }
-        public abstract void Execute(BaseCharacter character);
+        public ShopMenu MenuForShop { get; internal set; }
+        public string Name { get; set; }
+        public abstract void Execute(IBaseCharacter character);
     }
 }

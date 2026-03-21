@@ -15,7 +15,7 @@ public class SuperPower : BaseCell
     public override bool Interaction(IBaseCharacter character)
     {
 
-        if (character is not Hero hero || hero.Coins < 2)
+        if (character.Coins < 2)
         {
             return true;
         }
@@ -32,9 +32,9 @@ public class SuperPower : BaseCell
         };
         Maze.Surface.Add(ground);
 
-        hero.Hp++;
-        hero.SuperPower++;
-        hero.Coins -= 2;
+        character.Hp++;
+        character.SuperPower++;
+        character.Coins -= 2;
         return true;
     }
 }

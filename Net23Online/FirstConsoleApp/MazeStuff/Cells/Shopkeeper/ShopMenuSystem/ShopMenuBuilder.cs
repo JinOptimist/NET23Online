@@ -27,7 +27,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
 
             foreach (var item in _shopMenu.MenuItems)
             {
-                item._shopMenu = _shopMenu;
+                item.MenuForShop = _shopMenu;
             }
 
             return _shopMenu;

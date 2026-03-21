@@ -1,5 +1,6 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem;
 using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,12 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.TradeGoods
     {
         public TradeKeys(int unitPrice, int count) : base(unitPrice, count)
         {
-            _name = "Key";
+            Name = "Key";
         }
 
-        public override void Execute(BaseCharacter character)
+        public override void Execute(IBaseCharacter character)
         {
-            var keysCount = _shopMenu.MenuItems
+            var keysCount = MenuForShop.MenuItems
                 .OfType<TradeKeys>()
                 .FirstOrDefault()?._count;
             if (keysCount != null)
@@ -25,12 +26,12 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.TradeGoods
                 if (character.Coins > 0 && keysCount > 0)
                 {
                     character.Coins--;
-//                    character.Key++;
-                    _shopMenu.ShopHistory.Add("You bought 1 Key");
+                    character.Keys++;
+                    MenuForShop.ShopHistory.Add("You bought 1 Key");
                 }
                 else
                 {
-                    _shopMenu.ShopHistory.Add("You don't have any coin");
+                    MenuForShop.ShopHistory.Add("You don't have any coin");
                 }
             }
         }

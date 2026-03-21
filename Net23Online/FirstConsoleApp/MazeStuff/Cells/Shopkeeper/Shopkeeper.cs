@@ -4,6 +4,8 @@ using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Special;
 using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.TradeGoods;
 using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem;
 using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 using System.Runtime.CompilerServices;
 
 
@@ -11,17 +13,17 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper
 {
     internal class Shopkeeper : BaseCell
     {
-        public BaseCharacter Character;
+        public IBaseCharacter Character;
         private Random _random;
         public bool _wantToTrade;
         public List<BaseShopItem> GoodsAndServices { get; set; }
-        public Shopkeeper(Maze maze, Random random) : base(maze)
+        public Shopkeeper(IMaze maze, Random random) : base(maze)
         {
             _random = random;
             _wantToTrade = true;
         }
         public override char Symbol => '$';
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
             Character = character;
             Console.Clear();
