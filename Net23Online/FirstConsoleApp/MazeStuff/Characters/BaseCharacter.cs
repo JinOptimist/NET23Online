@@ -101,7 +101,7 @@ namespace FirstConsoleApp.MazeStuff.Characters
             SuperPower = +amount;
         }
 
-        public virtual void GameOver()
+        public void GameOver()
         {
             Console.WriteLine("\n╔════════════════════════════════════════════╗");
             Console.WriteLine("║               GAME OVER                    ║");
