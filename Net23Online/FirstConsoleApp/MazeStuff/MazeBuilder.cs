@@ -52,6 +52,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateSpeedPotions();
             GenerateSkipingMove();
             GenerateFire();
+            GenerateSlotMachine();
 
             return _maze;
         }
@@ -724,6 +725,23 @@ namespace FirstConsoleApp.MazeStuff
                 };
 
                 ReplaceCell(fire);
+            }
+        }
+
+
+        private void GenerateSlotMachine(int maxSlotMachineCount = 1)
+        {
+            
+
+            for (int i = 0; i < maxSlotMachineCount; i++)
+            {
+                
+                var slotMachine = new SlotMachine(_maze)
+                {
+                    X = 1,
+                    Y = 0,
+                };
+                ReplaceCell(slotMachine);
             }
         }
     }
