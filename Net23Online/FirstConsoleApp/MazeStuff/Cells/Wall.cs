@@ -1,18 +1,25 @@
 ﻿using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Wall : BaseCell
     {
         private const int _SUPERPOWER_COST = 1;
-        public Wall(Maze maze) : base(maze)
+       
+        public Wall(IMaze maze) : base(maze)
         {
         }
 
         public override char Symbol => '█';
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("wall_sound.wav");
+
+           
             if (character is Hero hero && hero.SuperPower >= _SUPERPOWER_COST)
             {
                 Maze.Surface.Remove(this);

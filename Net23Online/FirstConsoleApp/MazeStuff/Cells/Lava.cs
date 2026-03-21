@@ -1,17 +1,19 @@
-﻿using FirstConsoleApp.MazeStuff.Characters;
+﻿using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
     internal class Lava : BaseCell
     {
-        private const int _HP_COST = 1;
-        public Lava(Maze maze) : base(maze)
+        public Lava(IMaze maze) : base(maze)
         {
+
         }
+        private const int _HP_COST = 1;
 
         public override char Symbol => 'L';
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
             if (!character.HasHp(_HP_COST) || character.Hp <= _HP_COST)
             {
@@ -20,6 +22,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
                 character.GameOver();
                 return false;
             }
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("lava_sound.wav");
+
             Maze.EventHistory.Add("This 'hot pot' too hot for you.");
             character.SpendHp(_HP_COST);
             character.Burning++;

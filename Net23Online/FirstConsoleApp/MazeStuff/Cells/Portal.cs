@@ -1,4 +1,7 @@
-﻿using FirstConsoleApp.MazeStuff.Characters;
+﻿using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
@@ -9,17 +12,20 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public Portal LinkedPortal { get; set; }
         public bool IsSingleUse {  get; set; }
 
-        public Portal(Maze maze) : base(maze)
+        public Portal(IMaze maze) : base(maze)
         {
         }
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
             Console.WriteLine("A portal stands here. Use it? (Y/N)");
             
             var key = Console.ReadKey(true).Key;
             if (key != ConsoleKey.Y)
             {
+                MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+                soundPlayer.PlayMusic("portal_sound.wav");
+
                 Maze.EventHistory.Add("You decided not to use the portal");
                 return true;
             }

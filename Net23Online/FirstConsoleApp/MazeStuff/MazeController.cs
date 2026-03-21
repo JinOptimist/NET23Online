@@ -1,11 +1,11 @@
 ﻿
-using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff
 {
     public class MazeController
     {
-        private Maze _maze;
+        private IMaze _maze;
 
         private MazeBuilder _mazeBuilder;
         private int _countSteps = 0;
@@ -14,6 +14,11 @@ namespace FirstConsoleApp.MazeStuff
         public void Play()
         {
             _mazeBuilder = new MazeBuilder();
+
+            var soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("maze_soundtrack.wav", 0.3f, true);
+
+            var mazeBuilder = new MazeBuilder();
 
             _maze = _mazeBuilder.Build(24, 12);
 
@@ -27,6 +32,7 @@ namespace FirstConsoleApp.MazeStuff
                 continuewGame = DoOneStep();
                 mazeDrawer.Draw(_maze);
             }
+
         }
 
         /// <summary>

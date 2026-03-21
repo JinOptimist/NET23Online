@@ -1,4 +1,6 @@
 ﻿using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,8 @@ namespace FirstConsoleApp.MazeStuff.Cells
     {
 
         private const int _HP_COLLECT = 1;
-        public Rest(Maze maze) : base(maze)
+
+        public Rest(IMaze maze) : base(maze)
         {
         }
 
@@ -19,9 +22,12 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public override bool IsBonusCell { get; init; } = true;
 
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
             character.CollectHp(_HP_COLLECT);
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("rest_sound.wav");
+
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)
             {

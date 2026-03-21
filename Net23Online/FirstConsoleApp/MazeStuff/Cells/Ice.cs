@@ -1,9 +1,5 @@
-﻿using FirstConsoleApp.MazeStuff.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
@@ -12,11 +8,11 @@ namespace FirstConsoleApp.MazeStuff.Cells
         private const int _HP_COST = 1;
         private const int _Speed_COST = 1;
         public override char Symbol => 'i';
-        public Ice(Maze maze) : base(maze)
+        public Ice(IMaze maze) : base(maze)
         {
         }
 
-        public override bool Interaction(BaseCharacter character)
+        public override bool Interaction(IBaseCharacter character)
         {
             
             if (!character.HasHp(_HP_COST) || character.Hp <= _HP_COST)
@@ -33,6 +29,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             character.SpendHp(_HP_COST);
             character.SpendSpeed(_Speed_COST);
+
+            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            soundPlayer.PlayMusic("ice_sound.wav");
 
 
             Maze.Surface.Remove(this);
