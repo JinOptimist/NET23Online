@@ -743,6 +743,18 @@ namespace FirstConsoleApp.MazeStuff
                 };
                 ReplaceCell(slotMachine);
             }
+
+            // private void ReplaceCell(IBaseCell newCell) // coin [1,1]
+            //{
+            //var oldCell = _maze
+            //    .Surface
+            //    .First(c => c.X == newCell.X && c.Y == newCell.Y);
+            //_maze.Surface.Remove(oldCell);
+
+            //_maze.Surface.Add(newCell); // replace
+            //}
+
+
         }
     }
 }
