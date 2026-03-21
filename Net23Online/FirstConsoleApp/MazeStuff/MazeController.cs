@@ -14,20 +14,17 @@ namespace FirstConsoleApp.MazeStuff
         private MazeBuilder _mazeBuilder;
         private int _countSteps = 0;
         private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
-        
-        
-        public void Play(int width = 24, int height = 12, bool isSecretMaze = false, Hero hero=null)
+
+
+        public void Play(int width = 24, int height = 12, bool isSecretMaze = false, Hero hero = null)
         {
 
             _mazeBuilder = new MazeBuilder();
-                        
+
             var soundPlayer = new MazeSoundPlayer();
             soundPlayer.PlayMusic("maze_soundtrack.wav", 0.3f, true);
 
-            //var mazeBuilder = new MazeBuilder();
-
-            Hero heroFromMaze = _mazeBuilder.heroFromMaze;
-            _maze = _mazeBuilder.Build(width, height, /*this,*/ isSecretMaze: isSecretMaze, inputHero: heroFromMaze);
+            _maze = _mazeBuilder.Build(width, height, isSecretMaze: isSecretMaze, inputHero: hero);
 
             var mazeDrawer = new MazeDrawer();
 

@@ -1,4 +1,5 @@
-﻿using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+﻿using FirstConsoleApp.MazeStuff.Characters;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
     internal class SecretRoom : BaseCell
     {
         public IMaze SecretMaze { get; set; } //отдельный лабиринт 5х5 для секретной комнаты
-        private readonly MazeController _mazeController;
-
+       
         public bool IsSecretMaze { get; set; } = true;
 
         public SecretRoom(IMaze maze) : base(maze)
@@ -27,7 +27,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             Replace();
 
             var secretRoomConroller = new MazeController();// Передать серкретный лабиринт. Создается новый герой а не старый. Передать в MazeController героя?
-            secretRoomConroller.Play(5, 5, SecretMaze.IsSecretMaze, hero: SecretMaze.Hero);
+            secretRoomConroller.Play(5, 5, SecretMaze.IsSecretMaze, hero: (Hero)character);
 
             return true;
         }

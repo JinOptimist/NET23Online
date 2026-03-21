@@ -18,14 +18,10 @@ namespace FirstConsoleApp.MazeStuff
 
         private IMaze _maze;
         private Random _random;
-
-        public Hero heroFromMaze {  get; set; }
-
-        //private MazeController _mazeController;
-
-        public IMaze Build(int width, int height, /*MazeController mazeController,*/ int? seed = null, bool isSecretMaze = false, Hero inputHero = null)
+               
+        public IMaze Build(int width, int height, int? seed = null, bool isSecretMaze = false, Hero inputHero = null)
         {
-            //_mazeController = mazeController;
+            
             _maze = new Maze
             {
                 Width = width,
@@ -54,8 +50,6 @@ namespace FirstConsoleApp.MazeStuff
                 return _maze;
             }
 
-            heroFromMaze = GetHeroFromMaze(_maze);
-
             GenerateWall();
             GenerateGround(_maze.Hero.X, _maze.Hero.Y);// Genrate path
             GenerateCoins();
@@ -74,11 +68,7 @@ namespace FirstConsoleApp.MazeStuff
 
             return _maze;
         }
-        public Hero GetHeroFromMaze(IMaze maze)
-        {
-            return _maze.Hero;
-        }
-
+        
         private Hero GenerateHero()
         {
             return new Hero(_maze)
