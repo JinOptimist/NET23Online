@@ -12,7 +12,7 @@ namespace FirstConsoleApp.MazeStuff
         public Hero Hero { get; set; }
 
         public int Seed { get; set; }
-
+        public char FogOfWarSymbol { get; set; } = '#';
         // ground == '.'
         // wall '#'
         // coin 'c'

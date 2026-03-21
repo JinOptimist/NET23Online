@@ -32,8 +32,16 @@ namespace FirstConsoleApp.MazeStuff
                            .Surface
                            .First(cell => cell.X == x && cell.Y == y);
                     }
-
-                    var symbol = currentCell.Symbol;
+                    var symbol = new char();
+                    if(Math.Abs(maze.Hero.X - currentCell.X) > 3 || Math.Abs(maze.Hero.Y - currentCell.Y) > 3)
+                    {
+                        symbol = maze.FogOfWarSymbol;
+                    }
+                    else
+                    {
+                        symbol = currentCell.Symbol;
+                    }
+                    
                     Console.Write(symbol);
 
                     //BaseCell currentCell;
