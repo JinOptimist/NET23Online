@@ -13,7 +13,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(BaseCharacter character)
         {
-            if (character is Hero hero && hero.SuperPower > 0)
+            if (character is Hero hero && hero.SuperPower >= _SUPERPOWER_COST)
             {
                 Maze.Surface.Remove(this);
                 var ground = new Ground(Maze)

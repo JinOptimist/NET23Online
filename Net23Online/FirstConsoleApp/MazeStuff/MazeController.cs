@@ -67,10 +67,7 @@ namespace FirstConsoleApp.MazeStuff
                         return false;
                     }
             }
-            if (_maze.Hero.IsDead )
-            {
-                return false;
-            }
+            
             var destenationCell = _maze[destenationX, destenationY];
             if (destenationCell == null)
             {
@@ -89,7 +86,10 @@ namespace FirstConsoleApp.MazeStuff
                     _mazeBuilder.GenerateIceNearHero();
                 }
             }
-
+            if (_maze.Hero.IsDead)
+            {
+                return false;
+            }
             return true;
         }
     }
