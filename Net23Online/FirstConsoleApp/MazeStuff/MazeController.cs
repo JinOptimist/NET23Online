@@ -1,5 +1,8 @@
 ﻿
+using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
+using Microsoft.VisualBasic;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -11,7 +14,9 @@ namespace FirstConsoleApp.MazeStuff
         private int _countSteps = 0;
         private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
 
-        public void Play()
+        //private bool _isSecretMaze;
+
+        public void Play(int width = 24, int height = 12, bool isSecretMaze = false)
         {
             _mazeBuilder = new MazeBuilder();
 
@@ -20,7 +25,9 @@ namespace FirstConsoleApp.MazeStuff
 
             var mazeBuilder = new MazeBuilder();
 
-            _maze = _mazeBuilder.Build(24, 12);
+            //_maze.IsSecretMaze = isSecretMaze;
+
+            _maze = _mazeBuilder.Build(width, height, this, isSecretMaze: isSecretMaze);
 
             var mazeDrawer = new MazeDrawer();
 
@@ -29,7 +36,7 @@ namespace FirstConsoleApp.MazeStuff
             var continuewGame = true;
             while (continuewGame)
             {
-                continuewGame = DoOneStep();
+                continuewGame = DoOneStep(isSecretMaze);
                 mazeDrawer.Draw(_maze);
             }
 
@@ -40,7 +47,7 @@ namespace FirstConsoleApp.MazeStuff
         /// Return false game must be stopped
         /// </summary>
         /// <returns></returns>
-        private bool DoOneStep()
+        private bool DoOneStep(bool isSecretMaze = false)
         {
             var destenationX = _maze.Hero.X;
             var destenationY = _maze.Hero.Y;
@@ -87,10 +94,19 @@ namespace FirstConsoleApp.MazeStuff
 
                 _countSteps++;
 
-                if (_countSteps % STEPS_TO_ICE == 0)
+                if (!isSecretMaze)
                 {
-                    _mazeBuilder.GenerateIceNearHero();
+                    if (_countSteps % STEPS_TO_ICE == 0)
+                    {
+                        _mazeBuilder.GenerateIceNearHero();
+                    }
                 }
+
+                if (destenationCell is ExitSecretRoom)
+                {
+                    return /*true*/destenationCell.Interaction(_maze.Hero);
+                }
+
             }
 
             return true;

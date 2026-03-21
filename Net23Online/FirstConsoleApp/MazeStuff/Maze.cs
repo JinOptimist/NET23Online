@@ -12,6 +12,7 @@ namespace FirstConsoleApp.MazeStuff
         public Hero Hero { get; set; }
 
         public int Seed { get; set; }
+        public bool IsSecretMaze { get; set; } = false;
 
         // ground == '.'
         // wall '#'
