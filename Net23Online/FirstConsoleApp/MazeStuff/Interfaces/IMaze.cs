@@ -13,5 +13,9 @@ namespace FirstConsoleApp.MazeStuff.Interfaces
         int Seed { get; set; }
         IList<IBaseCell> Surface { get; set; }
         int Width { get; set; }
+        public interface IAudioPlayer
+        {
+            void Play(string filePath, float volume, bool loop);
+        }
     }
 }

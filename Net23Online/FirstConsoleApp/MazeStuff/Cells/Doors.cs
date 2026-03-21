@@ -95,8 +95,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         }
         private void Open()
         {
-            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-            soundPlayer.PlayMusic("door_sound.mp3", 0.7f);
+            soundPlayerForCells.Play("door_sound.wav", 0.6f);
 
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)

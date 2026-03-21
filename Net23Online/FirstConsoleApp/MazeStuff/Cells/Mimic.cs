@@ -24,8 +24,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(IBaseCharacter character)
         {
-            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-            soundPlayer.PlayMusic("mimic_sound.mp3");
+            soundPlayerForCells.Play("mimic_sound.wav");
 
             Maze.EventHistory.Add("You encounteder a mimic");
             if (character.Hp < 1)

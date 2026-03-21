@@ -1,4 +1,5 @@
 ﻿
+using FirstConsoleApp.MazeStuff;
 using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff
@@ -15,8 +16,8 @@ namespace FirstConsoleApp.MazeStuff
         {
             _mazeBuilder = new MazeBuilder();
 
-            var soundPlayer = new MazeSoundPlayer();
-            soundPlayer.PlayMusic("maze_soundtrack.wav", 0.3f, true);
+            var soundPlayer = new MazeSoundPlayer(new AudioOutput(), path => new AudioFile(path));
+            soundPlayer.Play("maze_soundtrack.wav", 0.2f, true);
 
             var mazeBuilder = new MazeBuilder();
 

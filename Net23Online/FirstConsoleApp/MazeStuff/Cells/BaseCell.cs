@@ -1,4 +1,5 @@
-﻿using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+﻿using FirstConsoleApp.MazeStuff;
+using FirstConsoleApp.MazeStuff.Cells.Interfaces;
 using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
 
@@ -11,6 +12,8 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public IMaze Maze { get; set; }
         public abstract char Symbol { get; }
         public virtual bool IsBonusCell { get; init; } = false;
+
+        protected MazeSoundPlayer soundPlayerForCells = new MazeSoundPlayer(new AudioOutput(), path => new AudioFile(path));
 
         public BaseCell(MazeStuff.Interfaces.IMaze maze)
         {

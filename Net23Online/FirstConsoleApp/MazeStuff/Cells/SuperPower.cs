@@ -20,8 +20,7 @@ public class SuperPower : BaseCell
             return true;
         }
 
-        MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-        soundPlayer.PlayMusic("superpower_sound.wav");
+        soundPlayerForCells.Play("superpower_sound.wav");
 
         Maze.EventHistory.Add("SuperPower! +Hp. You can break the wall.");
             

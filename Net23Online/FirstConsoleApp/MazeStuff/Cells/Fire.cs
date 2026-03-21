@@ -20,7 +20,8 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
 
         public override bool Interaction(IBaseCharacter character)
-        {            
+        {
+            soundPlayerForCells.Play("fire_sound.wav", 0.5f);
             character.Hp--;
 
             Maze.EventHistory.Add("You're on fire!");

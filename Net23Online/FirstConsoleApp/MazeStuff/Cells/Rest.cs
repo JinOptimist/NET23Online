@@ -23,8 +23,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(IBaseCharacter character)
         {
-            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-            soundPlayer.PlayMusic("rest_sound.wav");
+            soundPlayerForCells.Play("rest_sound.wav");
 
             character.Hp++;
             Maze.Surface.Remove(this);

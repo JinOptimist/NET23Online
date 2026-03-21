@@ -23,9 +23,6 @@ namespace FirstConsoleApp.MazeStuff.Cells
             var key = Console.ReadKey(true).Key;
             if (key != ConsoleKey.Y)
             {
-                MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-                soundPlayer.PlayMusic("portal_sound.wav");
-
                 Maze.EventHistory.Add("You decided not to use the portal");
                 return true;
             }
@@ -33,6 +30,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             character.X = LinkedPortal.X;
             character.Y = LinkedPortal.Y;
 
+            soundPlayerForCells.Play("portal_sound.wav", 0.6f);
             Maze.EventHistory.Add("You stepped through the portal");
 
             if (IsSingleUse)

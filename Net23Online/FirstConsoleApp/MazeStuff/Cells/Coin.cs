@@ -13,11 +13,12 @@ namespace FirstConsoleApp.MazeStuff.Cells
         }
 
         public override char Symbol => SYMBOL;
+     
 
         public override bool Interaction(IBaseCharacter character)
         {
-            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-            soundPlayer.PlayMusic("coin_sound.mp3");
+
+            soundPlayerForCells.Play("coin_sound.wav");
 
             Maze.EventHistory.Add("Look, it's a coin");
 

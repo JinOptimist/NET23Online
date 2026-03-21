@@ -13,6 +13,7 @@ namespace FirstConsoleApp.MazeStuff
 
         public int Seed { get; set; }
 
+
         // ground == '.'
         // wall '#'
         // coin 'c'
