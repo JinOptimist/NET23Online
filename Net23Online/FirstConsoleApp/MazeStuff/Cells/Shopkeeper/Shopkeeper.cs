@@ -36,6 +36,9 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper
                 Maze.EventHistory.Add("Shopkeeper ignore you!");
                 return true;
             }
+            //нет способа остановить музыку лабиринта
+            //MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
+            //soundPlayer.PlayMusic("Shopkeeper.mp3", 0.7f, true);
             GoodsAndServices = new List<BaseShopItem>
             {
                 new TradeKeys(unitPrice: 2, count: 1),

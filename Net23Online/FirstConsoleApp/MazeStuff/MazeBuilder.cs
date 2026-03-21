@@ -759,12 +759,12 @@ namespace FirstConsoleApp.MazeStuff
                 y = groundsMaze[indexRandomGround].Y;
             }
 
-            var shopKeeper = new Shopkeeper(_maze, _random)
+            var shopkeeper = new Shopkeeper(_maze, _random)
             {
                 X = x,
                 Y = y
             };
-            ReplaceCell(shopKeeper);
+            ReplaceCell(shopkeeper);
         }
     }
 }

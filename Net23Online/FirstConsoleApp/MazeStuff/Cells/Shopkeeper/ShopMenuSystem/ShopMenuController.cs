@@ -20,13 +20,13 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
             var shopMenuBuilder = new ShopMenuBuilder();
             _shopMenu = shopMenuBuilder.Build(_shopkeeper.GoodsAndServices, '<');
             var shopMenuDrawer = new ShopMenuDrawer();
-            shopMenuDrawer.Draw(_shopMenu);
+            shopMenuDrawer.Draw(_shopMenu, _shopkeeper);
             
             var continueShoping = true;
             do
             {
                 continueShoping = DoOneMenuAction();
-                shopMenuDrawer.Draw(_shopMenu);
+                shopMenuDrawer.Draw(_shopMenu, _shopkeeper);
             } while (continueShoping);
         }
         private bool DoOneMenuAction()

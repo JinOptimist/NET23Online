@@ -11,10 +11,12 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
     internal class ShopMenuDrawer
     {
         private ShopMenu _shopMenu;
+        private Shopkeeper _shopkeeper;
         private const int SHOP_HISTORY_LENGHT = 3;
-        public void Draw(ShopMenu shopMenu)
+        public void Draw(ShopMenu shopMenu, Shopkeeper shopkeeper)
         {
             _shopMenu = shopMenu;
+            _shopkeeper = shopkeeper;
             Console.Clear();
             for (var menuItemIndex = 0; menuItemIndex < shopMenu.MenuItems.Count(); menuItemIndex++)
             {
@@ -36,6 +38,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
                     Console.WriteLine();
                 }
             }
+            Console.WriteLine($"\nCoins: {_shopkeeper.Character.Coins}");
             Console.WriteLine("\nShop History:");
             DrawShopMenuHistory();
         }
