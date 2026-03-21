@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems
 {
-    internal abstract class BaseShopItem : IBaseShopItem
+    public abstract class BaseShopItem : IBaseShopItem
     {
         public ShopMenu MenuForShop { get; internal set; }
         public string Name { get; set; }
+        public virtual string PriceDisplay => "";
         public abstract void Execute(IBaseCharacter character);
     }
 }

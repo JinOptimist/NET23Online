@@ -2,7 +2,7 @@
 
 namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Services.Interfaces
 {
-    internal interface IIBaseShopkeeperService : IBaseShopItem
+    public interface IIBaseShopkeeperService : IBaseShopItem
     {
         int UnitPrice { get; }
     }

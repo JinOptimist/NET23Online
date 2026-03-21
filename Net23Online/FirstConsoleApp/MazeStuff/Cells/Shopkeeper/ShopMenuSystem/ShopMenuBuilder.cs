@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
 {
-    internal class ShopMenuBuilder
+    public class ShopMenuBuilder
     {
         private ShopMenu _shopMenu;
         public ShopMenu Build(List<BaseShopItem> goodsAndServices, char cursor = '<')

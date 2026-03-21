@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
 {
-    internal class ShopMenuController
+    public class ShopMenuController
     {
         private ShopMenu _shopMenu;
         private Shopkeeper _shopkeeper { get; set; }
@@ -63,7 +63,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
                     }
             }
             _shopMenu._cursorPosition = currentCursorPosition;
-            if(!_shopkeeper._wantToTrade)
+            if(!_shopkeeper.WantToTrade)
             {
                 return false;
             }

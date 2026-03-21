@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Services
 {
-    internal class ShopkeeperServiceRestoreHP : IBaseShopkeeperService
+    public class ShopkeeperServiceRestoreHP : IBaseShopkeeperService
     {
         public ShopkeeperServiceRestoreHP(int unitPrice) : base(unitPrice)
         {

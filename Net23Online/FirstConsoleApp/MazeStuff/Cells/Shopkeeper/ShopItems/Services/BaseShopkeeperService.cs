@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Services
 {
-    internal abstract class IBaseShopkeeperService : BaseShopItem, IIBaseShopkeeperService
+    public abstract class IBaseShopkeeperService : BaseShopItem, IIBaseShopkeeperService
     {
         protected int _unitPrice;
         public int UnitPrice => _unitPrice;
+        public override string PriceDisplay => $"Cost:{_unitPrice}";
         protected IBaseShopkeeperService(int unitPrice)
         {
             _unitPrice = unitPrice;

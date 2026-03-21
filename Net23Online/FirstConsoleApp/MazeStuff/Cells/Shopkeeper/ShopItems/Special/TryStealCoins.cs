@@ -16,7 +16,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Special
         private Shopkeeper _shopKeeper;
         public TryStealCoins(Shopkeeper shopKeeper, Random random)
         {
-            Name = "Try steal coins from Shopkeeper.";
+            Name = "Try steal coins from Shopkeeper";
             _shopKeeper = shopKeeper;
             _random = random;
         }
@@ -32,7 +32,7 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Special
             else
             {
                 character.Hp--;
-                _shopKeeper._wantToTrade = false;
+                _shopKeeper.WantToTrade = false;
                 _shopKeeper.Maze.EventHistory.Add("The theft failed! That freak of a shopkeeper got mad, \nbeat you up, and now refuses to trade with you.");
             }
         }

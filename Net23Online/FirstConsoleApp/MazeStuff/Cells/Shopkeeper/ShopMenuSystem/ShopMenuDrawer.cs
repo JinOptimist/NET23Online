@@ -1,14 +1,16 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems;
-using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.TradeGoods;
+using FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopItems.Services;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
 {
-    internal class ShopMenuDrawer
+    public class ShopMenuDrawer
     {
         private ShopMenu _shopMenu;
         private Shopkeeper _shopkeeper;
@@ -21,22 +23,17 @@ namespace FirstConsoleApp.MazeStuff.Cells.Shopkeeper.ShopMenuSystem
             for (var menuItemIndex = 0; menuItemIndex < shopMenu.MenuItems.Count(); menuItemIndex++)
             {
                 var currentMenuItem = shopMenu.MenuItems[menuItemIndex];
-                Console.Write($"{menuItemIndex + 1}. ");
-                if(currentMenuItem is BaseTradeGoods)
+                Console.Write($"{menuItemIndex + 1}.");
+                Console.Write($"{currentMenuItem.Name.PadRight(20)} ");
+                if (currentMenuItem.PriceDisplay != "")
                 {
-                    Console.Write("Buy ");
+                    Console.Write($" {currentMenuItem.PriceDisplay.PadRight(11)}");
                 }
-
-                Console.Write($"{currentMenuItem.Name}");
-                
                 if(shopMenu._cursorPosition == menuItemIndex)
                 {
-                    Console.WriteLine($"{shopMenu._cursor}");
+                    Console.Write($"{shopMenu._cursor}");
                 }
-                else
-                {
-                    Console.WriteLine();
-                }
+                Console.WriteLine();
             }
             Console.WriteLine($"\nCoins: {_shopkeeper.Character.Coins}");
             Console.WriteLine("\nShop History:");
