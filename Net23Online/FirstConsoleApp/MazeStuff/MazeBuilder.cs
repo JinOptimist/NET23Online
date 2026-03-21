@@ -53,7 +53,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateSpeedPotions();
             GenerateSkipingMove();
             GenerateFire();
-            GenerateShopKeeper();
+            GenerateShopkeeper();
             return _maze;
         }
 
@@ -728,16 +728,16 @@ namespace FirstConsoleApp.MazeStuff
             }
         }
 
-        private void GenerateShopKeeper()
+        private void GenerateShopkeeper()
         {
             var doorsMaze = _maze
                 .Surface
                 .Where(cell => cell is Doors)
                 .ToList();
 
-            var cellsNearDoors = GetNearCellsFromList(doorsMaze);
-            var groundsNearDoors = cellsNearDoors.Where(cell => cell is Ground);
-            var firstGroundNearDoors = groundsNearDoors.FirstOrDefault();
+            var firstGroundNearDoors = GetNearCellsFromList(doorsMaze)
+                .FirstOrDefault(cell => cell is Ground);
+
             var x = new int();
             var y = new int();
             if(firstGroundNearDoors != null)
