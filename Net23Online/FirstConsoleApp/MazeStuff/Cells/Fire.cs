@@ -21,14 +21,19 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(IBaseCharacter character)
         {            
-            character.Hp -= 1; 
+            character.Hp--;
+
+            Maze.EventHistory.Add("You're on fire!");
 
             Maze.Surface.Remove(this);
+
             var ground = new Ground(Maze)
             {
                 X = X,
                 Y = Y,
             };
+
+            Maze.Surface.Add(ground);
             return true;
         }
        
