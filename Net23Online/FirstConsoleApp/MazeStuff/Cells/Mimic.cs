@@ -4,22 +4,12 @@ using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
-    public class Mimic : BaseCell
+    public abstract class Mimic : BaseCell
     {
         Random _random;
         public Mimic(IMaze maze) : base(maze)
         {
             _random = new Random();
-        }
-
-        public override char Symbol
-        {
-            get
-            {
-                var mimicMasks = new List<char> { Coin.SYMBOL, Doors.SYMBOL };
-                var index = _random.Next(mimicMasks.Count);
-                return mimicMasks[index];
-            }
         }
 
         public override bool Interaction(IBaseCharacter character)

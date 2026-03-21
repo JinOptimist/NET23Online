@@ -147,7 +147,6 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateMimics()
         {
-            GenerateMimic(RANDOM_MIMIC_CODE);
             GenerateMimic(COIN_LIKE_MIMIC_CODE, 4);
             GenerateMimic(DOOR_LIKE_MIMIC_CODE, 2);
         }
@@ -161,10 +160,10 @@ namespace FirstConsoleApp.MazeStuff
                     type == COIN_LIKE_MIMIC_CODE && GetNearCells<Ground>(x).Count() == 1 || 
                     type == DOOR_LIKE_MIMIC_CODE && GetNearCells<Ground>(x).Count() > 1)
                 .ToList();
-            TryReplaceMimic(maxMimicCount, freeCells);
+            TryReplaceMimic(maxMimicCount, freeCells, type);
         }
 
-        private void TryReplaceMimic(int maxMimicCount, List<IBaseCell> cells)
+        private void TryReplaceMimic(int maxMimicCount, List<IBaseCell> cells, int type)
         {
             if (!cells.Any())
             {
@@ -175,11 +174,29 @@ namespace FirstConsoleApp.MazeStuff
             {
                 var randomIndex = _random.Next(cells.Count());
                 var randomCell = cells[randomIndex];
-                var mimic = new Mimic(_maze)
+                Mimic mimic;
+                switch (type)
                 {
-                    X = randomCell.X,
-                    Y = randomCell.Y,
-                };
+                    case DOOR_LIKE_MIMIC_CODE:
+                        {
+                            mimic = new DoorLikeMimic(_maze)
+                            {
+                                X = randomCell.X,
+                                Y = randomCell.Y,
+                            };
+                            break;
+                        }
+                    default:
+                        {
+                            mimic = new CoinLikeMimic(_maze)
+                            {
+                                X = randomCell.X,
+                                Y = randomCell.Y,
+                            };
+                            break;
+                        }
+                }
+
                 ReplaceCell(mimic);
             }
         }

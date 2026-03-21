@@ -17,6 +17,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public Stranger(IMaze maze) : base(maze)
         {
+            _random = new Random();
         }
 
         public override char Symbol => '.';
