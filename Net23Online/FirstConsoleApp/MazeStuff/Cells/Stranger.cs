@@ -1,10 +1,5 @@
 ﻿using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
@@ -17,6 +12,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public Stranger(IMaze maze) : base(maze)
         {
+            _random = new Random();
         }
 
         public override char Symbol => '.';
@@ -32,25 +28,24 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         private string WeightedRandomSelection(IBaseCharacter character)
         {
-            int selection = GetWeightedIndex();
-            double reduction = _weights[selection] * _factor;
-            if (_weights[selection] - reduction < _minWeight)
+            int _weightedIndex = GetWeightedIndex();
+            double reduction = _weights[_weightedIndex] * _factor;
+            if (_weights[_weightedIndex] - reduction < _minWeight)
             {
-                reduction = _weights[selection] - _minWeight;
+                reduction = _weights[_weightedIndex] - _minWeight;
             }
 
-            _weights[selection] -= reduction;
+            _weights[_weightedIndex] -= reduction;
             double bonus = reduction / (_weights.Length - 1);
-
             for (int j = 0; j < _weights.Length; j++)
             {
-                if (j != selection)
+                if (j != _weightedIndex)
                 {
                     _weights[j] += bonus;
                 }
             }
 
-            switch (selection)
+            switch (_weightedIndex)
             {
                 case 0:
                     {

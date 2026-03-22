@@ -1,7 +1,5 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
-using System;
-using System.Diagnostics.Metrics;
 using FirstConsoleApp.MazeStuff.Extensions;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using FirstConsoleApp.MazeStuff.Cells.Interfaces;
