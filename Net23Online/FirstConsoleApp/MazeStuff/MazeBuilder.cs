@@ -16,9 +16,7 @@ namespace FirstConsoleApp.MazeStuff
 
         private IMaze _maze;
         private Random _random;
-        public const int RANDOM_MIMIC_CODE = 0;
-        public const int COIN_LIKE_MIMIC_CODE = 1;
-        public const int DOOR_LIKE_MIMIC_CODE = 2;
+        public const char RANDOM_MIMIC_CODE = '0';
 
         public IMaze Build(int width, int height, int? seed = null)
         {
@@ -146,23 +144,23 @@ namespace FirstConsoleApp.MazeStuff
         private void GenerateMimics()
         {
             GenerateMimic(RANDOM_MIMIC_CODE);
-            GenerateMimic(COIN_LIKE_MIMIC_CODE, 4);
-            GenerateMimic(DOOR_LIKE_MIMIC_CODE, 2);
+            GenerateMimic(Coin.SYMBOL, 4);
+            GenerateMimic(Doors.SYMBOL, 2);
         }
 
-        private void GenerateMimic(int type, int maxMimicCount = 2)
+        private void GenerateMimic(char symbol, int maxMimicCount = 2)
         {
             var freeCells = _maze
                 .Surface
                 .Where(cell => cell is Ground)
-                .Where(x => type == RANDOM_MIMIC_CODE || 
-                    type == COIN_LIKE_MIMIC_CODE && GetNearCells<Ground>(x).Count() == 1 || 
-                    type == DOOR_LIKE_MIMIC_CODE && GetNearCells<Ground>(x).Count() > 1)
+                .Where(x => symbol == RANDOM_MIMIC_CODE || 
+                    symbol == Coin.SYMBOL && GetNearCells<Ground>(x).Count() == 1 || 
+                    symbol == Doors.SYMBOL && GetNearCells<Ground>(x).Count() > 1)
                 .ToList();
-            TryReplaceMimic(maxMimicCount, freeCells);
+            TryReplaceMimic(maxMimicCount, freeCells, symbol);
         }
 
-        private void TryReplaceMimic(int maxMimicCount, List<IBaseCell> cells)
+        private void TryReplaceMimic(int maxMimicCount, List<IBaseCell> cells, char symbol)
         {
             if (!cells.Any())
             {
@@ -173,7 +171,7 @@ namespace FirstConsoleApp.MazeStuff
             {
                 var randomIndex = _random.Next(cells.Count());
                 var randomCell = cells[randomIndex];
-                var mimic = new Mimic(_maze)
+                var mimic = new Mimic(_maze, symbol)
                 {
                     X = randomCell.X,
                     Y = randomCell.Y,
