@@ -1,10 +1,12 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Cells.Interfaces;
 using FirstConsoleApp.MazeStuff.Characters;
-using System;
-using System.Diagnostics.Metrics;
 using FirstConsoleApp.MazeStuff.Extensions;
 using FirstConsoleApp.MazeStuff.Interfaces;
-using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+using FirstConsoleApp.SeaBattleHumanVsBot;
+using System;
+using System.Diagnostics.Metrics;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -147,11 +149,11 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateMimics()
         {
-            GenerateMimic(COIN_LIKE_MIMIC_CODE, 4);
-            GenerateMimic(DOOR_LIKE_MIMIC_CODE, 2);
+            GenerateMimic<CoinLikeMimic>(COIN_LIKE_MIMIC_CODE, 4);
+            GenerateMimic<DoorLikeMimic>(DOOR_LIKE_MIMIC_CODE, 2);
         }
 
-        private void GenerateMimic(int type, int maxMimicCount = 2)
+        private void GenerateMimic<T>(int type, int maxMimicCount = 2) where T : Mimic
         {
             var freeCells = _maze
                 .Surface
@@ -160,45 +162,25 @@ namespace FirstConsoleApp.MazeStuff
                     type == COIN_LIKE_MIMIC_CODE && GetNearCells<Ground>(x).Count() == 1 || 
                     type == DOOR_LIKE_MIMIC_CODE && GetNearCells<Ground>(x).Count() > 1)
                 .ToList();
-            TryReplaceMimic(maxMimicCount, freeCells, type);
-        }
-
-        private void TryReplaceMimic(int maxMimicCount, List<IBaseCell> cells, int type)
-        {
-            if (!cells.Any())
+            if (!freeCells.Any())
             {
                 return;
             }
 
             for (int i = 0; i < maxMimicCount; i++)
             {
-                var randomIndex = _random.Next(cells.Count());
-                var randomCell = cells[randomIndex];
-                Mimic mimic;
-                switch (type)
-                {
-                    case DOOR_LIKE_MIMIC_CODE:
-                        {
-                            mimic = new DoorLikeMimic(_maze)
-                            {
-                                X = randomCell.X,
-                                Y = randomCell.Y,
-                            };
-                            break;
-                        }
-                    default:
-                        {
-                            mimic = new CoinLikeMimic(_maze)
-                            {
-                                X = randomCell.X,
-                                Y = randomCell.Y,
-                            };
-                            break;
-                        }
-                }
-
-                ReplaceCell(mimic);
+                var randomIndex = _random.Next(freeCells.Count());
+                var randomCell = freeCells[randomIndex];
+                var mimic = (T)Activator.CreateInstance(typeof(T), _maze);
+                TryReplaceMimic(mimic, randomCell);
             }
+        }
+
+        private void TryReplaceMimic(Mimic mimic, IBaseCell cell)
+        {
+            mimic.X = cell.X;
+            mimic.Y = cell.Y;
+            ReplaceCell(mimic);
         }
 
         private void GenerateCoins(int maxCoinCount = 4)
