@@ -9,25 +9,31 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
-    internal class SecretRoom : BaseCell
+    public class SecretRoom : BaseCell
     {
-        public IMaze SecretMaze { get; set; } //отдельный лабиринт 5х5 для секретной комнаты
-       
-        public bool IsSecretMaze { get; set; } = true;
+        private const int MAX_HEIGHT = 5;
+        private const int MAX_WIDTH = 5;
+        public IMazeController secretRoomConroller = new MazeController(); //Перемистил с метода Interaction
+
+        public IMaze SecretMaze { get; set; } //отдельный лабиринт для секретной комнаты
+                                              //public bool IsSecretMaze { get; set; } = true;
 
         public SecretRoom(IMaze maze) : base(maze)
         {
             SecretMaze = new Maze();
             SecretMaze.IsSecretMaze = true;
         }
+
         public override char Symbol { get; } = 'R';
         public override bool Interaction(IBaseCharacter character)
         {
             Maze.EventHistory.Add("You find secret room!");
             Replace();
 
-            var secretRoomConroller = new MazeController();// Передать серкретный лабиринт. Создается новый герой а не старый. Передать в MazeController героя?
-            secretRoomConroller.Play(5, 5, SecretMaze.IsSecretMaze, hero: (Hero)character);
+            //IMazeController secretRoomConroller = new MazeController();// Передать серкретный лабиринт. Передать в MazeController героя?
+                                                                       // с типом MazeController тесты не работают. ImazeController
+
+            secretRoomConroller.Play(MAX_HEIGHT, MAX_WIDTH, SecretMaze.IsSecretMaze, hero: (Hero)character);
 
             return true;
         }

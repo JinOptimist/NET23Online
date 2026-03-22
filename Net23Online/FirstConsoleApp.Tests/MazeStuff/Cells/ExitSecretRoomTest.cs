@@ -5,11 +5,6 @@ using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FirstConsoleApp.Tests.MazeStuff.Cells
 {
@@ -63,7 +58,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
         [TestCase(3, 1)]
         [TestCase(4, 2)]
         [TestCase(5, 2)]
-        public void Interaction_AddEventHistoruBaseOnCallCount(int countCall, int countEventHistoreAdd)
+        public void Interaction_AddEventHistoryBasedOnCallCount(int countCall, int countEventHistoreAdd)
         {
             // Prepare
             var baseCharacter = _baseCharacterMock.Object;

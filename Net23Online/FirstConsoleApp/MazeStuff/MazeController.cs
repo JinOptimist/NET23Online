@@ -7,7 +7,7 @@ using Microsoft.VisualBasic;
 
 namespace FirstConsoleApp.MazeStuff
 {
-    public class MazeController
+    public class MazeController : IMazeController
     {
         private IMaze _maze;
 
@@ -16,7 +16,7 @@ namespace FirstConsoleApp.MazeStuff
         private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
 
 
-        public void Play(int width = 24, int height = 12, bool isSecretMaze = false, Hero hero = null)
+        public void Play(int width = 24, int height = 12, bool isSecretMaze = false, Hero hero = null) //Передать не Hero а Интерфейс? IBaseCaracter
         {
 
             _mazeBuilder = new MazeBuilder();

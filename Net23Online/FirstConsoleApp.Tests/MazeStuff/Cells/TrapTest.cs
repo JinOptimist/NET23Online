@@ -79,7 +79,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
         {
             //Prepare
 
-            var soundPlayerMock = new Mock<IMazeSoundPlayer>(); //У нас создается в методе Interaction создавался реальный объект
+            var soundPlayerMock = new Mock<IMazeSoundPlayer>(); // В методе Interaction создавался реальный объект
             _trap.soundPlayer = soundPlayerMock.Object;
 
             // Act
