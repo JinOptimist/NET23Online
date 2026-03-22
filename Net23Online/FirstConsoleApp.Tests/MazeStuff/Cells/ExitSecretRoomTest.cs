@@ -10,7 +10,6 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
 {
     internal class ExitSecretRoomTest
     {
-
         private ExitSecretRoom _exitSecretRoom;
         private Mock<IBaseCharacter> _baseCharacterMock;
         private Mock<IMaze> _mazeMock;
@@ -22,11 +21,10 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             _baseCharacterMock = new Mock<IBaseCharacter>();
 
             var maze = _mazeMock.Object;
-            _exitSecretRoom = new ExitSecretRoom(maze); 
+            _exitSecretRoom = new ExitSecretRoom(maze);
 
             //Maze.EventHistory.Add("You left the secret room.");
             _mazeMock.Setup(x => x.EventHistory.Add(It.IsAny<string>()));
-
         }
 
         [Test]
@@ -75,7 +73,6 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             _mazeMock.Verify(x => x.EventHistory.Add("You left the secret room."),
                 Times.Exactly(countEventHistoreAdd),
                 $"If Interaction was called {countCall} times, EvetnHisory mus be Add {countEventHistoreAdd} times");
-
         }
     }
 }

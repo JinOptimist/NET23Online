@@ -6,12 +6,6 @@ using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FirstConsoleApp.Tests.MazeStuff.Cells
 {
@@ -32,6 +26,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
 
             _baseCharacterMock = new Mock<IBaseCharacter>();
 
+            //Hero hero= (Hero)_baseCharacterMock.Object;
             _secretRoomControllerMock = new Mock<IMazeController>();
             _secretRoomControllerMock.Setup(x => x.Play(It.IsAny<int>(), It.IsAny<int>(), true, It.Is<Hero>(x => x != null)));
 
@@ -80,13 +75,14 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
         public void Interaction_StartSecretMaze()
         {
             // Prepare
-            //Сохраняет конструктор не виртуальные методы переопределить нельзя
+            //Сохраняет конструктор, не виртуальные методы переопределить нельзя
             //Mock<MazeController> secretRoomControllerMock = new Mock<MazeController>();
 
             var secretRoomController = _secretRoomControllerMock.Object;
 
             // Act
             _secretRoom.Interaction(_baseCharacterMock.Object);
+            //Hero hero= (Hero)_baseCharacterMock.Object;
 
             // Assert
             _secretRoomControllerMock.Verify(x => x.Play(It.IsAny<int>(), It.IsAny<int>(), true, It.Is<Hero>(x => x != null)), Times.Once(),
