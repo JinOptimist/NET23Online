@@ -36,6 +36,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             character.Hp--;
             character.Coins += 10;
+            character.EnemiesKilled++;
             Maze.EventHistory.Add("You were wounded and awarded");
             Maze.Surface.Remove(this);
             var ground = new Ground(Maze)

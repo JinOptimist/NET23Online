@@ -16,6 +16,8 @@ namespace FirstConsoleApp.MazeStuff.Characters
         public int Speed { get; set; }
         public int Burning { get; set; }
 
+        public int EnemiesKilled { get; set; }
+
         public int Keys { get; set; }
 
         public bool HasKey()

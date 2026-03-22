@@ -1,5 +1,7 @@
 ﻿
+using FirstConsoleApp.MazeStuff.Characters;
 using FirstConsoleApp.MazeStuff.Interfaces;
+using System.Diagnostics;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -13,6 +15,7 @@ namespace FirstConsoleApp.MazeStuff
 
         public void Play()
         {
+            var startPlayTime = Stopwatch.StartNew();
             _mazeBuilder = new MazeBuilder();
 
             var soundPlayer = new MazeSoundPlayer();
@@ -33,6 +36,14 @@ namespace FirstConsoleApp.MazeStuff
                 mazeDrawer.Draw(_maze);
             }
 
+            startPlayTime.Stop();
+            var timeSpentPlaying = startPlayTime.Elapsed;
+            var spentTimeStatistics = $"{(int)timeSpentPlaying.TotalHours} H {timeSpentPlaying.Minutes} Min {timeSpentPlaying.Seconds} Sec";
+            var heroStatistics = _maze.Hero;
+            Console.Clear();
+            Console.WriteLine(spentTimeStatistics);
+            Console.WriteLine($"Coins earned: {heroStatistics.Coins}");
+            Console.WriteLine($"Enemies killed: {heroStatistics.EnemiesKilled}");
         }
 
         /// <summary>

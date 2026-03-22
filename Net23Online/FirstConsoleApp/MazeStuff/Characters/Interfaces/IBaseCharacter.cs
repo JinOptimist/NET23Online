@@ -10,6 +10,7 @@ namespace FirstConsoleApp.MazeStuff.Characters.Interfaces
         int Keys { get; set; }
         string Name { get; set; }
         int Speed { get; set; }
+        public int EnemiesKilled { get; set; }
 
         void CollectKey();
         bool HasKey();
