@@ -13,7 +13,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
     {
         private const int MAX_HEIGHT = 5;
         private const int MAX_WIDTH = 5;
-        public IMazeController secretRoomConroller = new MazeController(); //Перемистил с метода Interaction
+        public IMazeController secretRoomConroller = new MazeController(); //Перемистил с метода Interaction в чвойства
 
         public IMaze SecretMaze { get; set; } //отдельный лабиринт для секретной комнаты
                                               //public bool IsSecretMaze { get; set; } = true;

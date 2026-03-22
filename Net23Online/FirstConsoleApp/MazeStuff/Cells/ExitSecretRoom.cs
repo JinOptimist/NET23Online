@@ -10,8 +10,6 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class ExitSecretRoom : BaseCell
     {
-        //private readonly MazeController _mazeController;
-
         public ExitSecretRoom(IMaze maze) : base(maze)
         {
 

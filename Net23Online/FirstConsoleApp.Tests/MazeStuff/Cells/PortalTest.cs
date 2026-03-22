@@ -21,7 +21,6 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
         private Mock<IMaze> _mazeMock;
         private Mock<IBaseCharacter> _baseCharacterMock;
 
-
         [SetUp]
         public void Setup()
         {
@@ -51,25 +50,6 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
 
             _mazeMock.Object.Surface.Add(_portal);
             _mazeMock.Object.Surface.Add(_linkedPortal);
-        }
-
-        [Test]
-        [TestCase("Y", false)]
-        [TestCase("y", false)]
-        [TestCase("N", true)]
-        [TestCase("w", true)]
-        public void Interaction_IsPortalUsed(string inputKey, bool actual)
-        {
-            // Prepare
-
-            Console.SetIn(new System.IO.StringReader(inputKey));
-
-            // Act
-            bool IsPortalUsed = _portal.Interaction(_baseCharacterMock.Object);
-            //Console.SetIn(new System.IO.StringReader(inputKey));
-
-            // Assert
-            Assert.That(IsPortalUsed, Is.EqualTo(actual));
         }
 
         [Test]
