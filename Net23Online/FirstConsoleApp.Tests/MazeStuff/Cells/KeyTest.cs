@@ -1,4 +1,5 @@
-﻿using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+﻿using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Cells.Interfaces;
 using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using Moq;
@@ -92,6 +93,19 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
 
             // Assert
             _baseCharacterMock.Verify(x => x.CollectKey(), Times.Once());
+        }
+
+        [Test]
+        public void ReplaceKeyToGround_KeyWasReplaceToGround()
+        {
+            // Prepare
+
+            // Act
+            _key.Interaction(_baseCharacterMock.Object);
+
+            // Assert
+            _mazeMock.Verify(x => x.Surface.Remove(_key), Times.Once());
+            _mazeMock.Verify(x => x.Surface.Add(It.IsAny<Ground>()), Times.Once());
         }
     }
 }

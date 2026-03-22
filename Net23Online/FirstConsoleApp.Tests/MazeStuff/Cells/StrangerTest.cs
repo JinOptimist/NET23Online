@@ -1,14 +1,9 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
-using FirstConsoleApp.MazeStuff.Cells.Interfaces;
 using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FirstConsoleApp.Tests.MazeStuff.Cells
 {
@@ -22,10 +17,6 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
         public void Setup()
         {
             _mazeMock = new Mock<IMaze>();
-            _mazeMock
-                .Setup(x => x.Surface.Remove(It.IsAny<IBaseCell>()));
-            _mazeMock
-                .Setup(x => x.Surface.Add(It.IsAny<IBaseCell>()));
             _mazeMock
                 .Setup(x => x.EventHistory.Add(It.IsAny<string>()));
             var maze = _mazeMock.Object;
