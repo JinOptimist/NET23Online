@@ -7,12 +7,12 @@ namespace FirstConsoleApp.MazeStuff.Cells
     {
         public const char SYMBOL = 'c';
         public override bool IsBonusCell { get; init; } = true;
-
+        private const int _COINS_COLLECT = 1;
         public Coin(IMaze maze) : base(maze)
         {
 
         }
-        private const int _COINS_COLLECT = 1;
+       
         
 
         public override char Symbol => SYMBOL;

@@ -27,7 +27,12 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
 
             _baseCharacterMock = new Mock<IBaseCharacter>();
             _baseCharacterMock.SetupProperty(x => x.Coins);
-
+            _baseCharacterMock.Setup(x => x.CollectCoin(It.IsAny<int>()))
+                .Callback<int>(amount =>
+                {
+                    var current = _baseCharacterMock.Object.Coins;
+                    _baseCharacterMock.Object.Coins = current + amount;
+                });
             _coin = new Coin(maze); // ONE REAL OBJECT
         }
 
@@ -40,7 +45,6 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             // Prepare
             var baseCharacter = _baseCharacterMock.Object;
             baseCharacter.Coins = initialCoins;
-
             // Act
             _coin.Interaction(baseCharacter);
 

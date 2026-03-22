@@ -29,7 +29,7 @@ namespace FirstConsoleApp.MazeStuff.Characters
         }
         public bool HasHp(int amount)
         {
-            if (Hp >= amount)
+            if (Hp > amount)
             {
                 return true;
             }

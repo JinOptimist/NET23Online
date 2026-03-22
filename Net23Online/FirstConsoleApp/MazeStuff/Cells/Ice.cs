@@ -14,10 +14,10 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(IBaseCharacter character)
         {
-            
-            if (!character.HasHp(_HP_COST) || character.Hp <= _HP_COST)
+
+            if (!character.HasHp(_HP_COST))
             {
-                Maze.EventHistory.Add("LAST LIFE LOST, It's An Ice ");
+                Maze.EventHistory.Add("LAST LIFE LOST, It's An Ice");
                 character.Hp = 0;
                 character.GameOver();
                 return false;
@@ -25,6 +25,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
             if (!character.HasSpeeds(_Speed_COST))
             {
                 Maze.EventHistory.Add("You are freezing!");
+                character.Speed = 0;
             }
 
             character.SpendHp(_HP_COST);

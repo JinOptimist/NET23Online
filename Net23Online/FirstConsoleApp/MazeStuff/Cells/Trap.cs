@@ -16,7 +16,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(IBaseCharacter character)
         {
-            if (!character.HasHp(_HP_COST) || character.Hp <= _HP_COST)
+            if (character.Hp <= _HP_COST)
             {
                 character.Hp = 0;
                 Maze.EventHistory.Add("LAST LIFE LOST,it's a trap ");
