@@ -18,7 +18,7 @@ namespace FirstConsoleApp.MazeStuff.Characters.Interfaces
         public bool HasCoins(int amount);
         public bool HasSpeeds(int amount);
         public bool HasSuperPower(int amount);
-        void UseKey(int amount);
+        public void UseKey(int amount);
         public void SpendCoins(int amount);
         public void SpendHp(int amount);
         public void SpendSpeed(int amount);
