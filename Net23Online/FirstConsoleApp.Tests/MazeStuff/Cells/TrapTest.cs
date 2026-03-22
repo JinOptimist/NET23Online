@@ -30,8 +30,6 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             _mazeMock.Setup(x => x.Surface.Add(It.IsAny<IBaseCell>()));
             _mazeMock.Setup(x => x.Surface.Remove(It.IsAny<IBaseCell>()));
 
-            //Переопределять soundPlayer.PlayMusic не нужно тк объект MazeSoundPlayer создвается внутри метода (MazeSoundPlayer soundPlayer = new MazeSoundPlayer();)?
-
             _trap = new Trap(maze);
 
         }
