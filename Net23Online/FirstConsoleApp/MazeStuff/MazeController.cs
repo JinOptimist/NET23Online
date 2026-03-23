@@ -8,7 +8,8 @@ namespace FirstConsoleApp.MazeStuff
     {
         private IMaze _maze;
         private Random _random;
-        private bool _isStrangerAppeared;
+        private Stranger _stranger;
+        public const int CHANSE_STRANGER_APPEARED = 30;
         private MazeBuilder _mazeBuilder;
         private int _countSteps = 0;
         private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
@@ -28,7 +29,7 @@ namespace FirstConsoleApp.MazeStuff
 
             mazeDrawer.Draw(_maze);
             _random = new Random();
-            _isStrangerAppeared = false;
+            _stranger = new Stranger(_maze, _random);
             var continuewGame = true;
             while (continuewGame)
             {
@@ -90,10 +91,9 @@ namespace FirstConsoleApp.MazeStuff
 
                 _countSteps++;
                 int randomNumber = _random.Next(100);
-                if (randomNumber < 30)
+                if (randomNumber < CHANSE_STRANGER_APPEARED)
                 {
-                    Stranger stranger = new Stranger(_maze);
-                    stranger.Interaction(_maze.Hero);
+                    _stranger.Interaction(_maze.Hero);
                 }
 
                 if (_countSteps % STEPS_TO_ICE == 0)

@@ -5,14 +5,14 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Stranger : BaseCell
     {
-        Random _random;
-        static double[] _weights = { 100.0, 100.0, 100.0 };
-        double _minWeight = 10.0;
-        double _factor = 0.3;
+        private Random _random;
+        private double[] _weights = { 100.0, 100.0, 100.0 };
+        public const double MIN_WEIGHT = 10.0;
+        public const double FACTOR = 0.3;
 
-        public Stranger(IMaze maze) : base(maze)
+        public Stranger(IMaze maze, Random random) : base(maze)
         {
-            _random = new Random();
+            _random = random;
         }
 
         public override char Symbol => '.';
@@ -28,20 +28,20 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         private string WeightedRandomSelection(IBaseCharacter character)
         {
-            int _weightedIndex = GetWeightedIndex();
-            double reduction = _weights[_weightedIndex] * _factor;
-            if (_weights[_weightedIndex] - reduction < _minWeight)
+            var _weightedIndex = GetWeightedIndex();
+            var reduction = _weights[_weightedIndex] * FACTOR;
+            if (_weights[_weightedIndex] - reduction < MIN_WEIGHT)
             {
-                reduction = _weights[_weightedIndex] - _minWeight;
+                reduction = _weights[_weightedIndex] - MIN_WEIGHT;
             }
 
             _weights[_weightedIndex] -= reduction;
-            double bonus = reduction / (_weights.Length - 1);
-            for (int j = 0; j < _weights.Length; j++)
+            var bonus = reduction / (_weights.Length - 1);
+            for (int i = 0; i < _weights.Length; i++)
             {
-                if (j != _weightedIndex)
+                if (i != _weightedIndex)
                 {
-                    _weights[j] += bonus;
+                    _weights[i] += bonus;
                 }
             }
 
@@ -67,9 +67,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         private int GetWeightedIndex()
         {
-            double totalWeight = _weights.Sum();
-            double randomPoint = _random.NextDouble() * totalWeight;
-            double currentSum = 0;
+            var totalWeight = _weights.Sum();
+            var randomPoint = _random.NextDouble() * totalWeight;
+            var currentSum = 0.00;
             for (int i = 0; i < _weights.Length; i++)
             {
                 currentSum += _weights[i];

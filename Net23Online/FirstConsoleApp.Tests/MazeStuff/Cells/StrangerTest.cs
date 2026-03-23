@@ -12,6 +12,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
         private Stranger _stranger;
         private Mock<IBaseCharacter> _baseCharacterMock;
         private Mock<IMaze> _mazeMock;
+        private Mock<Random> _randomMock;
 
         [SetUp]
         public void Setup()
@@ -20,7 +21,9 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             _mazeMock
                 .Setup(x => x.EventHistory.Add(It.IsAny<string>()));
             var maze = _mazeMock.Object;
-            _stranger = new Stranger(maze);
+            _randomMock = new Mock<Random>();
+            Random random = new Random();
+            _stranger = new Stranger(maze, _randomMock.Object);
             _baseCharacterMock = new Mock<IBaseCharacter>();
         }
 

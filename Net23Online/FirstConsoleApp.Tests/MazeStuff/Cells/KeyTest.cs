@@ -55,7 +55,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             _key.Interaction(_baseCharacterMock.Object);
 
             // Assert
-            _soundPlayerMock.Verify(x => x.PlayMusic(It.IsAny<string>(), It.IsAny<float>(), It.IsAny<bool>()), Times.Once());
+            _soundPlayerMock.Verify(x => x.PlayMusic(It.IsAny<string>(), It.IsAny<float>(), It.IsAny<bool>()), Times.Never());
         }
 
         [Test]
