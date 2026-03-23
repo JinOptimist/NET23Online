@@ -8,12 +8,12 @@ namespace FirstConsoleApp.MazeStuff
     {
         private IMaze _maze;
 
-        private static System.Timers.Timer _gameTimer;
+        private System.Timers.Timer _gameTimer;
         private MazeBuilder _mazeBuilder;
         private int _countSteps = 0;
         private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
         private const int MILISECONDS_TO_ESCAPE = 30000;
-        volatile bool continuewGame = true;
+        private bool continuewGame = true;
 
         public void Play()
         {
