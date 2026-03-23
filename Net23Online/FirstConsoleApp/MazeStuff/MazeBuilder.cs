@@ -1,5 +1,9 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Cells.Shopkeeper;
 using FirstConsoleApp.MazeStuff.Characters;
+using System;
+using System.Diagnostics.Metrics;
+using FirstConsoleApp.MazeStuff.Cells.ConsoleInputReader;
 using FirstConsoleApp.MazeStuff.Extensions;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using FirstConsoleApp.MazeStuff.Cells.Interfaces;
@@ -13,8 +17,9 @@ namespace FirstConsoleApp.MazeStuff
         private const double SINGLE_USE_PORTAL_CHANCE = 0.3;
         private const int _MAX_DOORS_COUNT = 5;
         private const int MAX_ICE = 15;
+        private const int MAX_FIRE = 5;
 
-        private IMaze _maze;
+        private IMaze _maze;  
         private Random _random;
 
         public IMaze Build(int width, int height, int? seed = null)
@@ -45,7 +50,9 @@ namespace FirstConsoleApp.MazeStuff
             GenerateIce(10);
             GenerateSpeedPotions();
             GenerateSkipingMove();
-
+            GenerateFire();
+            GenerateGhost(4);
+            GenerateShopkeeper();
             return _maze;
         }
 
@@ -408,7 +415,7 @@ namespace FirstConsoleApp.MazeStuff
 
             foreach (var cell in selectedCells)
             {
-                var portal = new Portal(_maze)
+                var portal = new Portal(_maze, new ConsoleInputReader())
                 {
                     X = cell.X,
                     Y = cell.Y,
@@ -700,9 +707,84 @@ namespace FirstConsoleApp.MazeStuff
             }
         }
 
+        private void GenerateFire()
+        {           
 
-        
-    
+            for (int i = 0; i < MAX_FIRE; i++)
+            {
+                var x = _random.Next(0, _maze.Width);
+                var y = _random.Next(0, _maze.Height);
+
+                var fire = new Fire(_maze)
+                {
+                    X = x,
+                    Y = y,
+                };
+
+                ReplaceCell(fire);
+            }
+        }
+
+        private void GenerateShopkeeper()
+        {
+            var doorsMaze = _maze
+                .Surface
+                .Where(cell => cell is Doors)
+                .ToList();
+
+            var firstGroundNearDoors = GetNearCellsFromList(doorsMaze)
+                .FirstOrDefault(cell => cell is Ground);
+
+            var x = new int();
+            var y = new int();
+            if(firstGroundNearDoors != null)
+            {
+                x = firstGroundNearDoors.X;
+                y = firstGroundNearDoors.Y;
+            }
+            else
+            {
+                var startHeroAreaX = 5;
+                var startHeroAreaY = 5;
+                var groundsMaze = _maze.Surface
+                    .Where(cell => cell is Ground)
+                    .Where(cell => cell.X >= startHeroAreaX && cell.Y >= startHeroAreaY).ToList();
+                var indexRandomGround = _random.Next(0, groundsMaze.Count() - 1);
+                x = groundsMaze[indexRandomGround].X;
+                y = groundsMaze[indexRandomGround].Y;
+            }
+
+            var shopkeeper = new Shopkeeper(_maze, _random)
+            {
+                X = x,
+                Y = y
+            };
+            ReplaceCell(shopkeeper);
+        }
+        private void GenerateGhost(int countOfGhost = 2)
+        {
+            var cellToGenerateGhost = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Wall>(x).Count() == 2)
+                .ToList();
+
+            if(countOfGhost > cellToGenerateGhost.Count) 
+            {
+                countOfGhost = 2;
+            }
+            for (int i = 0; i < countOfGhost; i++)
+            {
+
+                var cellToReplace = cellToGenerateGhost[i];
+                var ghost = new Ghost(_maze)
+                {
+                    X = cellToReplace.X,
+                    Y = cellToReplace.Y,
+                };
+            ReplaceCell(ghost);
+            }
+        }
     }
 }
 

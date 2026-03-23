@@ -11,6 +11,7 @@
     <None Remove="MazeStuff\Sounds\coin_sound.mp3" />
     <None Remove="MazeStuff\Sounds\coin_sound.wav" />
     <None Remove="MazeStuff\Sounds\door_sound.mp3" />
+    <None Remove="MazeStuff\Sounds\end_of_timer.mp3" />
     <None Remove="MazeStuff\Sounds\ice_sound.wav" />
     <None Remove="MazeStuff\Sounds\key_sound.wav" />
     <None Remove="MazeStuff\Sounds\lava_sound.wav" />
@@ -30,6 +31,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MazeStuff\Sounds\door_sound.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MazeStuff\Sounds\end_of_timer.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MazeStuff\Sounds\ice_sound.wav">

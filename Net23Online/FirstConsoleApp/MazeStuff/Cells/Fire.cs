@@ -9,25 +9,24 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
-    public class Rest : BaseCell
+    public class Fire: BaseCell
     {
-
-
-        public Rest(IMaze maze) : base(maze)
+        public Fire (IMaze maze) : base(maze)
         {
+            
         }
 
-        public override char Symbol => 'Q';
-        public override bool IsBonusCell { get; init; } = true;
+        public override char Symbol => '^';
 
 
         public override bool Interaction(IBaseCharacter character)
-        {
-            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-            soundPlayer.PlayMusic("rest_sound.wav");
+        {            
+            character.Hp--;
 
-            character.Hp++;
+            Maze.EventHistory.Add("You're on fire!");
+
             Maze.Surface.Remove(this);
+
             var ground = new Ground(Maze)
             {
                 X = X,
@@ -37,6 +36,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             return true;
         }
+       
 
-    }   
+}
 }
