@@ -1,4 +1,5 @@
-﻿using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+﻿using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Cells.Interfaces;
 using FirstConsoleApp.MazeStuff.Characters;
 using FirstConsoleApp.MazeStuff.Interfaces;
 
@@ -10,7 +11,7 @@ namespace FirstConsoleApp.MazeStuff
         public int Height { get; set; }
 
         public Hero Hero { get; set; }
-
+        public Monster Monster { get; set; }
         public int Seed { get; set; }
 
         // ground == '.'

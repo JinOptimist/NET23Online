@@ -37,6 +37,7 @@ namespace FirstConsoleApp.MazeStuff
             var hero = GenerateHero();
             _maze.Hero = hero;
 
+
             GenerateWall();
             GenerateGround(hero.X, hero.Y);// Genrate path
             GenerateCoins();
@@ -52,8 +53,49 @@ namespace FirstConsoleApp.MazeStuff
             GenerateSpeedPotions();
             GenerateSkipingMove();
             GenerateFire();
+            GenerateMonsterLair();
+
+            var monster = GenerateMonster();
+            _maze.Monster = monster;
 
             return _maze;
+        }
+
+        private Monster GenerateMonster()
+        {
+            var lairs = _maze
+            .Surface
+            .Where(x => x is MonsterLair)
+            .ToList();
+
+            var lair = lairs[_random.Next(lairs.Count)];
+
+            return new Monster(_maze)
+            {
+                X = lair.X,
+                Y = lair.Y,
+            };
+        }
+
+        private void GenerateMonsterLair(int maxCountLairMonster = 2)
+        {
+            var grounds = _maze
+            .Surface
+            .Where(x => x is Ground)
+            .ToList();
+
+            for (int i = 0; i < maxCountLairMonster; i++)
+            {
+                var freeCell = grounds[_random.Next(grounds.Count)];
+
+                var MonsterLair = new MonsterLair(_maze)
+                {
+                    X = freeCell.X,
+                    Y = freeCell.Y,
+                };
+
+                ReplaceCell(MonsterLair);
+            }
         }
 
         private Hero GenerateHero()

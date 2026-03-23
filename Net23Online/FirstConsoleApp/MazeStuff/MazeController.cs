@@ -1,4 +1,5 @@
 ﻿
+using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Interfaces;
 
 namespace FirstConsoleApp.MazeStuff
@@ -6,6 +7,8 @@ namespace FirstConsoleApp.MazeStuff
     public class MazeController
     {
         private IMaze _maze;
+
+        private Random _random = new Random();
 
         private MazeBuilder _mazeBuilder;
         private int _countSteps = 0;
@@ -33,6 +36,52 @@ namespace FirstConsoleApp.MazeStuff
                 mazeDrawer.Draw(_maze);
             }
 
+        }
+
+        private void OneStepMonster()
+        {
+            var countDirection = 4;
+
+            var destenationX = _maze.Monster.X;
+            var destenationY = _maze.Monster.Y;
+
+            var direction = _random.Next(countDirection);
+
+            switch (direction)
+            {
+                case 0:
+                    {
+                        destenationY--;
+                        break;
+                    }
+                case 1:
+                    {
+                        destenationY++;
+                        break;
+                    }
+                case 2:
+                    {
+                        destenationX--;
+                        break;
+                    }
+                case 3:
+                    {
+                        destenationX++;
+                        break;
+                    }
+            }
+
+            var destenationCell = _maze[destenationX, destenationY];
+
+            if (destenationCell == null || destenationCell.Symbol == '█')
+            {
+                OneStepMonster();
+            }
+            else
+            {
+                _maze.Monster.X = destenationX;
+                _maze.Monster.Y = destenationY;
+            }
         }
 
         /// <summary>
@@ -91,8 +140,15 @@ namespace FirstConsoleApp.MazeStuff
                 {
                     _mazeBuilder.GenerateIceNearHero();
                 }
+
             }
 
+            if (_maze.Hero.X == _maze.Monster.X && _maze.Hero.Y == _maze.Monster.Y)
+            {
+                return false;
+            }
+
+            OneStepMonster();
             return true;
         }
     }

@@ -5,6 +5,9 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class SkipingMove : BaseCell
     {
+        const int CHANCE_OUT_PERCENT = 75;
+        const int MAX_VALUE_PERCENT = 100;
+
         public override char Symbol => 'O';
 
         public SkipingMove(IMaze maze) : base(maze)
@@ -27,9 +30,6 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public bool HasFallenIntoPit(IBaseCharacter character)
         {
-            const int CHANCE_OUT_PERCENT = 75;
-            const int MAX_VALUE_PERCENT = 100;
-
             var cellsWithPits = Maze
                 .Surface
                 .Where(pit => pit.Symbol == Symbol)

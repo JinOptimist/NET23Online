@@ -26,6 +26,10 @@ namespace FirstConsoleApp.MazeStuff
                     {
                         currentCell = maze.Hero;
                     }
+                    else if (maze.Monster.X == x && maze.Monster.Y == y)
+                    {
+                        currentCell = maze.Monster;
+                    }
                     else
                     {
                         currentCell = maze
