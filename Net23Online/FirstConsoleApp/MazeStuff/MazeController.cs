@@ -1,5 +1,6 @@
-﻿
+﻿//using System.Timers;
 using FirstConsoleApp.MazeStuff.Interfaces;
+using System.Timers;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -7,9 +8,12 @@ namespace FirstConsoleApp.MazeStuff
     {
         private IMaze _maze;
 
+        private System.Timers.Timer _gameTimer;
         private MazeBuilder _mazeBuilder;
         private int _countSteps = 0;
         private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
+        private const int MILISECONDS_TO_ESCAPE = 30000;
+        private bool continuewGame = true;
 
         public void Play()
         {
@@ -26,7 +30,13 @@ namespace FirstConsoleApp.MazeStuff
 
             mazeDrawer.Draw(_maze);
 
-            var continuewGame = true;
+            Console.WriteLine("You have 30 seconds to escape");
+            
+            _gameTimer = new System.Timers.Timer(MILISECONDS_TO_ESCAPE);
+            _gameTimer.Elapsed += OnTimedEvent;
+            _gameTimer.AutoReset = false;
+            _gameTimer.Enabled = true;
+
             while (continuewGame)
             {
                 continuewGame = DoOneStep();
@@ -42,9 +52,18 @@ namespace FirstConsoleApp.MazeStuff
         /// <returns></returns>
         private bool DoOneStep()
         {
+            if(!continuewGame)
+            {
+                return false;
+            }
             var destenationX = _maze.Hero.X;
             var destenationY = _maze.Hero.Y;
             var key = Console.ReadKey(true);
+
+            if (!continuewGame)
+            {
+                return false;
+            }
 
             switch (key.Key)
             {
@@ -77,7 +96,7 @@ namespace FirstConsoleApp.MazeStuff
             var destenationCell = _maze[destenationX, destenationY];
             if (destenationCell == null)
             {
-                return true;
+                return continuewGame;
             }
 
             if (destenationCell.Interaction(_maze.Hero))
@@ -93,7 +112,16 @@ namespace FirstConsoleApp.MazeStuff
                 }
             }
 
-            return true;
+            return continuewGame;
+        }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs time)
+        {
+            Console.Clear();
+            Console.WriteLine("YOU LOST IN MAZE FOREVER");
+            MazeSoundPlayer soundEndGame = new MazeSoundPlayer();
+            soundEndGame.PlayMusic("end_of_timer.mp3");
+            continuewGame = false;
         }
     }
 }
