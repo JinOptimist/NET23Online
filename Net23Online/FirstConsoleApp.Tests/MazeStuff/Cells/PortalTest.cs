@@ -55,8 +55,14 @@ public class PortalTest
             .Setup(x => x.ReadKey()).Returns(ConsoleKey.Y);
         
         //Act
-        //Как проверять Readkey?
-        //Мой тест не работает так как ждет ввода с консоли
+         
+        /*Как проверять Readkey?
+         * я столкнулась с проблемой, что в Portal.Interaction был вызов Console.ReadKey который нельзя замокать. 
+         *Я создала отдельный интерфейс IInputReader и класс ConsoleInputReader 
+         *В классе Portal добавила поле _inputReader и передачу через конструктор — теперь 
+         *портал не создаёт ввод сам, а получает его снаружи. 
+         *В тесте передаём мок, в игре передаём ConsoleInputReader
+        */
         var baseCharacter = _baseCharacterMock.Object;
         _portal.Interaction(baseCharacter);
         
