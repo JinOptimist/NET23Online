@@ -17,6 +17,7 @@ namespace FirstConsoleApp.MazeStuff.Characters
         public int Burning { get; set; }
 
         public int Keys { get; set; }
+        public int SuperPower { get; set; } 
 
         public bool HasKey()
         {

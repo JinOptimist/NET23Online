@@ -32,8 +32,8 @@ namespace FirstConsoleApp.MazeStuff.Cells
                 X = X,
                 Y = Y,
             };
-
             Maze.Surface.Add(ground);
+
             return true;
         }
        

@@ -1,4 +1,5 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Cells.Shopkeeper;
 using FirstConsoleApp.MazeStuff.Characters;
 using System;
 using System.Diagnostics.Metrics;
@@ -53,6 +54,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateSkipingMove();
             GenerateFire();
             GenerateGhost(4);
+            GenerateShopkeeper();
             return _maze;
         }
 
@@ -725,6 +727,43 @@ namespace FirstConsoleApp.MazeStuff
 
                 ReplaceCell(fire);
             }
+        }
+
+        private void GenerateShopkeeper()
+        {
+            var doorsMaze = _maze
+                .Surface
+                .Where(cell => cell is Doors)
+                .ToList();
+
+            var firstGroundNearDoors = GetNearCellsFromList(doorsMaze)
+                .FirstOrDefault(cell => cell is Ground);
+
+            var x = new int();
+            var y = new int();
+            if(firstGroundNearDoors != null)
+            {
+                x = firstGroundNearDoors.X;
+                y = firstGroundNearDoors.Y;
+            }
+            else
+            {
+                var startHeroAreaX = 5;
+                var startHeroAreaY = 5;
+                var groundsMaze = _maze.Surface
+                    .Where(cell => cell is Ground)
+                    .Where(cell => cell.X >= startHeroAreaX && cell.Y >= startHeroAreaY).ToList();
+                var indexRandomGround = _random.Next(0, groundsMaze.Count() - 1);
+                x = groundsMaze[indexRandomGround].X;
+                y = groundsMaze[indexRandomGround].Y;
+            }
+
+            var shopkeeper = new Shopkeeper(_maze, _random)
+            {
+                X = x,
+                Y = y
+            };
+            ReplaceCell(shopkeeper);
         }
         private void GenerateGhost(int countOfGhost = 2)
         {
