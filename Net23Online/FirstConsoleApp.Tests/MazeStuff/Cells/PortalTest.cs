@@ -1,7 +1,7 @@
-﻿using FirstConsoleApp.MazeStuff.Cells;
-using FirstConsoleApp.MazeStuff.Cells.Interfaces;
-using FirstConsoleApp.MazeStuff.Characters.Interfaces;
-using FirstConsoleApp.MazeStuff.Interfaces;
+using MazeCore.Cells;
+using MazeCore.Cells.Interfaces;
+using MazeCore.Characters.Interfaces;
+using MazeCore.Interfaces;
 using Moq;
 using NUnit.Framework;
 

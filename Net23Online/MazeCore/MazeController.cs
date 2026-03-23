@@ -1,9 +1,8 @@
-﻿using MazeCore;
 using MazeCore.Cells;
 using MazeCore.Interfaces;
 using System.Timers;
 
-namespace FirstConsoleApp.MazeStuff
+namespace MazeCore
 {
     public class MazeController
     {
@@ -127,7 +126,7 @@ namespace FirstConsoleApp.MazeStuff
             return continuewGame;
         }
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs time)
+        private void OnTimedEvent(object source, ElapsedEventArgs time)
         {
             Console.Clear();
             Console.WriteLine("YOU LOST IN MAZE FOREVER");
