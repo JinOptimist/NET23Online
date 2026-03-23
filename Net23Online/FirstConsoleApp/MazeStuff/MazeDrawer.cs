@@ -32,15 +32,9 @@ namespace FirstConsoleApp.MazeStuff
                            .Surface
                            .First(cell => cell.X == x && cell.Y == y);
                     }
-                    var symbol = new char();
-                    if(Math.Abs(maze.Hero.X - currentCell.X) > maze.FogOfWar.HorizontalRadius || Math.Abs(maze.Hero.Y - currentCell.Y) > maze.FogOfWar.VerticalRadius)
-                    {
-                        symbol = maze.FogOfWar.Symbol;
-                    }
-                    else
-                    {
-                        symbol = currentCell.Symbol;
-                    }
+                    var symbol = (Math.Abs(maze.Hero.X - currentCell.X) > maze.FogOfWar.HorizontalRadius 
+                        || Math.Abs(maze.Hero.Y - currentCell.Y) > maze.FogOfWar.VerticalRadius)
+                        ? maze.FogOfWar.Symbol : currentCell.Symbol;
                     
                     Console.Write(symbol);
 

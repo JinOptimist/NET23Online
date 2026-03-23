@@ -8,8 +8,8 @@ namespace FirstConsoleApp.MazeStuff
 {
     public class MazeFogOfWar
     {
-        public int VerticalRadius = 3;
-        public int HorizontalRadius = 3;
-        public char Symbol = '#';
+        public int VerticalRadius { get; set; } = 3;
+        public int HorizontalRadius { get; set; } = 3;
+        public char Symbol { get; set; } = '#';
     }
 }
