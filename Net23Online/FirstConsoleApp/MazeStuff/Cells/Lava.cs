@@ -18,7 +18,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             Maze.EventHistory.Add("This 'hot pot' too hot for you.");
             character.Hp--;
-            character.Burning++;
+            character.Burning += 2;
 
             return true;
         }

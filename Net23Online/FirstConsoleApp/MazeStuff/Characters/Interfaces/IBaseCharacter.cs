@@ -15,5 +15,6 @@ namespace FirstConsoleApp.MazeStuff.Characters.Interfaces
         bool HasKey();
         void SpendCoins(int amount);
         void UseKey(int amount);
+        void ProcessBurnEffect();
     }
 }
