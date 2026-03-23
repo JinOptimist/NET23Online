@@ -1,4 +1,6 @@
-﻿//using System.Timers;
+﻿
+using FirstConsoleApp.MazeStuff.Cells;
+//using System.Timers;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using System.Timers;
 
@@ -7,6 +9,9 @@ namespace FirstConsoleApp.MazeStuff
     public class MazeController
     {
         private IMaze _maze;
+        private Random _random;
+        private Stranger _stranger;
+        public const int CHANSE_STRANGER_APPEARED = 30;
 
         private System.Timers.Timer _gameTimer;
         private MazeBuilder _mazeBuilder;
@@ -29,6 +34,9 @@ namespace FirstConsoleApp.MazeStuff
             var mazeDrawer = new MazeDrawer();
 
             mazeDrawer.Draw(_maze);
+            _random = new Random();
+            _stranger = new Stranger(_maze, _random);
+            var continuewGame = true;
 
             Console.WriteLine("You have 30 seconds to escape");
             
@@ -105,6 +113,11 @@ namespace FirstConsoleApp.MazeStuff
                 _maze.Hero.Y = destenationY;
 
                 _countSteps++;
+                int randomNumber = _random.Next(100);
+                if (randomNumber < CHANSE_STRANGER_APPEARED)
+                {
+                    _stranger.Interaction(_maze.Hero);
+                }
 
                 if (_countSteps % STEPS_TO_ICE == 0)
                 {

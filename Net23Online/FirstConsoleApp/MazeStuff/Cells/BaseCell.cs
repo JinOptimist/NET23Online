@@ -12,7 +12,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public abstract char Symbol { get; }
         public virtual bool IsBonusCell { get; init; } = false;
 
-        public BaseCell(MazeStuff.Interfaces.IMaze maze)
+        public BaseCell(IMaze maze)
         {
             Maze = maze;
         }
