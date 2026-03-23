@@ -18,26 +18,28 @@ namespace FirstConsoleApp.MazeStuff.Characters
 
         public int Keys { get; set; }
 
-        public bool HasKey()
+        public bool HasKey(int amount)
         {
-            if (Keys > 0)
+            if (Keys >= amount)
             {
                 return true;
             }
             return false;
         }
+
         public void UseKey(int amount)
         {
-            Keys--;
-            Coins += amount;
+            Keys -= amount;
         }
+
         public void SpendCoins(int amount)
         {
             Coins -= amount;
         }
-        public void CollectKey()
+
+        public void CollectKey(int amount)
         {
-            Keys++;
+            Keys += amount;
         }
     }
 }

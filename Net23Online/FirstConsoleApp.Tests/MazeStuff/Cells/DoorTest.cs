@@ -1,0 +1,214 @@
+﻿using Moq;
+
+using NUnit.Framework;
+
+using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+using FirstConsoleApp.MazeStuff.Characters.Interfaces;
+using FirstConsoleApp.MazeStuff.Interfaces;
+
+namespace FirstConsoleApp.Tests.MazeStuff.Cells
+{
+    public class DoorTest
+    {
+        private Doors _door;
+        private Mock<IBaseCharacter> _baseCharacterMock;
+        private Mock<IMaze> _mazeMock;
+
+        [SetUp]
+        public void Setup()
+        {
+            _mazeMock = new Mock<IMaze>();
+            _mazeMock
+               .Setup(x => x.Surface.Remove(It.IsAny<IBaseCell>()));
+            _mazeMock
+               .Setup(x => x.Surface.Add(It.IsAny<IBaseCell>()));
+            _mazeMock
+               .Setup(x => x.EventHistory.Add(It.IsAny<string>()));
+
+            var _maze = _mazeMock.Object;
+
+            _baseCharacterMock = new Mock<IBaseCharacter>();
+
+            _door = new Doors(_maze); // real object
+        }
+
+        [Test]
+        public void Interaction_UserCancels_ReturnsFalse()
+        {
+            //arrange
+            var _baseCharacter = _baseCharacterMock.Object;
+            var input = new StringReader("3");
+            Console.SetIn(input);
+
+            //act
+            var result = _door.Interaction(_baseCharacter);
+
+            //assert
+            Assert.That(result, Is.False);
+
+            _mazeMock.Verify(m => m.Surface.Remove(_door), Times.Never);
+            _mazeMock.Verify(m => m.Surface.Add(It.IsAny<Ground>()), Times.Never);
+            _mazeMock.Verify(m => m.EventHistory.Add(It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public void Interaction_WhenOpenedWithKey_DoorWasReplacedByGround_ReturnsTrue()
+        {
+            // Arrange
+            _baseCharacterMock.Setup(b => b.HasKey(It.IsAny<int>())).Returns(true);
+            _baseCharacterMock.Setup(b => b.UseKey(It.IsAny<int>()))
+                .Callback<int>(amount => _baseCharacterMock.Object.Keys -= amount);
+
+            var input = new StringReader("1");
+            Console.SetIn(input);
+
+            // Act
+            var result = _door.Interaction(_baseCharacterMock.Object);
+
+            // Assert
+            Assert.That(result, Is.True);
+
+            _baseCharacterMock.Verify(b => b.UseKey(It.IsAny<int>()), Times.Once);
+
+            _mazeMock.Verify(m => m.Surface.Remove(_door), Times.Once());
+            _mazeMock.Verify(m => m.Surface.Add(It.Is<Ground>(g => g.X == _door.X && g.Y == _door.Y)), Times.Once());
+            _mazeMock.Verify(m => m.EventHistory.Add(It.IsAny<string>()), Times.Once());
+        }
+
+        [Test]
+        public void Interaction_WhenNoKey_ReturnsFalse()
+        {
+            //arrange
+            _baseCharacterMock.SetupProperty(b => b.Keys);
+            _baseCharacterMock.Setup(b => b.HasKey(It.IsAny<int>())).Returns(false);
+            var _baseCharacter = _baseCharacterMock.Object;
+
+            var input = new StringReader("1\n3");
+            Console.SetIn(input);
+
+            //act
+            var result = _door.Interaction(_baseCharacter);
+
+            //assert
+            Assert.That(result, Is.False);
+
+            _baseCharacterMock.Verify(b => b.UseKey(It.IsAny<int>()), Times.Never);
+
+            _mazeMock.Verify(m => m.Surface.Remove(It.IsAny<IBaseCell>()), Times.Never);
+            _mazeMock.Verify(m => m.Surface.Add(It.IsAny<Ground>()), Times.Never);
+            _mazeMock.Verify(m => m.EventHistory.Add(It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        [TestCase(1, 0)]
+        [TestCase(5, 4)]
+        [TestCase(21, 20)]
+        public void Interaction_WhenOpenedWithKeys_DecreaseKeys(int initialKeys, int resultKeys)
+        {
+            //arrange
+            _baseCharacterMock.SetupProperty(b => b.Keys);
+            _baseCharacterMock.Setup(b => b.HasKey(It.IsAny<int>())).Returns(true);
+            _baseCharacterMock
+                .Setup(b => b.UseKey(It.IsAny<int>()))
+                .Callback<int>(amount => _baseCharacterMock.Object.Keys -= amount);
+            var _baseCharacter = _baseCharacterMock.Object;
+            _baseCharacter.Keys = initialKeys;
+
+            var input = new StringReader("1");
+            Console.SetIn(input);
+
+            //act
+            var result = _door.Interaction(_baseCharacter);
+
+            //assert
+            Assert.That(_baseCharacter.Keys, Is.EqualTo(resultKeys));
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public void Interaction_WhenOpenedWithCoins_DoorWasReplacedByGround_ReturnsTrue(int initialCoins)
+        {
+            // Arrange
+            _baseCharacterMock.SetupProperty(b => b.Coins);
+            _baseCharacterMock.Setup(b => b.HasKey(It.IsAny<int>())).Returns(false);
+            _baseCharacterMock.Setup(b => b.SpendCoins(It.IsAny<int>()))
+                .Callback<int>(amount => _baseCharacterMock.Object.Coins -= amount);
+
+            var character = _baseCharacterMock.Object;
+            character.Coins = initialCoins;
+
+            var input = new StringReader("2");
+            Console.SetIn(input);
+
+            // Act
+            var result = _door.Interaction(character);
+
+            // Assert
+            Assert.That(result, Is.True);
+
+            _mazeMock.Verify(m => m.Surface.Remove(_door), Times.Once());
+            _mazeMock.Verify(m => m.Surface.Add(It.Is<Ground>(g => g.X == _door.X && g.Y == _door.Y)), Times.Once());
+            _mazeMock.Verify(m => m.EventHistory.Add(It.IsAny<string>()), Times.Once());
+
+            _baseCharacterMock.Verify(b => b.SpendCoins(It.IsAny<int>()), Times.Once());
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void Interaction_OpenWithCoins_NotEnoughCoins_ReturnsFalse(int initialCoins)
+        {
+            //arrange
+            _baseCharacterMock.SetupProperty(b => b.Coins);
+            _baseCharacterMock
+                .Setup(b => b.SpendCoins(It.IsAny<int>()))
+                .Callback<int>(amount => _baseCharacterMock.Object.Coins -= amount);
+
+            var _baseCharacter = _baseCharacterMock.Object;
+            _baseCharacter.Coins = initialCoins;
+
+            var input = new StringReader("2\n3\n");
+            Console.SetIn(input);
+
+            //act
+            var result = _door.Interaction(_baseCharacter);
+
+            //assert
+            Assert.That(result, Is.False);
+            _baseCharacterMock.Verify(b => b.SpendCoins(It.IsAny<int>()), Times.Never);
+
+            _mazeMock.Verify(m => m.Surface.Remove(It.IsAny<IBaseCell>()), Times.Never);
+            _mazeMock.Verify(m => m.Surface.Add(It.IsAny<Ground>()), Times.Never);
+
+            _mazeMock.Verify(m => m.EventHistory.Add(It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        [TestCase(2, 1)]
+        [TestCase(10, 9)]
+        [TestCase(6, 5)]
+        public void Interaction_WhenOpenedWithCoins_DecreaseCoins(int initialCoins, int resultCoins)
+        {
+            //arrange
+            _baseCharacterMock.SetupProperty(b => b.Coins);
+            _baseCharacterMock
+                .Setup(b => b.SpendCoins(It.IsAny<int>()))
+                .Callback<int>(amount => _baseCharacterMock.Object.Coins -= amount);
+
+            var _baseCharacter = _baseCharacterMock.Object;
+            _baseCharacter.Coins = initialCoins;
+
+            var input = new StringReader("2");
+            Console.SetIn(input);
+            //act
+            var result = _door.Interaction(_baseCharacter);
+
+            //assert
+            Assert.That(result, Is.True);
+            Assert.That(_baseCharacter.Coins, Is.EqualTo(resultCoins));
+        }
+    }
+}

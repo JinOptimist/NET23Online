@@ -54,7 +54,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         }
         private bool TryOpenWithKey(IBaseCharacter character, int cost)
         {
-            if (!character.HasKey())
+            if (!character.HasKey(cost))
             {
                 Console.WriteLine(" You don't have a key!");
                 return false;
@@ -62,7 +62,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             character.UseKey(cost);
             Open();
-            Console.WriteLine(" Door unlocked with key!");
+            Maze.EventHistory.Add(" Door unlocked with key!");
             return true;
         }
 
@@ -76,7 +76,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
             character.SpendCoins(cost);
             Open();
-            Console.WriteLine($" Paid {cost} coins. Door is now open.");
+            Maze.EventHistory.Add($" Paid {cost} coins. Door is now open.");
             return true;
         }
 

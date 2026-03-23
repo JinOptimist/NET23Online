@@ -11,8 +11,8 @@ namespace FirstConsoleApp.MazeStuff.Characters.Interfaces
         string Name { get; set; }
         int Speed { get; set; }
 
-        void CollectKey();
-        bool HasKey();
+        void CollectKey(int amount);
+        bool HasKey(int amount);
         void SpendCoins(int amount);
         void UseKey(int amount);
     }

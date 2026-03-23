@@ -8,9 +8,11 @@ public class Key : BaseCell
 
     public override char Symbol => 'K';
 
+    private const int _KEY_COLLECT = 1;
+
     public  bool Collect(IBaseCharacter character)
     {
-        character.CollectKey();
+        character.CollectKey(_KEY_COLLECT);
         return true; 
     }
     public override bool Interaction(IBaseCharacter character)
