@@ -16,7 +16,6 @@ namespace FirstConsoleApp.MazeStuff
 
         private IMaze _maze;
         private Random _random;
-        public const char RANDOM_MIMIC_CODE = '0';
 
         public IMaze Build(int width, int height, int? seed = null)
         {
@@ -143,7 +142,6 @@ namespace FirstConsoleApp.MazeStuff
 
         private void GenerateMimics()
         {
-            GenerateMimic(RANDOM_MIMIC_CODE);
             GenerateMimic(Coin.SYMBOL, 4);
             GenerateMimic(Doors.SYMBOL, 2);
         }
@@ -153,8 +151,7 @@ namespace FirstConsoleApp.MazeStuff
             var freeCells = _maze
                 .Surface
                 .Where(cell => cell is Ground)
-                .Where(x => symbol == RANDOM_MIMIC_CODE || 
-                    symbol == Coin.SYMBOL && GetNearCells<Ground>(x).Count() == 1 || 
+                .Where(x => symbol == Coin.SYMBOL && GetNearCells<Ground>(x).Count() == 1 || 
                     symbol == Doors.SYMBOL && GetNearCells<Ground>(x).Count() > 1)
                 .ToList();
             TryReplaceMimic(maxMimicCount, freeCells, symbol);
