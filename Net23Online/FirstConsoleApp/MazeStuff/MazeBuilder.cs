@@ -3,6 +3,7 @@ using FirstConsoleApp.MazeStuff.Cells.Shopkeeper;
 using FirstConsoleApp.MazeStuff.Characters;
 using System;
 using System.Diagnostics.Metrics;
+using FirstConsoleApp.MazeStuff.Cells.ConsoleInputReader;
 using FirstConsoleApp.MazeStuff.Extensions;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using FirstConsoleApp.MazeStuff.Cells.Interfaces;
@@ -419,7 +420,7 @@ namespace FirstConsoleApp.MazeStuff
 
             foreach (var cell in selectedCells)
             {
-                var portal = new Portal(_maze)
+                var portal = new Portal(_maze, new ConsoleInputReader())
                 {
                     X = cell.X,
                     Y = cell.Y,
