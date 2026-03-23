@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
-    internal class Rest : BaseCell
+    public class Rest : BaseCell
     {
 
 
