@@ -13,7 +13,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public abstract char Symbol { get; }
         public virtual bool IsBonusCell { get; init; } = false;
 
-        protected MazeSoundPlayer soundPlayerForCells = new MazeSoundPlayer(new AudioOutput(), path => new AudioFile(path));
+        public IAudioPlayer soundPlayerForCells = new MazeSoundPlayer(new AudioOutput(), path => new AudioFile(path));
 
         public BaseCell(MazeStuff.Interfaces.IMaze maze)
         {

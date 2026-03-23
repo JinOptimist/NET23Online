@@ -8,6 +8,6 @@ namespace FirstConsoleApp.MazeStuff.Interfaces
 {
     public interface IAudioPlayer
     {
-        void Play(string fileName, float volume, bool loop);
+        void Play(string filePath, float volume = 0.3f, bool loop = false);
     }
 }

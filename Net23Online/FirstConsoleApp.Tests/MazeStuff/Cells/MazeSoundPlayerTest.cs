@@ -11,45 +11,40 @@ namespace FirstConsoleApp.Tests.MazeStuff
         private Mock<IAudioOutput> _outputMock;
         private Mock<IAudioFile> _audioFileMock;
 
-        private MazeSoundPlayer _player;
+        private MazeSoundPlayer _soundPlayer;
 
         [SetUp]
         public void Setup()
         {
             _outputMock = new Mock<IAudioOutput>();
             _audioFileMock = new Mock<IAudioFile>();
-
-            // важно: возвращаем фейковый IWaveProvider
             _audioFileMock
                 .Setup(x => x.GetWaveProvider())
                 .Returns(Mock.Of<IWaveProvider>());
 
-            _player = new MazeSoundPlayer(
+            _soundPlayer = new MazeSoundPlayer(
                 _outputMock.Object,
                 _ => _audioFileMock.Object
             );
         }
-
-        // ✅ 1. Проверка установки громкости
         [Test]
         [TestCase(0.5f, 0.5f)]
         [TestCase(-1f, 0f)]
         [TestCase(2f, 1f)]
-        public void Play_ShouldSetCorrectVolume(float input, float expected)
+        public void PlayShouldSetCorrectVolume(float input, float expected)
         {
             // Act
-            _player.Play("test.mp3", input, false);
+            _soundPlayer.Play("test.mp3", input, false);
 
             // Assert
             _audioFileMock.VerifySet(x => x.Volume = expected, Times.Once);
         }
 
-        // ✅ 2. Проверка вызова Init
         [Test]
-        public void Play_ShouldInitializeOutput()
+        public void PlayShouldInitializeOutput()
         {
             // Act
-            _player.Play("test.mp3", 0.3f, false);
+            _soundPlayer.Play("test.mp3", 0.3f, false);
 
             // Assert
             _outputMock.Verify(
@@ -58,20 +53,18 @@ namespace FirstConsoleApp.Tests.MazeStuff
             );
         }
 
-        // ✅ 3. Проверка вызова Play
         [Test]
-        public void Play_ShouldCallPlayOnOutput()
+        public void PlayShouldCallPlayOnOutput()
         {
             // Act
-            _player.Play("test.mp3", 0.3f, false);
+            _soundPlayer.Play("test.mp3", 0.3f, false);
 
             // Assert
             _outputMock.Verify(x => x.Play(), Times.Once);
         }
 
-        // ✅ 4. Проверка, что создаётся аудиофайл через фабрику
         [Test]
-        public void Play_ShouldCallAudioFactory()
+        public void PlayShouldCallAudioFactory()
         {
             bool factoryCalled = false;
 
@@ -90,9 +83,8 @@ namespace FirstConsoleApp.Tests.MazeStuff
             Assert.That(factoryCalled, Is.True);
         }
 
-        // ✅ 5. Проверка передачи корректного пути (дополнительно)
         [Test]
-        public void Play_ShouldPassCorrectPathToFactory()
+        public void PlayShouldPassCorrectPathToFactory()
         {
             string? receivedPath = null;
 
