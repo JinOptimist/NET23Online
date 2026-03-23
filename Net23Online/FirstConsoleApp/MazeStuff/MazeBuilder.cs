@@ -1,10 +1,11 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
+using FirstConsoleApp.MazeStuff.Cells.Interfaces;
 using FirstConsoleApp.MazeStuff.Characters;
-using System;
-using System.Diagnostics.Metrics;
 using FirstConsoleApp.MazeStuff.Extensions;
 using FirstConsoleApp.MazeStuff.Interfaces;
-using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+using System;
+using System.Diagnostics.Metrics;
+using System.Text;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -710,19 +711,21 @@ namespace FirstConsoleApp.MazeStuff
         }
 
         private void GenerateFire()
-        {           
+        {             
+            var grounds = _maze.Surface
+              .Where(ground => ground is Ground)
+              .Where(ground => GetNearCells<Ground>(ground).Count() >= 2)
+              .ToList();
 
             for (int i = 0; i < MAX_FIRE; i++)
             {
-                var x = _random.Next(0, _maze.Width);
-                var y = _random.Next(0, _maze.Height);
-
+                var randomIndex = _random.Next(0, grounds.Count);
+                var randomPlace = grounds[randomIndex];
                 var fire = new Fire(_maze)
                 {
-                    X = x,
-                    Y = y,
+                    X = randomPlace.X,
+                    Y = randomPlace.Y,
                 };
-
                 ReplaceCell(fire);
             }
         }
