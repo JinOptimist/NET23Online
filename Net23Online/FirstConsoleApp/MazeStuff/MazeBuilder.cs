@@ -726,27 +726,28 @@ namespace FirstConsoleApp.MazeStuff
                 ReplaceCell(fire);
             }
         }
-        private void GenerateGhost()
+        private void GenerateGhost(int countOfGhost = 2)
         {
             var cellToGenerateGhost = _maze
                 .Surface
                 .Where(x => x is Ground)
-                .Where(x => GetNearCells<Coin>(x).Count() == 1)
+                .Where(x => GetNearCells<Wall>(x).Count() == 2)
                 .ToList();
 
-            for (int i = 0; i < cellToGenerateGhost.Count; i++)
+            if(countOfGhost > cellToGenerateGhost.Count) 
             {
-                if(cellToGenerateGhost[i] is Ground)
+                countOfGhost = 2;
+            }
+            for (int i = 0; i < countOfGhost; i++)
+            {
+
+                var cellToReplace = cellToGenerateGhost[i];
+                var ghost = new Ghost(_maze)
                 {
-                    var cellToReplace = cellToGenerateGhost[i];
-                    var ghost = new Ghost(_maze)
-                    {
-                        X = cellToReplace.X,
-                        Y = cellToReplace.Y,
-                    };
-                    ReplaceCell(ghost);
-                }
-                
+                    X = cellToReplace.X,
+                    Y = cellToReplace.Y,
+                };
+            ReplaceCell(ghost);
             }
         }
     }
