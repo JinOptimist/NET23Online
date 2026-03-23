@@ -33,9 +33,9 @@ namespace FirstConsoleApp.MazeStuff
                            .First(cell => cell.X == x && cell.Y == y);
                     }
                     var symbol = new char();
-                    if(Math.Abs(maze.Hero.X - currentCell.X) > 3 || Math.Abs(maze.Hero.Y - currentCell.Y) > 3)
+                    if(Math.Abs(maze.Hero.X - currentCell.X) > maze.FogOfWar.HorizontalRadius || Math.Abs(maze.Hero.Y - currentCell.Y) > maze.FogOfWar.VerticalRadius)
                     {
-                        symbol = maze.FogOfWarSymbol;
+                        symbol = maze.FogOfWar.Symbol;
                     }
                     else
                     {
