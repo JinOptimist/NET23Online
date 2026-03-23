@@ -52,7 +52,7 @@ namespace FirstConsoleApp.MazeStuff
             GenerateSpeedPotions();
             GenerateSkipingMove();
             GenerateFire();
-
+            GenerateGhost(4);
             return _maze;
         }
 
@@ -724,6 +724,30 @@ namespace FirstConsoleApp.MazeStuff
                 };
 
                 ReplaceCell(fire);
+            }
+        }
+        private void GenerateGhost(int countOfGhost = 2)
+        {
+            var cellToGenerateGhost = _maze
+                .Surface
+                .Where(x => x is Ground)
+                .Where(x => GetNearCells<Wall>(x).Count() == 2)
+                .ToList();
+
+            if(countOfGhost > cellToGenerateGhost.Count) 
+            {
+                countOfGhost = 2;
+            }
+            for (int i = 0; i < countOfGhost; i++)
+            {
+
+                var cellToReplace = cellToGenerateGhost[i];
+                var ghost = new Ghost(_maze)
+                {
+                    X = cellToReplace.X,
+                    Y = cellToReplace.Y,
+                };
+            ReplaceCell(ghost);
             }
         }
     }
