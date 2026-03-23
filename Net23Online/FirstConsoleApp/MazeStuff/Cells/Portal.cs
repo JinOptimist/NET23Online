@@ -7,20 +7,22 @@ namespace FirstConsoleApp.MazeStuff.Cells
 {
     public class Portal : BaseCell
     {
+        private readonly IInputReader _inputReader;
         public override char Symbol => '%';
         public override bool IsBonusCell { get; init; } = true;
         public Portal LinkedPortal { get; set; }
         public bool IsSingleUse {  get; set; }
 
-        public Portal(IMaze maze) : base(maze)
+        public Portal(IMaze maze, IInputReader inputReader) : base(maze)
         {
+            _inputReader = inputReader;
         }
 
         public override bool Interaction(IBaseCharacter character)
         {
             Console.WriteLine("A portal stands here. Use it? (Y/N)");
             
-            var key = Console.ReadKey(true).Key;
+            var key = _inputReader.ReadKey();
             if (key != ConsoleKey.Y)
             {
                 MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
