@@ -1,5 +1,5 @@
-﻿
-using FirstConsoleApp.MazeStuff.Interfaces;
+﻿using FirstConsoleApp.MazeStuff.Interfaces;
+using FirstConsoleApp.MazeStuff.MazeAudio;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -15,12 +15,10 @@ namespace FirstConsoleApp.MazeStuff
         {
             _mazeBuilder = new MazeBuilder();
 
-            var soundPlayer = new MazeSoundPlayer();
-            soundPlayer.PlayMusic("maze_soundtrack.wav", 0.3f, true);
-
-            var mazeBuilder = new MazeBuilder();
-
             _maze = _mazeBuilder.Build(24, 12);
+
+            var cue = CellSoundCatalog.GetCue(GetType());
+            _maze.Audio.Play(cue.FileName, cue.Volume);
 
             var mazeDrawer = new MazeDrawer();
 

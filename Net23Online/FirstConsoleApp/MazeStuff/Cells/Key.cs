@@ -15,8 +15,7 @@ public class Key : BaseCell
     }
     public override bool Interaction(IBaseCharacter character)
     {
-        MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-        soundPlayer.PlayMusic("key_sound.wav", 0.6f);
+        PlayCellSound();
         Maze.EventHistory.Add("Look, it's a key");
         Collect(character);
         ReplaceKeyToGround();

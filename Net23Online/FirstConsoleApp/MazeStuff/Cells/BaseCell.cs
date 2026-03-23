@@ -1,6 +1,7 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells.Interfaces;
 using FirstConsoleApp.MazeStuff.Characters.Interfaces;
 using FirstConsoleApp.MazeStuff.Interfaces;
+using FirstConsoleApp.MazeStuff.MazeAudio;
 
 namespace FirstConsoleApp.MazeStuff.Cells
 {
@@ -15,6 +16,12 @@ namespace FirstConsoleApp.MazeStuff.Cells
         public BaseCell(MazeStuff.Interfaces.IMaze maze)
         {
             Maze = maze;
+        }
+
+        protected void PlayCellSound()
+        {
+            var cue = CellSoundCatalog.GetCue(GetType());
+            Maze.Audio.Play(cue.FileName, cue.Volume);
         }
 
         public abstract bool Interaction(IBaseCharacter character);

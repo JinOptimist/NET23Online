@@ -43,5 +43,7 @@ namespace FirstConsoleApp.MazeStuff
                 return Surface.SingleOrDefault(cell => cell.X == x && cell.Y == y);
             }
         }
+
+        public IAudioPlayer Audio { get; set; } = null!;
     }
 }

@@ -14,8 +14,7 @@ namespace FirstConsoleApp.MazeStuff.Cells
 
         public override bool Interaction(IBaseCharacter character)
         {
-            MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-            soundPlayer.PlayMusic("pit_sound.wav");
+            PlayCellSound();
 
             Maze.EventHistory.Add("opps! yuo in pit");
 

@@ -1,10 +1,9 @@
 ﻿using FirstConsoleApp.MazeStuff.Cells;
 using FirstConsoleApp.MazeStuff.Characters;
-using System;
-using System.Diagnostics.Metrics;
 using FirstConsoleApp.MazeStuff.Extensions;
 using FirstConsoleApp.MazeStuff.Interfaces;
 using FirstConsoleApp.MazeStuff.Cells.Interfaces;
+using FirstConsoleApp.MazeStuff.MazeAudio;
 
 namespace FirstConsoleApp.MazeStuff
 {
@@ -23,13 +22,14 @@ namespace FirstConsoleApp.MazeStuff
         public const int COIN_LIKE_MIMIC_CODE = 1;
         public const int DOOR_LIKE_MIMIC_CODE = 2;
 
-        public IMaze Build(int width, int height, int? seed = null)
+        public IMaze Build(int width, int height, int? seed = null, IAudioPlayer? audio = null)
         {
             _maze = new Maze
             {
                 Width = width,
                 Height = height,
-                Seed = seed ?? DateTime.Now.Millisecond
+                Seed = seed ?? DateTime.Now.Millisecond,
+                Audio = audio ?? new MazeAudioPlayer()
             };
 
             _random = new Random(_maze.Seed);
