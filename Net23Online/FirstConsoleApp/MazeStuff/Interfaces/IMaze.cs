@@ -11,6 +11,7 @@ namespace FirstConsoleApp.MazeStuff.Interfaces
         int Height { get; set; }
         Hero Hero { get; set; }
         int Seed { get; set; }
+        public MazeFogOfWar FogOfWar { get; set; }
         IList<IBaseCell> Surface { get; set; }
         int Width { get; set; }
     }

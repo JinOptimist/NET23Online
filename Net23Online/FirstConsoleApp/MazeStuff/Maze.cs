@@ -12,7 +12,7 @@ namespace FirstConsoleApp.MazeStuff
         public Hero Hero { get; set; }
 
         public int Seed { get; set; }
-
+        public MazeFogOfWar FogOfWar { get; set; } = new MazeFogOfWar();
         // ground == '.'
         // wall '#'
         // coin 'c'
