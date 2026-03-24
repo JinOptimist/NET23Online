@@ -1,10 +1,11 @@
 using MazeCore.Cells;
+using MazeCore.Characters;
 using MazeCore.Interfaces;
 using System.Timers;
 
 namespace MazeCore
 {
-    public class MazeController
+    public class MazeController: IMazeController
     {
         private IMaze _maze;
         private Random _random;
@@ -18,7 +19,7 @@ namespace MazeCore
         private const int MILISECONDS_TO_ESCAPE = 30000;
         private bool continuewGame = true;
 
-        public void Play()
+        public void Play(int width = 24, int height = 12, bool isSecretMaze = false, Hero hero = null)
         {
             _mazeBuilder = new MazeBuilder();
 
@@ -27,7 +28,7 @@ namespace MazeCore
 
             var mazeBuilder = new MazeBuilder();
 
-            _maze = _mazeBuilder.Build(24, 12);
+            _maze = _mazeBuilder.Build(width, height, isSecretMaze: isSecretMaze, inputHero: hero);
 
             var mazeDrawer = new MazeDrawer();
 
@@ -45,7 +46,7 @@ namespace MazeCore
 
             while (continuewGame)
             {
-                continuewGame = DoOneStep();
+                continuewGame = DoOneStep(isSecretMaze);
                 mazeDrawer.Draw(_maze);
             }
 
@@ -56,7 +57,7 @@ namespace MazeCore
         /// Return false game must be stopped
         /// </summary>
         /// <returns></returns>
-        private bool DoOneStep()
+        private bool DoOneStep(bool isSecretMaze = false)
         {
             if(!continuewGame)
             {
@@ -119,9 +120,16 @@ namespace MazeCore
                     _stranger.Interaction(_maze.Hero);
                 }
 
-                if (_countSteps % STEPS_TO_ICE == 0)
+                if (!isSecretMaze)
                 {
-                    _mazeBuilder.GenerateIceNearHero();
+                    if (_countSteps % STEPS_TO_ICE == 0)
+                    {
+                        _mazeBuilder.GenerateIceNearHero();
+                    }
+                }
+                if (destenationCell is ExitSecretRoom)
+                {
+                    return destenationCell.Interaction(_maze.Hero);
                 }
             }
 
