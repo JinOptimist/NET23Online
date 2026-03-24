@@ -1,3 +1,4 @@
+using MazeCore.Cells.Interfaces;
 using MazeCore.Characters.Interfaces;
 using MazeCore.Interfaces;
 
@@ -13,6 +14,7 @@ namespace MazeCore.Cells
 
         public Doors(IMaze maze) : base(maze)
         {
+            
         }
 
         public override char Symbol => SYMBOL;
@@ -77,12 +79,14 @@ namespace MazeCore.Cells
             return true;
         }
 
-        private static int ReadMenuChoice(int min, int max)
+        private int ReadMenuChoice(int min, int max)
         {
             while (true)
             {
                 Console.Write($"Your choice ({min}-{max}): ");
-                if (int.TryParse(Console.ReadLine(), out var choice) && choice >= min && choice <= max)
+                var input = Maze.InputReader.ReadLine();
+
+                if (int.TryParse(input, out var choice) && choice >= min && choice <= max)
                 {
                     return choice;
                 }

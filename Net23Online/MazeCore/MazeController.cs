@@ -104,6 +104,7 @@ namespace MazeCore
             {
                 return continuewGame;
             }
+
             _maze.Hero.ProcessBurnEffect();
 
             if (destenationCell.Interaction(_maze.Hero))

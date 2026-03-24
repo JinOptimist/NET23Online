@@ -92,7 +92,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             _key.Interaction(_baseCharacterMock.Object);
 
             // Assert
-            _baseCharacterMock.Verify(x => x.CollectKey(), Times.Once());
+            _baseCharacterMock.Verify(x => x.CollectKey(It.IsAny<int>()), Times.Once());
         }
 
         [Test]

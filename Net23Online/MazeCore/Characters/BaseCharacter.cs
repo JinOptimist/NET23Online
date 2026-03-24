@@ -38,8 +38,6 @@ namespace MazeCore.Characters
             Coins -= amount;
         }
 
-        public void CollectKey()
-
         public void CollectKey(int amount)
         {
             Keys += amount;

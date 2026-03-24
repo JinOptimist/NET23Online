@@ -6,6 +6,7 @@ namespace MazeCore
 {
     public class Maze : IMaze
     {
+        public IInputReader InputReader { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
 

@@ -107,6 +107,8 @@ namespace FirstConsoleApp.MazeStuff
                 return continuewGame;
             }
 
+            _maze.Hero.ProcessBurnEffect();
+
             if (destenationCell.Interaction(_maze.Hero))
             {
                 _maze.Hero.X = destenationX;

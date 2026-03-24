@@ -8,4 +8,9 @@ public class ConsoleInputReader : IInputReader
     {
         return Console.ReadKey(true).Key;
     }
+
+    public string ReadLine()
+    {
+        return Console.ReadLine();
+    }
 }
