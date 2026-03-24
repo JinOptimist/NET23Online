@@ -817,7 +817,7 @@ namespace MazeCore
         {
             var secretRoom = new SecretRoom(_maze)
             {
-                X = 0,
+                X = 2,
                 Y = 2
             };
             ReplaceCell(secretRoom);

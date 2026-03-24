@@ -1,6 +1,4 @@
-﻿using MazeCore;
-using MazeCore.Cells;
-using MazeCore.Characters;
+﻿using MazeCore.Characters;
 using MazeCore.Characters.Interfaces;
 using MazeCore.Interfaces;
 namespace MazeCore.Cells
