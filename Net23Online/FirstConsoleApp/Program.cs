@@ -1,4 +1,5 @@
-using FirstConsoleApp.MazeStuff;
+
+using MazeCore;
 
 
 
