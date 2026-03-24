@@ -3,4 +3,5 @@
 public interface IInputReader
 {
     ConsoleKey ReadKey();
+    string ReadLine();
 }

@@ -19,9 +19,9 @@ namespace MazeCore.Characters
         public int Keys { get; set; }
         public int SuperPower { get; set; } 
 
-        public bool HasKey()
+        public bool HasKey(int amount)
         {
-            if (Keys > 0)
+            if (Keys >= amount)
             {
                 return true;
             }
@@ -30,8 +30,7 @@ namespace MazeCore.Characters
 
         public void UseKey(int amount)
         {
-            Keys--;
-            Coins += amount;
+            Keys -= amount;
         }
 
         public void SpendCoins(int amount)
@@ -39,9 +38,9 @@ namespace MazeCore.Characters
             Coins -= amount;
         }
 
-        public void CollectKey()
+        public void CollectKey(int amount)
         {
-            Keys++;
+            Keys += amount;
         }
 
         public void ProcessBurnEffect()

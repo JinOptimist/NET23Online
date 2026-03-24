@@ -26,7 +26,8 @@ namespace MazeCore
             {
                 Width = width,
                 Height = height,
-                Seed = seed ?? DateTime.Now.Millisecond
+                Seed = seed ?? DateTime.Now.Millisecond,
+                InputReader = new ConsoleInputReader()
             };
 
             _random = new Random(_maze.Seed);
@@ -413,7 +414,7 @@ namespace MazeCore
 
             foreach (var cell in selectedCells)
             {
-                var portal = new Portal(_maze, new ConsoleInputReader())
+                var portal = new Portal(_maze,new ConsoleInputReader())
                 {
                     X = cell.X,
                     Y = cell.Y,
