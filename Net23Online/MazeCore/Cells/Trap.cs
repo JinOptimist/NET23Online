@@ -5,7 +5,7 @@ namespace MazeCore.Cells
 {
     public class Trap : BaseCell
     {
-        public IMazeSoundPlayer soundPlayer;
+        public IMazeSoundPlayer SoundPlayer { get; set; }
         public Trap(IMaze maze) : base(maze)
         {
         }
@@ -14,8 +14,8 @@ namespace MazeCore.Cells
 
         public override bool Interaction(IBaseCharacter character)
         {
-            IMazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-            soundPlayer.PlayMusic("trap_sound.wav");
+            SoundPlayer = new MazeSoundPlayer();
+            SoundPlayer.PlayMusic("trap_sound.wav");
 
             Maze.EventHistory.Add("Look out, it's a trap");
             character.Hp--;
