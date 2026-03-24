@@ -1,10 +1,8 @@
-﻿using System.Timers;
-
-using MazeCore;
 using MazeCore.Cells;
 using MazeCore.Interfaces;
+using System.Timers;
 
-namespace FirstConsoleApp.MazeStuff
+namespace MazeCore
 {
     public class MazeController
     {
@@ -39,7 +37,7 @@ namespace FirstConsoleApp.MazeStuff
             var continuewGame = true;
 
             Console.WriteLine("You have 30 seconds to escape");
-
+            
             _gameTimer = new System.Timers.Timer(MILISECONDS_TO_ESCAPE);
             _gameTimer.Elapsed += OnTimedEvent;
             _gameTimer.AutoReset = false;
@@ -60,7 +58,7 @@ namespace FirstConsoleApp.MazeStuff
         /// <returns></returns>
         private bool DoOneStep()
         {
-            if (!continuewGame)
+            if(!continuewGame)
             {
                 return false;
             }
@@ -106,6 +104,7 @@ namespace FirstConsoleApp.MazeStuff
             {
                 return continuewGame;
             }
+            _maze.Hero.ProcessBurnEffect();
 
             if (destenationCell.Interaction(_maze.Hero))
             {
@@ -128,7 +127,7 @@ namespace FirstConsoleApp.MazeStuff
             return continuewGame;
         }
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs time)
+        private void OnTimedEvent(object source, ElapsedEventArgs time)
         {
             Console.Clear();
             Console.WriteLine("YOU LOST IN MAZE FOREVER");
