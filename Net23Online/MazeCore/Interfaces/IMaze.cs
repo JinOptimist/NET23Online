@@ -16,5 +16,7 @@ namespace MazeCore.Interfaces
         IList<IBaseCell> Surface { get; set; }
         int Width { get; set; }
         IInputReader InputReader { get; set; }
+        bool IsSecretMaze { get; set; }
+
     }
 }

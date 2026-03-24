@@ -20,6 +20,8 @@ namespace MazeCore
         public IList<IBaseCell> Surface { get; set; } = new List<IBaseCell>();
 
         public IList<string> EventHistory { get; set; } = new List<string>();
+        public bool IsSecretMaze { get; set; } = false;
+
 
         public IBaseCell? this[int x, int y]
         {

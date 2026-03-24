@@ -34,8 +34,8 @@ namespace MazeCore.Cells.Shopkeeper
                 return true;
             }
             //нет способа остановить музыку лабиринта
-            //MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
-            //soundPlayer.PlayMusic("Shopkeeper.mp3", 0.7f, true);
+            //MazeSoundPlayer SoundPlayer = new MazeSoundPlayer();
+            //SoundPlayer.PlayMusic("Shopkeeper.mp3", 0.7f, true);
             GoodsAndServices = new List<BaseShopItem>
             {
                 new TradeGoods(name: "Key", unitPrice: 2, count: 1, c => c.Keys++),
