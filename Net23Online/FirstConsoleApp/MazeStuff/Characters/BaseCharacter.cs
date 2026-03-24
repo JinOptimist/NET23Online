@@ -45,17 +45,19 @@ namespace FirstConsoleApp.MazeStuff.Characters
 
         public void ProcessBurnEffect()
         {
-            if (Burning > 0)
-            {   
-                Hp--;
-                Maze.EventHistory.Add($"You've lost 1 HP from burning. Your HP: {Hp}");
+            if (Burning < 0)
+            {
+                return;
+            }
 
-                Burning--;
+            Hp--;
+            Maze.EventHistory.Add($"You've lost 1 HP from burning. Your HP: {Hp}");
 
-                if (Burning == 0)
-                {
-                    Maze.EventHistory.Add($"You put out the fire");
-                }
+            Burning--;
+
+            if (Burning == 0)
+            {
+                Maze.EventHistory.Add($"You put out the fire");
             }
         }
     }
