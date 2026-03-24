@@ -15,6 +15,10 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
         private Mock<IBaseCharacter> _baseCharacterMock;
         private Mock<IMaze> _mazeMock;
 
+        private const string OPTION_OPEN_WITH_KEY = "1";
+        private const string OPTION_OPEN_WITH_COIN = "2";
+        private const string OPTION_CANCEL = "3";
+
         [SetUp]
         public void Setup()
         {
@@ -38,7 +42,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
         {
             //arrange
             var _baseCharacter = _baseCharacterMock.Object;
-            var input = new StringReader("3");
+            var input = new StringReader(OPTION_CANCEL);
             Console.SetIn(input);
 
             //act
@@ -60,7 +64,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             _baseCharacterMock.Setup(b => b.UseKey(It.IsAny<int>()))
                 .Callback<int>(amount => _baseCharacterMock.Object.Keys -= amount);
 
-            var input = new StringReader("1");
+            var input = new StringReader(OPTION_OPEN_WITH_KEY);
             Console.SetIn(input);
 
             // Act
@@ -84,7 +88,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             _baseCharacterMock.Setup(b => b.HasKey(It.IsAny<int>())).Returns(false);
             var _baseCharacter = _baseCharacterMock.Object;
 
-            var input = new StringReader("1\n3");
+            var input = new StringReader($"{OPTION_OPEN_WITH_KEY}\n{OPTION_CANCEL}");
             Console.SetIn(input);
 
             //act
@@ -115,7 +119,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             var _baseCharacter = _baseCharacterMock.Object;
             _baseCharacter.Keys = initialKeys;
 
-            var input = new StringReader("1");
+            var input = new StringReader($"{OPTION_OPEN_WITH_KEY}");
             Console.SetIn(input);
 
             //act
@@ -140,7 +144,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             var character = _baseCharacterMock.Object;
             character.Coins = initialCoins;
 
-            var input = new StringReader("2");
+            var input = new StringReader($"{OPTION_OPEN_WITH_COIN}");
             Console.SetIn(input);
 
             // Act
@@ -170,7 +174,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             var _baseCharacter = _baseCharacterMock.Object;
             _baseCharacter.Coins = initialCoins;
 
-            var input = new StringReader("2\n3\n");
+            var input = new StringReader($"{OPTION_OPEN_WITH_COIN}\n{OPTION_CANCEL}");
             Console.SetIn(input);
 
             //act
@@ -201,7 +205,7 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             var _baseCharacter = _baseCharacterMock.Object;
             _baseCharacter.Coins = initialCoins;
 
-            var input = new StringReader("2");
+            var input = new StringReader($"{OPTION_OPEN_WITH_COIN}");
             Console.SetIn(input);
             //act
             var result = _door.Interaction(_baseCharacter);
