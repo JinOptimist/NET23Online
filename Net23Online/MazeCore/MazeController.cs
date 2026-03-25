@@ -1,12 +1,11 @@
-﻿using System.Timers;
-
-using MazeCore;
 using MazeCore.Cells;
+using MazeCore.Characters;
 using MazeCore.Interfaces;
+using System.Timers;
 
-namespace FirstConsoleApp.MazeStuff
+namespace MazeCore
 {
-    public class MazeController
+    public class MazeController: IMazeController
     {
         private IMaze _maze;
         private Random _random;
@@ -20,7 +19,7 @@ namespace FirstConsoleApp.MazeStuff
         private const int MILISECONDS_TO_ESCAPE = 30000;
         private bool continuewGame = true;
 
-        public void Play()
+        public void Play(int width = 24, int height = 12, bool isSecretMaze = false, Hero hero = null)
         {
             _mazeBuilder = new MazeBuilder();
 
@@ -29,7 +28,7 @@ namespace FirstConsoleApp.MazeStuff
 
             var mazeBuilder = new MazeBuilder();
 
-            _maze = _mazeBuilder.Build(24, 12);
+            _maze = _mazeBuilder.Build(width, height, isSecretMaze: isSecretMaze, inputHero: hero);
 
             var mazeDrawer = new MazeDrawer();
 
@@ -39,7 +38,7 @@ namespace FirstConsoleApp.MazeStuff
             var continuewGame = true;
 
             Console.WriteLine("You have 30 seconds to escape");
-
+            
             _gameTimer = new System.Timers.Timer(MILISECONDS_TO_ESCAPE);
             _gameTimer.Elapsed += OnTimedEvent;
             _gameTimer.AutoReset = false;
@@ -47,7 +46,7 @@ namespace FirstConsoleApp.MazeStuff
 
             while (continuewGame)
             {
-                continuewGame = DoOneStep();
+                continuewGame = DoOneStep(isSecretMaze);
                 mazeDrawer.Draw(_maze);
             }
 
@@ -58,9 +57,9 @@ namespace FirstConsoleApp.MazeStuff
         /// Return false game must be stopped
         /// </summary>
         /// <returns></returns>
-        private bool DoOneStep()
+        private bool DoOneStep(bool isSecretMaze = false)
         {
-            if (!continuewGame)
+            if(!continuewGame)
             {
                 return false;
             }
@@ -121,16 +120,23 @@ namespace FirstConsoleApp.MazeStuff
                     _stranger.Interaction(_maze.Hero);
                 }
 
-                if (_countSteps % STEPS_TO_ICE == 0)
+                if (!isSecretMaze)
                 {
-                    _mazeBuilder.GenerateIceNearHero();
+                    if (_countSteps % STEPS_TO_ICE == 0)
+                    {
+                        _mazeBuilder.GenerateIceNearHero();
+                    }
+                }
+                if (destenationCell is ExitSecretRoom)
+                {
+                    return destenationCell.Interaction(_maze.Hero);
                 }
             }
 
             return continuewGame;
         }
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs time)
+        private void OnTimedEvent(object source, ElapsedEventArgs time)
         {
             Console.Clear();
             Console.WriteLine("YOU LOST IN MAZE FOREVER");

@@ -7,9 +7,9 @@ using NUnit.Framework;
 
 namespace FirstConsoleApp.Tests.MazeStuff.Cells
 {
-    public class CoinTest
+    public class RestTest
     {
-        private Coin _coin;
+        private Rest _rest;
         private Mock<IBaseCharacter> _baseCharacterMock;
         private Mock<IMaze> _mazeMock;
 
@@ -26,26 +26,26 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             var maze = _mazeMock.Object;
 
             _baseCharacterMock = new Mock<IBaseCharacter>();
-            _baseCharacterMock.SetupProperty(x => x.Coins);
+            _baseCharacterMock.SetupProperty(x => x.Hp);
 
-            _coin = new Coin(maze); // ONE REAL OBJECT
+            _rest = new Rest(maze); // ONE REAL OBJECT
         }
 
         [Test]
         [TestCase(0, 1)]
         [TestCase(12, 13)]
         [TestCase(100, 101)]
-        public void Interaction_CoinAreIncrease(int initialCoins, int resultCoins)
+        public void Interaction_CoinAreIncrease(int initialRest, int resultHP)
         {
             // Prepare
             var baseCharacter = _baseCharacterMock.Object;
-            baseCharacter.Coins = initialCoins;
+            baseCharacter.Hp = initialRest;
 
             // Act
-            _coin.Interaction(baseCharacter);
+            _rest.Interaction(baseCharacter);
 
             // Assert
-            Assert.That(baseCharacter.Coins, Is.EqualTo(resultCoins), $"Coins count must be {resultCoins}");
+            Assert.That(baseCharacter.Hp, Is.EqualTo(resultHP), $"HP count must be {resultHP}");
         }
 
         [Test]
@@ -54,10 +54,10 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             // Prepare
 
             // Act
-            var result = _coin.Interaction(_baseCharacterMock.Object);
+            var result = _rest.Interaction(_baseCharacterMock.Object);
 
             // Assert
-            Assert.That(result, Is.EqualTo(true), $"You can step in Coin");
+            Assert.That(result, Is.EqualTo(true), $"You can step on Rest");
         }
 
         [Test]
@@ -66,10 +66,10 @@ namespace FirstConsoleApp.Tests.MazeStuff.Cells
             // Prepare
 
             // Act
-            _coin.Interaction(_baseCharacterMock.Object);
+            _rest.Interaction(_baseCharacterMock.Object);
 
             // Assert
-            _mazeMock.Verify(x => x.Surface.Remove(_coin), Times.Once());
+            _mazeMock.Verify(x => x.Surface.Remove(_rest), Times.Once());
             _mazeMock.Verify(x => x.Surface.Add(It.IsAny<Ground>()), Times.Once());
         }
     }

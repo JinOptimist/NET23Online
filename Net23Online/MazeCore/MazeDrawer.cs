@@ -1,7 +1,7 @@
-﻿using MazeCore.Cells.Interfaces;
+using MazeCore.Cells.Interfaces;
 using MazeCore.Interfaces;
 
-namespace FirstConsoleApp.MazeStuff
+namespace MazeCore
 {
     public class MazeDrawer
     {
@@ -15,7 +15,7 @@ namespace FirstConsoleApp.MazeStuff
 
             for (int y = 0; y < maze.Height; y++)
             {
-                Console.WriteLine();// new line
+                Console.WriteLine();
 
                 for (int x = 0; x < maze.Width; x++)
                 {
@@ -31,22 +31,11 @@ namespace FirstConsoleApp.MazeStuff
                            .Surface
                            .First(cell => cell.X == x && cell.Y == y);
                     }
-                    var symbol = (Math.Abs(maze.Hero.X - currentCell.X) > maze.FogOfWar.HorizontalRadius 
+                    var symbol = (Math.Abs(maze.Hero.X - currentCell.X) > maze.FogOfWar.HorizontalRadius
                         || Math.Abs(maze.Hero.Y - currentCell.Y) > maze.FogOfWar.VerticalRadius)
                         ? maze.FogOfWar.Symbol : currentCell.Symbol;
-                    
-                    Console.Write(symbol);
 
-                    //BaseCell currentCell;
-                    //for (int i = 0; i < maze.Cells.Count; i++)
-                    //{
-                    //    var cell = maze.Cells[i];
-                    //    if (cell.X == x && cell.Y == y)
-                    //    {
-                    //        currentCell = cell;
-                    //        break;
-                    //    }
-                    //}
+                    Console.Write(symbol);
                 }
             }
 

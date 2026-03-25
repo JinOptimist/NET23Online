@@ -8,70 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="MazeStuff\Sounds\coin_sound.mp3" />
-    <None Remove="MazeStuff\Sounds\coin_sound.wav" />
-    <None Remove="MazeStuff\Sounds\door_sound.mp3" />
-    <None Remove="MazeStuff\Sounds\ice_sound.wav" />
-    <None Remove="MazeStuff\Sounds\key_sound.wav" />
-    <None Remove="MazeStuff\Sounds\lava_sound.wav" />
-    <None Remove="MazeStuff\Sounds\maze_background_music.wav" />
-    <None Remove="MazeStuff\Sounds\mimic_sound.mp3" />
-    <None Remove="MazeStuff\Sounds\pit_sound.wav" />
-    <None Remove="MazeStuff\Sounds\portal_sound.wav" />
-    <None Remove="MazeStuff\Sounds\rest_sound.wav" />
-    <None Remove="MazeStuff\Sounds\speedpotion_sound.flac" />
-    <None Remove="MazeStuff\Sounds\superpower_sound.wav" />
-    <None Remove="MazeStuff\Sounds\trap_sound.wav" />
-    <None Remove="MazeStuff\Sounds\wall_sound.wav" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="MazeStuff\Sounds\coin_sound.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\door_sound.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\ice_sound.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\key_sound.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\lava_sound.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\maze_soundtrack.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\mimic_sound.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\pit_sound.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\portal_sound.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\rest_sound.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\speedpotion_sound.flac">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\superpower_sound.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\trap_sound.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeStuff\Sounds\wall_sound.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="NAudio" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MazeCore\MazeCore.csproj" />
   </ItemGroup>
 
 </Project>
