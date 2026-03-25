@@ -33,6 +33,7 @@ namespace MazeCore.Cells
             }
 
             character.Hp--;
+            character.EnemiesKilled++;
             character.Coins += 10;
             Maze.EventHistory.Add("You were wounded and awarded");
             Maze.Surface.Remove(this);

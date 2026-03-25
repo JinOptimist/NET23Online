@@ -23,6 +23,7 @@ internal class Ghost:BaseCell
         if (ghostDieOrNot)//If we kill a ghost, we take his money and the ghost disappears.
         {
             character.Coins += BagWithCoins;
+            character.EnemiesKilled++;
             Maze.Surface.Remove(this);
             Maze.EventHistory.Add($"The Ghost is dead. Your reward - {BagWithCoins} coins");
             return true;

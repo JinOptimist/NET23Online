@@ -10,6 +10,7 @@ namespace MazeCore.Characters.Interfaces
         int Keys { get; set; }
         string Name { get; set; }
         int Speed { get; set; }
+        int EnemiesKilled { get; set; }
         public int SuperPower { get; set; }
 
         void CollectKey(int amount);
