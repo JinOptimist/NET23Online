@@ -3,19 +3,20 @@ using MazeCore.Interfaces;
 
 namespace MazeCore.Cells
 {
-    public class Fire: BaseCell
+    public class Fire : BaseCell
     {
-        public Fire (IMaze maze) : base(maze)
+        public Fire(IMaze maze) : base(maze)
         {
-            
+
         }
 
         public override char Symbol => '^';
 
 
         public override bool Interaction(IBaseCharacter character)
-        {            
+        {
             character.Hp--;
+            character.Burning++;
 
             Maze.EventHistory.Add("You're on fire!");
 
@@ -30,7 +31,7 @@ namespace MazeCore.Cells
 
             return true;
         }
-       
 
-}
+
+    }
 }

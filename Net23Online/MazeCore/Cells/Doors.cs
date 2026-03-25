@@ -1,3 +1,4 @@
+using MazeCore.Cells.Interfaces;
 using MazeCore.Characters.Interfaces;
 using MazeCore.Interfaces;
 
@@ -13,6 +14,7 @@ namespace MazeCore.Cells
 
         public Doors(IMaze maze) : base(maze)
         {
+            
         }
 
         public override char Symbol => SYMBOL;
@@ -51,7 +53,7 @@ namespace MazeCore.Cells
         }
         private bool TryOpenWithKey(IBaseCharacter character, int cost)
         {
-            if (!character.HasKey())
+            if (!character.HasKey(cost))
             {
                 Console.WriteLine(" You don't have a key!");
                 return false;
@@ -59,7 +61,7 @@ namespace MazeCore.Cells
 
             character.UseKey(cost);
             Open();
-            Console.WriteLine(" Door unlocked with key!");
+            Maze.EventHistory.Add(" Door unlocked with key!");
             return true;
         }
 
@@ -73,16 +75,18 @@ namespace MazeCore.Cells
 
             character.SpendCoins(cost);
             Open();
-            Console.WriteLine($" Paid {cost} coins. Door is now open.");
+            Maze.EventHistory.Add($" Paid {cost} coins. Door is now open.");
             return true;
         }
 
-        private static int ReadMenuChoice(int min, int max)
+        private int ReadMenuChoice(int min, int max)
         {
             while (true)
             {
                 Console.Write($"Your choice ({min}-{max}): ");
-                if (int.TryParse(Console.ReadLine(), out var choice) && choice >= min && choice <= max)
+                var input = Maze.InputReader.ReadLine();
+
+                if (int.TryParse(input, out var choice) && choice >= min && choice <= max)
                 {
                     return choice;
                 }

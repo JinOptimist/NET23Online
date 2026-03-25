@@ -12,9 +12,10 @@ namespace MazeCore.Characters.Interfaces
         int Speed { get; set; }
         public int SuperPower { get; set; }
 
-        void CollectKey();
-        bool HasKey();
+        void CollectKey(int amount);
+        bool HasKey(int amount);
         void SpendCoins(int amount);
         void UseKey(int amount);
+        void ProcessBurnEffect();
     }
 }

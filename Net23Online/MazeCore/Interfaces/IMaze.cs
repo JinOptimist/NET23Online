@@ -15,5 +15,8 @@ namespace MazeCore.Interfaces
         MazeFogOfWar FogOfWar { get; set; }
         IList<IBaseCell> Surface { get; set; }
         int Width { get; set; }
+        IInputReader InputReader { get; set; }
+        bool IsSecretMaze { get; set; }
+
     }
 }

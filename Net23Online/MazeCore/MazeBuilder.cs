@@ -17,25 +17,41 @@ namespace MazeCore
         private const int MAX_ICE = 15;
         private const int MAX_FIRE = 5;
 
-        private IMaze _maze;  
+        private IMaze _maze;
         private Random _random;
 
-        public IMaze Build(int width, int height, int? seed = null)
+        public IMaze Build(int width, int height, int? seed = null, bool isSecretMaze = false, Hero inputHero = null)
         {
             _maze = new Maze
             {
                 Width = width,
                 Height = height,
-                Seed = seed ?? DateTime.Now.Millisecond
+                Seed = seed ?? DateTime.Now.Millisecond,
+                InputReader = new ConsoleInputReader()
             };
 
             _random = new Random(_maze.Seed);
 
-            var hero = GenerateHero();
-            _maze.Hero = hero;
+
+            if (inputHero == null)
+            {
+                var hero = GenerateHero();
+                _maze.Hero = hero;
+            }
+            else
+            {
+                _maze.Hero = inputHero;
+            }
+
+            if (isSecretMaze)
+            {
+                GenerateSecretMaze();
+
+                return _maze;
+            }
 
             GenerateWall();
-            GenerateGround(hero.X, hero.Y);// Genrate path
+            GenerateGround(_maze.Hero.X, _maze.Hero.Y);// Genrate path
             GenerateCoins();
             GenerateSuperPower();
             GenerateTrap();
@@ -51,6 +67,7 @@ namespace MazeCore
             GenerateFire();
             GenerateGhost(4);
             GenerateShopkeeper();
+            GenerateSecretRoom();
             return _maze;
         }
 
@@ -156,7 +173,7 @@ namespace MazeCore
             var freeCells = _maze
                 .Surface
                 .Where(cell => cell is Ground)
-                .Where(x => symbol == Coin.SYMBOL && GetNearCells<Ground>(x).Count() == 1 || 
+                .Where(x => symbol == Coin.SYMBOL && GetNearCells<Ground>(x).Count() == 1 ||
                     symbol == Doors.SYMBOL && GetNearCells<Ground>(x).Count() > 1)
                 .ToList();
             TryReplaceMimic(maxMimicCount, freeCells, symbol);
@@ -574,19 +591,6 @@ namespace MazeCore
         /// Get near cells from cells in input List 
         /// </summary>
         /// <returns></returns>
-        public List<IBaseCell> GetNearCellsFromListTEST(List<IBaseCell> inputCellList)
-        {
-            var outputNearCells = new List<IBaseCell>();
-
-            foreach (var cell in inputCellList)
-            {
-                var nearOneCell = GetNearCells<IBaseCell>(cell).ToList();
-                outputNearCells.AddRange(nearOneCell);
-            }
-
-            return outputNearCells;
-        }
-
         public IEnumerable<IBaseCell> GetNearCellsFromList(List<IBaseCell> inputCellList)
         {
             foreach (var cell in inputCellList)
@@ -603,21 +607,6 @@ namespace MazeCore
         /// Get list with unique cells from List
         /// </summary>
         /// <returns></returns>
-        public List<IBaseCell> GetUniqueCellsFromList0(List<IBaseCell> inputCellList)
-        {
-            var uniqueCells = new List<IBaseCell>();
-
-            foreach (var cell in inputCellList)
-            {
-                bool isDublicates = uniqueCells.Any(c => c.X == cell.X && c.Y == cell.Y);
-                if (!isDublicates)
-                {
-                    uniqueCells.Add(cell);
-                }
-            }
-            return uniqueCells;
-        }
-
         public List<IBaseCell> GetUniqueCellsFromList(List<IBaseCell> inputCellList)
         {
             return inputCellList.Distinct().ToList();
@@ -706,7 +695,7 @@ namespace MazeCore
         }
 
         private void GenerateFire()
-        {           
+        {
 
             for (int i = 0; i < MAX_FIRE; i++)
             {
@@ -735,7 +724,7 @@ namespace MazeCore
 
             var x = new int();
             var y = new int();
-            if(firstGroundNearDoors != null)
+            if (firstGroundNearDoors != null)
             {
                 x = firstGroundNearDoors.X;
                 y = firstGroundNearDoors.Y;
@@ -767,7 +756,7 @@ namespace MazeCore
                 .Where(x => GetNearCells<Wall>(x).Count() == 2)
                 .ToList();
 
-            if(countOfGhost > cellToGenerateGhost.Count) 
+            if (countOfGhost > cellToGenerateGhost.Count)
             {
                 countOfGhost = 2;
             }
@@ -780,9 +769,60 @@ namespace MazeCore
                     X = cellToReplace.X,
                     Y = cellToReplace.Y,
                 };
-            ReplaceCell(ghost);
+                ReplaceCell(ghost);
             }
         }
+        private void GenerateSecretMaze()
+        {
+            for (int y = 0; y < _maze.Height; y++)
+            {
+                for (int x = 0; x < _maze.Width; x++)
+                {
+                    IBaseCell cell;
+
+                    if (x == 0 && y == 1)
+                    {
+                        cell = new ExitSecretRoom(_maze)
+                        {
+                            X = x,
+                            Y = y
+                        };
+                    }
+                    else if (x == 0 || x == _maze.Width - 1 || y == 0 || y == _maze.Height - 1)
+                    {
+                        cell = new Wall(_maze)
+                        {
+                            X = x,
+                            Y = y
+                        };
+                    }
+                    else
+                    {
+                        cell = new Coin(_maze)
+                        {
+                            X = x,
+                            Y = y
+                        };
+                    }
+                    _maze.Surface.Add(cell);
+                }
+            }
+
+            var exitSecretRoomCell = _maze.Surface.OfType<ExitSecretRoom>().FirstOrDefault();
+            _maze.Hero.X = exitSecretRoomCell.X;
+            _maze.Hero.Y = exitSecretRoomCell.Y;
+        }
+
+        private void GenerateSecretRoom()
+        {
+            var secretRoom = new SecretRoom(_maze)
+            {
+                X = 2,
+                Y = 2
+            };
+            ReplaceCell(secretRoom);
+        }
+
     }
 }
 
