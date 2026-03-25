@@ -10,10 +10,7 @@ namespace MazeCore.Cells
 
         public Coin(IMaze maze) : base(maze)
         {
-
         }
-        private const int _COINS_COLLECT = 1;
-        
 
         public override char Symbol => SYMBOL;
 
@@ -23,7 +20,8 @@ namespace MazeCore.Cells
             soundPlayer.PlayMusic("coin_sound.mp3");
 
             Maze.EventHistory.Add("Look, it's a coin");
-            character.CollectCoin(_COINS_COLLECT);
+
+            character.Coins++;
 
             Replace();
 

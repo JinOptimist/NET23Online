@@ -8,7 +8,7 @@ public class SuperPower : BaseCell
     public SuperPower(IMaze maze) : base(maze)
     {
     }
-    
+
     public override char Symbol => 'P';
 
     public override bool Interaction(IBaseCharacter character)
@@ -23,9 +23,10 @@ public class SuperPower : BaseCell
         soundPlayer.PlayMusic("superpower_sound.wav");
 
         Maze.EventHistory.Add("SuperPower! +Hp. You can break the wall.");
-            
+
         Maze.Surface.Remove(this);
-        var ground = new Ground(Maze) { 
+        var ground = new Ground(Maze)
+        {
             X = X,
             Y = Y,
         };

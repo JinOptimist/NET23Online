@@ -1,11 +1,11 @@
 ﻿using MazeCore.Cells;
 using MazeCore.Characters.Interfaces;
 using MazeCore.Interfaces;
-internal class Ghost:BaseCell
+internal class Ghost : BaseCell
 {
     const int CHACNE_TO_KILL_GHOST = 5;
     private int BagWithCoins = 3;
-    public Ghost(IMaze maze) :base(maze) 
+    public Ghost(IMaze maze) : base(maze)
     {
     }
     public override char Symbol => 'G';
@@ -35,7 +35,7 @@ internal class Ghost:BaseCell
         }
         else//If we miss and have HP or coins
         {
-            if(character.Coins > 0) //Ghost takes our coin and runs away.
+            if (character.Coins > 0) //Ghost takes our coin and runs away.
             {
                 character.Coins--;
                 BagWithCoins++;

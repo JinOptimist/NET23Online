@@ -6,46 +6,79 @@ namespace MazeCore.Characters
 {
     public abstract class BaseCharacter : BaseCell, IBaseCharacter
     {
+
+        private int _coins;
+        private int _hp;
+        private int _speed;
+        private int _key;
+        private int _burning;
+        private int _superPower;
+        private bool _isDead;
+
         protected BaseCharacter(IMaze maze) : base(maze)
         {
+            _coins = 0;
+            _hp = 100;
+            _speed = 1;
+            _key = 0;
+            _burning = 0;
+            _superPower = 0;
         }
-
         public string Name { get; set; }
-        public int Hp { get; set; }
-        public int Coins { get; set; }
-        public int Speed { get; set; }
-        public int Burning { get; set; }
 
-        public int Keys { get; set; }
-        public int SuperPower { get; set; } 
-
-        public bool HasKey(int amount)
-        {
-            if (Keys >= amount)
-            {
-                return true;
+        public int Hp {
+            get {
+                return _hp;
             }
-            return false;
+            set {
+                _hp = Math.Clamp(value, 0, 100);
+            }
+        }
+        public int Coins {
+            get {
+                return _coins;
+            }
+            set {
+                _coins = Math.Max(0, value);
+            }
+        }
+        public int Speed {
+            get {
+                return _speed;
+            }
+            set {
+                _speed = Math.Max(1, value);
+            }
+        }
+        public int Key {
+            get {
+                return _key;
+            }
+            set {
+                _key = Math.Max(0, value);
+            }
+        }
+        public int SuperPower {
+            get {
+                return _superPower;
+            }
+            set {
+                _superPower = Math.Max(0, value);
+            }
         }
 
-        public void UseKey(int amount)
-        {
-            Keys -= amount;
+        public int Burning {
+            get {
+                return _burning;
+            }
+            set {
+                _burning = Math.Max(0, value);
+            }
         }
-
-        public void SpendCoins(int amount)
-        {
-            Coins -= amount;
-        }
-
-        public void CollectKey(int amount)
-        {
-            Keys += amount;
-        }
-
+        public bool IsDead => _isDead;
         public void ProcessBurnEffect()
         {
-            if (Burning < 0)
+            if (_burning < 0)
             {
                 return;
             }
@@ -53,12 +86,19 @@ namespace MazeCore.Characters
             Hp--;
             Maze.EventHistory.Add($"You've lost 1 HP from burning. Your HP: {Hp}");
 
-            Burning--;
+            _burning--;
 
-            if (Burning == 0)
+            if (_burning == 0)
             {
                 Maze.EventHistory.Add($"You put out the fire");
             }
+        }
+
+        public void Die()
+        {
+            _isDead = true;
+            Hp = 0;
+            Maze.EventHistory.Add($"Character died  with 0 HP");
         }
     }
 }

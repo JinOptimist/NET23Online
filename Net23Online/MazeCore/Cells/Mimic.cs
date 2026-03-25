@@ -12,10 +12,8 @@ namespace MazeCore.Cells
             _mimicSymbol = mimicSymbol;
         }
 
-        public override char Symbol
-        {
-            get
-            {
+        public override char Symbol {
+            get {
                 return _mimicSymbol;
             }
         }

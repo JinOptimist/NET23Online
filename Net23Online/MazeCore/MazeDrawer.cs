@@ -54,7 +54,7 @@ namespace MazeCore
         private void DrawHeroStats()
         {
             var hero = _maze.Hero;
-            Console.WriteLine($"Hp: {hero.Hp} Coins: {hero.Coins} Keys: {hero.Keys} SuperPower: {hero.SuperPower} Speed: {hero.Speed}");
+            Console.WriteLine($"Hp: {hero.Hp} Coins: {hero.Coins} Keys: {hero.Key} SuperPower: {hero.SuperPower} Speed: {hero.Speed}");
         }
 
         private void DrawEventHsitory()

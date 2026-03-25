@@ -11,7 +11,6 @@ namespace MazeCore
         private Random _random;
         private Stranger _stranger;
         public const int CHANSE_STRANGER_APPEARED = 30;
-
         private System.Timers.Timer _gameTimer;
         private MazeBuilder _mazeBuilder;
         private int _countSteps = 0;
@@ -35,7 +34,6 @@ namespace MazeCore
             mazeDrawer.Draw(_maze);
             _random = new Random();
             _stranger = new Stranger(_maze, _random);
-            var continuewGame = true;
 
             Console.WriteLine("You have 30 seconds to escape");
             
@@ -44,7 +42,7 @@ namespace MazeCore
             _gameTimer.AutoReset = false;
             _gameTimer.Enabled = true;
 
-            while (continuewGame)
+            while (continuewGame && !_maze.Hero.IsDead)
             {
                 continuewGame = DoOneStep(isSecretMaze);
                 mazeDrawer.Draw(_maze);
@@ -59,7 +57,7 @@ namespace MazeCore
         /// <returns></returns>
         private bool DoOneStep(bool isSecretMaze = false)
         {
-            if(!continuewGame)
+            if(!continuewGame || _maze.Hero.IsDead)
             {
                 return false;
             }
@@ -67,10 +65,6 @@ namespace MazeCore
             var destenationY = _maze.Hero.Y;
             var key = Console.ReadKey(true);
 
-            if (!continuewGame)
-            {
-                return false;
-            }
 
             switch (key.Key)
             {
@@ -105,7 +99,6 @@ namespace MazeCore
             {
                 return continuewGame;
             }
-
             _maze.Hero.ProcessBurnEffect();
 
             if (destenationCell.Interaction(_maze.Hero))
@@ -132,7 +125,12 @@ namespace MazeCore
                     return destenationCell.Interaction(_maze.Hero);
                 }
             }
-
+            if (_maze.Hero.Hp <= 0 && !_maze.Hero.IsDead)
+            {
+                _maze.Hero.Die(); 
+                continuewGame = false;
+                return false;
+            }
             return continuewGame;
         }
 
@@ -144,5 +142,7 @@ namespace MazeCore
             soundEndGame.PlayMusic("end_of_timer.mp3");
             continuewGame = false;
         }
+
+      
     }
 }

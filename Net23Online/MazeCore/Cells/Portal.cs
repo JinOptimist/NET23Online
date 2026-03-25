@@ -10,7 +10,7 @@ namespace MazeCore.Cells
         public override char Symbol => '%';
         public override bool IsBonusCell { get; init; } = true;
         public Portal LinkedPortal { get; set; }
-        public bool IsSingleUse {  get; set; }
+        public bool IsSingleUse { get; set; }
 
         public Portal(IMaze maze, IInputReader inputReader) : base(maze)
         {
@@ -20,7 +20,7 @@ namespace MazeCore.Cells
         public override bool Interaction(IBaseCharacter character)
         {
             Console.WriteLine("A portal stands here. Use it? (Y/N)");
-            
+
             var key = _inputReader.ReadKey();
             if (key != ConsoleKey.Y)
             {

@@ -38,7 +38,7 @@ namespace MazeCore.Cells.Shopkeeper
             //SoundPlayer.PlayMusic("Shopkeeper.mp3", 0.7f, true);
             GoodsAndServices = new List<BaseShopItem>
             {
-                new TradeGoods(name: "Key", unitPrice: 2, count: 1, c => c.Keys++),
+                new TradeGoods(name: "Key", unitPrice: 2, count: 1, c => c.Key++),
                 new TradeGoods(name: "Speed Potion", unitPrice: 1, count: 3, c => c.Speed++),
                 new TradeGoods(name: "Super Power", unitPrice: 3, count: 1, c => c.SuperPower++),
                 new ShopkeeperServiceRestoreHP(unitPrice: 2),
