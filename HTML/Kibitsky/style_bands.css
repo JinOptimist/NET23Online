@@ -1,0 +1,93 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e1e2f, #121212);
+    color: #ffffff;
+}
+
+header {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    opacity: 0.8;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.band {
+    display: grid;
+    gap: 16px;
+    align-items: start;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+@media (min-width: 560px) {
+    .band {
+        grid-template-columns: minmax(160px, 280px) 1fr;
+    }
+}
+
+.band__thumb {
+    margin: 0;
+}
+
+.band__thumb img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    /* Якорь по верху: при обрезке под 16:9 сохраняем головы, убираем лишний низ */
+    object-position: top center;
+    border-radius: 10px;
+}
+
+.band__body h2 {
+    margin-top: 0;
+}
+
+.band:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+.preferences_music_title {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.preferences_music_items {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
