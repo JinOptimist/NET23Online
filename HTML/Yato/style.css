@@ -1,0 +1,55 @@
+body{
+    background-color: #d0c2b5;
+}
+
+.films{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.film{
+    background-color:tan;
+    width: 400px;
+    border-radius: 20px 20px 0 0;
+    border: 10px solid #000000
+}
+
+.film-image-container{
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.film-image-container img{
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.film-image-container:hover{
+    transform: scale(1.1);
+  }
+
+.film-title{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.film-title h3{
+    color:cornsilk;
+    text-shadow: 
+    +2px +2px 4px #000000,
+    +2px +2px 8px #000000,
+    +2px +2px 16px #000000,
+    +2px +2px 24px #000000,
+    +2px +2px 30px #000000;
+}
+
+.film-quote p{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
