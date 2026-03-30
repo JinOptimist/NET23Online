@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+      <ul>
+        <li>
+          <a href="#" class="site-brand">
+            <img class="site-logo" src="images/logo.svg">
+            WebMoney
+          </a>
+        </li>
+        <li><a href="#about-company">О компании</a></li>
+        <li><a href="#currency-rates">Курсы валют</a></li>
+        <li><a href="#news">Новости</a></li>
+        <li><a href="#footer-contacts">Контакты</a></li>
+      </ul>
+    <select class="lang-select" name="language">
+      <option value="ru" selected>Рус</option>
+      <option value="en">Eng</option>
+    </select>
+  </header>
+
+  <main class="site-main">
+    <section class="login-section">
+      <h2 id="login-heading">Вход в личный кабинет</h2>
+      <form class="login-form" action="#" method="post">
+        <div class="login-field">
+          <label for="login-username">Логин</label>
+          <input
+            id="login-username"
+            name="username"
+            type="text"
+            autocomplete="username"
+            required
+            minlength="5"
+            maxlength="40"
+          >
+          <span class="login-hint">Не короче 5 символов</span>
+        </div>
+        <div class="login-field">
+          <label for="login-password">Пароль</label>
+          <input
+            id="login-password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+            minlength="8"
+            maxlength="50"
+            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}"
+          >
+          <span class="login-hint">Не менее 8 символов (латиница), минимум одна заглавная, одна строчная буква и одна цифра</span>
+        </div>
+        <div class="login-actions">
+          <button type="submit" class="login-submit">Войти</button>
+          <button type="submit" class="login-submit">Зарегистрироваться</button>
+        </div>
+      </form>
+    </section>
+
+    <article id="about-company" class="about-company">
+        <h2>О нас</h2>
+      <p>WebMoney — один из крупных коммерческих банков, включен в I группу системно значимых банков на 2025 год. Инициатор внедрения современных разработок в области безналичных расчетов и систем дистанционного обслуживания.</p>
+      <p>По версии аналитиков американского журнала Global Finance WebMoney стал лучшим банком в 2024 году.</p>
+      <p>Также WebMoney в 2024 году получил серию наград на премии «Банк года» по итогам 2023 года:</p>
+      <ul>
+        <li>Вклад в науку — 1 место</li>
+        <li>Крупный банк — 2 место</li>
+        <li>Мобильное приложение для физических лиц — 3 место</li>
+      </ul>
+      <p>Одна из главных отличительных черт WebMoney — стремление быть инновационным и технологичным, задавать тренды в развитии банковских сервисов. Выстраивая бизнес-стратегию, WebMoney стремится действовать социально ответственно, чтобы способствовать долгосрочному благосостоянию людей. В 2024 году независимое рейтинговое агентство BIK-Ratings присвоило WebMoney ESG-рейтинг на уровне AA.esg (прогноз стабильный).</p>
+    </article>
+
+    <section id="currency-rates" class="currency-rates">
+      <h2 id="currency-rates-heading">Курсы валют</h2>
+      <p>Курсы указаны за единицу иностранной валюты в рублях</p>
+      <table class="rates-table">
+        <caption class="rates-table-caption">Действуют с 08:30 30.03.2026 и могут быть изменены в течение дня.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Валюта</th>
+            <th scope="col" class="rates-table-num">Покупка</th>
+            <th scope="col" class="rates-table-num">Продажа</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="rates-currency-cell">
+                <img class="rates-currency-icon" src="images/usd.svg">
+                <span class="rates-currency-code">1 USD</span>
+              </span>
+            </td>
+            <td class="rates-table-num">2.9400</td>
+            <td class="rates-table-num">2.9780</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="rates-currency-cell">
+                <img class="rates-currency-icon" src="images/euro.svg">
+                <span class="rates-currency-code">1 EUR</span>
+              </span>
+            </td>
+            <td class="rates-table-num">3.3830</td>
+            <td class="rates-table-num">3.4280</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="rates-currency-cell">
+                <img class="rates-currency-icon" src="images/rub.svg">
+                <span class="rates-currency-code">100 RUB</span>
+              </span>
+            </td>
+            <td class="rates-table-num">3.6250</td>
+            <td class="rates-table-num">3.6750</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="rates-currency-cell">
+                <img class="rates-currency-icon" src="images/cny.svg">
+                <span class="rates-currency-code">10 CNY</span>
+              </span>
+            </td>
+            <td class="rates-table-num">4.3000</td>
+            <td class="rates-table-num">4.5500</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="news" class="site-news">
+      <h2 id="news-heading">Новости</h2>
+      <ul class="news-list">
+        <li>
+          <article class="news-card">
+            <time class="news-date" datetime="2026-03-28">28 марта 2026</time>
+            <h3 class="news-title">WebMoney подтвердил ESG-рейтинг AA с «стабильным» прогнозом</h3>
+            <p class="news-content">Агентство BIK-Ratings отметило прозрачность экологической и социальной отчётности банка и вовлечённость в программы финансовой грамотности для молодёжи и пенсионеров.</p>
+          </article>
+        </li>
+        <li>
+          <article class="news-card">
+            <time class="news-date" datetime="2026-03-26">26 марта 2026</time>
+            <h3 class="news-title">Изменения в величинах процентных ставок</h3>
+            <p class="news-content">С 1 мая 2026 года вступают в силу новые Величины процентных ставок и прочие условия обслуживания счетов физических лиц.</p>
+          </article>
+        </li>
+        <li>
+          <article class="news-card">
+            <time class="news-date" datetime="2026-03-22">22 марта 2026</time>
+            <h3 class="news-title">WebMoney поддержал Единый день открытых дверей в учебных заведениях</h3>
+            <p class="news-content">Мероприятие традиционно объединяет абитуриентов, их родителей, педагогов и организации-заказчиков кадров, предоставляя площадку для открытого диалога и знакомства с будущими возможностями обучения и трудоустройства.</p>
+          </article>
+        </li>
+        <li>
+          <article class="news-card">
+            <time class="news-date" datetime="2026-03-18">18 марта 2026</time>
+            <h3 class="news-title">Открыт образовательный центр «Финансы без страха»</h3>
+            <p class="news-content">Бесплатные вебинары и очные встречи: как распознать мошенничество, безопасно пользоваться картами и планировать семейный бюджет. Запись доступна всем жителям региона.</p>
+          </article>
+        </li>
+        <li>
+          <article class="news-card">
+            <time class="news-date" datetime="2026-03-14">14 марта 2026</time>
+            <h3 class="news-title">Технологические работы 19 марта</h3>
+            <p class="news-content">Уважаемые клиенты!<br>
+                Информируем, что 19 марта 2026 года с 02:00 до 06:00 запланированы технологические работы. В это время будут кратковременные перерывы в работе приложения. Просим планировать платежи с учетом данной информации.</p>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-columns">
+      <div id="footer-contacts">
+        <p class="footer-contacts-title">Контакты</p>
+        <p class="footer-contacts-subtitle">Служба поддержки</p>
+          <dl class="footer-contacts-phones">
+            <dt>Городской</dt>
+            <dd>+375 17 111 11 11</dd>
+            <dt>life:)</dt>
+            <dd>+375 25 222 22 22</dd>
+            <dt>MTC</dt>
+            <dd>+375 29 333 33 33</dd>
+            <dt>A1</dt>
+            <dd>+375 44 444 44 44</dd>
+          </dl>
+      </div>
+      <div class="footer-social">
+        <p class="footer-social-title">Мы в соцсетях</p>
+        <ul class="footer-social-list">
+          <li>
+            <a class="footer-social-link" href="#">
+              <img class="footer-social-icon" src="images/youtube.svg">
+            </a>
+          </li>
+          <li>
+            <a class="footer-social-link" href="#">
+              <img class="footer-social-icon" src="images/instagram.svg">
+            </a>
+          </li>
+          <li>
+            <a class="footer-social-link" href="#">
+              <img class="footer-social-icon" src="images/linkedin.svg">
+            </a>
+          </li>
+          <li>
+            <a class="footer-social-link" href="#">
+              <img class="footer-social-icon" src="images/telegram.svg">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2000 – 2026 «ВебМани»</p>
+  </footer>
+</body>
+</html>
