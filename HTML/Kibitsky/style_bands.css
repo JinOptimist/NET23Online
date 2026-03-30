@@ -47,11 +47,11 @@ main {
     }
 }
 
-.band__thumb {
+.band_thumb {
     margin: 0;
 }
 
-.band__thumb img {
+.band_thumb img {
     display: block;
     width: 100%;
     height: auto;
@@ -62,7 +62,7 @@ main {
     border-radius: 10px;
 }
 
-.band__body h2 {
+.band_body h2 {
     margin-top: 0;
 }
 
