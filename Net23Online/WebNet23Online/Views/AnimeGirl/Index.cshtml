@@ -1,0 +1,62 @@
+﻿@using WebNet23Online.Models.AnimeGirl
+@model List<AnimeGirlImageInfoViewModel>
+@{
+    Layout = "_LayoutAnime";
+}
+
+<title>Мои увлечения — аниме, игры, книги</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&amp;family=Sniglet:wght@400;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/anime-girl/style-nice.css">
+
+
+<div class="bg-blobs" aria-hidden="true"></div>
+
+<header class="site-header">
+    <p class="tagline">Личная страничка</p>
+    <h1>Аниме, игры и книги</h1>
+    <p class="lead">Здесь собираю то, что нравится: пока подробно про аниме — игры и книги добавлю позже.</p>
+    <a href="/AnimeGirl/Index?count=1">The only one</a>
+    <a href="/AnimeGirl/Index?count=2">Two is enought</a>
+    <a href="/AnimeGirl/Index?count=3">MORE</a>
+</header>
+
+<main>
+    <section class="section section-anime" id="anime">
+        <h2 class="section-title">Аниме</h2>
+        <p class="section-intro">То, что цепляет стилем, историей или просто настроением.</p>
+        <div class="card-grid">
+            @foreach (var girl in Model)
+            {
+                <article class="media-card">
+                    <div class="media-card__img-wrap">
+                        <img src="@girl.Url" alt="Иллюстрация аниме-девочки в камуфляже" width="400" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="media-card__caption">@girl.Title</p>
+                </article>
+            }
+        </div>
+    </section>
+
+    <section class="section section-placeholder" id="games">
+        <h2 class="section-title">Игры</h2>
+        <div class="placeholder-box">
+            <span class="placeholder-icon" aria-hidden="true">🎮</span>
+            <p>Скоро добавлю список любимых игр и, может, пару скриншотов.</p>
+        </div>
+    </section>
+
+    <section class="section section-placeholder" id="books">
+        <h2 class="section-title">Книги</h2>
+        <div class="placeholder-box">
+            <span class="placeholder-icon" aria-hidden="true">📚</span>
+            <p>Здесь появятся книги, которые хочется перечитывать и рекомендовать.</p>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <p>Сделано с теплом · 2026</p>
+</footer>
+
