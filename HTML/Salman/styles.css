@@ -31,7 +31,9 @@
 }
 
 body {
+  overflow-x: hidden;
   position: relative;
+  max-width: 100%;
   margin: 0 auto;
   font-family: var(--ff-1);
   font-size: 1rem;
