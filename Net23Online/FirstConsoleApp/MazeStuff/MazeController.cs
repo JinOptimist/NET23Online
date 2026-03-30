@@ -44,13 +44,20 @@ namespace FirstConsoleApp.MazeStuff
             _gameTimer.Elapsed += OnTimedEvent;
             _gameTimer.AutoReset = false;
             _gameTimer.Enabled = true;
-
+            var startPlayTime = DateTime.Now;
             while (continuewGame)
             {
                 continuewGame = DoOneStep();
                 mazeDrawer.Draw(_maze);
             }
+            var playedTime = DateTime.Now - startPlayTime;
+            var timeResult = $"{(int)playedTime.TotalHours} H {playedTime.Minutes} min {playedTime.Seconds} sec";
+            var heroStatistics = _maze.Hero;
 
+            Console.Clear();
+            Console.WriteLine($"Total time played {timeResult}");
+            Console.WriteLine($"Coins earned: {heroStatistics.Coins}");
+            Console.WriteLine($"Enemies killed: {heroStatistics.EnemiesKilled}");
         }
 
         /// <summary>
