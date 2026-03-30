@@ -6,8 +6,6 @@ namespace MazeCore.Cells
 {
     public class Wall : BaseCell
     {
-        private const int _SUPERPOWER_COST = 1;
-       
         public Wall(IMaze maze) : base(maze)
         {
         }
@@ -19,8 +17,7 @@ namespace MazeCore.Cells
             MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
             soundPlayer.PlayMusic("wall_sound.wav");
 
-           
-            if (character is Hero hero && hero.SuperPower >= _SUPERPOWER_COST)
+            if (character is Hero hero && hero.SuperPower > 0)
             {
                 Maze.Surface.Remove(this);
                 var ground = new Ground(Maze)
@@ -29,12 +26,12 @@ namespace MazeCore.Cells
                     Y = Y,
                 };
                 Maze.Surface.Add(ground);
-                
-                character.SpendSuperPower(_SUPERPOWER_COST);
+
+                hero.SuperPower--;
                 Maze.EventHistory.Add("You break the wall");
                 return true;
             }
-            
+
             Maze.EventHistory.Add("Boom. It's a wall");
             return false;
         }

@@ -5,8 +5,6 @@ namespace MazeCore.Cells
 {
     public class SkipingMove : BaseCell
     {
-        private const int _HP_COST = 10;
-        private const int _Coins_COST = 1;
         public override char Symbol => 'O';
 
         public SkipingMove(IMaze maze) : base(maze)
@@ -16,28 +14,13 @@ namespace MazeCore.Cells
 
         public override bool Interaction(IBaseCharacter character)
         {
-            if (!character.HasHp(_HP_COST) || character.Hp <= _HP_COST)
-            {
-                Maze.EventHistory.Add("opps! yuo in pit");
-                Maze.EventHistory.Add("LAST LIFE LOST, It's skipping Move ");
-                character.Hp = 0;
-                character.GameOver();
-                return false;
-            }
-            if (!character.HasCoins(_Coins_COST))
-            {
-                Maze.EventHistory.Add("opps! yuo in pit");
-                Maze.EventHistory.Add("NO COINS TO COMPLETE! ");
-                character.GameOver();
-                return false;
-            }
-            Maze.EventHistory.Add("opps! you in pit");
             MazeSoundPlayer soundPlayer = new MazeSoundPlayer();
             soundPlayer.PlayMusic("pit_sound.wav");
 
+            Maze.EventHistory.Add("opps! yuo in pit");
 
-            character.SpendHp(_HP_COST);
-            character.SpendCoins(_Coins_COST);
+            character.Hp -= 10;
+            character.Coins--;
 
             return true;
         }
