@@ -1,55 +1,96 @@
 body{
-    background-color: #d0c2b5;
+    background-color:papayawhip;
 }
 
-.films{
+* {
+    font-family: monospace, 'Courier New', Courier;
+}
+
+.header{
+    text-align: center;
+    margin: 100px;
+}
+
+.hobbys{
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    justify-content:center;
 }
 
-.film{
+.sports{
+    text-align: center;
+    margin: 100px;
+}
+
+.games{
+    text-align: center;
+    margin: 100px;
+}
+
+
+.hobby{
+    margin: 20px;
     background-color:tan;
-    width: 400px;
-    border-radius: 20px 20px 0 0;
-    border: 10px solid #000000
+    border-radius: 15px 0px 15px 15px;
+    box-shadow: 4px 4px 4px #000;
 }
 
-.film-image-container{
+
+
+.image-container{
     position: relative;
-    transition: all 0.3s ease;
+    
 }
 
-.film-image-container img{
-    width: 400px;
-    height: 300px;
+.image-container img{
+    width: 350px;
+    height: 250px;
     object-fit: cover;
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 15px 0px 0px 0px;
+    border: 4px solid rgb(126, 126, 126);
 }
 
-.film-image-container:hover{
-    transform: scale(1.1);
-  }
-
-.film-title{
+.image-container h3{
+    color:rgb(255, 233, 208);
+    background-color:peru;
+    padding: 5px 15px 5px 15px;
+    border-radius: 15px 0px 15px 15px;
+    box-shadow: 
+    0 0 15px #000, 
+    0 0 25px #000;
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: 0px;
+    right: 15px;
 }
 
-.film-title h3{
-    color:cornsilk;
-    text-shadow: 
-    +2px +2px 4px #000000,
-    +2px +2px 8px #000000,
-    +2px +2px 16px #000000,
-    +2px +2px 24px #000000,
-    +2px +2px 30px #000000;
+.description-container{
+    width: 310px;
+    padding: 0px 20px 5px 20px;
 }
 
-.film-quote p{
+.activity-submit{
     display: flex;
     justify-content: center;
-    padding: 20px;
+}
+
+.activity-submit-form{
+    background-color: rgb(211, 193, 175);
+    padding: 100px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0px 0px 100px 0px;
+}
+
+
+.activity-submit-date, .activity-submit-time, .activity-submit-description{
+    font-size: 16px;
+}
+
+.activity-submit-name{
+    width: 200px;
+    height: 30px;
+    padding: 14px 10px;
+    font-size: 20px;
+    margin: 20px 0px 10px 0px;
 }
