@@ -26,12 +26,12 @@ namespace MazeCore.Cells
                     Y = Y,
                 };
                 Maze.Surface.Add(ground);
-                
+
                 hero.SuperPower--;
                 Maze.EventHistory.Add("You break the wall");
                 return true;
             }
-            
+
             Maze.EventHistory.Add("Boom. It's a wall");
             return false;
         }

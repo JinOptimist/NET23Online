@@ -32,5 +32,5 @@ namespace MazeCore.Cells
             return true;
         }
 
-    }   
+    }
 }
