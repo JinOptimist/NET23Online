@@ -1,17 +1,10 @@
-﻿@{
+﻿@model List<WebNet23Online.Models.AnimalWorld.StartPageAnimalViewModel>
+@{
     Layout = "_LayoutAnimalWorld";
 }
 
 <title>Мир животных</title>
 
-<div class="header-body">
-    <h1>Удивительный мир животных</h1>
-    <div class="header-links">
-        <a class="header-link" href="">Дикие животные</a>
-        <a class="header-link" href="">Домашние животные</a>
-        <a class="header-link" href="">Интересные факты</a>
-    </div>
-</div>
 <div class="main-place">
     <div class="green-title">
         <h2>О нашей планете</h2>
@@ -25,14 +18,13 @@
         <h2>Братья наши меньшие</h2>
     </div>
     <hr class="green-line">
-    <div class="animal">
-        <h3>Жираф</h3>
-        <p>Жирафы — исключительно растительноядные животные. Строение тела и физиология позволяют им питаться листвой древесных крон — на высоте, где у них нет конкурентов.</p>
-    </div>
-    <div class="animal">
-        <h3>Медведь</h3>
-        <p>Сравнительно с остальными семействами отряда хищных, медведи отличаются наибольшим однообразием внешнего вида, размеров, многих особенностей внутреннего строения. Это самые крупные из современных наземных хищников.</p>
-    </div>
+    @foreach (var animal in Model)
+    {
+        <div class="animal">
+            <h3>@animal.Name</h3>
+            <p>@animal.BriefDescription</p>
+        </div>
+    }
     <div class="green-title">
         <h2>Какое ваше любимое животное?</h2>
     </div>
