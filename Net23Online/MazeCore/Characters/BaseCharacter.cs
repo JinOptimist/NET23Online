@@ -15,7 +15,7 @@ namespace MazeCore.Characters
         public int Coins { get; set; }
         public int Speed { get; set; }
         public int Burning { get; set; }
-
+        public int EnemiesKilled { get; set; }
         public int Keys { get; set; }
         public int SuperPower { get; set; } 
 

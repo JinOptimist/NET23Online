@@ -10,10 +10,10 @@ public class Key : BaseCell
 
     private const int _KEY_COLLECT = 1;
 
-    public  bool Collect(IBaseCharacter character)
+    public bool Collect(IBaseCharacter character)
     {
         character.CollectKey(_KEY_COLLECT);
-        return true; 
+        return true;
     }
     public override bool Interaction(IBaseCharacter character)
     {
