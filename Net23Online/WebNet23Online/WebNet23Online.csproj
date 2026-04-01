@@ -10,4 +10,8 @@
     <Folder Include="wwwroot\images\rock-legends-portal\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MazeCore\MazeCore.csproj" />
+  </ItemGroup>
+
 </Project>
