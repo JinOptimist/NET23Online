@@ -1,0 +1,130 @@
+﻿<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Купить авто</title>
+    <link rel="stylesheet" href="/css/japanese-domestic-market/jdm-style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="header_inner">
+                <div class="logo">JDM</div>
+                <nav class="navigation-menu">
+                    <a class="nav-link" href="/JapaneseDomesticMarket/Home">Главная</a>
+                    <a class="nav-link" href="/JapaneseDomesticMarket/Catalog">Объявления</a>
+                    <a class="nav-link" href="/JapaneseDomesticMarket/Journal">Журнал</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="cards">
+        <div class="conteainer-card-box">
+            <div style="color:aliceblue">
+                <div>
+                    <h2>
+                        Продажа японских автомобилей в Беларуси
+                    </h2>
+                </div>
+                <div>
+                    <h3>Поиск по параметрам</h3>
+                </div>
+                <form>
+                    <div class="auto-buy">
+                        <label for="marka">Выберите марку</label>
+                        <select type="text" id="marka">
+                            <option selected value="all"> </option>
+                            <option value="toyota">Toyota</option>
+                            <option value="mazda">Mazda</option>
+                            <option value="honda">Honda</option>
+                            <option value="nissan">Nissan</option>
+                        </select>
+                        <label for="model">Выберите модель</label>
+                        <select type="text" id="model">
+                            <option selected value="all"> </option>
+                            <option value="mark2">Mark 2</option>
+                            <option value="gt86">GT 86</option>
+                            <option value="skyline">Skyline</option>
+                            <option value="nsx">NSX</option>
+                        </select>
+                        <label for="kpp" id="kpp">Коробка передач</label>
+                        <div>
+                            <label><input type="checkbox">Автоматическая</label><br>
+                            <label><input type="checkbox">Механическая</label><br>
+                        </div>
+                        <div class="price-container">Ценовой диапазон</div>
+                        <div>
+                            <input type="range" id="prices" min="21000" max="37250" value="0" step="50"
+                                   oninput="rangeValue.innerText = this.value">
+                        </div>
+                        <output id="rangeValue">21000</output>
+                    </div>
+                    <button class="card-button">Посмотреть объявления</button>
+                </form>
+            </div>
+
+            <div class="container container-card">
+                <div class="card">
+                    <div class="card-top">
+                        <a href="#!" class="card-img">
+                            <img src="/images/japanese-domestic-market/toyota-chaser.jpg" alt="Купить Тойота Чайзер в Беларуси"
+                                 class="card__photo">
+                        </a>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="card-price">
+                            <div class="card-price card-price--common">21 000$</div>
+                        </div>
+                        <a href="#!" class="card-title">Toyota Chaser, 1998 год </a>
+                        <button class="card-button">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-card">
+                <div class="card">
+                    <div class="card-top">
+                        <a href="#!" class="card-img">
+                            <img src="/images/japanese-domestic-market/nissan-370z.jpg" alt="Купить Тойота Чайзер в Беларуси"
+                                 class="card__photo">
+                        </a>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="card-price">
+                            <div class="card-price card-price--common">
+                                36 250$
+                            </div>
+                        </div>
+                        <a href="#!" class="card-title">Nissan 370Z, 2009 год</a>
+                        <button class="card-button">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-card">
+                <div class="card">
+                    <div class="card-top">
+                        <a href="#!" class="card-img">
+                            <img src="/images/japanese-domestic-market/mitsubishi_evo.jpg" alt="Купить Тойота Чайзер в Беларуси"
+                                 class="card__photo">
+                        </a>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="card-price">
+                            <div class="card-price card-price--common">
+                                37 250$
+                            </div>
+                        </div>
+                        <a href="#!" class="card-title">Mitsubishi Lancer Evolution</a>
+                        <button class="card-button">Подробнее</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
