@@ -107,11 +107,11 @@ footer.footer {
     }
 }
 
-.band_thumb {
+.band-thumb {
     margin: 0;
 }
 
-    .band_thumb img {
+    .band-thumb img {
         display: block;
         width: 100%;
         height: auto;
@@ -121,8 +121,8 @@ footer.footer {
         border-radius: 10px;
     }
 
-.band__body h2,
-.band_body h2 {
+.band--body h2,
+.band-body h2 {
     margin-top: 0;
 }
 
@@ -131,7 +131,7 @@ footer.footer {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
-.preferences_music_title {
+.preferences-music-title {
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -142,7 +142,7 @@ footer.footer {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-.preferences_music_items {
+.preferences-music-items {
     display: flex;
     flex-direction: row;
     justify-content: center;
