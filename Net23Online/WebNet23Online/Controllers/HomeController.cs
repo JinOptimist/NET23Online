@@ -17,7 +17,10 @@ namespace WebNet23Online.Controllers
         {
             return View();
         }
-
+        public IActionResult Stich()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
