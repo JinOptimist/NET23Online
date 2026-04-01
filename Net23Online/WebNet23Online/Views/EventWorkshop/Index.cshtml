@@ -1,4 +1,8 @@
-﻿<link rel="stylesheet" href="/css/event-workshop/event-workshop.css" />
+﻿@using WebNet23Online.Models.EventWorkshop
+@model List<EventWorkshopEventInfoViewModel>
+@{
+    Layout = "_LayoutEventWorkshop";
+}
 <div class="header">
     <div class="page-title">
         <h1>Любительский досуг!</h1>
@@ -7,81 +11,50 @@
         <p>Здесь размещаются любительские события в которых каждый может принять участие.</p>
     </div>
 </div>
-<div class="hobbys">
-    <div class="hobby">
-        <div class="event-info-container">
-            <div class="image-container">
-                <img src="images/hobby/hobby1.jpg" />
-                <h3>Музыкальная импровизация</h3>
+<div class="events">
+    <div class="events-filter">
+        <a href="/EventWorkshop/Index?typeEvent=Creation">
+            <div>
+                Творчество
             </div>
-            <div class="description-container">
-                <p>Импровизация любителей музыки! Создайте шедевр со случайными людьми.</p>
+        </a>
+        <a href="/EventWorkshop/Index?typeEvent=Sport">
+            <div>
+                Спорт
             </div>
-        </div>
-        <div class="datetime-container">
-            <div class="date-container">
-                29 JAN
+        </a>
+        <a href="/EventWorkshop/Index?typeEvent=Games">
+            <div>
+                Игры
             </div>
-            <div class="year-container">
-                2025
-            </div>
-            <div class="time-container">
-                22:00
-            </div>
-        </div>
+        </a>
     </div>
-    <div class="hobby">
-        <div class="event-info-container">
-            <div class="image-container">
-                <img src="images/hobby/hobby2.jpg" />
-                <h3>Чайная церемония</h3>
+    @foreach (var workshopEvent in Model)
+    {
+        <div class="creation">
+            <div class="event-info-container">
+                <div class="image-container">
+                    <img src="@workshopEvent.Url"/>
+                    <h3>@workshopEvent.Title</h3>
+                </div>
+                <div class="description-container">
+                    <p>@workshopEvent.Description</p>
+                </div>
             </div>
-            <div class="description-container">
-                <p>Примите участие в чайной церемонии! Знакомства, дружеское общение и многое другое.</p>
-            </div>
-        </div>
-        <div class="datetime-container">
-            <div class="date-container">
-                29 JAN
-            </div>
-            <div class="year-container">
-                2025
-            </div>
-            <div class="time-container">
-                22:00
-            </div>
-        </div>
-    </div>
-    <div class="hobby">
-        <div class="event-info-container">
-            <div class="image-container">
-                <img src="images/hobby/hobby3.jpg">
-                <h3>Книжные дебаты</h3>
-            </div>
-            <div class="description-container">
-                <p>Читаем, обсуждаем, спорим в поисках истины. Приглашаются все желающие!</p>
+            <div class="datetime-container">
+                <div class="date-container">
+                    @workshopEvent.Date.Substring(0, 6)
+                </div>
+                <div class="year-container">
+                    @workshopEvent.Date.Substring(6)
+                </div>
+                <div class="time-container">
+                    @workshopEvent.Time
+                </div>
             </div>
         </div>
-        <div class="datetime-container">
-            <div class="date-container">
-                29 JAN
-            </div>
-            <div class="year-container">
-                2025
-            </div>
-            <div class="time-container">
-                22:00
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="sports">
-Здесь будет спортивный досуг
-</div>
-<div class="games">
-Здесь будут игры
-</div>
+    }
+</div>  
 <div class="activity-submit">
 <form class="activity-submit-form">
     <h2>Отправь запрос на создание досуга!</h2>
@@ -95,12 +68,12 @@
                 Выберите категорию
             </div>
             <label>
-                hobbys
-                <input type="radio" name="category" value="hobbys">
+                creation
+                <input type="radio" name="category" value="creation">
             </label>
             <label>
-                sports
-                <input type="radio" name="category" value="sports">
+                sport
+                <input type="radio" name="category" value="sport">
             </label>
             <label>
                 games
@@ -132,5 +105,6 @@
                 <textarea class="activity-submit-description" name="activity-submit-description" rows="10" cols="50" placeholder="Опишите событие"></textarea>
             </div>
         </div>
+        <button type="submit">Add Event</button>
     </form>
 </div>
