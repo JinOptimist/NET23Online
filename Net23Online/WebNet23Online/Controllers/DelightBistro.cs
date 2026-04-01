@@ -21,7 +21,8 @@ namespace WebNet23Online.Controllers
                 case "salads":
                     viewModel.MenuType = "Салаты";
                     break;
-                    // Нужен ли default?
+                default:
+                    break;
             }
 
             return View(viewModel);
