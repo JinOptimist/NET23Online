@@ -14,4 +14,8 @@
     <ProjectReference Include="..\MazeCore\MazeCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\rock-bands\" />
+  </ItemGroup>
+
 </Project>
