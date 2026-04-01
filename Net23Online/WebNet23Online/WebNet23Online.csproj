@@ -10,4 +10,8 @@
     <Folder Include="wwwroot\images\rock-legends-portal\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\rock-bands\" />
+  </ItemGroup>
+
 </Project>
