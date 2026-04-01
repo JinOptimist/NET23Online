@@ -1,0 +1,169 @@
+:root{
+    --graphite: #37353E;
+    --gunmetal: #44444E;
+    --taupe-grey: #664f4f;
+    --taupe-light: #906b6b;
+    --alabaster-grey: #D3DAD9;
+    --ghost-white: #F7F7FF;
+    --cream: #f3e1c7;
+}
+
+@font-face {
+    font-family: 'Farabee Regular';
+    src: url('fonts/Farabee_Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Farabee Semibold';
+    src: url('fonts/Farabee_Semibold.ttf') format('ttf');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Farabee Bold';
+    src: url('fonts/Farabee_Bold.ttf') format('ttf');
+    font-weight: 700;
+    font-style: normal;
+}
+
+body{
+    background: linear-gradient(45deg, var(--cream) -50%, var(--graphite) 80%);
+    font-family: 'Farabee Regular', 'Trebuchet MS', sans-serif;
+    font-weight: 400;
+    margin: 0px;
+}
+
+h1, h2 {
+    font-weight:700;
+}
+
+h3, h4{
+    font-weight: 600;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 300px;
+    color: var(--ghost-white);
+    text-align: center;
+    box-shadow: 0px 10px 10px #000;
+}
+
+.hobbys{
+    margin-top: 10px;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+
+}
+
+
+.sports{
+    text-align: center;
+    margin: 100px;
+}
+
+.games{
+    text-align: center;
+    margin: 100px;
+}
+
+
+.hobby{
+    display: inline-flex;
+    margin: 20px;
+    border-radius: 15px 0px 15px 15px;
+    transition: transform 0.4s ease;
+}
+
+
+
+.event-info-container{
+    display: flex;
+    border: 5px dotted var(--ghost-white);
+    border-radius: 15px 0px 15px 15px;
+    transition: transform 0.4s ease, box-shadow 0.1s ease;
+}
+
+.datetime-container{
+    display: flex;
+    flex-flow: column wrap;
+    height: 80px;
+    background-color: var(--alabaster-grey);
+    border-radius: 0px 0px 15px 0px;
+    margin-top: 50px;
+    padding: 4px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.hobby:hover .datetime-container, 
+.hobby:hover .event-info-container {
+    box-shadow: 0 0 15px var(--ghost-white);
+    transform: translateY(-5px);
+  }
+
+.image-container{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    background-color: var(--taupe-grey);
+
+}
+
+.image-container img{
+    width: 350px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 12px 0px 0px 0px;
+}
+
+.image-container h3{
+    color:var(--cream);
+    
+}
+
+.description-container{
+    width: 350px;
+    padding: 0px 20px 5px 20px;
+    background-color: var(--taupe-light);
+    border-left: 5px dotted var(--ghost-white);
+    border-radius: 0px 0px 12px 0px;
+}
+
+.description-container p{
+    color: var(--cream);
+    transition: transform 0.4s ease, box-shadow 0.3s ease;
+}
+
+.activity-submit{
+    display: flex;
+    justify-content: center;
+}
+
+.activity-submit-form{
+    background-color: rgb(211, 193, 175);
+    padding: 100px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0px 0px 100px 0px;
+}
+
+
+.activity-submit-date, .activity-submit-time, .activity-submit-description{
+    font-size: 16px;
+}
+
+.activity-submit-name{
+    width: 200px;
+    height: 30px;
+    padding: 14px 10px;
+    font-size: 20px;
+    margin: 20px 0px 10px 0px;
+}

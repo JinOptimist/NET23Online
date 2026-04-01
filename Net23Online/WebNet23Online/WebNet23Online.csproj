@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\event-workshop\" />
+    <Folder Include="wwwroot\images\event-workshop\" />
   </ItemGroup>
 
 </Project>
