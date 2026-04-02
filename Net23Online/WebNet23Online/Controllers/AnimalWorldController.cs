@@ -31,5 +31,10 @@ namespace WebNet23Online.Controllers
             };
             return View(startPageAnimals);
         }
+
+        public IActionResult Add()
+        {
+            return View();
+        }
     }
 }

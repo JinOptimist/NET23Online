@@ -1,0 +1,31 @@
+﻿@model WebNet23Online.Models.AnimalWorld.StartPageAnimalViewModel
+@{
+    Layout = "_LayoutAnimalWorld";
+}
+
+<title>Добавление животного</title>
+
+<div class="main-place">
+    <div class="green-title">
+        <h2>Добавление нового животного</h2>
+    </div>
+    <hr class="green-line">
+    <p>Заполните форму ниже, чтобы рассказать о новом животном на нашем сайте.</p>
+    <form method="post">
+        <div class="form-group">
+            <label for="Name">Название животного</label>
+            <input class="form-input" type="text" id="Name" name="Name" placeholder="Например: Снежный барс" required>
+        </div>
+        <div class="form-group">
+            <label for="BriefDescription">Краткое описание (для списка)</label>
+            <input class="form-input" type="text" id="BriefDescription" name="BriefDescription" placeholder="Опишите в одном предложении..." required>
+        </div>
+        <div class="button-group">
+            <button class="find-animal-button" type="submit">Опубликовать</button>
+            <a href="/" class="back-link">Отмена</a>
+        </div>
+    </form>
+</div>
+<div class="footer-body">
+    <p>&copy; 2026 Мир Животных. Берегите природу!</p>
+</div>
