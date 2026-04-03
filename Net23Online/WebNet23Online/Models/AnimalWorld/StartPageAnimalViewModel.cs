@@ -2,7 +2,7 @@
 {
     public class StartPageAnimalViewModel
     {
-        public string Name { get; set; }
+        public string AnimalName { get; set; }
 
         public string BriefDescription { get; set; }
     }

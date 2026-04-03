@@ -13,16 +13,21 @@
     <p>Заполните форму ниже, чтобы рассказать о новом животном на нашем сайте.</p>
     <form method="post">
         <div class="form-group">
-            <label for="Name">Название животного</label>
-            <input class="form-input" type="text" id="Name" name="Name" placeholder="Например: Снежный барс" required>
+            <div class="green-title">
+                <h6>Название животного</h6>
+            </div>
+            @Html.TextBoxFor(animal => animal.AnimalName, new { @class = "form-input", type = "text", placeholder = "Например: Панда" })
         </div>
+        <hr />
         <div class="form-group">
-            <label for="BriefDescription">Краткое описание (для списка)</label>
-            <input class="form-input" type="text" id="BriefDescription" name="BriefDescription" placeholder="Опишите в одном предложении..." required>
+            <div class="green-title">
+                <h6>Краткое описание</h6>
+            </div>
+            @Html.TextBoxFor(animal => animal.BriefDescription, new { @class = "form-input", type = "text", placeholder = "Опишите в одном предложении..." })
         </div>
+        <hr />
         <div class="button-group">
-            <button class="find-animal-button" type="submit">Опубликовать</button>
-            <a href="/" class="back-link">Отмена</a>
+            <button class="find-animal-button" type="submit">Добавить</button>
         </div>
     </form>
 </div>
