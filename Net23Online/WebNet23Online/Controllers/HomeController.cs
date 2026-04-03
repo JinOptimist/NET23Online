@@ -14,7 +14,7 @@ namespace WebNet23Online.Controllers
         }
 
         public IActionResult Index()
-        {
+        {     
             return View();
         }
 

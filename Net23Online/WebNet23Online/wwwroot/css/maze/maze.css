@@ -1,0 +1,19 @@
+.maze {
+    /*background: #00ffff;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.maze-row {
+    display: flex;
+}
+
+.maze-cell {
+    display: inline-block;
+    width: 15px;
+}
+
+.hero {
+    background-color: coral;
+}
