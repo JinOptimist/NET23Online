@@ -48,9 +48,12 @@
                             </div>
                             <div class="recept">
                                 <ul>
-                                    @foreach (var ingredient in foodItem.Ingredients)
+                                    @if (foodItem.Ingredients is not null)
                                     {
-                                        <li>@ingredient</li>
+                                        @foreach (var ingredient in foodItem.Ingredients)
+                                        {
+                                            <li>@ingredient</li>
+                                        }
                                     }
                                 </ul>
                             </div>
@@ -84,6 +87,8 @@
             <li><a href="\DelightBistro\Index?menutype=soups">Супы</a> </li>
             <li> <a href="\DelightBistro\Index?menutype=hot">Горячее</a> </li>
             <li><a href="\DelightBistro\Index?menutype=salads">Салаты</a> </li>
+            <li><a href="\DelightBistro\FoodBuilder">Добавить блюдо</a> </li>
+
         </ul>
     </aside>
 </div>

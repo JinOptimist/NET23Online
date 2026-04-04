@@ -1,6 +1,6 @@
 ﻿namespace WebNet23Online.Models.DelightBistro
 {
-    public class FoodItem
+    public class FoodItemViewModel
     {
         public string Name { get; set; }
         public int Price { get; set; }

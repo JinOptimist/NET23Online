@@ -5,11 +5,12 @@ namespace WebNet23Online.Controllers
 {
     public class DelightBistroController : Controller
     {
-        //          /DelightBistro/Index
+
+        public static List<FoodItemViewModel> _foodItems = GetAllFoodItems();// static menu, delete after add db
+
         public IActionResult Index(string menuType)
         {
-            var allFoods = GetAllFoodItems();
-            //var viewModel = new MenuTypeViewModel() { };
+            var allFoods = _foodItems;
             var viewModels = new List<MenuTypeViewModel>
             {
                 new MenuTypeViewModel()
@@ -41,12 +42,24 @@ namespace WebNet23Online.Controllers
             return View(viewModel);
         }
 
-        public List<FoodItem> GetAllFoodItems()
+        [HttpGet]
+        public IActionResult FoodBuilder()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult FoodBuilder(FoodItemViewModel foodItem)
+        {
+            _foodItems.Add(foodItem);
+            return RedirectToAction("Index");
+        }
+        public static List<FoodItemViewModel> GetAllFoodItems()
         {
 
-            return new List<FoodItem>
+            return new List<FoodItemViewModel>
              {
-                new FoodItem
+                new FoodItemViewModel
                  {
                     Name = "Tom Yum Talay",
                     Price = 20,
@@ -63,7 +76,7 @@ namespace WebNet23Online.Controllers
                     }
                  },
 
-                new FoodItem
+                new FoodItemViewModel
                 {
                     Name = "Lentil Soup",
                     Price = 15,
@@ -80,7 +93,7 @@ namespace WebNet23Online.Controllers
                    }
                 },
 
-                new FoodItem
+                new FoodItemViewModel
                 {
                     Name = "Стейк с пастой",
                     Price = 30,
@@ -95,7 +108,7 @@ namespace WebNet23Online.Controllers
                     }
                 },
 
-                new FoodItem
+                new FoodItemViewModel
                 {
                     Name = "Лазанья",
                     Price = 30,
@@ -112,7 +125,7 @@ namespace WebNet23Online.Controllers
                     }
                 },
 
-                new FoodItem
+                new FoodItemViewModel
                 {
                     Name = "Хрустящая курица с кунжутом",
                     Price = 25,
@@ -130,7 +143,7 @@ namespace WebNet23Online.Controllers
                     }
                 },
 
-                new FoodItem
+                new FoodItemViewModel
                 {
                     Name = "Паста с креветками, чесноком и чили",
                     Price = 25,
@@ -146,7 +159,7 @@ namespace WebNet23Online.Controllers
                     }
                 },
 
-                new FoodItem
+                new FoodItemViewModel
                 {
                     Name = "Салат Цезарь",
                     Price = 20,
@@ -163,7 +176,7 @@ namespace WebNet23Online.Controllers
                     }
                 },
 
-                new FoodItem
+                new FoodItemViewModel
                 {
                     Name = "Салат средиземноморский",
                     Price = 25,
@@ -180,6 +193,6 @@ namespace WebNet23Online.Controllers
                     }
                 }
             };
-        }
+        }//static method
     }
 }
