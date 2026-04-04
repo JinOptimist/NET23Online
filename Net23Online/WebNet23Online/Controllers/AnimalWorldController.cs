@@ -27,6 +27,13 @@ namespace WebNet23Online.Controllers
             return View(startPageAnimals);
         }
 
+        [HttpGet]
+        public IActionResult AddAnimal()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult AddAnimal(StartPageAnimalViewModel viewModel)
         {
             if (!string.IsNullOrEmpty(viewModel.AnimalName) && !string.IsNullOrEmpty(viewModel.BriefDescription))
