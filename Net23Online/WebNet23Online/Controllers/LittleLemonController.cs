@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WebNet23Online.Models;
 using WebNet23Online.Models.LittleLemon;
 
 namespace WebNet23Online.Controllers
@@ -67,9 +65,32 @@ namespace WebNet23Online.Controllers
                 ImageUrl = "/images/little-lemon/images/tagine.jpg",
                 Category = "Lunch"
             });
-            var filteredMenuItems = string.IsNullOrEmpty(category)? menuItems.ToList(): menuItems.Where(item => item.Category == category).ToList();
-            menuItems = filteredMenuItems.Count == 0? menuItems.ToList(): filteredMenuItems;
-            return View(menuItems);
+            var filteredMenuItems = string.IsNullOrEmpty(category) ? menuItems.ToList() : menuItems.Where(item => item.Category == category).ToList();
+            menuItems = filteredMenuItems.Count == 0 ? menuItems.ToList() : filteredMenuItems;
+            var pageModel = new LittleLemonIndexPageViewModel
+            {
+                Hero = new LittleLemonHeroSectionViewModel
+                {
+                    CallToActionHref = Url.Action("Reservation", "LittleLemon") ?? string.Empty,
+                    CallToActionText = "Reserve a Table",
+                    HeroImageUrl = "/images/little-lemon/images/restauranfood.jpg",
+                    HeroImageAlt = "Signature Mediterranean platter at Little Lemon"
+                },
+                MenuItems = menuItems
+            };
+            return View(pageModel);
+        }
+
+        public IActionResult Reservation()
+        {
+            var hero = new LittleLemonHeroSectionViewModel
+            {
+                CallToActionHref = (Url.Action("Index", "LittleLemon") ?? string.Empty) + "#menu",
+                CallToActionText = "Order For Delivery",
+                HeroImageUrl = "/images/little-lemon/images/restauranfood.jpg",
+                HeroImageAlt = "Signature Mediterranean platter at Little Lemon"
+            };
+            return View(hero);
         }
     }
 }

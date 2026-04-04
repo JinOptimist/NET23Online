@@ -1,28 +1,11 @@
 ﻿@using WebNet23Online.Models.LittleLemon
-@model List<LittleLemonMenuCardsViewModel>
+@model LittleLemonIndexPageViewModel
 @{
     Layout = "_LayoutLittleLemon";
 }
 <title>Little Lemon Restaurant</title>
 
-<section class="hero-section">
-    <div class="hero-container">
-        <div class="hero-content">
-            <h2>Little Lemon <span>Chicago</span></h2>
-            <p>
-                Thoughtful Mediterranean dining where heritage recipes meet
-                contemporary craft.
-            </p>
-            <div class="hero-button">
-                <a href="#" class="btn">Reserve a Table</a>
-            </div>
-        </div>
-        <div class="hero-img-container">
-            <img src="/images/little-lemon/images/restauranfood.jpg"
-                alt="Signature Mediterranean platter at Little Lemon" class="img" width="375" height="355" />
-        </div>
-    </div>
-</section>
+@Html.Partial("_LittleLemonHeroSection", Model.Hero)
 <section id="menu" class="menu-section">
     <div class="menu-container">
         <div class="menu-content">
@@ -39,11 +22,11 @@
             <a href="/LittleLemon/Index/?category=Drinks" class="btn-filter">Drinks</a>
         </div>
         <div class="menu-item-container">
-            @foreach (var menuItem in Model)
+            @foreach (var menuItem in Model.MenuItems)
             {
                 <div class="menu-item-content">
                     <div class="menu-item-img-container">
-                        <img src="@menuItem.ImageUrl" alt="@menuItem.Name" class="img" width="375" height="355" />
+                        <img src="@menuItem.ImageUrl" alt="@menuItem.Name" class="img" />
                     </div>
                     <h3>@menuItem.Name</h3>
                     <p>@menuItem.Price<span>$</span></p>
@@ -71,17 +54,16 @@
         <div class="rate-card">
             <div class="stars">
                 <span class="stars-description">5 out of 5 stars</span>
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
             </div>
 
             <div class="testimonial-user-info">
                 <div class="user-image">
-                    <img src="/images/little-lemon/images/user-1.png" alt="Testimonial 1" class="img" width="375"
-                        height="355" />
+                    <img src="/images/little-lemon/images/user-1.png" alt="Testimonial 1" class="img" />
                 </div>
                 <div class="user-info">
                     <h5>Jon Do</h5>
@@ -95,16 +77,15 @@
         <div class="rate-card">
             <div class="stars">
                 <span class="stars-description">5 out of 5 stars</span>
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
             </div>
             <div class="testimonial-user-info">
                 <div class="user-image">
-                    <img src="/images/little-lemon/images/user-2.png" alt="Testimonial 2" class="img" width="375"
-                        height="355" />
+                    <img src="/images/little-lemon/images/user-2.png" alt="Testimonial 2" class="img" />
                 </div>
                 <div class="user-info">
                     <h5>Naomi Noah</h5>
@@ -118,15 +99,14 @@
         <div class="rate-card">
             <div class="stars">
                 <span class="stars-description">4 out of 5 stars</span>
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
             </div>
             <div class="testimonial-user-info">
                 <div class="user-image">
-                    <img src="/images/little-lemon/images/user-3.png" alt="Testimonial 3" class="img" width="375"
-                        height="355" />
+                    <img src="/images/little-lemon/images/user-3.png" alt="Testimonial 3" class="img" />
                 </div>
                 <div class="user-info">
                     <h5>Joni Sou</h5>
@@ -140,16 +120,15 @@
         <div class="rate-card">
             <div class="stars">
                 <span class="stars-description">5 out of 5 stars</span>
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" width="17" height="16" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
+                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
             </div>
             <div class="testimonial-user-info">
                 <div class="user-image">
-                    <img src="/images/little-lemon/images/user-4.png" alt="Testimonial 4" class="img" width="375"
-                        height="355" />
+                    <img src="/images/little-lemon/images/user-4.png" alt="Testimonial 4" class="img" />
                 </div>
                 <div class="user-info">
                     <h5>Sara Lopez</h5>
