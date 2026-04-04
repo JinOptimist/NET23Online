@@ -3,7 +3,7 @@
 @{
     Layout = "_LayoutimagesDelightBistro";
 }
-@model MenuTypeViewModel
+@model List<MenuTypeViewModel>
 
 <link rel="stylesheet" href="\css\delight-bistro\style.css" />
  
@@ -24,232 +24,38 @@
 
 <div class="layout">
     <div class="plate">
-        @if (Model.MenuType == "Супы" || string.IsNullOrEmpty(Model.MenuType))
+
+        @foreach (var category in Model)
         {
             <div class="type-of-food">
-                <div class="type-name center">Супы</div>
+                <div class="type-name center">@category.TypeName</div>
                 <div class="menu">
-                    <div class="food-item">
-                        <div class="image-container">
-                            <img src="/images/delight-bistro/TomYumTalay.jpg" alt="Tom Yum Talay" />
-                        </div>
-                        <div class="name-price-btn">
-                            <div class="name-price">
-                                <div class="food-name">Tom Yum Talay</div>
-                                <div class="price">20 р</div>
-                            </div>
-                            <div class="btnright">
-                                <button class="add-button colorbtn">+</button>
-                            </div>
-                        </div>
-                        <div class="recept">
-                            <ul>
-                                <li>Креветки</li>
-                                <li>Шампиньоны</li>
-                                <li>Лайм</li>
-                                <li>Паста</li>
-                                <li>Помидоры</li>
-                                <li>Перец чили</li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <div class="food-item">
-                        <div class="image-container">
-                            <img src="\images\delight-bistro\LentilSoup.jpg" alt="Lentil Soup" />
-                        </div>
-                        <div class="name-price-btn">
-                            <div class="name-price">
-                                <div class="food-name">Lentil Soup</div>
-                                <div class="price">15 р</div>
+                    @foreach (var foodItem in category.FoodItems)
+                    {
+                        <div class="food-item">
+                            <div class="image-container">
+                                <img src=@foodItem.ImgURL alt=@foodItem.Name />
                             </div>
-                            <div class="btnright">
-                                <button class="add-button colorbtn">+</button>
-                            </div>
-                        </div>
-                        <div class="recept">
-                            <ul>
-                                <li>Говядина</li>
-                                <li>Чечевица красная</li>
-                                <li>Картофель</li>
-                                <li>Лук репчатый</li>
-                                <li>Помидоры</li>
-                                <li>Морковь</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-        @if (Model.MenuType == "Горячее" || string.IsNullOrEmpty(Model.MenuType))
-        {
-            <div class="type-of-food">
-                <div class="type-name center"> Горячее</div>
-                <div class="menu">
-                    <div class="food-item">
-                        <div class="image-container">
-                            <img src="/images/delight-bistro/Steak2.jpg" alt="Steak2" />
-                        </div>
-                        <div class="name-price-btn">
-                            <div class="name-price">
-                                <div class="food-name">Стейк с пастой</div>
-                                <div class="price">30 р</div>
-                            </div>
-                            <div class="btnright">
-                                <button class="add-button colorbtn">+</button>
-                            </div>
-                        </div>
-                        <div class="recept">
-                            <ul>
-                                <li>Говяжий стейк</li>
-                                <li>Паста</li>
-                                <li>Сливочно‑перечный соус</li>
-                                <li>Зелень</li>
-                            </ul>
-                        </div>
-                    </div>
-                        
-                    <div class="food-item">
-                        <div class="image-container">
-                            <img src="/images/delight-bistro/Lasana.jpg" alt="Lasana" />
-                        </div>
-                        <div class="name-price-btn">
-                            <div class="name-price">
-                                <div class="food-name">Лазанья</div>
-                                <div class="price">30 р</div>
-                            </div>
-                            <div class="btnright">
-                                <button class="add-button colorbtn">+</button>
-                            </div>
-                        </div>
-                        <div class="recept">
-                            <ul>
-                                <li>Паста Лазанья</li>
-                                <li>Фарш говяжий</li>
-                                <li>Соус бешамель</li>
-                                <li>Сыр пармезан</li>
-                                <li>Помидоры</li>
-                                <li>Зелень</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="food-item">
-                        <div class="image-container">
-                            <img src="/images/delight-bistro/CrispySesameChicken.jpg"
-                                 alt="CrispySesameChicken" />
-                        </div>
-
-                        <div class="name-price-btn">
-                            <div class="name-price">
-                                <div class="food-name">Хрустящая курица с кунжутом</div>
-                                <div class="price">25 р</div>
-                            </div>
-                            <div class="btnright">
-                                <button class="add-button colorbtn">+</button>
-                            </div>
-                        </div>
-
-                        <div class="recept">
-                            <ul>
-                                <li>Курица</li>
-                                <li>Семена кунжута</li>
-                                <li>Мед</li>
-                                <li>Рис</li>
-                                <li>Лук репчатый</li>
-                                <li>Чесночная паста</li>
-                                <li>Белый перец</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="food-item">
-                        <div class="image-container">
-                            <img src="\images\delight-bistro\ChilliGarlicPrawnPasta.jpg"
-                                 alt="Chilli Garlic Prawn Pasta" />
-                        </div>
-                        <div class="name-price-btn">
-                            <div class="name-price">
-                                <div class="food-name">
-                                    Паста с креветками, чесноком и чили
+                            <div class="name-price-btn">
+                                <div class="name-price">
+                                    <div class="food-name">@foodItem.Name</div>
+                                    <div class="price">@foodItem.Price р</div>
                                 </div>
-                                <div class="price">25 р</div>
+                                <div class="btnright">
+                                    <button class="add-button colorbtn">+</button>
+                                </div>
                             </div>
-                            <div class="btnright">
-                                <button class="add-button colorbtn">+</button>
-                            </div>
-                        </div>
-                        <div class="recept">
-                            <ul>
-                                <li>Креветки</li>
-                                <li>Лингвини</li>
-                                <li>Помидоры черри</li>
-                                <li>Хлопья чили</li>
-                                <li>Зелень</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-        @if (Model.MenuType == "Салаты" || string.IsNullOrEmpty(Model.MenuType))
-        {
-            <div class="type-of-food">
-                <div class="type-name center">Салаты</div> @* Если сюда передать Model.MenuType
-                    то должен быть вариант для названия на общей страничке (Model.MenuType==null or "")*@
-                <div class="menu">
-                    <div class="food-item">
-                        <div class="image-container">
-                            <img src="\images\delight-bistro\CesarSalad.jpg" alt="CesarSalad" />
-                        </div>
-
-                        <div class="name-price-btn">
-                            <div class="name-price">
-                                <div class="food-name">Салат Цезарь</div>
-                                <div class="price">20 р</div>
-                            </div>
-                            <div class="btnright">
-                                <button class="add-button colorbtn">+</button>
+                            <div class="recept">
+                                <ul>
+                                    @foreach (var ingredient in foodItem.Ingredients)
+                                    {
+                                        <li>@ingredient</li>
+                                    }
+                                </ul>
                             </div>
                         </div>
-
-                        <div class="recept">
-                            <ul>
-                                <li>Римский салат</li>
-                                <li>Сухарики</li>
-                                <li>Пармезан</li>
-                                <li>Черный молотый перец</li>
-                                <li>Курица</li>
-                                <li>Морковь</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="food-item">
-                        <div class="image-container">
-                            <img src="/images/delight-bistro/Salad2.jpg" alt="Salad2" />
-                        </div>
-
-                        <div class="name-price-btn">
-                            <div class="name-price">
-                                <div class="food-name">Салат средиземноморский</div>
-                                <div class="price">25 р</div>
-                            </div>
-                            <div class="btnright">
-                                <button class="add-button colorbtn">+</button>
-                            </div>
-                        </div>
-
-                        <div class="recept">
-                            <ul>
-                                <li>Микс салатов</li>
-                                <li>Помидоры черри</li>
-                                <li>Черные оливки</li>
-                                <li>Сыр</li>
-                                <li>Черный молотый перец</li>
-                                <li>Оливковое масло</li>
-                            </ul>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         }
