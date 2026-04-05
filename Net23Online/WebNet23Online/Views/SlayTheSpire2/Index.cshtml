@@ -1,20 +1,11 @@
 @{
     Layout = "_LayoutSLayTheSpire";
 }
-<!DOCTYPE html>
-<html lang="ru">
-
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/slay-the-spire-2/style.css">
-</head>
-
-<body>
-    <main>
+<div class="spire-index">
         <header class="page-intro">
             <div class="spire-quote-line" aria-hidden="true"></div>
             <p class="spire-quote">«Тысячу лет Шпиль дремал... Теперь он вновь открылся, ещё более голодный и опасный, чем когда-либо, пожирая всех, кто осмелится подняться наверх»</p>
-            <div class="spire-quote-line spire-quote-line--bottom" aria-hidden="true"></div>
+            <div class="spire-quote-line spire-quote-line-bottom" aria-hidden="true"></div>
         </header>
         <div class="heroes">
             <div class="hero">
@@ -52,10 +43,12 @@
                 <div class="hero-name">Defect</div>
             </div>
         </div>
-        <div class="heroes heroes--triple">
+        <div class="heroes heroes-triple">
             <div class="hero">
                 <div class="image-container">
-                    <img src="/images/slay-the-spire-2/BoardGame.jpg" />
+                    <a asp-controller="SlayTheSpire2" asp-action="KickStarter" class="hero-image-link">
+                        <img src="/images/slay-the-spire-2/BoardGame.jpg" alt="Board game — открыть страницу Kickstarter" />
+                    </a>
                 </div>
             </div>
             <div class="hero">
@@ -69,6 +62,4 @@
                 </div>
             </div>
         </div>
-    </main>
-</body>
-</html>
+</div>
