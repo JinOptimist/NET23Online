@@ -1,4 +1,4 @@
-﻿@model WebNet23Online.Models.AnimalWorld.StartPageAnimalViewModel
+﻿@model WebNet23Online.Models.AnimalWorld.StartPageBeastViewModel
 @{
     Layout = "_LayoutAnimalWorld";
 }
@@ -16,7 +16,7 @@
             <div class="green-title">
                 <h6>Название животного</h6>
             </div>
-            @Html.TextBoxFor(animal => animal.AnimalName, new { @class = "form-input", type = "text", placeholder = "Например: Панда" })
+            @Html.TextBoxFor(animal => animal.BeastName, new { @class = "form-input", type = "text", placeholder = "Например: Панда" })
         </div>
         <hr />
         <div class="form-group">
