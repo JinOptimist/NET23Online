@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebNet23Online</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebNet23Online.styles.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="/css/slay-the-spire-2/style.css">
+</head>
+<body>
+    <header class="spire-navbar">
+        <a class="spire-navbar__brand" asp-area="" asp-controller="Home" asp-action="Index">WebNet23Online</a>
+        <nav class="spire-navbar__nav" aria-label="Меню">
+            <a class="spire-navbar__link" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
