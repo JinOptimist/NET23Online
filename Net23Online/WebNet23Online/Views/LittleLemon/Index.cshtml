@@ -51,94 +51,30 @@
 <section class="testimonials-section">
     <h2>What our customers say!</h2>
     <div class="testimonials-container">
-        <div class="rate-card">
-            <div class="stars">
-                <span class="stars-description">5 out of 5 stars</span>
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-            </div>
-
-            <div class="testimonial-user-info">
-                <div class="user-image">
-                    <img src="/images/little-lemon/images/user-1.png" alt="Testimonial 1" class="img" />
+        @foreach (var testimonial in Model.Testimonials)
+        {
+            <div class="rate-card">
+                <div class="stars">
+                    <span class="stars-description">@testimonial.StarsDescription</span>
+                    @for (var starIndex = 0; starIndex < testimonial.StarRating; starIndex++)
+                    {
+                        <img src="@LittleLemonTestimonialViewModel.StarIconRelativeUrl" alt="star" />
+                    }
                 </div>
-                <div class="user-info">
-                    <h5>Jon Do</h5>
-                    <p class="nick-name">Johnny_utah</p>
+                <div class="testimonial-user-info">
+                    <div class="user-image">
+                        <img src="@testimonial.UserPhotoUrl" alt="@testimonial.UserPhotoAlt" class="img" />
+                    </div>
+                    <div class="user-info">
+                        <h5>@testimonial.AuthorDisplayName</h5>
+                        <p class="nick-name">@testimonial.AuthorNickName</p>
+                    </div>
                 </div>
+                <p class="rate-description">
+                    “@testimonial.Quote”
+                </p>
             </div>
-            <p class="rate-description">
-                “We had such a great time celebrating my grandmothers bitthday!”
-            </p>
-        </div>
-        <div class="rate-card">
-            <div class="stars">
-                <span class="stars-description">5 out of 5 stars</span>
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-            </div>
-            <div class="testimonial-user-info">
-                <div class="user-image">
-                    <img src="/images/little-lemon/images/user-2.png" alt="Testimonial 2" class="img" />
-                </div>
-                <div class="user-info">
-                    <h5>Naomi Noah</h5>
-                    <p class="nick-name">Naomi88-noa</p>
-                </div>
-            </div>
-            <p class="rate-description">
-                “Such a chilled out atmosphere - love it!”
-            </p>
-        </div>
-        <div class="rate-card">
-            <div class="stars">
-                <span class="stars-description">4 out of 5 stars</span>
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-            </div>
-            <div class="testimonial-user-info">
-                <div class="user-image">
-                    <img src="/images/little-lemon/images/user-3.png" alt="Testimonial 3" class="img" />
-                </div>
-                <div class="user-info">
-                    <h5>Joni Sou</h5>
-                    <p class="nick-name">Sou_dark</p>
-                </div>
-            </div>
-            <p class="rate-description">
-                “Best Feta Salad in town. Flawless everytime!”
-            </p>
-        </div>
-        <div class="rate-card">
-            <div class="stars">
-                <span class="stars-description">5 out of 5 stars</span>
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-                <img src="/images/little-lemon/svg/Star.svg" alt="star" />
-            </div>
-            <div class="testimonial-user-info">
-                <div class="user-image">
-                    <img src="/images/little-lemon/images/user-4.png" alt="Testimonial 4" class="img" />
-                </div>
-                <div class="user-info">
-                    <h5>Sara Lopez</h5>
-                    <p class="nick-name">Sara72</p>
-                </div>
-            </div>
-            <p class="rate-description">
-                “Seriously cannot stop thinking about the Turkish Mac n’ Cheese!!”
-            </p>
-        </div>
+        }
     </div>
 </section>
 <section id="about" class="about-us-section">

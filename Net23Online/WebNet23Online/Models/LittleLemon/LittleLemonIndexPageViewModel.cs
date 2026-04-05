@@ -4,5 +4,6 @@ namespace WebNet23Online.Models.LittleLemon
     {
         public LittleLemonHeroSectionViewModel Hero { get; set; } 
         public List<LittleLemonMenuCardsViewModel> MenuItems { get; set; }
+        public List<LittleLemonTestimonialViewModel> Testimonials {  get; set; }
     }
 }
