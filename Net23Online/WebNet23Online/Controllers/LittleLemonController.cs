@@ -65,8 +65,10 @@ namespace WebNet23Online.Controllers
                 ImageUrl = "/images/little-lemon/images/tagine.jpg",
                 Category = "Lunch"
             });
-            var filteredMenuItems = string.IsNullOrEmpty(category) ? menuItems.ToList()
-                                    : menuItems.Where(item => item.Category == category).ToList();
+            var filteredMenuItems = string.IsNullOrEmpty(category)
+                ? menuItems.ToList()
+                : menuItems.Where(item => item.Category == category)
+                .ToList();
             menuItems = filteredMenuItems.Count == 0 ? menuItems.ToList() : filteredMenuItems;
 
             var testimonials = new List<LittleLemonTestimonialViewModel>
@@ -78,7 +80,7 @@ namespace WebNet23Online.Controllers
                     UserPhotoAlt = "Testimonial 1",
                     AuthorDisplayName = "Jon Do",
                     AuthorNickName = "Johnny_utah",
-                    Quote = "We had such a great time celebrating my grandmothers bitthday!"
+                    Quote = "We had such a great time celebrating my grandmothers birthday!"
                 },
                 new LittleLemonTestimonialViewModel
                 {
@@ -110,12 +112,12 @@ namespace WebNet23Online.Controllers
             };
             var hero = new LittleLemonHeroSectionViewModel
             {
-                CallToActionHref = Url.Action("Reservation", "LittleLemon") ?? string.Empty,
+                CallToActionHref = Url.Action("Reservation", "LittleLemon"),
                 CallToActionText = "Reserve a Table",
                 HeroImageUrl = "/images/little-lemon/images/restauranfood.jpg",
                 HeroImageAlt = "Signature Mediterranean platter at Little Lemon"
             };
-            
+
             var pageModel = new LittleLemonIndexPageViewModel
             {
                 Hero = hero,
@@ -129,12 +131,53 @@ namespace WebNet23Online.Controllers
         {
             var hero = new LittleLemonHeroSectionViewModel
             {
-                CallToActionHref = (Url.Action("Index", "LittleLemon") ?? string.Empty) + "#menu",
+                CallToActionHref = (Url.Action("Index", "LittleLemon") + "#menu"),
                 CallToActionText = "Order For Delivery",
                 HeroImageUrl = "/images/little-lemon/images/restauranfood.jpg",
                 HeroImageAlt = "Signature Mediterranean platter at Little Lemon"
             };
             return View(hero);
         }
+        [HttpGet]
+        public IActionResult Subscribe()
+        {
+            return RedirectToAction("index");
+        }
+
+        [HttpPost]
+        public IActionResult Subscribe(LittleLemonSubscribeViewModel model)
+        {
+            var message = SubscribeMessage(model.Email);
+            TempData[LittleLemonSubscribeViewModel.MessageKey] = message;
+            return LocalRedirect(model.ReturnUrl);
+
+        }
+
+        private bool IsRegistered(string email)
+        {
+            var registeredEmails = new List<string>
+            {
+                "alice@gmail.com",
+                "bob@example.com"
+            };
+            if (registeredEmails
+                .Contains(email))
+            {
+                return true;
+            }
+
+            return false;
+        }
+        private string SubscribeMessage(string email)
+        {
+            var name = email.Split('@')[0]
+                .Split('.')[0];
+            if (IsRegistered(email))
+            {
+                return $"{name}, You are already with us!";
+            }
+            return $"Thanks {name} for subscribe!";
+        }
+
     }
 }
