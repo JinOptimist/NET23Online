@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WebNet23Online.Models;
 using WebNet23Online.Models.LittleLemon;
 
 namespace WebNet23Online.Controllers
@@ -67,9 +65,119 @@ namespace WebNet23Online.Controllers
                 ImageUrl = "/images/little-lemon/images/tagine.jpg",
                 Category = "Lunch"
             });
-            var filteredMenuItems = string.IsNullOrEmpty(category)? menuItems.ToList(): menuItems.Where(item => item.Category == category).ToList();
-            menuItems = filteredMenuItems.Count == 0? menuItems.ToList(): filteredMenuItems;
-            return View(menuItems);
+            var filteredMenuItems = string.IsNullOrEmpty(category)
+                ? menuItems.ToList()
+                : menuItems.Where(item => item.Category == category)
+                .ToList();
+            menuItems = filteredMenuItems.Count == 0 ? menuItems.ToList() : filteredMenuItems;
+
+            var testimonials = new List<LittleLemonTestimonialViewModel>
+            {
+                new LittleLemonTestimonialViewModel
+                {
+                    StarRating = 5,
+                    UserPhotoUrl = "/images/little-lemon/images/user-1.png",
+                    UserPhotoAlt = "Testimonial 1",
+                    AuthorDisplayName = "Jon Do",
+                    AuthorNickName = "Johnny_utah",
+                    Quote = "We had such a great time celebrating my grandmothers birthday!"
+                },
+                new LittleLemonTestimonialViewModel
+                {
+                    StarRating = 5,
+                    UserPhotoUrl = "/images/little-lemon/images/user-2.png",
+                    UserPhotoAlt = "Testimonial 2",
+                    AuthorDisplayName = "Naomi Noah",
+                    AuthorNickName = "Naomi88-noa",
+                    Quote = "Such a chilled out atmosphere - love it!"
+                },
+                new LittleLemonTestimonialViewModel
+                {
+                    StarRating = 4,
+                    UserPhotoUrl = "/images/little-lemon/images/user-3.png",
+                    UserPhotoAlt = "Testimonial 3",
+                    AuthorDisplayName = "Joni Sou",
+                    AuthorNickName = "Sou_dark",
+                    Quote = "Best Feta Salad in town. Flawless everytime!"
+                },
+                new LittleLemonTestimonialViewModel
+                {
+                    StarRating = 5,
+                    UserPhotoUrl = "/images/little-lemon/images/user-4.png",
+                    UserPhotoAlt = "Testimonial 4",
+                    AuthorDisplayName = "Sara Lopez",
+                    AuthorNickName = "Sara72",
+                    Quote = "Seriously cannot stop thinking about the Turkish Mac n' Cheese!!"
+                }
+            };
+            var hero = new LittleLemonHeroSectionViewModel
+            {
+                CallToActionHref = Url.Action("Reservation", "LittleLemon"),
+                CallToActionText = "Reserve a Table",
+                HeroImageUrl = "/images/little-lemon/images/restauranfood.jpg",
+                HeroImageAlt = "Signature Mediterranean platter at Little Lemon"
+            };
+
+            var pageModel = new LittleLemonIndexPageViewModel
+            {
+                Hero = hero,
+                MenuItems = menuItems,
+                Testimonials = testimonials
+            };
+            return View(pageModel);
         }
+
+        public IActionResult Reservation()
+        {
+            var hero = new LittleLemonHeroSectionViewModel
+            {
+                CallToActionHref = (Url.Action("Index", "LittleLemon") + "#menu"),
+                CallToActionText = "Order For Delivery",
+                HeroImageUrl = "/images/little-lemon/images/restauranfood.jpg",
+                HeroImageAlt = "Signature Mediterranean platter at Little Lemon"
+            };
+            return View(hero);
+        }
+        [HttpGet]
+        public IActionResult Subscribe()
+        {
+            return RedirectToAction("index");
+        }
+
+        [HttpPost]
+        public IActionResult Subscribe(LittleLemonSubscribeViewModel model)
+        {
+            var message = SubscribeMessage(model.Email);
+            TempData[LittleLemonSubscribeViewModel.MESSAGE_KEY] = message;
+            return LocalRedirect(model.ReturnUrl);
+
+        }
+
+        private bool IsRegistered(string email)
+        {
+            var registeredEmails = new List<string>
+            {
+                "ali@gmail.com",
+                "black.sea@example.com"
+            };
+            if (registeredEmails
+                .Contains(email))
+            {
+                return true;
+            }
+
+            return false;
+        }
+        private string SubscribeMessage(string email)
+        {
+            var name = email.Split('@')[0]
+                .Split('.')[0];
+            if (IsRegistered(email))
+            {
+                return $"{name}, You are already with us!";
+            }
+            return $"Thanks {name} for subscribe!";
+        }
+
     }
 }
