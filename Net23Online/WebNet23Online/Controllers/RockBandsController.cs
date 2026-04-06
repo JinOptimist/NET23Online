@@ -5,7 +5,7 @@ namespace WebNet23Online.Controllers
 {
     public class RockBandsController : Controller
     {
-        // STATIC IS A BAD IDEA — REMOVE AFTER ADD DATABASE (как у преподавателя в Maze)
+        // STATIC IS A BAD IDEA — REMOVE AFTER ADD DATABASE
         private static readonly List<BandBlockViewModel> _bands =
         [
             new BandBlockViewModel
