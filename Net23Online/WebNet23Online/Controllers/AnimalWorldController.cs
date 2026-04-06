@@ -46,18 +46,18 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddAnimal(StartPageBeastViewModel viewModel)
         {
-            if (!string.IsNullOrEmpty(viewModel.BeastName) && !string.IsNullOrEmpty(viewModel.BriefDescription))
+            if (string.IsNullOrEmpty(viewModel.BeastName) || string.IsNullOrEmpty(viewModel.BriefDescription))
             {
-                var beastSearch = _startPageAnimalViewModels.FirstOrDefault(animal => animal.BeastName.ToLower() == viewModel.BeastName.ToLower());
-                if (beastSearch == null)
-                {
-                    _startPageAnimalViewModels.Add(viewModel);
-                }
-                
-                return RedirectToAction("Index");
+                return View();
             }
-            
-            return View();
+
+            var beastSearch = _startPageAnimalViewModels.FirstOrDefault(animal => animal.BeastName.ToLower() == viewModel.BeastName.ToLower());
+            if (beastSearch == null)
+            {
+                _startPageAnimalViewModels.Add(viewModel);
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
