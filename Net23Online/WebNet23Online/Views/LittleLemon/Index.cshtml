@@ -16,10 +16,10 @@
         </div>
         <div class="menu-filter-items">
             <a href="/LittleLemon/Index" class="btn-filter">Mains</a>
-            <a href="/LittleLemon/Index/?category=Lunch" class="btn-filter">Lunch</a>
-            <a href="/LittleLemon/Index/?category=Desserts" class="btn-filter">Desserts</a>
-            <a href="/LittleLemon/Index/?category=Specials" class="btn-filter">Specials</a>
-            <a href="/LittleLemon/Index/?category=Drinks" class="btn-filter">Drinks</a>
+            <a href="/LittleLemon/Index/?category=Lunch#menu" class="btn-filter">Lunch</a>
+            <a href="/LittleLemon/Index/?category=Desserts#menu" class="btn-filter">Desserts</a>
+            <a href="/LittleLemon/Index/?category=Specials#menu" class="btn-filter">Specials</a>
+            <a href="/LittleLemon/Index/?category=Drinks#menu" class="btn-filter">Drinks</a>
         </div>
         <div class="menu-item-container">
             @foreach (var menuItem in Model.MenuItems)
@@ -58,7 +58,8 @@
                     <span class="stars-description">@testimonial.StarsDescription</span>
                     @for (var starIndex = 0; starIndex < testimonial.StarRating; starIndex++)
                     {
-                        <img src="@LittleLemonTestimonialViewModel.StarIconRelativeUrl" alt="star" />
+                        <img src="@LittleLemonTestimonialViewModel.STAR_ICON_RELATIVE_URL"
+							 alt="star" />
                     }
                 </div>
                 <div class="testimonial-user-info">

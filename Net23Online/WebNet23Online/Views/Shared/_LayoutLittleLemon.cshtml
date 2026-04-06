@@ -104,7 +104,7 @@
 				</form>
 				@{
 					var subscribeMessage = TempData
-						[LittleLemonSubscribeViewModel.MessageKey]?.ToString();
+						[LittleLemonSubscribeViewModel.MESSAGE_KEY]?.ToString();
 					if (subscribeMessage != null)
 					{
 						<p class="subscribe-feedback">@subscribeMessage</p>

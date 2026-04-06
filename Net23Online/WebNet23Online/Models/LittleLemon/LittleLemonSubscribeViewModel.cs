@@ -2,7 +2,7 @@
 {
     public class LittleLemonSubscribeViewModel
     {
-        public const string MessageKey = "SubscribeMessage";
+        public const string MESSAGE_KEY = "SubscribeMessage";
         public string Email { get; set; }
         public string ReturnUrl { get; set; }
     }

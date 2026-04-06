@@ -148,7 +148,7 @@ namespace WebNet23Online.Controllers
         public IActionResult Subscribe(LittleLemonSubscribeViewModel model)
         {
             var message = SubscribeMessage(model.Email);
-            TempData[LittleLemonSubscribeViewModel.MessageKey] = message;
+            TempData[LittleLemonSubscribeViewModel.MESSAGE_KEY] = message;
             return LocalRedirect(model.ReturnUrl);
 
         }
