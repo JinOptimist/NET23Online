@@ -8,7 +8,7 @@ using MazeCore.Cells.Interfaces;
 
 namespace MazeCore
 {
-    public class MazeBuilder
+    public class MazeBuilder : IMazeBuilder
     {
         private const int MIN_PORTAL_PAIRS = 2;
         private const int MAX_PORTAL_PAIRS = 5;

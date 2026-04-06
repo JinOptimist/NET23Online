@@ -1,4 +1,4 @@
-﻿@model List<WebNet23Online.Models.AnimalWorld.StartPageAnimalViewModel>
+﻿@model WebNet23Online.Models.AnimalWorld.StartPageAnimalsViewModel
 @{
     Layout = "_LayoutAnimalWorld";
 }
@@ -18,19 +18,18 @@
         <h2>Братья наши меньшие</h2>
     </div>
     <hr class="green-line">
-    @foreach (var animal in Model)
+    @foreach (var animal in Model.Animals)
     {
         <div class="animal">
-            <h3>@animal.Name</h3>
+            <h3>@animal.BeastName</h3>
             <p>@animal.BriefDescription</p>
         </div>
     }
     <div class="green-title">
         <h2>Какое ваше любимое животное?</h2>
     </div>
-    <div class="find-animal">
-        <input class="input-text" type="text" placeholder="Напишите название...">
-        <button class="find-animal-button" type="submit">Отправить</button>
+    <div id="search-result-container">
+        @await Html.PartialAsync("AnimalSearch", Model.Beast)
     </div>
     <hr class="green-line">
 </div>

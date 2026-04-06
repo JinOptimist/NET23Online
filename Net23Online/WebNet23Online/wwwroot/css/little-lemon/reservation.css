@@ -1,0 +1,74 @@
+@import url("home-page-styles.css");
+/*reservation section*/
+.booking-section {
+  padding: 4rem 0;
+  background-color: var(--clr-white);
+}
+.booking-section h2 {
+  text-align: center;
+  color: var(--clr-grey-1);
+}
+.booking-form {
+  display: grid;
+  column-gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--clr-primary-2);
+  box-shadow: var(--dark-shadow);
+}
+.booking-form label {
+  display: block;
+  margin-bottom: 0.25rem;
+  margin-left: 0.5rem;
+  font-size: 1.5rem;
+  color: var(--clr-primary-1);
+}
+.booking-form input {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--clr-primary-1);
+  border-radius: var(--radius);
+}
+.booking-form select,
+.booking-form input,
+.booking-form textarea {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: var(--radius);
+  outline: none;
+  font-family: var(--ff-1);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--clr-primary-2);
+  cursor: pointer;
+}
+.booking-form textarea::placeholder{
+  color: var(--clr-primary-2);
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: var(--clr-white) url(/images/little-lemon/icons/icons8-down-32.png) no-repeat;
+  background-size: 1rem 1rem;
+  transition: var(--transition);
+  background-position-x: calc(100% - 1.5rem);
+  background-position-y: center;
+}
+
+.booking-section .btn {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: 300px;
+  margin: 2rem auto;
+  padding: 2rem 0;
+  color: var(--clr-grey-1);
+}
+
+.booking-section .btn:hover {
+  color: var(--clr-white);
+}

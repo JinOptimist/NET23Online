@@ -1,4 +1,6 @@
-﻿@{
+﻿@using WebNet23Online.Models.RockBands
+@model RockBandsIndexViewModel
+@{
     Layout = "_LayoutRockBands";
 }
 <title>Любимые группы</title>
@@ -18,62 +20,61 @@
             <div class="preferences-music-items">
                 <input type="checkbox" id="rock" name="rock">
                 <label for="rock">Рок</label>
-            
+
                 <input type="checkbox" id="metal" name="metal">
                 <label for="metal">Метал</label>
-            
+
                 <input type="checkbox" id="alternative" name="alternative">
                 <label for="alternative">Альтернатива</label>
-            
+
                 <input type="checkbox" id="punk" name="punk">
                 <label for="punk">Панк-рок</label>
             </div>
 
         </div>
-        <div class="band">
-            <div class="band-thumb">
-                <img src="/images/rock-bands/BMTH.jpg" alt="Bring Me The Horizon" width="640" height="360" loading="lazy">
-            </div>
-            <div class="band--body">
-                <h2>Bring Me The Horizon</h2>
-                <p>Британская рок-группа, известная своим экспериментальным звучанием и мощной энергетикой.</p>
-            </div>
-        </div>
 
-        <div class="band">
-            <div class="band-thumb">
-                <img src="/images/rock-bands/slipknot.jpg" alt="Slipknot" width="640" height="360" loading="lazy">
+        @foreach (var band in Model.Bands)
+        {
+            <div class="band">
+                <div class="band-thumb">
+                    @if (!string.IsNullOrWhiteSpace(band.ImageUrl))
+                    {
+                        <img src="@band.ImageUrl" alt="@band.Name" width="640" height="360" loading="lazy" referrerpolicy="no-referrer">
+                    }
+                    else
+                    {
+                        <img alt="@band.Name">
+                    }
+                </div>
+                <div class="band--body">
+                    <h2>@band.Name</h2>
+                    <p>@band.Description</p>
+                </div>
             </div>
-            <div class="band--body">
-                <h2>Slipknot</h2>
-                <p>Легендарная метал-группа с агрессивным стилем и уникальным визуальным образом.</p>
-            </div>
-        </div>
+        }
 
-        <div class="band">
-            <div class="band-thumb">
-                <img src="/images/rock-bands/metallica.jpg" alt="Metallica" width="640" height="360" loading="lazy">
+        <div class="preferences-music add-band-form">
+            <div class="preferences-music-title">
+                <h2>Добавить группу</h2>
+                <p class="add-band-form-hint">Новая карточка появится в списке в том же формате, что и остальные.</p>
             </div>
-            <div class="band--body">
-                <h2>Metallica</h2>
-                <p>Одна из самых влиятельных метал-групп в истории с культовыми альбомами.</p>
+            <div class="preferences-music-items add-band-form-panel">
+                <form method="post" class="add-band-form-fields">
+                    <div class="add-band-field">
+                        <label for="band-name">Название</label>
+                        <input id="band-name" type="text" name="@nameof(BandBlockViewModel.Name)" placeholder="Например, Arctic Monkeys" autocomplete="off" />
+                    </div>
+                    <div class="add-band-field">
+                        <label for="band-description">Описание</label>
+                        <textarea id="band-description" name="@nameof(BandBlockViewModel.Description)" placeholder="Коротко о группе и звучании" rows="4"></textarea>
+                    </div>
+                    <div class="add-band-field">
+                        <label for="band-image">Ссылка на фото в интернете</label>
+                        <input id="band-image" type="text" inputmode="url" name="@nameof(BandBlockViewModel.ImageUrl)" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
+                        <span class="add-band-field__help">Вставьте прямой URL картинки. Поле можно оставить пустым.</span>
+                    </div>
+                    <button type="submit" class="add-band-submit">Добавить в список</button>
+                </form>
             </div>
         </div>
-        <div class="band">
-            <div class="band-thumb">
-                <img>
-            </div>
-            <div class="band--body">
-                <h2>Здесь появятся другие группы</h2>
-                <p>А здесь появится описание для этой группы</p>
-            </div>
-        </div>
-        <div class="band">
-            <div class="band-thumb">
-                <img>
-            </div>
-            <div class="band-body">
-                <h2>Здесь появятся другие группы</h2>
-                <p>А здесь появится описание для этой группы</p>
-            </div>
-        </main>
+    </main>

@@ -79,3 +79,40 @@
     text-align: center;
     padding: 3px;
 }
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+	display: block;
+	font-weight: bold;
+	color: green;
+	margin-bottom: 5px;
+}
+
+.form-input, .form-textarea {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	box-sizing: border-box; /* Чтобы padding не раздувал ширину */
+	font-family: inherit;
+}
+
+.form-textarea {
+	height: 150px;
+	resize: vertical;
+}
+
+.button-group {
+	display: flex;
+	gap: 15px;
+	margin-top: 20px;
+}
+
+.back-link {
+	text-decoration: none;
+	color: #2e7d32;
+	padding: 10px;
+	align-self: center;
+}

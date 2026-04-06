@@ -18,4 +18,8 @@
     <Folder Include="wwwroot\images\rock-bands\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\steam\" />
+  </ItemGroup>
+
 </Project>

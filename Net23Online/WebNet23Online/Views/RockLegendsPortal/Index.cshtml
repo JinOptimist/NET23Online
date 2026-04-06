@@ -1,4 +1,6 @@
-﻿@{
+﻿@using WebNet23Online.Models.RockLegendsPortal
+@model RockLegendsPortalViewModel
+@{
     Layout = "_LayoutRockLegends";
 }
     <title>Rock Legends Portal</title>
@@ -188,25 +190,21 @@
                 <video id="groupVideo" controls autoplay preload="auto" playsinline>
                     <source id="videoSource" src="" type="video/mp4">
                 </video>
-                <div class="poll-container">
-                    <p>А какая из этих групп вам нравится больше всего?</p>
-                    <div class="poll-controls">
+             <div class="poll-container">
+                     <p>А какая из этих групп вам нравится больше всего?</p>
+    
+                 <form asp-controller="RockLegendsPortal" asp-action="Index" method="post">
+                     <div class="poll-controls">
                         <span class="easter-egg">продам душу за билеты на концерт AC/DC</span>
-                        <select id="rock-poll">
-                            <option value="kiss">KISS</option>
-                            <option value="ozzy">Ozzy Osbourne</option>
-                            <option value="acdc">AC/DC</option>
-                            <option value="bonjovi">Bon Jovi</option>
-                            <option value="rammstein">Rammstein</option>
-                            <option value="metallica">Metallica</option>
-                            <option value="slipknot">Slipknot</option>
-                            <option value="skillet">Skillet</option>
-                            <option value="tdg">Three Days Grace</option>
-                            <option value="bmth">Bring Me The Horizon</option>
+                        <select name="SelectedBand" id="rock-poll">
+                              <option value="kiss">KISS</option>
+                              <option value="ozzy">Ozzy Osbourne</option>
+                              <option value="acdc">AC/DC</option>
                         </select>
-                        <button class="poll-button">Отправить</button>
-                    </div>
-                </div>
+                        <button type="submit" class="poll-button">Отправить</button>
+                     </div>
+                 </form>
+             </div>
             </div>
         </div>
     </div>
