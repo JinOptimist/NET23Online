@@ -157,8 +157,8 @@ namespace WebNet23Online.Controllers
         {
             var registeredEmails = new List<string>
             {
-                "alice@gmail.com",
-                "bob@example.com"
+                "ali@gmail.com",
+                "black.sea@example.com"
             };
             if (registeredEmails
                 .Contains(email))
