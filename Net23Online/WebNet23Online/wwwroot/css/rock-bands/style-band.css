@@ -153,12 +153,11 @@ footer.footer {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Форма добавления группы — в одном ключе с блоками .band и .preferences-music */
 .add-band-form .preferences-music-title {
     gap: 6px;
 }
 
-.add-band-form__hint {
+.add-band-form-hint {
     margin: 0;
     font-size: 0.95rem;
     font-weight: normal;
@@ -166,7 +165,7 @@ footer.footer {
     line-height: 1.4;
 }
 
-.add-band-form__panel {
+.add-band-form-panel {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
@@ -174,7 +173,7 @@ footer.footer {
     padding: 18px 20px 20px;
 }
 
-.add-band-form__fields {
+.add-band-form-fields {
     display: flex;
     flex-direction: column;
     gap: 16px;

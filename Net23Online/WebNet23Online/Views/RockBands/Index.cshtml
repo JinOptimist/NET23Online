@@ -56,10 +56,10 @@
         <div class="preferences-music add-band-form">
             <div class="preferences-music-title">
                 <h2>Добавить группу</h2>
-                <p class="add-band-form__hint">Новая карточка появится в списке в том же формате, что и остальные.</p>
+                <p class="add-band-form-hint">Новая карточка появится в списке в том же формате, что и остальные.</p>
             </div>
-            <div class="preferences-music-items add-band-form__panel">
-                <form method="post" class="add-band-form__fields">
+            <div class="preferences-music-items add-band-form-panel">
+                <form method="post" class="add-band-form-fields">
                     <div class="add-band-field">
                         <label for="band-name">Название</label>
                         <input id="band-name" type="text" name="@nameof(BandBlockViewModel.Name)" placeholder="Например, Arctic Monkeys" autocomplete="off" />
@@ -71,7 +71,7 @@
                     <div class="add-band-field">
                         <label for="band-image">Ссылка на фото в интернете</label>
                         <input id="band-image" type="text" inputmode="url" name="@nameof(BandBlockViewModel.ImageUrl)" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
-                        <span class="add-band-field__help">Вставьте прямой URL картинки (обычно заканчивается на .jpg, .png или .webp). Поле можно оставить пустым. Если фото не откроется, сайт-источник может запрещать встраивание.</span>
+                        <span class="add-band-field__help">Вставьте прямой URL картинки. Поле можно оставить пустым.</span>
                     </div>
                     <button type="submit" class="add-band-submit">Добавить в список</button>
                 </form>
