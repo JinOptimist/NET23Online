@@ -152,3 +152,123 @@ footer.footer {
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
+
+.add-band-form .preferences-music-title {
+    gap: 6px;
+}
+
+.add-band-form-hint {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: normal;
+    opacity: 0.72;
+    line-height: 1.4;
+}
+
+.add-band-form-panel {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 18px 20px 20px;
+}
+
+.add-band-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.add-band-field {
+    text-align: left;
+}
+
+    .add-band-field label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: rgba(255, 255, 255, 0.88);
+    }
+
+    .add-band-field__help {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.8rem;
+        opacity: 0.55;
+        line-height: 1.35;
+    }
+
+    .add-band-field input[type="text"],
+    .add-band-field textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.28);
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 1rem;
+        line-height: 1.45;
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .add-band-field textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .add-band-field input::placeholder,
+    .add-band-field textarea::placeholder {
+        color: rgba(255, 255, 255, 0.42);
+    }
+
+    .add-band-field input:hover,
+    .add-band-field textarea:hover {
+        border-color: rgba(255, 255, 255, 0.22);
+        background: rgba(0, 0, 0, 0.22);
+    }
+
+    .add-band-field input:focus,
+    .add-band-field textarea:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+        background: rgba(0, 0, 0, 0.32);
+    }
+
+.add-band-submit {
+    align-self: center;
+    margin-top: 4px;
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.25s, border-color 0.25s;
+}
+
+    .add-band-submit:hover {
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.28);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .add-band-submit:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+    }
+
+    .add-band-submit:active {
+        transform: translateY(-1px);
+    }
