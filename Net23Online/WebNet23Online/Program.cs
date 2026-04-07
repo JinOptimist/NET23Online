@@ -41,6 +41,7 @@ builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
 
 builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
 builder.Services.AddSingleton<IMazeService, MazeService>();
+builder.Services.AddSingleton<IAnimalWorldService, AnimalWorldService>();
 
 var app = builder.Build();
 
