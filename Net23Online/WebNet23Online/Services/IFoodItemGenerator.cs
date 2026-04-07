@@ -2,10 +2,10 @@
 
 namespace WebNet23Online.Services.Interfaces
 {
-    public interface FoodItemViewModelGenerator
+    public interface IFoodItemGenerator
     {
         List<FoodItemViewModel> GenerateFoodItems();
-        List<MenuTypeViewModel> GetMenuTypes(string sortMenuType);
+        List<MenuTypeViewModel> GetMenuTypes(/*string sortMenuType*/);
         void AddFoodItem(FoodItemViewModel foodItem);
     }
 }

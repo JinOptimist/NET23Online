@@ -3,16 +3,13 @@ using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services
 {
-    public class FoodItemGenerator : FoodItemViewModelGenerator
+    public class FoodItemGenerator : IFoodItemGenerator
     {
-        // public List<FoodItemViewModel> _foodItems;
 
-        private List<FoodItemViewModel> _foodItems; //FoodItemViewModel or FoodItem
-                                                    // private FoodItemViewModel _foodItem;
+        private List<FoodItemViewModel> _foodItems;
 
         public FoodItemGenerator()
         {
-            //_foodItem = foodItem;
             _foodItems = new List<FoodItemViewModel>
             {
                 new FoodItemViewModel
@@ -158,14 +155,13 @@ namespace WebNet23Online.Services
 
         public List<FoodItemViewModel> GenerateFoodItems()
         {
-            // return new List<FoodItemViewModel>(_foodItems);
             return _foodItems;
         }
 
-        public List<MenuTypeViewModel> GetMenuTypes(string sortMenuType)
+        public List<MenuTypeViewModel> GetMenuTypes(/*string sortMenuType*/)
         {
 
-            var allMenuTypes = new List<MenuTypeViewModel> //
+            var allMenuTypes = new List<MenuTypeViewModel>
             {
                 new MenuTypeViewModel()//
                 {
@@ -188,12 +184,12 @@ namespace WebNet23Online.Services
                 }
             };
 
-            var OneMenuType = allMenuTypes.Where(x => x.MenuType == sortMenuType).ToList();
-            if (string.IsNullOrEmpty(sortMenuType))
-            {
-                return allMenuTypes;
-            }
-            return OneMenuType;
+            //var OneMenuType = allMenuTypes.Where(x => x.MenuType == sortMenuType).ToList();
+            //if (string.IsNullOrEmpty(sortMenuType))
+            //{
+            return allMenuTypes;
+            //}
+            //return OneMenuType;
         }
     }
 }
