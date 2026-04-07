@@ -1,6 +1,8 @@
 using MazeCore;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
+using WebNet23Online.Models.DelightBistro;//Нужно ли тут это простаранство имен?
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +43,9 @@ builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
 
 builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
 builder.Services.AddSingleton<IMazeService, MazeService>();
+
+//DelightBistro DI
+builder.Services.AddSingleton<FoodItemViewModelGenerator, FoodItemGenerator>();
 
 var app = builder.Build();
 
