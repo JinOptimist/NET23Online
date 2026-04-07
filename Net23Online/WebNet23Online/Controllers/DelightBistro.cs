@@ -15,37 +15,15 @@ namespace WebNet23Online.Controllers
 
         public IActionResult Index(string menuType)
         {
-            //var allFoods = _foodItems;
-            var allFoods = _foodItemGenerator.GenerateFoodItems();
-            var viewModels = new List<MenuTypeViewModel> //
-            {
-                new MenuTypeViewModel()//
-                {
-                    MenuType="soups",
-                    TypeName="Супы",
-                    FoodItems =allFoods.Where(x=>x.MenuType=="soups").ToList(),
-                },
-                new MenuTypeViewModel()
-                {
-                    MenuType="hot",
-                    TypeName="Горячее",
+            var viewModels = _foodItemGenerator.GetMenuTypes(menuType);// Сервисы не завязывать на данных из экшенов
+           
 
-                 FoodItems =allFoods.Where(x=>x.MenuType=="hot").ToList(),
-                },
-                new MenuTypeViewModel()
-                {
-                    MenuType="salads",
-                    TypeName="Салаты",
-                    FoodItems =allFoods.Where(x=>x.MenuType=="salads").ToList(),
-                }
-            };
-
-            var viewModel = viewModels.Where(x => x.MenuType == menuType).ToList();
-            if (string.IsNullOrEmpty(menuType))
-            {
-                return View(viewModels);
-            }
-            return View(viewModel);
+            //var viewModel = viewModels.Where(x => x.MenuType == menuType).ToList();
+            //if (string.IsNullOrEmpty(menuType))
+            //{
+            //    return View(viewModels);
+            //}
+            return View(viewModels);
         }
 
         [HttpGet]

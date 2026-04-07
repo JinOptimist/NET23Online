@@ -8,7 +8,7 @@ namespace WebNet23Online.Services
         // public List<FoodItemViewModel> _foodItems;
 
         private List<FoodItemViewModel> _foodItems; //FoodItemViewModel or FoodItem
-       // private FoodItemViewModel _foodItem;
+                                                    // private FoodItemViewModel _foodItem;
 
         public FoodItemGenerator()
         {
@@ -160,6 +160,40 @@ namespace WebNet23Online.Services
         {
             // return new List<FoodItemViewModel>(_foodItems);
             return _foodItems;
+        }
+
+        public List<MenuTypeViewModel> GetMenuTypes(string sortMenuType)
+        {
+
+            var allMenuTypes = new List<MenuTypeViewModel> //
+            {
+                new MenuTypeViewModel()//
+                {
+                    MenuType="soups",
+                    TypeName="Супы",
+                    FoodItems =_foodItems.Where(x => x.MenuType=="soups").ToList(),
+                },
+                new MenuTypeViewModel()
+                {
+                    MenuType="hot",
+                    TypeName="Горячее",
+
+                 FoodItems =_foodItems.Where(x => x.MenuType=="hot").ToList(),
+                },
+                new MenuTypeViewModel()
+                {
+                    MenuType="salads",
+                    TypeName="Салаты",
+                    FoodItems =_foodItems.Where(x => x.MenuType=="salads").ToList(),
+                }
+            };
+
+            var OneMenuType = allMenuTypes.Where(x => x.MenuType == sortMenuType).ToList();
+            if (string.IsNullOrEmpty(sortMenuType))
+            {
+                return allMenuTypes;
+            }
+            return OneMenuType;
         }
     }
 }
