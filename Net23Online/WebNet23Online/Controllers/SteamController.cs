@@ -1,11 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Models.Steam;
+using WebNet23Online.Services;
+using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
 {
     public class SteamController : Controller
     {
-        [HttpGet]
+        private readonly ICatalogService _catalogService;
+
+        public SteamController(ICatalogService catalogService)
+        {
+            _catalogService = catalogService;
+        }
+
         public IActionResult Index()
         {
             var model = new SteamHomeViewModel()
@@ -20,34 +28,15 @@ namespace WebNet23Online.Controllers
         [HttpGet]
         public IActionResult Catalog()
         {
-            var model = new CatalogViewModel
-            { 
-                Games = SteamCatalog.All.ToList(),
-            };
+            var model = _catalogService.GetCatalog();
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Catalog(string? genre, decimal? maxPrice)
+        public IActionResult Catalog(CatalogFilterViewModel filter)
         {
-            var games = SteamCatalog.All.AsQueryable();
-            if (!string.IsNullOrEmpty(genre) && genre != "All")
-            {
-                games = games.Where(g => g.Genre == genre);
-            }
-
-            if (maxPrice.HasValue)
-            {
-                games = games.Where(g => g.Price <= maxPrice);
-            }
-
-            var model = new CatalogViewModel
-            {
-                Genre = genre,
-                MaxPrice = maxPrice,
-                Games = games.ToList(),
-            };
+            var model = _catalogService.GetCatalog(filter);
 
             return View(model);
         }

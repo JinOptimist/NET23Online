@@ -5,6 +5,15 @@
     {
         public const int SPECIAL_OFFERS_PREVIEW_COUNT = 6;
 
+        public static IList<GameGenre> Genres { get; } = new List<GameGenre>
+        {
+           GameGenre.All,
+           GameGenre.Action,
+           GameGenre.RPG,
+           GameGenre.Shooter,
+           GameGenre.Metroidvania
+        };
+
         public static IList<SteamGameViewModel> All { get; } = new List<SteamGameViewModel>
         {
             new()

@@ -42,6 +42,8 @@ builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
 builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
 builder.Services.AddSingleton<IMazeService, MazeService>();
 
+builder.Services.AddScoped<ICatalogService, CatalogService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
