@@ -38,6 +38,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAnimeGirlGenerator, AnimeGirlGenerator>();
 builder.Services.AddScoped<IEpicMeanlessPhraseGenerator, EpicMeanlessPhraseGenerator>();
 builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
+builder.Services.AddScoped<IRockBandsService, RockBandsService>();
 
 builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
 builder.Services.AddSingleton<IMazeService, MazeService>();
