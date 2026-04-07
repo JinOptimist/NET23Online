@@ -46,6 +46,7 @@ builder.Services.AddSingleton<IMazeService, MazeService>();
 
 //DelightBistro DI
 builder.Services.AddSingleton<IFoodItemGenerator, FoodItemGenerator>();
+builder.Services.AddSingleton<IMenuTypeGenerator, MenuTypeGenerator>();
 
 var app = builder.Build();
 

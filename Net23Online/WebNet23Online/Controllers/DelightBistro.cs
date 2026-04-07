@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Models.DelightBistro;
+using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
@@ -7,18 +8,20 @@ namespace WebNet23Online.Controllers
     public class DelightBistroController : Controller
     {
         private IFoodItemGenerator _foodItemGenerator;
-        public DelightBistroController(IFoodItemGenerator foodItemGenerator)
+        private IMenuTypeGenerator _menuTypeGenerator;
+        public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator)
         {
             _foodItemGenerator = foodItemGenerator;
+            _menuTypeGenerator = menuTypeGenerator;
         }
 
         public IActionResult Index(string menuType)
         {
             // Сервисы не завязывать на данных из экшенов?
-            var viewModels = _foodItemGenerator.GetMenuTypes(/*menuType*/);
+            var viewModels = _menuTypeGenerator.GetMenuTypesFromFoodItems(_foodItemGenerator.GenerateFoodItems()/*,menuType*/);
 
             // Если сервис связать с параметром menuType, то в экшене требуется эта логика
-            if (string.IsNullOrEmpty(menuType)) 
+            if (string.IsNullOrEmpty(menuType))
             {
                 return View(viewModels);
             }

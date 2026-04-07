@@ -5,9 +5,11 @@ namespace WebNet23Online.Services
 {
     public class FoodItemGenerator : IFoodItemGenerator
     {
-
         private List<FoodItemViewModel> _foodItems;
 
+        // или лучше не иметь свойство а сделать метод FoodItemGenerator возвращающим List
+        // Куда тогда добавлять созданную еду методом AddFoodItem?
+        // Добавить еще на вход параметр листа в который он будет сохранять foodItem
         public FoodItemGenerator()
         {
             _foodItems = new List<FoodItemViewModel>
@@ -158,38 +160,5 @@ namespace WebNet23Online.Services
             return _foodItems;
         }
 
-        public List<MenuTypeViewModel> GetMenuTypes(/*string sortMenuType*/)
-        {
-
-            var allMenuTypes = new List<MenuTypeViewModel>
-            {
-                new MenuTypeViewModel()//
-                {
-                    MenuType="soups",
-                    TypeName="Супы",
-                    FoodItems =_foodItems.Where(x => x.MenuType=="soups").ToList(),
-                },
-                new MenuTypeViewModel()
-                {
-                    MenuType="hot",
-                    TypeName="Горячее",
-
-                 FoodItems =_foodItems.Where(x => x.MenuType=="hot").ToList(),
-                },
-                new MenuTypeViewModel()
-                {
-                    MenuType="salads",
-                    TypeName="Салаты",
-                    FoodItems =_foodItems.Where(x => x.MenuType=="salads").ToList(),
-                }
-            };
-
-            //var OneMenuType = allMenuTypes.Where(x => x.MenuType == sortMenuType).ToList();
-            //if (string.IsNullOrEmpty(sortMenuType))
-            //{
-            return allMenuTypes;
-            //}
-            //return OneMenuType;
-        }
     }
 }
