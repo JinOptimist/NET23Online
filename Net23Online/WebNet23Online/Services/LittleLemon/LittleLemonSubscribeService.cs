@@ -1,6 +1,6 @@
 using WebNet23Online.Services.Interfaces;
 
-namespace TestApp.Services
+namespace WebNet23Online.Services
 {
     public class LittleLemonSubscribeService : ILittleLemonSubscribeService
     {

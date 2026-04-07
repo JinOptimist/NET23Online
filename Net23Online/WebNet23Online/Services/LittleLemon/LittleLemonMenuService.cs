@@ -1,9 +1,8 @@
 ﻿
-
 using WebNet23Online.Services.Interfaces;
 using WebNet23Online.Models.LittleLemon;
 
-namespace TestApp.Services
+namespace WebNet23Online.Services
 {
     public class LittleLemonMenuService : ILittleLemonMenuService
     {
