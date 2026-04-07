@@ -27,25 +27,18 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddAnimal(StartPageBeastViewModel viewModel)
         {
-            if (!_animalWorldService.AddAnimal(viewModel))
+            if (_animalWorldService.AddAnimal(viewModel))
             {
-                return View();
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
+            return View();
         }
 
         [HttpPost]
         public IActionResult AnimalSearch(StartPageBeastViewModel viewModel)
         {
-            var searchBeast = _animalWorldService.SearchAnimal(viewModel);
-
-            if (searchBeast == null)
-            {
-                return PartialView();
-            }
-
-            return PartialView(searchBeast);
+            return PartialView(_animalWorldService.SearchAnimal(viewModel));
         }
     }
 }
