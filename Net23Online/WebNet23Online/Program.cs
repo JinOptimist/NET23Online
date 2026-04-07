@@ -1,4 +1,5 @@
 using MazeCore;
+using TestApp.Services;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
@@ -6,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ILittleLemonMenuService, LittleLemonMenuService>();
+builder.Services.AddScoped<ILittleLemonTestimonialService, LittleLemonTestimonialService>();
+builder.Services.AddScoped<ILittleLemonSubscribeService, LittleLemonSubscribeService>();
 
 // Register Services
 //builder.Services.AddScoped<IAnimeGirlGenerator, AnimeGirlGenerator>(diContainer =>
