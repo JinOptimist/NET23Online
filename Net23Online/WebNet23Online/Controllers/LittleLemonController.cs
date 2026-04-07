@@ -64,7 +64,7 @@ namespace WebNet23Online.Controllers
             {
                 return LocalRedirect(model.ReturnUrl);
             }
-            return RedirectToAction(nameof(Index), nameof(LittleLemonController));
+            return RedirectToAction(nameof(Index));
         }
     }
 }
