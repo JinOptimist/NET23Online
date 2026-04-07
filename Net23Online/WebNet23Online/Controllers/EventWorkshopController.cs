@@ -5,14 +5,10 @@ namespace WebNet23Online.Controllers
 {
     public class EventWorkshopController : Controller
     {
+        private static List<EventInfoViewModel> Events { get; set; } = new();
         public IActionResult Index(string typeEvent) 
         {
-            var selectedViewModels = new List<EventWorkshopEventInfoViewModel>();
-
-            var isCreation = false;
-            var isSport = false;
-            var isGame = false;
-            var isAllType = false;
+            var selectedViewModels = new List<EventInfoViewModel>();
 
             switch (typeEvent)
             {
@@ -45,10 +41,31 @@ namespace WebNet23Online.Controllers
             return View(selectedViewModels);
         }
 
-        private List<EventWorkshopEventInfoViewModel> GetCreationViewModels()
+        [HttpGet]
+        public IActionResult BuilderEvent()
         {
-            var hobbyViewModels = new List<EventWorkshopEventInfoViewModel>();
-            hobbyViewModels.Add(new EventWorkshopEventInfoViewModel
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult BuilderEvent(BuilderEventViewModel newEvent)
+        {
+            Events.Add(new EventInfoViewModel
+            {
+                Url = newEvent.Url,
+                Title = newEvent.Title,
+                Description = newEvent.Description,
+                DateDay = newEvent.DateDay,
+                DateYear = newEvent.DateYear,
+                Time = newEvent.Time
+            });
+            return RedirectToAction("Index");
+        }
+
+        private List<EventInfoViewModel> GetCreationViewModels()
+        {
+            var hobbyViewModels = new List<EventInfoViewModel>();
+            hobbyViewModels.Add(new EventInfoViewModel
             {
                 Url = "/images/event-workshop/creation/creation1.jpg",
                 Title = "Музыкальная импровизация",
@@ -57,7 +74,7 @@ namespace WebNet23Online.Controllers
                 DateYear = "2026",
                 Time = "22:00"
             });
-            hobbyViewModels.Add(new EventWorkshopEventInfoViewModel
+            hobbyViewModels.Add(new EventInfoViewModel
             {
                 Url = "/images/event-workshop/creation/creation2.jpg",
                 Title = "Чайная церемония",
@@ -66,7 +83,7 @@ namespace WebNet23Online.Controllers
                 DateYear = "2026",
                 Time = "19:00"
             });
-            hobbyViewModels.Add(new EventWorkshopEventInfoViewModel
+            hobbyViewModels.Add(new EventInfoViewModel
             {
                 Url = "/images/event-workshop/creation/creation3.jpg",
                 Title = "Книжные дебаты",
@@ -79,10 +96,10 @@ namespace WebNet23Online.Controllers
             return hobbyViewModels;
         }
 
-        private List<EventWorkshopEventInfoViewModel> GetSportViewModels()
+        private List<EventInfoViewModel> GetSportViewModels()
         {
-            var sportViewModels = new List<EventWorkshopEventInfoViewModel>();
-            sportViewModels.Add(new EventWorkshopEventInfoViewModel
+            var sportViewModels = new List<EventInfoViewModel>();
+            sportViewModels.Add(new EventInfoViewModel
             {
                 Url = "/images/event-workshop/sport/sport1.jpg",
                 Title = "Велосипедный тур",
@@ -97,10 +114,10 @@ namespace WebNet23Online.Controllers
             return sportViewModels;
         }
 
-        private List<EventWorkshopEventInfoViewModel> GetGameViewModels()
+        private List<EventInfoViewModel> GetGameViewModels()
         {
-            var gameViewModels = new List<EventWorkshopEventInfoViewModel>();
-            gameViewModels.Add(new EventWorkshopEventInfoViewModel
+            var gameViewModels = new List<EventInfoViewModel>();
+            gameViewModels.Add(new EventInfoViewModel
             {
                 Url = "/images/event-workshop/games/game1.jpg",
                 Title = "D&D",

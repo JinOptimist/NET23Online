@@ -205,13 +205,14 @@ a, a:hover {
     justify-content: center;
 }
 
-.activity-submit-form{
+.activity-submit-form {
     background-color: rgb(211, 193, 175);
     padding: 50px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin: 300px 0px 100px 0px;
+    box-shadow: 0 0 30px var(--ghost-white);
 }
 
 

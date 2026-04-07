@@ -1,6 +1,6 @@
 ﻿namespace WebNet23Online.Models.EventWorkshop
 {
-    public class EventWorkshopEventInfoViewModel
+    public class EventInfoViewModel
     {
         public string Url { get; set; }
         public string Title { get; set; }
