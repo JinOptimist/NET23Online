@@ -1,13 +1,12 @@
 ﻿using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
 
-namespace WebNet23Online.Service
+namespace WebNet23Online.Services
 {
     public class RockBandsService : IRockBandsService
     {
 
-        // STATIC IS A BAD IDEA — REMOVE AFTER ADD DATABASE
-        private static readonly List<BandBlockViewModel> _bands =
+        private readonly List<BandBlockViewModel> _bands =
         [
             new BandBlockViewModel
             {
@@ -37,12 +36,7 @@ namespace WebNet23Online.Service
 
         public void AddBand(BandBlockViewModel viewModel)
         {
-            if (viewModel == null)
-            {
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(viewModel.Name))
+            if (viewModel == null || string.IsNullOrWhiteSpace(viewModel.Name))
             {
                 return;
             }
