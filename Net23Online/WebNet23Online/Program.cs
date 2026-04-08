@@ -45,6 +45,8 @@ builder.Services.AddSingleton<IMazeService, MazeService>();
 builder.Services.AddSingleton<IAnimalWorldService, AnimalWorldService>();
 builder.Services.AddSingleton<IRockBandsService, RockBandsService>();
 
+builder.Services.AddSingleton<IRockLegendsPick, RockLegendsPick>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
