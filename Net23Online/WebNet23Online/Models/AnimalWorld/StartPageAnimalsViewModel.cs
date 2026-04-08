@@ -4,6 +4,6 @@
     {
         public List<StartPageBeastViewModel> Animals { get; set; }
 
-        public StartPageBeastViewModel Beast;
+        public StartPageBeastViewModel Beast {  get; set; }
     }
 }
