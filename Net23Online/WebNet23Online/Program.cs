@@ -1,4 +1,5 @@
 using MazeCore;
+using MazeCore.Interfaces;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
