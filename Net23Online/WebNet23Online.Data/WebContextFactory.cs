@@ -17,7 +17,7 @@ namespace WebNet23Online.Data
                 .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<WebContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultDbConnection"));
 
             return new WebContext(optionsBuilder.Options);
         }

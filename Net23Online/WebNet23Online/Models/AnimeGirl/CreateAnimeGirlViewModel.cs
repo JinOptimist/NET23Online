@@ -1,6 +1,6 @@
-﻿namespace WebNet23Online.Data.Models
+﻿namespace WebNet23Online.Models.AnimeGirl
 {
-    public class AnimeGirlData : BaseModel
+    public class CreateAnimeGirlViewModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
