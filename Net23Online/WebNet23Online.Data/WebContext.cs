@@ -8,5 +8,11 @@ namespace WebNet23Online.Data
         public DbSet<AnimeGirlData> AnimeGirls { get; set; }
 
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
+        public WebContext() { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }
