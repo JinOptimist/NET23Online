@@ -1,0 +1,46 @@
+﻿@using WebNet23Online.Models.DelightBistro;
+
+@{
+    Layout = "_LayoutimagesDelightBistro";
+}
+@model FoodItemViewModel
+
+<link rel="stylesheet" href="\css\delight-bistro\style.css" />
+
+<div class="create-food-box">
+    <div class="form-title">Добавьте блюдо. Заполните все поля в форме</div>
+
+    <form method="post">
+        <div class="input-box">
+            @Html.TextBoxFor(x => x.Name, new { type = "text", placeholder = "Имя блюда" })
+        </div>
+        <div class="input-box">
+            @Html.TextBoxFor(x => x.Price, new { type = "number", placeholder = "Стоимость" })
+        </div>
+        <div class="input-radio-box">
+            <div class="radio-box-title">
+                Выберите тип меню
+            </div>
+            <div class="radio-box-container">
+                <div class="radio-box">
+                    @Html.RadioButtonFor(x => x.MenuType, "soups", new { id = "soups" })
+                    @Html.Label("soups", "Супы")
+                </div>
+                <div class="radio-box">
+                    @Html.RadioButtonFor(x => x.MenuType, "salads", new { id = "salads" })
+                    @Html.Label("salads", "Салаты")
+                </div>
+
+                <div class="radio-box">
+                    @Html.RadioButtonFor(x => x.MenuType, "hot", new { id = "hot" })
+                    @Html.Label("hot", "Горячие блюда")
+                </div>
+            </div>
+        </div>
+        <div class="input-box url-box">
+            @Html.TextBoxFor(x => x.ImgURL, new { type = "url", placeholder = "Добавьте URL изображения" })
+        </div>
+        <div class="food-create-button"><button type="submit">Добавить блюдо</button></div>
+    </form>
+
+</div>
