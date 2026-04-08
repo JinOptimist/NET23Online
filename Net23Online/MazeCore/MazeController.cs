@@ -17,7 +17,7 @@ namespace MazeCore
         private int _countSteps = 0;
         private const int STEPS_TO_ICE = 10; //Count steps to generate ice near hero
         private const int MILISECONDS_TO_ESCAPE = 30000;
-        private bool continuewGame = true;
+        public bool continuewGame = true;
 
         public void Play(int width = 24, int height = 12, bool isSecretMaze = false, Hero hero = null)
         {

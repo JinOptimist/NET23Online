@@ -1,0 +1,53 @@
+﻿body {
+    background-image: url('/images/cars/road-monument-valley_181624-48432.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.info {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.countries {
+    font-family: Arial, sans-serif;
+    font-size: 48px;
+    color: rgb(255, 153, 0)
+}
+
+.card-grid {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.car_brands {
+    background-color: rgba(255, 230, 0, 0.404);
+    border-radius: 10px;
+    width: calc(33.333% - 15px);
+    box-sizing: border-box;
+}
+
+.car_brands__caption {
+    padding: 10px;
+}
+
+.car_brands img {
+    width: 260px;
+    height: 200px;
+    object-fit: cover;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.car_brands__caption {
+    font-size: 32px
+}
