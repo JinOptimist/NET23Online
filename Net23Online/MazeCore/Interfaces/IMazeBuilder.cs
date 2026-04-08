@@ -1,8 +1,7 @@
 ﻿using MazeCore.Cells.Interfaces;
 using MazeCore.Characters;
-using MazeCore.Interfaces;
 
-namespace MazeCore
+namespace MazeCore.Interfaces
 {
     public interface IMazeBuilder
     {

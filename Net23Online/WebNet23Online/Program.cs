@@ -1,4 +1,5 @@
 using MazeCore;
+using MazeCore.Interfaces;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
@@ -42,6 +43,7 @@ builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
 builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
 builder.Services.AddSingleton<IMazeService, MazeService>();
 builder.Services.AddSingleton<IAnimalWorldService, AnimalWorldService>();
+builder.Services.AddSingleton<IRockBandsService, RockBandsService>();
 
 var app = builder.Build();
 
