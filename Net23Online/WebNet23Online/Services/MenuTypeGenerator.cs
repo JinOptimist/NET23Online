@@ -6,7 +6,7 @@ namespace WebNet23Online.Services
     public class MenuTypeGenerator : IMenuTypeGenerator
     {
 
-        public List<MenuTypeViewModel> GetMenuTypesFromFoodItems(List<FoodItemViewModel> foodItems/*, string sortMenuType*/)
+        public List<MenuTypeViewModel> GetMenuTypesFromFoodItems(List<FoodItemViewModel> foodItems, string sortMenuType)
         {
 
             var allMenuTypes = new List<MenuTypeViewModel>
@@ -32,12 +32,12 @@ namespace WebNet23Online.Services
                 }
             };
 
-            //var OneMenuType = allMenuTypes.Where(x => x.MenuType == sortMenuType).ToList();
-            //if (string.IsNullOrEmpty(sortMenuType))
-            //{
-            return allMenuTypes;
-            //}
-            //return OneMenuType;
+            var OneMenuType = allMenuTypes.Where(x => x.MenuType == sortMenuType).ToList();
+            if (string.IsNullOrEmpty(sortMenuType))
+            {
+                return allMenuTypes;
+            }
+            return OneMenuType;
         }
 
     }

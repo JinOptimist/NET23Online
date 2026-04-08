@@ -17,17 +17,7 @@ namespace WebNet23Online.Controllers
 
         public IActionResult Index(string menuType)
         {
-            // Сервисы не завязывать на данных из экшенов?
-            var viewModels = _menuTypeGenerator.GetMenuTypesFromFoodItems(_foodItemGenerator.GenerateFoodItems()/*,menuType*/);
-
-            // Если сервис связать с параметром menuType, то в экшене требуется эта логика
-            if (string.IsNullOrEmpty(menuType))
-            {
-                return View(viewModels);
-            }
-
-            var viewModel = viewModels.Where(x => x.MenuType == menuType).ToList();
-
+            var viewModel = _menuTypeGenerator.GetMenuTypesFromFoodItems(_foodItemGenerator.GenerateFoodItems(), menuType);
             return View(viewModel);
         }
 
@@ -41,7 +31,7 @@ namespace WebNet23Online.Controllers
         public IActionResult FoodBuilder(FoodItemViewModel foodItem)
         {
             _foodItemGenerator.AddFoodItem(foodItem);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

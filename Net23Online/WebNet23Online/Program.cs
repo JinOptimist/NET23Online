@@ -1,7 +1,6 @@
 using MazeCore;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
-using WebNet23Online.Models.DelightBistro;//Нужно ли тут это простаранство имен?
 
 
 var builder = WebApplication.CreateBuilder(args);
