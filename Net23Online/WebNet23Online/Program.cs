@@ -1,9 +1,14 @@
 using MazeCore;
 using MazeCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using WebNet23Online.Data;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebNet23Online;Integrated Security=True;Connect Timeout=30;";
+builder.Services.AddDbContext<WebContext>(op => op.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
