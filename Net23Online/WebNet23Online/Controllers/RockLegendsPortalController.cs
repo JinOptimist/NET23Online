@@ -1,15 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Models.RockLegendsPortal;
+using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
 {
     public class RockLegendsPortalController : Controller
     {
-        [HttpGet]
-        public IActionResult Index()
+        private readonly IRockLegendsPick _rockService;
+
+        public RockLegendsPortalController(IRockLegendsPick rockService)
         {
-            return View();
+            _rockService = rockService;
         }
+
+        [HttpGet]
+        public IActionResult Index() => View();
 
         [HttpPost]
         public IActionResult Index(RockLegendsPortalViewModel viewModel)
@@ -18,17 +23,12 @@ namespace WebNet23Online.Controllers
             {
                 return RedirectToAction("Details", new { id = viewModel.SelectedBand });
             }
-
             return View();
         }
 
         public IActionResult Details(string id)
         {
-            var model = new RockLegendsPortalViewModel
-            {
-                SelectedBand = id
-            };
-
+            var model = _rockService.GetBandDetails(id);
             return View(model);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebNet23Online.Data;
 using WebNet23Online.Models.Maze;
 using WebNet23Online.Services.Interfaces;
 
@@ -7,10 +8,12 @@ namespace WebNet23Online.Controllers
     public class MazeController : Controller
     {
         private IMazeService _mazeService;
+        private WebContext _webContext;
 
-        public MazeController(IMazeService mazeService)
+        public MazeController(IMazeService mazeService, WebContext webContext)
         {
             _mazeService = mazeService;
+            _webContext = webContext;
         }
 
         public IActionResult Index()

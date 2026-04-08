@@ -3,17 +3,30 @@
 
 @{
     Layout = "_LayoutRockLegends";
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.BandName; // Теперь заголовок вкладки — это имя группы
 }
 
-<div class="main-container">
-    <h1 style="color: white;">Hello</h1>
+<div class="main-container" style="padding: 20px; color: white;">
     
-    <p style="color: #bbb;">
-        Вы выбрали группу: <strong style="color: #e61919;">@Model.SelectedBand</strong>
-    </p>
+    <h1 style="color: #e61919; text-transform: uppercase; font-size: 3rem;">
+        @Model.BandName
+    </h1>
+    
+    <div class="content-box" style="background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px; border-left: 5px solid #e61919; margin-top: 20px;">
+        <h3 style="color: #fff;">История и биография</h3>
+        
+        <p style="color: #ccc; line-height: 1.8; font-size: 1.2rem; white-space: pre-line;">
+            @Model.Biography
+        </p>
+    </div>
 
-    <a href="/RockLegendsPortal/Index" class="poll-button" style="text-decoration: none; display: inline-block; margin-top: 20px;">
-        Вернуться назад
-    </a>
+    <div style="margin-top: 30px;">
+        <p style="color: #666; font-size: 0.9rem;">
+            Технический код выбора: @Model.SelectedBand
+        </p>
+        
+        <a href="/RockLegendsPortal/Index" class="poll-button" style="text-decoration: none; display: inline-block;">
+            Вернуться в портал
+        </a>
+    </div>
 </div>

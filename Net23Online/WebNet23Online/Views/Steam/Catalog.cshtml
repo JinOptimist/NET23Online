@@ -1,0 +1,60 @@
+@using WebNet23Online.Models.Steam
+@model CatalogViewModel
+@{
+    Layout = "_LayoutSteam";
+}
+<main class="page">
+    <section class="section">
+        <h1 class="page-title">Catalog</h1>
+        <p><a class="btn" href="/Steam/Index">← Back to store</a></p>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Filter</h2>
+        <form method="post">
+            <label>
+                Genre
+                <select name="Genre">
+                    @foreach (var genre in Model.Genres)
+                    {
+                        var isSelected = string.Equals(Model.Filter.Genre, genre.ToString(), StringComparison.OrdinalIgnoreCase)
+                        || (genre.ToString() == "All" && string.IsNullOrWhiteSpace(Model.Filter.Genre));
+
+                        <option value="@genre" selected="@isSelected">@genre</option>
+                    }
+                </select>
+            </label>
+            <label>
+                Max price
+                <input type="number" name="MaxPrice" step="0.01" value="@Model.Filter.MaxPrice.ToString()" />
+            </label>
+            <button type="submit" class="btn">Apply</button>
+        </form>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">All games (@Model.Games.Count)</h2>
+
+        <div class="cards">
+            @foreach (var game in Model.Games)
+            {
+                <article class="card">
+                    <div class="card-media">
+                        <img src="@game.ImageUrl" alt="@game.Title" />
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@game.Title</h3>
+                        @if (!string.IsNullOrWhiteSpace(game.Genre))
+                        {
+                            <p class="feature-text">@game.Genre</p>
+                        }
+                        <div class="card-footer">
+                            <span class="price">$@game.Price.ToString("0.00")</span>
+                            <a class="btn btn--small" href="#">View</a>
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    </section>
+</main>
