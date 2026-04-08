@@ -7,9 +7,6 @@ namespace WebNet23Online.Services
     {
         private List<FoodItemViewModel> _foodItems;
 
-        // или лучше не иметь свойство а сделать метод FoodItemGenerator возвращающим List
-        // Куда тогда добавлять созданную еду методом AddFoodItem?
-        // Добавить еще на вход параметр листа в который он будет сохранять foodItem
         public FoodItemGenerator()
         {
             _foodItems = new List<FoodItemViewModel>
