@@ -47,6 +47,8 @@ builder.Services.AddSingleton<IRockBandsService, RockBandsService>();
 
 builder.Services.AddSingleton<IRockLegendsPick, RockLegendsPick>();
 
+builder.Services.AddScoped<ICatalogService, CatalogService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
