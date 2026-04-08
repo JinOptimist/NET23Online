@@ -1,56 +1,69 @@
-﻿@{
+﻿@using WebNet23Online.Models.EventWorkshop;
+@{
     Layout = "_LayoutEventWorkshop";
 }
-<div class="activity-submit">
-    <form class="activity-submit-form">
-    <h2>Отправь запрос на создание досуга!</h2>
-    <div class="activity-submit-datetime">
-        <p>Дата и время мероприятия<p>
-            <input class="activity-submit-date" type="date">
-            <input class="activity-submit-time" type="time">
-        </div>
-        <div>
-            <div>
-                Выберите категорию
-            </div>
-            <label>
-                creation
-                <input type="radio" name="category" value="creation">
-            </label>
-            <label>
-                sport
-                <input type="radio" name="category" value="sport">
-            </label>
-            <label>
-                games
-                <input type="radio" name="category" value="games">
-            </label>
-        </div>
-        <div>
-            <div>
-                Укажите плюшки!
-            </div>
-            <label>
-                Еда
-                <input type="checkbox" name="features" value="hobbys">
-            </label>
-            <label>
-                Инвентарь
-                <input type="checkbox" name="features" value="sports">
-            </label>
-            <label>
-                Новчикам рады!
-                <input type="checkbox" name="features" value="games">
-            </label>
-        </div>
-        <div>
-            <div>
-                <input class="activity-submit-name" type="text" placeholder="Наименование" maxlength="30">
+@model BuilderEventViewModel
+    <div class="activity-submit">
+        <form class="activity-submit-form">
+        <h2>Отправь запрос на создание досуга!</h2>
+        <div class="activity-submit-datetime">
+            <p>Дата и время мероприятия<p>
+                <input class="activity-submit-date" type="date">
+                <input class="activity-submit-time" type="time">
             </div>
             <div>
-                <textarea class="activity-submit-description" name="activity-submit-description" rows="10" cols="50" placeholder="Опишите событие"></textarea>
+                <div>
+                    Выберите категорию
+                </div>
+                <label>
+                    creation
+                    <input type="radio" name="category" value="creation">
+                </label>
+                <label>
+                    sport
+                    <input type="radio" name="category" value="sport">
+                </label>
+                <label>
+                    games
+                    <input type="radio" name="category" value="games">
+                </label>
             </div>
-        </div>
-        <button type="submit">Add Event</button>
-    </form>
-</div>
+            <div>
+                <div>
+                    Укажите плюшки!
+                </div>
+                <label>
+                    Еда
+                    <input type="checkbox" name="features" value="hobbys">
+                </label>
+                <label>
+                    Инвентарь
+                    <input type="checkbox" name="features" value="sports">
+                </label>
+                <label>
+                    Новчикам рады!
+                    <input type="checkbox" name="features" value="games">
+                </label>
+            </div>
+            <div>
+                <div>
+                    <input class="activity-submit-name" type="text" placeholder="Наименование" maxlength="30">
+                </div>
+                <div>
+                    <textarea class="activity-submit-description" name="activity-submit-description" rows="10" cols="50" placeholder="Опишите событие"></textarea>
+                </div>
+            </div>
+            <button type="submit">Add Event</button>
+        </form>
+    </div>
+
+    <div class="activity-submit">
+    <form method="post" class="activity-submit-form">
+            <h2>Отправь запрос на создание досуга!</h2>
+            <div class="activity-submit-datetime">
+                <p>Дата и время мероприятия</p>
+                @Html.TextBoxFor(x => x.Url, new{type = "date"})<input class="activity-submit-date" type="date">
+                <input class="activity-submit-time" type="time">
+            </div>
+        </form>
+    </div>
