@@ -17,7 +17,8 @@ namespace WebNet23Online.Controllers
 
         public IActionResult Index(string menuType)
         {
-            var viewModel = _menuTypeGenerator.GetMenuTypesFromFoodItems(_foodItemGenerator.GenerateFoodItems(), menuType);
+            var foodItems = _foodItemGenerator.GenerateFoodItems();
+            var viewModel = _menuTypeGenerator.GetMenuTypesFromFoodItems(foodItems, menuType);
             return View(viewModel);
         }
 
