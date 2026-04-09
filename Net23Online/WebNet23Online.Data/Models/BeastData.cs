@@ -1,6 +1,6 @@
-﻿namespace WebNet23Online.Models.AnimalWorld
+﻿namespace WebNet23Online.Data.Models
 {
-    public class StartPageBeastViewModel
+    public class BeastData : BaseModel
     {
         public string BeastName { get; set; }
 
