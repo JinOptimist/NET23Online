@@ -36,6 +36,10 @@
                 </div>
             </div>
         </div>
+        <div class="input-box">
+            @* <input type="text" id="ingredientString" name="ingredientString" placeholder="Ингредиенты" /> *@
+            @Html.TextBox("ingredientString", new { type = "text", placeholder = "Ингредиенты" })
+        </div>
         <div class="input-box url-box">
             @Html.TextBoxFor(x => x.ImgURL, new { type = "url", placeholder = "Добавьте URL изображения" })
         </div>

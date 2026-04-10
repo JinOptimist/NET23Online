@@ -37,7 +37,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
-        public IActionResult FoodBuilder(FoodItemViewModel foodItem)
+        public IActionResult FoodBuilder(FoodItemViewModel foodItem, string ingredientString = "")
         {
             var foodItemData = new FoodItemData()
             {
@@ -45,7 +45,8 @@ namespace WebNet23Online.Controllers
                 Price = foodItem.Price,
                 ImgURL = foodItem.ImgURL,
                 MenuType = foodItem.MenuType,
-                Ingredients = string.Join(",", foodItem.Ingredients),//Получаем строку из списка
+                Ingredients = ingredientString,
+                //Ingredients = string.Join(",", foodItem.Ingredients),//Получаем строку из списка
             };
 
             _webContext.FoodItems.Add(foodItemData);
