@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MazeCore\MazeCore.csproj" />
+    <ProjectReference Include="..\WebNet23Online.Data\WebNet23Online.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

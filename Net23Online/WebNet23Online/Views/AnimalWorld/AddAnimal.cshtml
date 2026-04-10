@@ -23,7 +23,7 @@
             <div class="green-title">
                 <h6>Краткое описание</h6>
             </div>
-            @Html.TextBoxFor(animal => animal.BriefDescription, new { @class = "form-input", type = "text", placeholder = "Опишите в одном предложении..." })
+            @Html.TextAreaFor(animal => animal.BriefDescription, new { @class = "form-input", type = "text", placeholder = "Опишите в одном предложении..." })
         </div>
         <hr />
         <div class="button-group">

@@ -1,10 +1,11 @@
-﻿using WebNet23Online.Models.AnimeGirl;
+﻿using WebNet23Online.Data.Models;
+using WebNet23Online.Models.AnimeGirl;
 
 namespace WebNet23Online.Services.Interfaces
 {
     public interface IAnimeGirlGenerator
     {
         AnimeGirlImageInfoViewModel Generate();
-        List<AnimeGirlImageInfoViewModel> GenerateList(int count);
+        List<AnimeGirlImageInfoViewModel> GenerateList(List<AnimeGirlData> animeGirlDatas);
     }
 }
