@@ -13,6 +13,6 @@ namespace WebNet23Online.Data.Models
         public int Price { get; set; }
         public string MenuType { get; set; }
         public string ImgURL { get; set; }
-        public List<string> Ingredients { get; set; }
+        public string Ingredients { get; set; } //List хранить нельзя, как сделать его возможных хранить null
     }
 }

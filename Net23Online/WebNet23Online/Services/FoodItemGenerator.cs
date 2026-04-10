@@ -1,4 +1,5 @@
-﻿using WebNet23Online.Models.DelightBistro;
+﻿using WebNet23Online.Data.Models;
+using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services
@@ -152,9 +153,24 @@ namespace WebNet23Online.Services
             _foodItems.Add(foodItem);
         }
 
-        public List<FoodItemViewModel> GenerateFoodItems()
+        //public List<FoodItemViewModel> GenerateFoodItems()
+        //{
+        //    return _foodItems;
+        //}
+
+        public List<FoodItemViewModel> GenerateFoodItems(List<FoodItemData> foodItemDatas)
         {
-            return _foodItems;
+            //Заполняем свойства нашей VM FoodItem Свойствами FI из DB
+            var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
+            {
+                Name = x.Name,
+                Price = x.Price,
+                ImgURL = x.ImgURL,
+                MenuType= x.MenuType,
+             
+                Ingredients= x.Ingredients.Split(",",StringSplitOptions.RemoveEmptyEntries).ToList(), // string to List
+            });
+            return foodItemsViewModels.ToList();
         }
 
     }
