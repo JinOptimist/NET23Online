@@ -1,43 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Models.HabitTracker;
+using WebNet23Online.Services;
 
 namespace WebNet23Online.Controllers;
 
 public class HabitTrackerController : Controller
 {
-    //статик это плохо
-    private static HabitTrackerViewModel _habitsTraker  = new HabitTrackerViewModel();
-    
-    private static List<HabitViewModel> _allHabits = new List<HabitViewModel>
+    private IHabitTrackerService _habitService;
+    private IHabitStatisticsService _statisticsService;
+
+    public HabitTrackerController(IHabitTrackerService habitService, IHabitStatisticsService statisticsService)
     {
-        new HabitViewModel { Title = "Спорт 30 мин", ColorOfDot = "pink" },
-        new HabitViewModel { Title = "Английский 20 мин", ColorOfDot = "blue"},
-        new HabitViewModel { Title = "Программирование 1 час",  ColorOfDot = "green"},
-        new HabitViewModel { Title = "Вода 2л", ColorOfDot = "purple"},
-    };
-    
-    
+        _habitService = habitService;
+        _statisticsService = statisticsService;
+    }
     public IActionResult Index()
     {
-        var model = _habitsTraker;
-        model.Habits = _allHabits;
+        var model = _habitService.GetHabitTracker();
         return View(model);
     } 
     
     [HttpGet]
     public IActionResult Statistics()
     {
-        var  model = _habitsTraker;
-        model.Habits = _allHabits;
-
-        foreach (var habit in _allHabits)
-        {
-            var doneCount = habit.WeekResults.Count(x => x);
-            var percent = (float)doneCount / 7 * 100;
-            
-            habit.DoneCount = doneCount;
-            habit.Percent = percent;
-        }
+        var model = _habitService.GetHabitTracker();
+        _statisticsService.CreateStatisticsInfo(model);
+        
         return View(model);
     } 
     
@@ -56,18 +44,14 @@ public class HabitTrackerController : Controller
     [HttpPost]
     public IActionResult CreateHabit(HabitViewModel  habit)
     {
-        if (string.IsNullOrEmpty(habit.Title) 
-            || _allHabits.Any(h => h.Title == habit.Title))
+        var model = _habitService.GetHabitTracker();
+        if (_habitService.IsHabitHasTitle(habit)
+            || _habitService.IsHabitUnique(model, habit))
         {
             return RedirectToAction(nameof(Index));
         }
         
-        var availibleColors = new[] { "pink", "blue", "green", "purple" };
-        
-        var indexOfColorForHabit = _allHabits.Count % availibleColors.Length; 
-        
-        habit.ColorOfDot = availibleColors[indexOfColorForHabit];
-        _allHabits.Add(habit);
+        _habitService.CreateHabit(habit);
         
         return RedirectToAction(nameof(Index));
     }

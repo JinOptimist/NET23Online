@@ -59,6 +59,10 @@ builder.Services.AddScoped<ICatalogService, CatalogService>();
 builder.Services.AddSingleton<IFoodItemGenerator, FoodItemGenerator>();
 builder.Services.AddSingleton<IMenuTypeGenerator, MenuTypeGenerator>();
 
+//HabitTracker DI
+builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
+builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
