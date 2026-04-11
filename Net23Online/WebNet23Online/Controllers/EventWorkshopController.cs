@@ -1,42 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Models.AnimeGirl;
 using WebNet23Online.Models.EventWorkshop;
+using WebNet23Online.Models.Steam;
 namespace WebNet23Online.Controllers
 {
     public class EventWorkshopController : Controller
     {
-        private static List<EventInfoViewModel> Events { get; set; } = new();
-        public IActionResult Index(string typeEvent) 
+        private static List<EventInfoViewModel> Events { get; set; }
+        static EventWorkshopController()
+        {
+            Events = new List<EventInfoViewModel>();
+            AddExampleViewModels();
+        }
+        public IActionResult Index(EventCategory? typeEvent) 
         {
             var selectedViewModels = new List<EventInfoViewModel>();
-
-            switch (typeEvent)
+            if(typeEvent.HasValue)
             {
-                case "Creation":
-                    {
-                        selectedViewModels?.AddRange(GetCreationViewModels());
-                        break;
-                    }
-                case "Sport":
-                    {
-                        selectedViewModels?.AddRange(GetSportViewModels());
-                        break;
-                    }
-                case "Games":
-                    {
-                        selectedViewModels?.AddRange(GetGameViewModels());
-                        break;
-                    }
-                default:
-                    {
-                        selectedViewModels = GetCreationViewModels()
-                            .Concat(GetSportViewModels())
-                            .Concat(GetGameViewModels())
-                            .ToList();
-                        break;
-                    }
+                selectedViewModels = Events
+                    .Where(x => x.Category == typeEvent)
+                    .ToList();
             }
-            selectedViewModels = selectedViewModels?.ToList();
+            else
+            {
+                selectedViewModels = Events.ToList();
+            }
 
             return View(selectedViewModels);
         }
@@ -48,87 +36,68 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
-        public IActionResult BuilderEvent(BuilderEventViewModel newEvent)
+        public IActionResult BuilderEvent(EventInfoViewModel newEvent)
         {
-            Events.Add(new EventInfoViewModel
-            {
-                Url = newEvent.Url,
-                Title = newEvent.Title,
-                Description = newEvent.Description,
-                DateDay = newEvent.DateDay,
-                DateYear = newEvent.DateYear,
-                Time = newEvent.Time
-            });
+            Events.Add(newEvent);
             return RedirectToAction("Index");
         }
 
-        private List<EventInfoViewModel> GetCreationViewModels()
+        private static void AddExampleViewModels()
         {
-            var hobbyViewModels = new List<EventInfoViewModel>();
-            hobbyViewModels.Add(new EventInfoViewModel
+            Events.Add(new EventInfoViewModel
             {
-                Url = "/images/event-workshop/creation/creation1.jpg",
+                Category = EventCategory.Creation,
+                Url = "https://i.imgur.com/mCulpWu.jpeg",
                 Title = "Музыкальная импровизация",
                 Description = "Импровизация любителей музыки! Создайте шедевр со случайными людьми.",
-                DateDay = "29 JAN",
-                DateYear = "2026",
-                Time = "22:00"
+                Date = new DateOnly(2026,5,29),
+                Time = new TimeOnly(22,0)
             });
-            hobbyViewModels.Add(new EventInfoViewModel
+            Events.Add(new EventInfoViewModel
             {
-                Url = "/images/event-workshop/creation/creation2.jpg",
+                Category = EventCategory.Creation,
+                Url = "https://i.imgur.com/yujdumm.jpeg",
                 Title = "Чайная церемония",
                 Description = "Примите участие в чайной церемонии! Знакомства, дружеское общение и многое другое.",
-                DateDay = "17 APR",
-                DateYear = "2026",
-                Time = "19:00"
+                //DateDay = "17 APR",
+                //DateYear = "2026",
+                //Time = "19:00"
             });
-            hobbyViewModels.Add(new EventInfoViewModel
+            Events.Add(new EventInfoViewModel
             {
-                Url = "/images/event-workshop/creation/creation3.jpg",
+                Category = EventCategory.Creation,
+                Url = "https://i.imgur.com/JrITbnD.jpeg",
                 Title = "Книжные дебаты",
                 Description = "Читаем, обсуждаем, спорим в поисках истины. Приглашаются все желающие!",
-                DateDay = "30 MAY",
-                DateYear = "2026",
-                Time = "08:00"
+                //DateDay = "30 MAY",
+                //DateYear = "2026",
+                //Time = "08:00"
             });
 
-            return hobbyViewModels;
-        }
-
-        private List<EventInfoViewModel> GetSportViewModels()
-        {
-            var sportViewModels = new List<EventInfoViewModel>();
-            sportViewModels.Add(new EventInfoViewModel
+            Events.Add(new EventInfoViewModel
             {
-                Url = "/images/event-workshop/sport/sport1.jpg",
+                Category = EventCategory.Sport,
+                Url = "https://i.imgur.com/YsbPP2S.jpeg",
                 Title = "Велосипедный тур",
                 Description = "Неспешно прокатитесь по велосипедным тропам, " +
                 "погружаясь в атмосферу загородной природы, хорошей компании и полезного спорта! " +
                 "Приглашаются все желающие.",
-                DateDay = "19 JUN",
-                DateYear = "2026",
-                Time = "15:00"
+                //DateDay = "19 JUN",
+                //DateYear = "2026",
+                //Time = "15:00"
             });
 
-            return sportViewModels;
-        }
-
-        private List<EventInfoViewModel> GetGameViewModels()
-        {
-            var gameViewModels = new List<EventInfoViewModel>();
-            gameViewModels.Add(new EventInfoViewModel
+            Events.Add(new EventInfoViewModel
             {
-                Url = "/images/event-workshop/games/game1.jpg",
+                Category = EventCategory.Games,
+                Url = "https://i.imgur.com/I1dbkqm.jpeg",
                 Title = "D&D",
                 Description = "Ограбьте бандитов, сожгите дракона, своруйте золото. " +
                 "Почувствуйте себя гномом в атмосферном приключении мира Dungeon & Dragons! Еда за счёт мастера.",
-                DateDay = "14 JUL",
-                DateYear = "2026",
-                Time = "14:00"
+                //DateDay = "14 JUL",
+                //DateYear = "2026",
+                //Time = "14:00"
             });
-
-            return gameViewModels;
         }
     }
 }

@@ -39,7 +39,7 @@
         <div class="creation">
             <div class="event-info-container">
                 <div class="image-container">
-                    <img src="@workshopEvent.Url"/>
+                    <img src="@workshopEvent.Url" />
                     <h3>@workshopEvent.Title</h3>
                 </div>
                 <div class="description-container">
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="datetime-container">
-                <div class="date-container">
+           @*      <div class="date-container">
                     @workshopEvent.DateDay
                 </div>
                 <div class="year-container">
@@ -55,8 +55,14 @@
                 </div>
                 <div class="time-container">
                     @workshopEvent.Time
-                </div>
+                </div> *@
             </div>
         </div>
     }
+
+    <div>
+        <a href="/EventWorkshop/BuilderEvent">
+            Создай своё событие!
+        </a>
+    </div>
 </div>  
