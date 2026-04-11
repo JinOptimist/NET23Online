@@ -8,7 +8,17 @@
 <link rel="stylesheet" href="\css\delight-bistro\style.css" />
 
 <div class="create-food-box">
-    <div class="form-title">Добавьте блюдо. Заполните все поля в форме</div>
+    <div class="form-title">
+        Добавьте блюдо. Заполните все поля в форме
+    </div>
+    @if (Model.Id.HasValue == true)
+    {
+        <div class="change-food">
+            <div class="change-food">
+                <img src=@Model.ImgURL alt=@Model.Name />
+            </div>
+        </div>
+    }
 
     <form method="post">
         <div class="input-box">
@@ -38,12 +48,15 @@
         </div>
         <div class="input-box">
             <div>Введите ингредиенты через запятую</div>
-           <div> @* @Html.TextBox("ingredientString","", new { /* type = "text", */ placeholder = "Ингредиенты" }) *@
-            @Html.TextBoxFor(x => x.Ingredients, new {placeholder = "Ингредиенты" })
+            <div>
+                <input type="text"
+                       name="Ingredients"
+                       value="@(Model.Ingredients != null ? string.Join(", ", Model.Ingredients) : "")"
+                       placeholder="Ингредиенты через запятую" />
             </div>
         </div>
         <div class="input-box url-box">
-            @Html.TextBoxFor(x => x.ImgURL, new { type = "url", placeholder = "Добавьте URL изображения" })
+            @Html.TextBoxFor(x => x.ImgURL, new { type = "string", placeholder = "Добавьте URL изображения" })
         </div>
         <div class="food-create-button"><button type="submit">Добавить блюдо</button></div>
     </form>

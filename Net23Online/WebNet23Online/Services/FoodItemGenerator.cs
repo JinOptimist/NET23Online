@@ -163,15 +163,34 @@ namespace WebNet23Online.Services
             //Заполняем свойства нашей VM FoodItem Свойствами FoodItemDatas
             var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
             {
+                Id = x.Id,
                 Name = x.Name,
                 Price = x.Price,
                 ImgURL = x.ImgURL,
-                MenuType= x.MenuType,
-             
-                Ingredients= x.Ingredients.Split(Separator, StringSplitOptions.RemoveEmptyEntries).ToList(), // string to List
+                MenuType = x.MenuType,
+
+                Ingredients = x.Ingredients.Split(Separator
+                , StringSplitOptions.RemoveEmptyEntries).ToList(), // string to List
             });
             return foodItemsViewModels.ToList();
         }
+
+        public FoodItemData ConvertVMtoData(FoodItemViewModel foodItemVM)
+        {
+            string ingredients = string.Join(Separator, foodItemVM.Ingredients);
+
+            var newFoodItemData = new FoodItemData()
+            {
+                Id = foodItemVM.Id ?? 0,
+                Name = foodItemVM.Name,
+                Price = foodItemVM.Price,
+                ImgURL = string.IsNullOrEmpty(foodItemVM.ImgURL) ? null : foodItemVM.ImgURL,
+                MenuType = foodItemVM.MenuType,
+                Ingredients = ingredients,
+            };
+            return newFoodItemData;
+        }
+
 
     }
 }

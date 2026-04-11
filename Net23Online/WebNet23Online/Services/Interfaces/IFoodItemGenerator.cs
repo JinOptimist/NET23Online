@@ -7,7 +7,8 @@ namespace WebNet23Online.Services.Interfaces
     {
         List<FoodItemViewModel> GenerateFoodItems();
         List<FoodItemViewModel> GenerateFoodItems(List<FoodItemData> foodItems);
-        string Separator {  get; set; }
+        FoodItemData ConvertVMtoData(FoodItemViewModel foodItemVM);
+        string Separator { get; set; }
         void AddFoodItem(FoodItemViewModel foodItem);
     }
 }
