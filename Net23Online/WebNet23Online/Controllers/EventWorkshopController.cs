@@ -7,9 +7,12 @@ namespace WebNet23Online.Controllers
 {
     public class EventWorkshopController : Controller
     {
-        public IEventService eventService { get; set; }
-        EventWorkshopController()
+        private IEventService _eventService;
+        private IEventWorkshopGenerator _eventWorkshopGenerator;
+        EventWorkshopController(IEventService eventService, IEventWorkshopGenerator eventWorkshopGenerator)
         {
+            _eventService = eventService;
+            _eventWorkshopGenerator = eventWorkshopGenerator;
             
         }
         public IActionResult Index(EventCategory? typeEvent) 

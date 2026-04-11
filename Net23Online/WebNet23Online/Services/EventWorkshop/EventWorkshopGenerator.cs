@@ -5,14 +5,10 @@ namespace WebNet23Online.Services.EventWorkshop
 {
     public class EventWorkshopGenerator : IEventWorkshopGenerator
     {
-        public IEventService EventService { get; set; }
-        public EventWorkshopGenerator() 
-        { 
-            EventService = new EventServices();
-        }
-        public void GenerateList()
+        public List<EventInfoViewModel> GenerateList()
         {
-            EventService.Events.Add(new EventInfoViewModel
+            var eventList = new List<EventInfoViewModel>();
+            eventList.Add(new EventInfoViewModel
             {
                 Category = EventCategory.Creation,
                 Url = "https://i.imgur.com/mCulpWu.jpeg",
@@ -21,7 +17,7 @@ namespace WebNet23Online.Services.EventWorkshop
                 Date = new DateOnly(2026, 5, 29),
                 Time = new TimeOnly(22, 0)
             });
-            EventService.Events.Add(new EventInfoViewModel
+            eventList.Add(new EventInfoViewModel
             {
                 Category = EventCategory.Creation,
                 Url = "https://i.imgur.com/yujdumm.jpeg",
@@ -31,7 +27,7 @@ namespace WebNet23Online.Services.EventWorkshop
                 //DateYear = "2026",
                 //Time = "19:00"
             });
-            EventService.Events.Add(new EventInfoViewModel
+            eventList.Add(new EventInfoViewModel
             {
                 Category = EventCategory.Creation,
                 Url = "https://i.imgur.com/JrITbnD.jpeg",
@@ -42,7 +38,7 @@ namespace WebNet23Online.Services.EventWorkshop
                 //Time = "08:00"
             });
 
-            EventService.Events.Add(new EventInfoViewModel
+            eventList.Add(new EventInfoViewModel
             {
                 Category = EventCategory.Sport,
                 Url = "https://i.imgur.com/YsbPP2S.jpeg",
@@ -55,7 +51,7 @@ namespace WebNet23Online.Services.EventWorkshop
                 //Time = "15:00"
             });
 
-            EventService.Events.Add(new EventInfoViewModel
+            eventList.Add(new EventInfoViewModel
             {
                 Category = EventCategory.Games,
                 Url = "https://i.imgur.com/I1dbkqm.jpeg",
@@ -66,11 +62,8 @@ namespace WebNet23Online.Services.EventWorkshop
                 //DateYear = "2026",
                 //Time = "14:00"
             });
-        }
 
-        List<EventInfoViewModel> IEventWorkshopGenerator.GenerateList()
-        {
-            throw new NotImplementedException();
+            return eventList;
         }
     }
 }
