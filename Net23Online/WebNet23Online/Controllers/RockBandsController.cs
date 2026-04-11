@@ -9,7 +9,7 @@ namespace WebNet23Online.Controllers
     {
         private readonly IRockBandsService _rockBandsService;
 
-        public RockBandsController(IRockBandsService rockBandsService, WebContext webContext)
+        public RockBandsController(IRockBandsService rockBandsService)
         {
             _rockBandsService = rockBandsService;
         }
