@@ -5,9 +5,9 @@ namespace WebNet23Online.Services.Interfaces
 {
     public interface IFoodItemGenerator
     {
-        //List<FoodItemViewModel> GenerateFoodItems();
+        List<FoodItemViewModel> GenerateFoodItems();
         List<FoodItemViewModel> GenerateFoodItems(List<FoodItemData> foodItems);
-
+        string Separator {  get; set; }
         void AddFoodItem(FoodItemViewModel foodItem);
     }
 }

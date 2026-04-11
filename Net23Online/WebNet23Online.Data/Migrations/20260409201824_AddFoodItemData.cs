@@ -19,7 +19,7 @@ namespace WebNet23Online.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     MenuType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImgURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImgURL = table.Column<string>(type: "nvarchar(max)", nullable: false),//Не трогаем миграцию а создаем новую
                     Ingredients = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

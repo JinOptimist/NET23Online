@@ -8,6 +8,6 @@ namespace WebNet23Online.Models.DelightBistro
         public int Price { get; set; }
         public string ImgURL { get; set; }
         public string MenuType { get; set; }
-        public List<string> Ingredients { get; set; } = new List<string>() {""};
+        public List<string> Ingredients { get; set; } /*= new List<string>() { "" };*/
     }
 }

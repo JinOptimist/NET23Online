@@ -12,10 +12,10 @@
 
     <form method="post">
         <div class="input-box">
-            @Html.TextBoxFor(x => x.Name, new { type = "text", placeholder = "Имя блюда" })
+            @Html.TextBoxFor(x => x.Name, new { type = "text", required = "required", placeholder = "Имя блюда" })
         </div>
         <div class="input-box">
-            @Html.TextBoxFor(x => x.Price, new { type = "number", placeholder = "Стоимость" })
+            @Html.TextBoxFor(x => x.Price, new { type = "number", required = "required", placeholder = "Стоимость" })
         </div>
         <div class="input-radio-box">
             <div class="radio-box-title">
@@ -37,8 +37,10 @@
             </div>
         </div>
         <div class="input-box">
-            @* <input type="text" id="ingredientString" name="ingredientString" placeholder="Ингредиенты" /> *@
-            @Html.TextBox("ingredientString", new { type = "text", placeholder = "Ингредиенты" })
+            <div>Введите ингредиенты через запятую</div>
+           <div> @* @Html.TextBox("ingredientString","", new { /* type = "text", */ placeholder = "Ингредиенты" }) *@
+            @Html.TextBoxFor(x => x.Ingredients, new {placeholder = "Ингредиенты" })
+            </div>
         </div>
         <div class="input-box url-box">
             @Html.TextBoxFor(x => x.ImgURL, new { type = "url", placeholder = "Добавьте URL изображения" })

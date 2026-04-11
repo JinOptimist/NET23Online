@@ -7,7 +7,7 @@ namespace WebNet23Online.Services
     public class FoodItemGenerator : IFoodItemGenerator
     {
         private List<FoodItemViewModel> _foodItems;
-
+        public string Separator { get; set; }
         public FoodItemGenerator()
         {
             _foodItems = new List<FoodItemViewModel>
@@ -153,14 +153,14 @@ namespace WebNet23Online.Services
             _foodItems.Add(foodItem);
         }
 
-        //public List<FoodItemViewModel> GenerateFoodItems()
-        //{
-        //    return _foodItems;
-        //}
+        public List<FoodItemViewModel> GenerateFoodItems()
+        {
+            return _foodItems;
+        }
 
         public List<FoodItemViewModel> GenerateFoodItems(List<FoodItemData> foodItemDatas)
         {
-            //Заполняем свойства нашей VM FoodItem Свойствами FI из DB
+            //Заполняем свойства нашей VM FoodItem Свойствами FoodItemDatas
             var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
             {
                 Name = x.Name,
@@ -168,7 +168,7 @@ namespace WebNet23Online.Services
                 ImgURL = x.ImgURL,
                 MenuType= x.MenuType,
              
-                Ingredients= x.Ingredients.Split(",",StringSplitOptions.RemoveEmptyEntries).ToList(), // string to List
+                Ingredients= x.Ingredients.Split(Separator, StringSplitOptions.RemoveEmptyEntries).ToList(), // string to List
             });
             return foodItemsViewModels.ToList();
         }
