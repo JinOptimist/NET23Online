@@ -36,7 +36,7 @@ namespace WebNet23Online.Services
                 return;
             }
 
-            var row = new RockBandsData
+            var newBand = new RockBandsData
             {
                 Name = viewModel.Name.Trim(),
                 Description = viewModel.Description?.Trim() ?? string.Empty,
@@ -45,7 +45,7 @@ namespace WebNet23Online.Services
                     : viewModel.ImageUrl.Trim(),
             };
 
-            _webContext.RockBand.Add(row);
+            _webContext.RockBand.Add(newBand);
             _webContext.SaveChanges();
         }
     }
