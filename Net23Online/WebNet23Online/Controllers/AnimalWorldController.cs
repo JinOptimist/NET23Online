@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebNet23Online.Data;
 using WebNet23Online.Models.AnimalWorld;
 using WebNet23Online.Services.Interfaces;
 
@@ -8,18 +7,15 @@ namespace WebNet23Online.Controllers
     public class AnimalWorldController : Controller
     {
         private IAnimalWorldService _animalWorldService;
-        private WebContext _webContext;
 
-        public AnimalWorldController(IAnimalWorldService animalWorldService, WebContext webContext)
+        public AnimalWorldController(IAnimalWorldService animalWorldService)
         {
             _animalWorldService = animalWorldService;
-            _webContext = webContext;
         }
 
         public IActionResult Index()
         {
-            var animals = _webContext.Beasts.ToList();
-            return View(_animalWorldService.GetRandomAnimals());
+            return View(_animalWorldService.GetAllAnimals());
         }
 
         [HttpGet]
