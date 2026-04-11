@@ -2,8 +2,8 @@
 {
     public enum EventCategory
     {
-        Creation,
-        Sport,
-        Games
+        Creation = 0,
+        Sport = 1,
+        Games = 2
     }
 }
