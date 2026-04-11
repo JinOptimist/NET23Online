@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebNet23Online.Data;
 using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
 
