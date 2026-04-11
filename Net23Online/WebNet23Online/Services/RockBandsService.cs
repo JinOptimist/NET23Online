@@ -1,37 +1,32 @@
-﻿using WebNet23Online.Models.RockBands;
+﻿using Microsoft.EntityFrameworkCore;
+using WebNet23Online.Data;
+using WebNet23Online.Data.Models;
+using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services
 {
     public class RockBandsService : IRockBandsService
     {
+        private readonly WebContext _webContext;
 
-        private readonly List<BandBlockViewModel> _bands =
-        [
-            new BandBlockViewModel
-            {
-                Name = "Bring Me The Horizon",
-                Description =
-                    "Британская рок-группа, известная своим экспериментальным звучанием и мощной энергетикой.",
-                ImageUrl = "/images/rock-bands/BMTH.jpg",
-            },
-            new BandBlockViewModel
-            {
-                Name = "Slipknot",
-                Description = "Легендарная метал-группа с агрессивным стилем и уникальным визуальным образом.",
-                ImageUrl = "/images/rock-bands/slipknot.jpg",
-            },
-            new BandBlockViewModel
-            {
-                Name = "Metallica",
-                Description = "Одна из самых влиятельных метал-групп в истории с культовыми альбомами.",
-                ImageUrl = "/images/rock-bands/metallica.jpg",
-            },
-        ];
+        public RockBandsService(WebContext webContext)
+        {
+            _webContext = webContext;
+        }
 
         public List<BandBlockViewModel> GetBands()
         {
-            return _bands.ToList();
+            return _webContext.RockBand
+                .AsNoTracking()
+                .OrderBy(b => b.Id)
+                .Select(b => new BandBlockViewModel
+                {
+                    Name = b.Name,
+                    Description = b.Description,
+                    ImageUrl = string.IsNullOrWhiteSpace(b.Url) ? null : b.Url,
+                })
+                .ToList();
         }
 
         public void AddBand(BandBlockViewModel viewModel)
@@ -41,16 +36,17 @@ namespace WebNet23Online.Services
                 return;
             }
 
-            _bands.Add(
-                new BandBlockViewModel
-                {
-                    Name = viewModel.Name?.Trim() ?? string.Empty,
-                    Description = viewModel.Description?.Trim() ?? string.Empty,
-                    ImageUrl = string.IsNullOrWhiteSpace(viewModel.ImageUrl)
-                        ? null
-                        : viewModel.ImageUrl.Trim(),
-                }
-            );
+            var row = new RockBandsData
+            {
+                Name = viewModel.Name.Trim(),
+                Description = viewModel.Description?.Trim() ?? string.Empty,
+                Url = string.IsNullOrWhiteSpace(viewModel.ImageUrl)
+                    ? string.Empty
+                    : viewModel.ImageUrl.Trim(),
+            };
+
+            _webContext.RockBand.Add(row);
+            _webContext.SaveChanges();
         }
     }
 }
