@@ -53,6 +53,8 @@ builder.Services.AddSingleton<IRockBandsService, RockBandsService>();
 
 builder.Services.AddSingleton<IRockLegendsPick, RockLegendsPick>();
 
+builder.Services.AddSingleton<ISlayTheSpire2RewardImageService, SlayTheSpire2RewardImageService>();
+
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 //DelightBistro DI
