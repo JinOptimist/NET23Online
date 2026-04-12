@@ -71,7 +71,6 @@ namespace WebNet23Online.Controllers
             {
                 var changedFoodItemData = _webContext.FoodItems.Find(foodItem.Id);
                 var ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
-                changedFoodItemData.Id=foodItem.Id??0;
                 changedFoodItemData.Name = foodItem.Name;
                 changedFoodItemData.Price = foodItem.Price;
                 changedFoodItemData.ImgURL = foodItem.ImgURL;
