@@ -22,9 +22,15 @@
 
     <form method="post">
         <div class="input-box">
+            <div>Id блюда</div>
+            @Html.TextBoxFor(x => x.Id, new { type = "number", required = "required", placeholder = "Id блюда" })
+        </div>
+        <div class="input-box">
+            <div>Название блюда</div>
             @Html.TextBoxFor(x => x.Name, new { type = "text", required = "required", placeholder = "Имя блюда" })
         </div>
         <div class="input-box">
+            <div>Цена блюда</div>
             @Html.TextBoxFor(x => x.Price, new { type = "number", required = "required", placeholder = "Стоимость" })
         </div>
         <div class="input-radio-box">
@@ -46,12 +52,12 @@
                 </div>
             </div>
         </div>
-        <div class="input-box">
+        <div>
             <div>Введите ингредиенты через запятую</div>
-            <div>
+            <div class="input-box url-box">
                 <input type="text"
                        name="Ingredients"
-                       value="@(Model.Ingredients != null ? string.Join(", ", Model.Ingredients) : "")"
+                       value="@(Model.Ingredients != null ? string.Join(",", Model.Ingredients) : "")"
                        placeholder="Ингредиенты через запятую" />
             </div>
         </div>

@@ -157,10 +157,9 @@ namespace WebNet23Online.Services
         {
             return _foodItems;
         }
-
+        // Перегрузка метода, генерация VM по Datas
         public List<FoodItemViewModel> GenerateFoodItems(List<FoodItemData> foodItemDatas)
         {
-            //Заполняем свойства нашей VM FoodItem Свойствами FoodItemDatas
             var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
             {
                 Id = x.Id,
@@ -170,7 +169,7 @@ namespace WebNet23Online.Services
                 MenuType = x.MenuType,
 
                 Ingredients = x.Ingredients.Split(Separator
-                , StringSplitOptions.RemoveEmptyEntries).ToList(), // string to List
+                , StringSplitOptions.RemoveEmptyEntries).ToList(),
             });
             return foodItemsViewModels.ToList();
         }

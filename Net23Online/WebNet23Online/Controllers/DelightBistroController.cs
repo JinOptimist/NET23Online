@@ -28,8 +28,8 @@ namespace WebNet23Online.Controllers
             FeelDataBase();
 
             var foodItemsDatas = _webContext.FoodItems.ToList();
-            var foodItemVMFromDatas = _foodItemGenerator.GenerateFoodItems(foodItemsDatas);
-            var viewModel = _menuTypeGenerator.GetMenuTypesFromFoodItems(foodItemVMFromDatas, menuType);
+            var foodItemsVM = _foodItemGenerator.GenerateFoodItems(foodItemsDatas);
+            var viewModel = _menuTypeGenerator.GetMenuTypesFromFoodItems(foodItemsVM, menuType);
 
             return View(viewModel);
         }
@@ -66,19 +66,19 @@ namespace WebNet23Online.Controllers
             //    return View(foodItem);
             //}
 
-            // Изменяем существующий элемент
+            // change an existing element
             if (foodItem.Id > 0)
             {
                 var changedFoodItemData = _webContext.FoodItems.Find(foodItem.Id);
                 var ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
-
+                changedFoodItemData.Id=foodItem.Id??0;
                 changedFoodItemData.Name = foodItem.Name;
                 changedFoodItemData.Price = foodItem.Price;
                 changedFoodItemData.ImgURL = foodItem.ImgURL;
                 changedFoodItemData.MenuType = foodItem.MenuType;
                 changedFoodItemData.Ingredients = ingredients;
             }
-            // Создаем новый элемент
+            // create new element
             else
             {
                 var newFoodItemDatas = _foodItemGenerator.ConvertVMtoData(foodItem);
@@ -90,7 +90,7 @@ namespace WebNet23Online.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private void FeelDataBase()//Метод в сервис?
+        private void FeelDataBase() //Метод в сервис?
         {
             if (!_webContext.FoodItems.Any())
             {
