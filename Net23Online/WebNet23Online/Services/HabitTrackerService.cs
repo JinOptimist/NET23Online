@@ -1,3 +1,4 @@
+using WebNet23Online.Data.Models;
 using WebNet23Online.Models.HabitTracker;
 
 namespace WebNet23Online.Services;
@@ -8,40 +9,39 @@ public class HabitTrackerService : IHabitTrackerService
 
     private List<HabitViewModel> _allHabits;
     
-    public HabitTrackerViewModel GetHabitTracker()
+    public HabitTrackerViewModel GenerateHabitTracker(HabitTrackerData habitTrackerData)
     {
-        if (_habitTracker is null)
+        var modelHabitTracker = new HabitTrackerViewModel()
         {
-            _habitTracker = new HabitTrackerViewModel();
-            _habitTracker.Habits = GetAllHabits();
-        }
-        
-        return _habitTracker;
-    }
-
-    private List<HabitViewModel> GetAllHabits()
-    {
-        if (_allHabits is null)
-        {
-            _allHabits = new List<HabitViewModel>()
+            UserName = habitTrackerData.UserName,
+            Habits = habitTrackerData.Habits.Select(habit => new HabitViewModel
             {
-                new HabitViewModel { Title = "Спорт 30 мин", ColorOfDot = "pink" },
-                new HabitViewModel { Title = "Английский 20 мин", ColorOfDot = "blue" },
-                new HabitViewModel { Title = "Программирование 1 час", ColorOfDot = "green" },
-                new HabitViewModel { Title = "Вода 2л", ColorOfDot = "purple" },
-            };
-        }
-        return _allHabits;
+                DoneCount = habit.DoneCount,
+                Percent = habit.Percent,
+                Title = habit.Title,
+                WeekResults = habit.WeekResults,
+                ColorOfDot = habit.ColorOfDot,
+            }).ToList(),
+        };
+        return modelHabitTracker;
     }
 
-    public void CreateHabit(HabitViewModel habit)
+    public HabitData CreateHabit(HabitViewModel modelHabit, int habitsCount)
     {
         var availibleColors = new[] { "pink", "blue", "green", "purple" };
         
-        var indexOfColorForHabit = _allHabits.Count % availibleColors.Length; 
+        var indexOfColorForHabit = habitsCount % availibleColors.Length; 
         
-        habit.ColorOfDot = availibleColors[indexOfColorForHabit];
-        _allHabits.Add(habit);
+        var habit = new HabitData()
+        {
+            ColorOfDot = availibleColors[indexOfColorForHabit],
+            DoneCount = modelHabit.DoneCount,
+            Percent = modelHabit.Percent,
+            Title = modelHabit.Title,
+            WeekResults = modelHabit.WeekResults,
+        };
+
+        return habit;
     }
 
     public bool IsHabitHasTitle(HabitViewModel  habit)
