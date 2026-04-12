@@ -27,13 +27,12 @@
                     @Html.Label("soups", "Супы")
                 </div>
                 <div class="radio-box">
-                    @Html.RadioButtonFor(x => x.MenuType, "salads", new { id = "salads" })
-                    @Html.Label("salads", "Салаты")
-                </div>
-
-                <div class="radio-box">
                     @Html.RadioButtonFor(x => x.MenuType, "hot", new { id = "hot" })
                     @Html.Label("hot", "Горячие блюда")
+                </div>
+                <div class="radio-box">
+                    @Html.RadioButtonFor(x => x.MenuType, "salads", new { id = "salads" })
+                    @Html.Label("salads", "Салаты")
                 </div>
             </div>
         </div>

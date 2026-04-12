@@ -27,11 +27,11 @@ body {
     width: auto;
 }
 
-    .logo img {
-        max-width: 150px;
-        max-height: 100%;
-        background-color: #964040;
-    }
+.logo img {
+    max-width: 150px;
+    max-height: 100%;
+    background-color: #964040;
+}
 
 .logo-name {
     font-family: "Comic Sans MS", cursive, sans-serif;
@@ -55,8 +55,8 @@ body {
 }
 
 .plate {
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 .type-name {
@@ -238,16 +238,20 @@ body,
     font-size: 24px;
     font-weight: bold;
 }
-.url-box input{
+
+.url-box input {
     width: 400px;
 }
+
 .radio-box-title {
     font-size: 24px;
     font-weight: bold;
-    }
+}
+
 .radio-box label, input {
     cursor: pointer;
 }
+
 .food-create-button button {
     width: 400px;
     padding: 10px;

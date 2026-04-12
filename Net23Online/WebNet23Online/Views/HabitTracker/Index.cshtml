@@ -1,0 +1,76 @@
+@{
+    Layout = "_LayoutHabitTracker";
+}
+
+<link rel="stylesheet" href="/css/habit-tracker/main.css">
+
+
+<div class="tracker">
+    <div class="tracker-title">Трекер задач на неделю</div>
+    <div class="tracker-date">Сегодня - </div>
+
+    <div class="table-tracker">
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th>Пн</th>
+                <th>Вт</th>
+                <th>Ср</th>
+                <th>Чт</th>
+                <th>Пт</th>
+                <th>Сб</th>
+                <th>Вс</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="habit-name">Спорт 30 мин</td>
+                <td><span class="dot sport"></span></td>
+                <td><span class="dot sport"></span></td>
+                <td><span class="dot sport"></span></td>
+                <td><span class="dot sport"></span></td>
+                <td><span class="dot sport"></span></td>
+                <td><span class="dot sport"></span></td>
+                <td><span class="dot sport"></span></td>
+            </tr>
+            <tr>
+                <td class="habit-name">Английский 20 мин</td>
+                <td><span class="dot english"></span></td>
+                <td><span class="dot english"></span></td>
+                <td><span class="dot english"></span></td>
+                <td><span class="dot english"></span></td>
+                <td><span class="dot english"></span></td>
+                <td><span class="dot english"></span></td>
+                <td><span class="dot english"></span></td> 
+            </tr>
+            <tr>
+                <td class="habit-name">Программирование 1 час</td>
+                <td><span class="dot programming"></span></td>
+                <td><span class="dot programming"></span></td>
+                <td><span class="dot programming"></span></td>
+                <td><span class="dot programming"></span></td>
+                <td><span class="dot programming"></span></td>
+                <td><span class="dot programming"></span></td>
+                <td><span class="dot programming"></span></td>
+            </tr>
+            <tr>
+                <td class="habit-name">Вода 2л</td>
+                <td><span class="dot water
+                    "></span></td>
+                <td><span class="dot water"></span></td>
+                <td><span class="dot water"></span></td>
+                <td><span class="dot water"></span></td>
+                <td><span class="dot water"></span></td>
+                <td><span class="dot water"></span></td>
+                <td><span class="dot water"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/js/habit-tracker/main.js"></script>
+}
+

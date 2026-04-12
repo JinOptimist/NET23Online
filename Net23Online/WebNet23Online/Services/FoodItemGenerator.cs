@@ -1,64 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebNet23Online.Models.DelightBistro;
+﻿using WebNet23Online.Models.DelightBistro;
+using WebNet23Online.Services.Interfaces;
 
-namespace WebNet23Online.Controllers
+namespace WebNet23Online.Services
 {
-    public class DelightBistroController : Controller
+    public class FoodItemGenerator : IFoodItemGenerator
     {
+        private List<FoodItemViewModel> _foodItems;
 
-        public static List<FoodItemViewModel> _foodItems = GetAllFoodItems();// static menu, delete after add db
-
-        public IActionResult Index(string menuType)
+        public FoodItemGenerator()
         {
-            var allFoods = _foodItems;
-            var viewModels = new List<MenuTypeViewModel>
+            _foodItems = new List<FoodItemViewModel>
             {
-                new MenuTypeViewModel()
-                {
-                    MenuType="soups",
-                    TypeName="Супы",
-                    FoodItems =allFoods.Where(x=>x.MenuType=="soups").ToList(),
-                },
-                new MenuTypeViewModel()
-                {
-                    MenuType="hot",
-                    TypeName="Горячее",
-
-                    FoodItems =allFoods.Where(x=>x.MenuType=="hot").ToList(),
-                },
-                new MenuTypeViewModel()
-                {
-                    MenuType="salads",
-                    TypeName="Салаты",
-                    FoodItems =allFoods.Where(x=>x.MenuType=="salads").ToList(),
-                }
-            };
-
-            var viewModel = viewModels.Where(x => x.MenuType == menuType).ToList();
-            if (string.IsNullOrEmpty(menuType))
-            {
-                return View(viewModels);
-            }
-            return View(viewModel);
-        }
-
-        [HttpGet]
-        public IActionResult FoodBuilder()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult FoodBuilder(FoodItemViewModel foodItem)
-        {
-            _foodItems.Add(foodItem);
-            return RedirectToAction("Index");
-        }
-        public static List<FoodItemViewModel> GetAllFoodItems()
-        {
-
-            return new List<FoodItemViewModel>
-             {
                 new FoodItemViewModel
                  {
                     Name = "Tom Yum Talay",
@@ -193,6 +145,17 @@ namespace WebNet23Online.Controllers
                     }
                 }
             };
-        }//static method
+        }
+
+        public void AddFoodItem(FoodItemViewModel foodItem)
+        {
+            _foodItems.Add(foodItem);
+        }
+
+        public List<FoodItemViewModel> GenerateFoodItems()
+        {
+            return _foodItems;
+        }
+
     }
 }

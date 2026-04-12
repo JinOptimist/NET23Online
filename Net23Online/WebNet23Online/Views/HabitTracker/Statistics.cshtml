@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "_LayoutHabitTracker";
+}
+
+<link rel="stylesheet" href="/css/habit-tracker/statistics.css">
+
+<div class="tracker">
+    <div class="tracker-title">Статистика за месяц</div>
+    <div class="tracker-date" id="month-label"></div>
+
+    <div class="table-tracker stats-container">
+        <div class="stat-item">
+            <div class="stat-header">
+                <span class="stat-name">Спорт 30 мин</span>
+                <span class="stat-value" id="val-sport">0 / 30</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill sport" id="bar-sport"></div>
+            </div>
+        </div>
+
+        <div class="stat-item">
+            <div class="stat-header">
+                <span class="stat-name">Английский 20 мин</span>
+                <span class="stat-value" id="val-english">0 / 30</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill english" id="bar-english"></div>
+            </div>
+        </div>
+
+        <div class="stat-item">
+            <div class="stat-header">
+                <span class="stat-name">Программирование 1 час</span>
+                <span class="stat-value" id="val-programming">0 / 30</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill programming" id="bar-programming"></div>
+            </div>
+        </div>
+
+        <div class="stat-item">
+            <div class="stat-header">
+                <span class="stat-name">Вода 2л</span>
+                <span class="stat-value" id="val-water">0 / 30</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill water" id="bar-water"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/js/habit-tracker/statistics.js"></script>
+}

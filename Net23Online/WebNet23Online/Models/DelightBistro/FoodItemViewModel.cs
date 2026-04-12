@@ -1,4 +1,6 @@
-﻿namespace WebNet23Online.Models.DelightBistro
+﻿using WebNet23Online.Services.Interfaces;
+
+namespace WebNet23Online.Models.DelightBistro
 {
     public class FoodItemViewModel
     {
