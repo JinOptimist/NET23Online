@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing.Patterns;
 using WebNet23Online.Data;
-using WebNet23Online.Data.Models;
 using WebNet23Online.Models.DelightBistro;
-using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
+using WebNet23Online.Data.Repositories.Interfaces;
+
 
 namespace WebNet23Online.Controllers
 {
@@ -12,7 +11,10 @@ namespace WebNet23Online.Controllers
     {
         private IFoodItemGenerator _foodItemGenerator;
         private IMenuTypeGenerator _menuTypeGenerator;
-        private WebContext _webContext;
+
+        //private IFoodItemRepository _foodItemRepository;
+        private WebContext _webContext; //delete after add repository
+
         private const string SEPARATOR = ",";
 
         public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator, WebContext webContext)
