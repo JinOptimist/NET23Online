@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebNet23Online.Data;
 
@@ -10,9 +11,11 @@ using WebNet23Online.Data;
 namespace WebNet23Online.Data.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20260412170849_AnimalWorldDeastDataFirstVersion")]
+    partial class AnimalWorldDeastDataFirstVersion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,37 +47,6 @@ namespace WebNet23Online.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AnimeGirls");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.FoodItemData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImgURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ingredients")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MenuType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FoodItems");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.BeastData", b =>
@@ -124,31 +96,6 @@ namespace WebNet23Online.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Mazes");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.RockBandsData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RockBand");
                 });
 #pragma warning restore 612, 618
         }

@@ -13,6 +13,9 @@ builder.Services.AddDbContext<WebContext>(op => op.UseSqlServer(connectionString
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ILittleLemonMenuService, LittleLemonMenuService>();
+builder.Services.AddScoped<ILittleLemonTestimonialService, LittleLemonTestimonialService>();
+builder.Services.AddScoped<ILittleLemonSubscribeService, LittleLemonSubscribeService>();
 
 // Register Services
 //builder.Services.AddScoped<IAnimeGirlGenerator, AnimeGirlGenerator>(diContainer =>
@@ -48,8 +51,8 @@ builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
 
 builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
 builder.Services.AddSingleton<IMazeService, MazeService>();
-builder.Services.AddSingleton<IAnimalWorldService, AnimalWorldService>();
-builder.Services.AddSingleton<IRockBandsService, RockBandsService>();
+builder.Services.AddScoped<IAnimalWorldService, AnimalWorldService>();
+builder.Services.AddScoped<IRockBandsService, RockBandsService>();
 
 builder.Services.AddSingleton<IRockLegendsPick, RockLegendsPick>();
 
