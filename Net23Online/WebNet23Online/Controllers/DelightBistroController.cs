@@ -61,11 +61,7 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult FoodBuilder(FoodItemViewModel foodItem)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(foodItem);
-            //}
-
+            
             // change an existing element
             if (foodItem.Id > 0)
             {

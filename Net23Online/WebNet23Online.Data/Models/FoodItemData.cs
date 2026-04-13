@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace WebNet23Online.Data.Models
 {
-    public class FoodItemData
+    public class FoodItemData:BaseModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
         public string MenuType { get; set; }
-        public string? ImgURL { get; set; }// может быть null
-        public string Ingredients { get; set; }//List хранить нельзя, как сделать его возможных хранить null
+        public string? ImgURL { get; set; }
+        public string Ingredients { get; set; }
     }
 }

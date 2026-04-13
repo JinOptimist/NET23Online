@@ -157,7 +157,6 @@ namespace WebNet23Online.Services
         {
             return _foodItems;
         }
-        // Перегрузка метода, генерация VM по Datas
         public List<FoodItemViewModel> GenerateFoodItems(List<FoodItemData> foodItemDatas)
         {
             var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
