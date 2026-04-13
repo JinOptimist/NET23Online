@@ -2,6 +2,8 @@ using MazeCore;
 using MazeCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data;
+using WebNet23Online.Data.Repositories;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
