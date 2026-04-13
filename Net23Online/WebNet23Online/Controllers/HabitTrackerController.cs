@@ -37,6 +37,7 @@ public class HabitTrackerController : Controller
             .FirstOrDefault();
 
         var model = _habitService.GenerateHabitTracker(habitTrackerData);
+        _statisticsService.CreateStatisticsInfo(model);
         
         return View(model);
     } 
