@@ -7,6 +7,7 @@ namespace WebNet23Online.Data
     {
         public DbSet<AnimeGirlData> AnimeGirls { get; set; }
         public DbSet<MazeData> Mazes { get; set; }
+        public DbSet<RockBandsData> RockBand {  get; set; }    
 
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
     }

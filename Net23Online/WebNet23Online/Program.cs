@@ -52,7 +52,7 @@ builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
 builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
 builder.Services.AddSingleton<IMazeService, MazeService>();
 builder.Services.AddSingleton<IAnimalWorldService, AnimalWorldService>();
-builder.Services.AddSingleton<IRockBandsService, RockBandsService>();
+builder.Services.AddScoped<IRockBandsService, RockBandsService>();
 
 builder.Services.AddSingleton<IRockLegendsPick, RockLegendsPick>();
 
