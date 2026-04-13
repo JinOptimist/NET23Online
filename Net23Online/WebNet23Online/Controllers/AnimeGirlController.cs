@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebNet23Online.Data;
 using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.AnimeGirl;
 using WebNet23Online.Services.Interfaces;
 
@@ -11,18 +10,19 @@ namespace WebNet23Online.Controllers
     public class AnimeGirlController : Controller
     {
         private IAnimeGirlGenerator _animeGirlGenerator;
-        private WebContext _webContext;
+        private IAnimeGirlRepository _animeGirlRepository;
 
-        public AnimeGirlController(IAnimeGirlGenerator animeGirlGenerator, WebContext webContext)
+        public AnimeGirlController(IAnimeGirlGenerator animeGirlGenerator, 
+            IAnimeGirlRepository animeGirlRepository)
         {
             _animeGirlGenerator = animeGirlGenerator;
-            _webContext = webContext;
+            _animeGirlRepository = animeGirlRepository;
         }
 
         //    /AnimeGirl/Index
         public IActionResult Index()
         {
-            var animeGirlDatas = _webContext.AnimeGirls.ToList();
+            var animeGirlDatas = _animeGirlRepository.GetAll();
 
             var viewModels = _animeGirlGenerator.GenerateList(animeGirlDatas);
 
@@ -45,14 +45,12 @@ namespace WebNet23Online.Controllers
                 Url = viewModel.Url,
             };
 
-            var isExisted = _webContext.AnimeGirls.Any(x => x.Name == viewModel.Name);
-            if (isExisted)
+            if (_animeGirlRepository.IsNameFree(viewModel.Name))
             {
                 return View(viewModel);
             }
 
-            _webContext.AnimeGirls.Add(animeGirlData); // Want to add
-            _webContext.SaveChanges();                 // Real add
+            _animeGirlRepository.Add(animeGirlData);
 
             return RedirectToAction(nameof(Index));
         }

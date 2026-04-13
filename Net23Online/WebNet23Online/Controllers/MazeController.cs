@@ -8,12 +8,10 @@ namespace WebNet23Online.Controllers
     public class MazeController : Controller
     {
         private IMazeService _mazeService;
-        private WebContext _webContext;
 
-        public MazeController(IMazeService mazeService, WebContext webContext)
+        public MazeController(IMazeService mazeService)
         {
             _mazeService = mazeService;
-            _webContext = webContext;
         }
 
         public IActionResult Index()

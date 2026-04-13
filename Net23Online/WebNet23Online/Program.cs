@@ -63,6 +63,10 @@ builder.Services.AddSingleton<IMenuTypeGenerator, MenuTypeGenerator>();
 builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 
+// Repositories
+builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
+builder.Services.AddScoped<IMazeRepository, MazeRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

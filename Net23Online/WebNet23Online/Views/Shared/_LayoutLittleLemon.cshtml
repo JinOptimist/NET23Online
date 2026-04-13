@@ -12,7 +12,7 @@
 	<header class="header">
 		<div class="header-container">
 			<h1 class="header-title">Little Lemon restaurant</h1>
-			<a href="index.html">
+			<a href="/LittleLemon/Index">
 				<img src="/images/little-lemon/icons/logo.png"
 					 alt="Little Lemon logo"
 					 width="202"
@@ -103,14 +103,13 @@
 					</div>
 				</form>
 				@{
-					var subscribeMessage = TempData
-						[LittleLemonSubscribeViewModel.MESSAGE_KEY]?.ToString();
-					if (subscribeMessage != null)
-					{
-						<p class="subscribe-feedback">@subscribeMessage</p>
-					}
-						
-				}
+                    var subscribeMessage = TempData
+						[LittleLemonSubscribeViewModel.MESSAGE_KEY]?.ToString();                         
+                }
+                @if (!string.IsNullOrEmpty(subscribeMessage))
+                {
+                    <p class="subscribe-feedback">@subscribeMessage</p>
+                }
 				<div class="address">
 					<p>53, East Birchwood Ave. Brooklyn, New York 11201, USA.</p>
 					<p>contact@littlelemon.com</p>
