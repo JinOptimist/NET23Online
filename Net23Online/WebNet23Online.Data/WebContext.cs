@@ -10,6 +10,8 @@ namespace WebNet23Online.Data
         public DbSet<BeastData> Beasts { get; set; }
         public DbSet<RockBandsData> RockBand {  get; set; }    
 
+        public DbSet<RockLegendsData> RockLegends { get; set; }
+
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
     }
 }

@@ -5,5 +5,7 @@
         public string SelectedBand { get; set; }
         public string BandName { get; set; }
         public string Biography { get; set; }
+        public int PickTime { get; set; }
+
     }
 }
