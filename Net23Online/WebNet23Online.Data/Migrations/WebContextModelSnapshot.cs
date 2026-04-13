@@ -46,6 +46,37 @@ namespace WebNet23Online.Data.Migrations
                     b.ToTable("AnimeGirls");
                 });
 
+            modelBuilder.Entity("WebNet23Online.Data.Models.FoodItemData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImgURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredients")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MenuType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FoodItems");
+                });
+
             modelBuilder.Entity("WebNet23Online.Data.Models.BeastData", b =>
                 {
                     b.Property<int>("Id")
