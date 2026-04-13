@@ -1,4 +1,5 @@
-﻿using WebNet23Online.Models.DelightBistro;
+﻿using WebNet23Online.Data.Models;
+using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services
@@ -6,7 +7,7 @@ namespace WebNet23Online.Services
     public class FoodItemGenerator : IFoodItemGenerator
     {
         private List<FoodItemViewModel> _foodItems;
-
+        public string Separator { get; set; }
         public FoodItemGenerator()
         {
             _foodItems = new List<FoodItemViewModel>
@@ -156,6 +157,38 @@ namespace WebNet23Online.Services
         {
             return _foodItems;
         }
+        public List<FoodItemViewModel> GenerateFoodItems(List<FoodItemData> foodItemDatas)
+        {
+            var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Price = x.Price,
+                ImgURL = x.ImgURL,
+                MenuType = x.MenuType,
+
+                Ingredients = x.Ingredients.Split(Separator
+                , StringSplitOptions.RemoveEmptyEntries).ToList(),
+            });
+            return foodItemsViewModels.ToList();
+        }
+
+        public FoodItemData ConvertVMtoData(FoodItemViewModel foodItemVM)
+        {
+            string ingredients = string.Join(Separator, foodItemVM.Ingredients);
+
+            var newFoodItemData = new FoodItemData()
+            {
+                Id = foodItemVM.Id ?? 0,
+                Name = foodItemVM.Name,
+                Price = foodItemVM.Price,
+                ImgURL = string.IsNullOrEmpty(foodItemVM.ImgURL) ? null : foodItemVM.ImgURL,
+                MenuType = foodItemVM.MenuType,
+                Ingredients = ingredients,
+            };
+            return newFoodItemData;
+        }
+
 
     }
 }

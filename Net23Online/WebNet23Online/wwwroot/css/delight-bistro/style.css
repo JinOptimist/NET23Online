@@ -27,11 +27,11 @@ body {
     width: auto;
 }
 
-.logo img {
-    max-width: 150px;
-    max-height: 100%;
-    background-color: #964040;
-}
+    .logo img {
+        max-width: 150px;
+        max-height: 100%;
+        background-color: #964040;
+    }
 
 .logo-name {
     font-family: "Comic Sans MS", cursive, sans-serif;
@@ -242,6 +242,9 @@ body,
 .url-box input {
     width: 400px;
 }
+.ingredients-box input {
+    width: 400px;
+}
 
 .radio-box-title {
     font-size: 24px;
@@ -262,3 +265,16 @@ body,
     background-color: #ebae09;
     cursor: pointer;
 }
+
+.change-food {
+    text-align: center;
+}
+
+    .change-food img {
+        border-radius: 20px;
+        margin: 20px;
+        width: 300px;
+        max-height: 300px;
+        object-fit: cover;
+    }
+

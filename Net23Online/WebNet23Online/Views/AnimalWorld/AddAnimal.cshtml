@@ -16,7 +16,14 @@
             <div class="green-title">
                 <h6>Название животного</h6>
             </div>
-            @Html.TextBoxFor(animal => animal.BeastName, new { @class = "form-input", type = "text", placeholder = "Например: Панда" })
+            @Html.TextBoxFor(animal => animal.BeastName, new { @class = "form-input", type = "text", placeholder = "Например: Зебра" })
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Место обитания</h6>
+            </div>
+            @Html.TextBoxFor(animal => animal.NativeRange, new { @class = "form-input", type = "text", placeholder = "Например: Африка" })
         </div>
         <hr />
         <div class="form-group">
@@ -24,6 +31,13 @@
                 <h6>Краткое описание</h6>
             </div>
             @Html.TextAreaFor(animal => animal.BriefDescription, new { @class = "form-input", type = "text", placeholder = "Опишите в одном предложении..." })
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Полное описание</h6>
+            </div>
+            @Html.TextAreaFor(animal => animal.FullDescription, new { @class = "form-input", type = "text", placeholder = "Вся известная информация..." })
         </div>
         <hr />
         <div class="button-group">
