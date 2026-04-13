@@ -2,6 +2,8 @@ using MazeCore;
 using MazeCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data;
+using WebNet23Online.Data.Repositories;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
@@ -62,6 +64,10 @@ builder.Services.AddScoped<ICatalogService, CatalogService>();
 //DelightBistro DI
 builder.Services.AddSingleton<IFoodItemGenerator, FoodItemGenerator>();
 builder.Services.AddSingleton<IMenuTypeGenerator, MenuTypeGenerator>();
+
+// Repositories
+builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
+builder.Services.AddScoped<IMazeRepository, MazeRepository>();
 
 var app = builder.Build();
 

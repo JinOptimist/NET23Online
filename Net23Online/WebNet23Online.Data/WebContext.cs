@@ -6,6 +6,7 @@ namespace WebNet23Online.Data
     public class WebContext : DbContext
     {
         public DbSet<AnimeGirlData> AnimeGirls { get; set; }
+        public DbSet<UserData> Users { get; set; }
         public DbSet<MazeData> Mazes { get; set; }
         public DbSet<BeastData> Beasts { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
