@@ -46,6 +46,59 @@ namespace WebNet23Online.Data.Migrations
                     b.ToTable("AnimeGirls");
                 });
 
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ColorOfDot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DoneCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HabitTrackerDataId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Percent")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WeekResults")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HabitTrackerDataId");
+
+                    b.ToTable("HabitData");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HabitTracker");
+                });
+
             modelBuilder.Entity("WebNet23Online.Data.Models.BeastData", b =>
                 {
                     b.Property<int>("Id")
@@ -124,6 +177,18 @@ namespace WebNet23Online.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Mazes");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
+                {
+                    b.HasOne("WebNet23Online.Data.Models.HabitTrackerData", null)
+                        .WithMany("Habits")
+                        .HasForeignKey("HabitTrackerDataId");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerData", b =>
+                {
+                    b.Navigation("Habits");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.RockBandsData", b =>
