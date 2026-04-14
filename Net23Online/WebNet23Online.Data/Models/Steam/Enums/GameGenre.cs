@@ -1,4 +1,4 @@
-﻿namespace WebNet23Online.Models.Steam
+﻿namespace WebNet23Online.Data.Models.Steam.Enums
 {
     public enum GameGenre
     {
