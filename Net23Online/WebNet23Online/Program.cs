@@ -69,6 +69,7 @@ builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 
 // Repositories
+builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
 
