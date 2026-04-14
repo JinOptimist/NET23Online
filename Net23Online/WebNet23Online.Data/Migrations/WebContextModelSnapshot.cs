@@ -46,6 +46,119 @@ namespace WebNet23Online.Data.Migrations
                     b.ToTable("AnimeGirls");
                 });
 
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ColorOfDot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DoneCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HabitTrackerDataId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Percent")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WeekResults")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HabitTrackerDataId");
+
+                    b.ToTable("HabitData");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HabitTracker");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.BeastData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BeastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BriefDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NativeRange")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Beasts");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.FoodItemData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImgURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredients")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MenuType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FoodItems");
+                });
+
             modelBuilder.Entity("WebNet23Online.Data.Models.MazeData", b =>
                 {
                     b.Property<int>("Id")
@@ -64,6 +177,109 @@ namespace WebNet23Online.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Mazes");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
+                {
+                    b.HasOne("WebNet23Online.Data.Models.HabitTrackerData", null)
+                        .WithMany("Habits")
+                        .HasForeignKey("HabitTrackerDataId");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerData", b =>
+                {
+                    b.Navigation("Habits");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.RockBandsData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RockBand");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.RockLegendsData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ACDC")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AllUsers")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BonJovi")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BringMeTheHorizon")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Kiss")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Metallica")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ozzy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rammstein")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Skillet")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Slipknot")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThreeDaysGrace")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RockLegends");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.UserData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.Steam.GameData", b =>

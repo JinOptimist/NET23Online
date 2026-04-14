@@ -15,7 +15,7 @@ namespace WebNet23Online.Controllers
 
         public IActionResult Index()
         {
-            return View(_animalWorldService.GetRandomAnimals());
+            return View(_animalWorldService.GetAllAnimals());
         }
 
         [HttpGet]

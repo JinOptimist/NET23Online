@@ -3,7 +3,7 @@
 
 @{
     Layout = "_LayoutRockLegends";
-    ViewData["Title"] = Model.BandName; // Теперь заголовок вкладки — это имя группы
+    ViewData["Title"] = Model.BandName;
 }
 
 <div class="main-container" style="padding: 20px; color: white;">
@@ -22,6 +22,7 @@
 
     <div style="margin-top: 30px;">
         <p style="color: #666; font-size: 0.9rem;">
+            Данная группа была выбрана: @Model.PickTime
             Технический код выбора: @Model.SelectedBand
         </p>
         

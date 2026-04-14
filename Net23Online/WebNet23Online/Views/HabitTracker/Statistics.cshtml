@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WebNet23Online.Models.HabitTracker.HabitTrackerViewModel
+@{
     Layout = "_LayoutHabitTracker";
 }
 
@@ -9,45 +10,19 @@
     <div class="tracker-date" id="month-label"></div>
 
     <div class="table-tracker stats-container">
-        <div class="stat-item">
-            <div class="stat-header">
-                <span class="stat-name">Спорт 30 мин</span>
-                <span class="stat-value" id="val-sport">0 / 30</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill sport" id="bar-sport"></div>
-            </div>
-        </div>
 
-        <div class="stat-item">
-            <div class="stat-header">
-                <span class="stat-name">Английский 20 мин</span>
-                <span class="stat-value" id="val-english">0 / 30</span>
+        @foreach (var habit in Model.Habits)
+        {
+            <div class="stat-item">
+                <div class="stat-header">
+                    <span class="stat-name">@habit.Title</span>
+                    <span class="stat-value">@habit.DoneCount / @habit.WeekResults.Count</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill @habit.ColorOfDot" data-percent="@habit.Percent"></div>
+                </div>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill english" id="bar-english"></div>
-            </div>
-        </div>
-
-        <div class="stat-item">
-            <div class="stat-header">
-                <span class="stat-name">Программирование 1 час</span>
-                <span class="stat-value" id="val-programming">0 / 30</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill programming" id="bar-programming"></div>
-            </div>
-        </div>
-
-        <div class="stat-item">
-            <div class="stat-header">
-                <span class="stat-name">Вода 2л</span>
-                <span class="stat-value" id="val-water">0 / 30</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill water" id="bar-water"></div>
-            </div>
-        </div>
+        }
     </div>
 </div>
 
