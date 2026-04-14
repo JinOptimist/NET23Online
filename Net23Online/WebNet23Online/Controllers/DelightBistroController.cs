@@ -12,24 +12,25 @@ namespace WebNet23Online.Controllers
         private IFoodItemGenerator _foodItemGenerator;
         private IMenuTypeGenerator _menuTypeGenerator;
 
-        //private IFoodItemRepository _foodItemRepository;
-        private WebContext _webContext; //delete after add repository
+        private IFoodItemRepository _foodItemRepository;// Хотим ли мы создавать свойство репозиторя в сервисе?
+        //private WebContext _webContext; //delete after add repository
 
-        private const string SEPARATOR = ",";
+        private const string SEPARATOR = ",";// как связать это поле с полем _foodItemGenerator
 
-        public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator, WebContext webContext)
+        public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator, /*WebContext webContext*/ /*delete*//*,*/ IFoodItemRepository foodItemRepository)
         {
             _foodItemGenerator = foodItemGenerator;
             _menuTypeGenerator = menuTypeGenerator;
-            _webContext = webContext;
+            //_webContext = webContext;//delete
             _foodItemGenerator.Separator = SEPARATOR;
+            _foodItemRepository = foodItemRepository;
         }
 
         public IActionResult Index(string menuType)
         {
             FeelDataBase();
 
-            var foodItemsDatas = _webContext.FoodItems.ToList();
+            var foodItemsDatas = _foodItemRepository.GetAll();//List FIDatas
             var foodItemsVM = _foodItemGenerator.GenerateFoodItems(foodItemsDatas);
             var viewModel = _menuTypeGenerator.GetMenuTypesFromFoodItems(foodItemsVM, menuType);
 
@@ -37,13 +38,14 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult FoodBuilder(int? id)
+        public IActionResult FoodBuilder(int id)
         {
-            if (id.HasValue && id > 0)
+            if (/*id.HasValue &&*/ id > 0)
             {
-                var foodItemData = _webContext.FoodItems
-                    .Find(id.Value);
-
+                //var foodItemData = _webContext.FoodItems
+                //    .FirstOrDefault(x => x.Id == id); //delete
+                var foodItemData = _foodItemRepository.Get(id);
+                //ChangeFoodItemData();
                 var changedFoodItemVM = new FoodItemViewModel
                 {
                     Id = foodItemData.Id,
@@ -63,42 +65,48 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult FoodBuilder(FoodItemViewModel foodItem)
         {
-            
+            //Переписать if else=> сразу негативный сценарий
             // change an existing element
             if (foodItem.Id > 0)
             {
-                var changedFoodItemData = _webContext.FoodItems.Find(foodItem.Id);
-                var ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
-                changedFoodItemData.Name = foodItem.Name;
-                changedFoodItemData.Price = foodItem.Price;
-                changedFoodItemData.ImgURL = foodItem.ImgURL;
-                changedFoodItemData.MenuType = foodItem.MenuType;
-                changedFoodItemData.Ingredients = ingredients;
+                //Convert methode
+                var changedFoodItemData = _foodItemRepository.Get(foodItem.Id);
+                _foodItemGenerator.ChangeFoodItemData(foodItem, changedFoodItemData);
+
+                ////var convertVMtoData = _foodItemGenerator.ConvertVMtoData(foodItem);
+                //var ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
+
+                //changedFoodItemData.Name = foodItem.Name;
+                //changedFoodItemData.Price = foodItem.Price;
+                //changedFoodItemData.ImgURL = foodItem.ImgURL;
+                //changedFoodItemData.MenuType = foodItem.MenuType;
+                //changedFoodItemData.Ingredients = ingredients;
             }
             // create new element
             else
             {
-                var newFoodItemDatas = _foodItemGenerator.ConvertVMtoData(foodItem);
-                _webContext.FoodItems.Add(newFoodItemDatas);
+                _foodItemGenerator.ChangeFoodItemData(foodItem);
+                //var newFoodItemDatas = _foodItemGenerator.ConvertVMtoData(foodItem);
+                //_foodItemRepository.Add(newFoodItemDatas);
             }
 
-            _webContext.SaveChanges();
+            //_webContext.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
 
         private void FeelDataBase() //Метод в сервис?
         {
-            if (!_webContext.FoodItems.Any())
+            if (!_foodItemRepository.Any())
             {
                 var foodItems = _foodItemGenerator.GenerateFoodItems();
                 foreach (var foodItemVM in foodItems)
                 {
                     var foodItemData = _foodItemGenerator.ConvertVMtoData(foodItemVM);
-                    _webContext.FoodItems.Add(foodItemData);
+                    _foodItemRepository.Add(foodItemData);
                 }
 
-                _webContext.SaveChanges();
+                //_webContext.SaveChanges();
             }
         }
     }

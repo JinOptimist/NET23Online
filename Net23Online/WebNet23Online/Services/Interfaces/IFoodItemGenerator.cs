@@ -10,5 +10,6 @@ namespace WebNet23Online.Services.Interfaces
         FoodItemData ConvertVMtoData(FoodItemViewModel foodItemVM);
         string Separator { get; set; }
         void AddFoodItem(FoodItemViewModel foodItem);
+        void ChangeFoodItemData(FoodItemViewModel foodItem, FoodItemData changedFoodItemData = null);
     }
 }

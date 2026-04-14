@@ -8,5 +8,13 @@ namespace WebNet23Online.Data.Repositories
         public FoodItemRepository(WebContext context) : base(context)
         {
         }
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+        //public bool Any()
+        //{
+        //    return _dbSet.Any();
+        //}
     }
 }
