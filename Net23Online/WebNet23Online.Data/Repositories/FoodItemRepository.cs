@@ -12,9 +12,5 @@ namespace WebNet23Online.Data.Repositories
         {
             _context.SaveChanges();
         }
-        //public bool Any()
-        //{
-        //    return _dbSet.Any();
-        //}
     }
 }
