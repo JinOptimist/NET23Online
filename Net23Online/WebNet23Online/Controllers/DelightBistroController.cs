@@ -105,8 +105,6 @@ namespace WebNet23Online.Controllers
                     var foodItemData = _foodItemGenerator.ConvertVMtoData(foodItemVM);
                     _foodItemRepository.Add(foodItemData);
                 }
-
-                //_webContext.SaveChanges();
             }
         }
     }

@@ -8,6 +8,5 @@ namespace WebNet23Online.Data.Repositories.Interfaces
         FoodItemData? Get(int id);
         void SaveChanges();
         bool Any();
-
     }
 }
