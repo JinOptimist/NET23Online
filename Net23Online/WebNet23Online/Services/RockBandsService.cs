@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebNet23Online.Data.Models;
+﻿using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
@@ -18,6 +17,7 @@ namespace WebNet23Online.Services
         public List<BandBlockViewModel> GetBands()
         {
             return _rockBandsRepository
+                .GetAll()
                 .OrderBy(b => b.Id)
                 .Select(b => new BandBlockViewModel
                 {
