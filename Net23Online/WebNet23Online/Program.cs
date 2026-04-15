@@ -80,6 +80,8 @@ builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
 builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 
+builder.Services.AddScoped<IGameRepository, GameRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
