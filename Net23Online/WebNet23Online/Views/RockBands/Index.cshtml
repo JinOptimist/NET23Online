@@ -5,14 +5,15 @@
 }
 <title>Любимые группы</title>
 <link rel="stylesheet" href="/css/rock-bands/style-band.css">
-    <header>
-        <h1>Мои любимые группы</h1>
-        <p>Музыка, которая вдохновляет</p>
-        <a href="/">Home</a>
-    </header>
+<header>
+    <h1>Мои любимые группы</h1>
+    <p>Музыка, которая вдохновляет</p>
+    <a href="/">Home</a>
+</header>
 
-    <main>
+<main>
 
+    <form method="get">
         <div class="preferences-music">
             <div class="preferences-music-title">
                 <h2> Выбери то, что предпочитаешь ты:</h2>
@@ -30,51 +31,51 @@
                 <input type="checkbox" id="punk" name="punk">
                 <label for="punk">Панк-рок</label>
             </div>
+    </form>
+    </div>
 
-        </div>
-
-        @foreach (var band in Model.Bands)
-        {
-            <div class="band">
-                <div class="band-thumb">
-                    @if (!string.IsNullOrWhiteSpace(band.ImageUrl))
-                    {
-                        <img src="@band.ImageUrl" alt="@band.Name" width="640" height="360" loading="lazy" referrerpolicy="no-referrer">
-                    }
-                    else
-                    {
-                        <img alt="@band.Name">
-                    }
-                </div>
-                <div class="band--body">
-                    <h2>@band.Name</h2>
-                    <p>@band.Description</p>
-                </div>
+    @foreach (var band in Model.Bands)
+    {
+        <div class="band">
+            <div class="band-thumb">
+                @if (!string.IsNullOrWhiteSpace(band.ImageUrl))
+                {
+                    <img src="@band.ImageUrl" alt="@band.Name" width="640" height="360" loading="lazy" referrerpolicy="no-referrer">
+                }
+                else
+                {
+                    <img alt="@band.Name">
+                }
             </div>
-        }
-
-        <div class="preferences-music add-band-form">
-            <div class="preferences-music-title">
-                <h2>Добавить группу</h2>
-                <p class="add-band-form-hint">Новая карточка появится в списке в том же формате, что и остальные.</p>
-            </div>
-            <div class="preferences-music-items add-band-form-panel">
-                <form method="post" class="add-band-form-fields">
-                    <div class="add-band-field">
-                        <label for="band-name">Название</label>
-                        <input id="band-name" type="text" name="@nameof(BandBlockViewModel.Name)" placeholder="Например, Arctic Monkeys" autocomplete="off" />
-                    </div>
-                    <div class="add-band-field">
-                        <label for="band-description">Описание</label>
-                        <textarea id="band-description" name="@nameof(BandBlockViewModel.Description)" placeholder="Коротко о группе и звучании" rows="4"></textarea>
-                    </div>
-                    <div class="add-band-field">
-                        <label for="band-image">Ссылка на фото в интернете</label>
-                        <input id="band-image" type="text" inputmode="url" name="@nameof(BandBlockViewModel.ImageUrl)" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
-                        <span class="add-band-field__help">Вставьте прямой URL картинки. Поле можно оставить пустым.</span>
-                    </div>
-                    <button type="submit" class="add-band-submit">Добавить в список</button>
-                </form>
+            <div class="band--body">
+                <h2>@band.Name</h2>
+                <p>@band.Description</p>
             </div>
         </div>
-    </main>
+    }
+
+    <div class="preferences-music add-band-form">
+        <div class="preferences-music-title">
+            <h2>Добавить группу</h2>
+            <p class="add-band-form-hint">Новая карточка появится в списке в том же формате, что и остальные.</p>
+        </div>
+        <div class="preferences-music-items add-band-form-panel">
+            <form method="post" class="add-band-form-fields">
+                <div class="add-band-field">
+                    <label for="band-name">Название</label>
+                    <input id="band-name" type="text" name="@nameof(BandBlockViewModel.Name)" placeholder="Например, Arctic Monkeys" autocomplete="off" />
+                </div>
+                <div class="add-band-field">
+                    <label for="band-description">Описание</label>
+                    <textarea id="band-description" name="@nameof(BandBlockViewModel.Description)" placeholder="Коротко о группе и звучании" rows="4"></textarea>
+                </div>
+                <div class="add-band-field">
+                    <label for="band-image">Ссылка на фото в интернете</label>
+                    <input id="band-image" type="text" inputmode="url" name="@nameof(BandBlockViewModel.ImageUrl)" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
+                    <span class="add-band-field__help">Вставьте прямой URL картинки. Поле можно оставить пустым.</span>
+                </div>
+                <button type="submit" class="add-band-submit">Добавить в список</button>
+            </form>
+        </div>
+    </div>
+</main>

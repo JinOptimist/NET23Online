@@ -14,9 +14,21 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] int[]? genreIds)
         {
-            var viewModel = new RockBandsIndexViewModel { Bands = _rockBandsService.GetBands() };
+            var selectedGenreIds = genreIds ?? Array.Empty<int>();
+            var genres = _rockBandsService.GetGenres();
+            foreach (var g in genres)
+            {
+                g.IsSelected = selectedGenreIds.Contains(g.Id);
+            }
+
+            var viewModel = new RockBandsIndexViewModel
+            {
+                Bands = _rockBandsService.GetBands(selectedGenreIds),
+                Genres = genres,
+                SelectedGenreIds = selectedGenreIds,
+            };
             return View(viewModel);
         }
 

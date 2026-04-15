@@ -6,5 +6,6 @@ namespace WebNet23Online.Services.Interfaces
     {
         void AddBand(BandBlockViewModel viewModel);
         List<BandBlockViewModel> GetBands(int[]? genreIds = null);
+        List<GenreFilterItemViewModel> GetGenres();
     }
 }
