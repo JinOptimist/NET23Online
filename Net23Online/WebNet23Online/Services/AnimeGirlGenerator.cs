@@ -34,7 +34,8 @@ namespace WebNet23Online.Services
             //    Title = _phraseGenerator.Generate()
             //});
 
-            var viewModels = animeGirlDatas.Select(x => new AnimeGirlImageInfoViewModel
+            var viewModels = animeGirlDatas
+                .Select(x => new AnimeGirlImageInfoViewModel
             {
                 Url = x.Url,
                 Title = x.Name

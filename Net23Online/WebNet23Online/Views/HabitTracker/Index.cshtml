@@ -1,3 +1,4 @@
+@model WebNet23Online.Models.HabitTracker.HabitTrackerViewModel
 @{
     Layout = "_LayoutHabitTracker";
 }
@@ -8,66 +9,33 @@
 <div class="tracker">
     <div class="tracker-title">Трекер задач на неделю</div>
     <div class="tracker-date">Сегодня - </div>
-
+    
     <div class="table-tracker">
-        <table>
-            <thead>
-            <tr>
-                <th></th>
-                <th>Пн</th>
-                <th>Вт</th>
-                <th>Ср</th>
-                <th>Чт</th>
-                <th>Пт</th>
-                <th>Сб</th>
-                <th>Вс</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="habit-name">Спорт 30 мин</td>
-                <td><span class="dot sport"></span></td>
-                <td><span class="dot sport"></span></td>
-                <td><span class="dot sport"></span></td>
-                <td><span class="dot sport"></span></td>
-                <td><span class="dot sport"></span></td>
-                <td><span class="dot sport"></span></td>
-                <td><span class="dot sport"></span></td>
-            </tr>
-            <tr>
-                <td class="habit-name">Английский 20 мин</td>
-                <td><span class="dot english"></span></td>
-                <td><span class="dot english"></span></td>
-                <td><span class="dot english"></span></td>
-                <td><span class="dot english"></span></td>
-                <td><span class="dot english"></span></td>
-                <td><span class="dot english"></span></td>
-                <td><span class="dot english"></span></td> 
-            </tr>
-            <tr>
-                <td class="habit-name">Программирование 1 час</td>
-                <td><span class="dot programming"></span></td>
-                <td><span class="dot programming"></span></td>
-                <td><span class="dot programming"></span></td>
-                <td><span class="dot programming"></span></td>
-                <td><span class="dot programming"></span></td>
-                <td><span class="dot programming"></span></td>
-                <td><span class="dot programming"></span></td>
-            </tr>
-            <tr>
-                <td class="habit-name">Вода 2л</td>
-                <td><span class="dot water
-                    "></span></td>
-                <td><span class="dot water"></span></td>
-                <td><span class="dot water"></span></td>
-                <td><span class="dot water"></span></td>
-                <td><span class="dot water"></span></td>
-                <td><span class="dot water"></span></td>
-                <td><span class="dot water"></span></td>
-            </tr>
-            </tbody>
-        </table>
+      <div class="tracker-header">
+        <div class="habit-label-cell"></div>
+        <div class="day-cell">Пн</div>
+        <div class="day-cell">Вт</div>
+        <div class="day-cell">Ср</div>
+        <div class="day-cell">Чт</div>
+        <div class="day-cell">Пт</div>
+        <div class="day-cell">Сб</div>
+        <div class="day-cell">Вс</div>
+      </div>
+
+      @foreach (var habit in Model.Habits)
+      {
+        <div class="tracker-row">
+          <div class="habit-name">@habit.Title</div>
+          
+          @for(var d = 0; d < 7; d++)
+          {
+            <div class="dot-cell"><span class="dot @habit.ColorOfDot"></span></div>
+          }
+        </div>
+      }
+    
     </div>
+    
 </div>
 
 @section Scripts {

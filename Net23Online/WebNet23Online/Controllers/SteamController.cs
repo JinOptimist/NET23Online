@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+
+using WebNet23Online.Data.Models.Steam.Enums;
 using WebNet23Online.Models.Steam;
-using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
@@ -16,13 +17,9 @@ namespace WebNet23Online.Controllers
 
         public IActionResult Index()
         {
-            var model = new SteamHomeViewModel()
-            {
-                SpecialOffers = SteamCatalog.All.Take(SteamCatalog.SPECIAL_OFFERS_PREVIEW_COUNT).ToList(),
-                Featured = SteamCatalog.All.Skip(SteamCatalog.SPECIAL_OFFERS_PREVIEW_COUNT).ToList()
-            };
+            var viewModel = _catalogService.GetGamesForHomePage();
 
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -39,6 +36,32 @@ namespace WebNet23Online.Controllers
             var model = _catalogService.GetCatalog(filter);
 
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult AddGame()
+        {
+            var viewModel = new AddGameViewModel
+            {
+                AllGenres = Enum.GetValues(typeof(GameGenre))
+                                .Cast<GameGenre>()
+                                .Where(g => g != GameGenre.All)
+                                .ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddGame(AddGameViewModel viewModel)
+        {
+            viewModel.AllGenres = Enum.GetValues(typeof(GameGenre))
+                                .Cast<GameGenre>()
+                                .Where(g => g != GameGenre.All)
+                                .ToList();
+            _catalogService.AddGame(viewModel);
+
+            return RedirectToAction(nameof(Catalog));
         }
     }
 }
