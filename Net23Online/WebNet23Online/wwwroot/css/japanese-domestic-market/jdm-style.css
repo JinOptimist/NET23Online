@@ -1,0 +1,267 @@
+﻿.bebas-neue-regular {
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.h1 {
+    margin: 0;
+    color: rgb(70, 66, 50);
+    font-size: 15px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    background-color: rgb(246, 246, 246);
+    line-height: 1.5;
+    background: url("/images/japanese-domestic-market/background-auto.png") center, no-repeat;
+    background-size: cover;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.img-content {
+    max-width: 100%;
+    width: 33%;
+}
+
+.header-photo {
+    max-width: 100%;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.box-container {
+}
+
+.feedback-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: 1fr 150px;
+}
+
+.auto-card-title {
+    font-size: 18px;
+    text-align: center;
+}
+
+.header_inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header {
+    background-color: black;
+    padding-top: 20px;
+    width: 100%;
+    position: relative;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 400;
+    color: white;
+}
+
+/*navigation*/
+
+.navigation-menu {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.nav-link {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 12px;
+    color: white;
+    text-decoration: none;
+    transition: color .2s linear;
+}
+
+    .nav-link:hover {
+        color: rgb(214, 44, 44);
+    }
+
+.btn-watch {
+    width: 100%;
+    height: 30px;
+    background-color: white;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 4px;
+    text-align: center;
+    border: 1px solid rgb(78, 120, 36);
+}
+
+.btn-form {
+    margin-top: 20px;
+    max-width: 100%;
+    width: 50%;
+}
+
+.btn-watch:hover {
+    background-color: rgba(78, 120, 36);
+    color: aliceblue;
+    transition: .3s;
+}
+
+/*all cards*/
+
+.container-card-box {
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, 225px);
+    justify-content: center;
+    justify-items: center;
+    margin: 0 auto;
+    column-gap: 30px;
+    row-gap: 40px;
+}
+
+.one-category-auto {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 100%;
+    width: 1170px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+/* card */
+
+
+.card-photo {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    width: 225px;
+}
+
+    .card-photo > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: 0.2s;
+    }
+
+.cards {
+    min-height: 350px;
+    width: 225px;
+    box-shadow: 1px 2px 4px rgb(130, 130, 130);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-radius: 15px;
+}
+
+    .cards:hover {
+        box-shadow: 3px 6px 8px rgb(63, 63, 63);
+    }
+
+.auto-card {
+    box-shadow: 0 1px 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.auto-card-price {
+    text-align: center;
+    margin-bottom: 6px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.card-title {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #414141;
+}
+
+    .card-title:hover {
+        color: rgb(78, 120, 36);
+        transition: .3s;
+    }
+
+.card-button {
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 7px;
+    text-align: center;
+    border: 1px solid rgb(78, 120, 36);
+}
+
+    .card-button:hover {
+        background-color: rgb(78, 120, 36);
+        color: aliceblue;
+        transition: .3s;
+    }
+
+.content-news {
+    margin-top: 20px;
+}
+
+/*parametrs*/
+.price-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: sans-serif;
+}
+
+input[type="range"] {
+    width: 200px;
+}
+
+output {
+    font-weight: bold;
+    min-width: 30px;
+}
+
+.title-form {
+    font-size: 18px;
+    font-family: fantasy;
+}
+
+/*movie*/
+.container-content {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 15px;
+    margin: 0 auto;
+}

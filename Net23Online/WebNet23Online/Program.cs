@@ -58,6 +58,8 @@ builder.Services.AddScoped<IRockBandsService, RockBandsService>();
 
 builder.Services.AddSingleton<IRockLegendsPick, RockLegendsPick>();
 
+builder.Services.AddSingleton<ISlayTheSpire2RewardImageService, SlayTheSpire2RewardImageService>();
+
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 //DelightBistro DI
@@ -68,11 +70,19 @@ builder.Services.AddScoped<IMenuTypeGenerator, MenuTypeGenerator>();
 builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 
+//JapaneseDomesticMarker DI
+builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
+builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
+
 // Repositories
+builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
 builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
 
+builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
+
+builder.Services.AddScoped<IGameRepository, GameRepository>();
 
 var app = builder.Build();
 

@@ -1,0 +1,32 @@
+﻿@using WebNet23Online.Models.JapaneseDomesticMarket
+@model List<JDMCatalogViewModels>
+@{
+    Layout = "_LayoutJapaneseDomesticMarket";
+}
+<div class="container">
+    @foreach (var manufacture in Model)
+    {
+        <div class="one-category-auto">
+            <div class="auto-card-title">
+                @manufacture.ManufacturerType
+            </div>
+            <div class="container-card-box">
+                @foreach (var jdmItem in manufacture.CarsJDMItems)
+                {
+                    <div>
+                        <div class="auto-card-title">
+                            @jdmItem.Marka @jdmItem.Model
+                        </div>
+                        <div class="card-photo ">
+                            <img src=@jdmItem.Url alt=@jdmItem.Marka />
+                        </div>
+                        <div class="auto-card-price">
+                            @jdmItem.Price
+                        </div>
+                        <div><button class="btn-watch ">Подробнее</button></div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
