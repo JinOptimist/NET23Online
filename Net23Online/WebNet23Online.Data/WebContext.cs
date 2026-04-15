@@ -45,7 +45,21 @@ namespace WebNet23Online.Data
                 .WithMany(x => x.WhoIsMyFriends);
 
             modelBuilder.Entity<RockBandGenreData>()
-                        .HasKey(x => new { x.RockBandId, x.GenreId });
+                .HasKey(x => new { x.RockBandId, x.GenreId });
+
+            modelBuilder.Entity<RockBandGenreData>()
+                .HasOne(x => x.RockBand)
+                .WithMany(x => x.RockBandGenres)
+                .HasForeignKey(x => x.RockBandId);
+
+            modelBuilder.Entity<RockBandGenreData>()
+                .HasOne(x => x.Genre)
+                .WithMany(x => x.RockBandGenres)
+                .HasForeignKey(x => x.GenreId);
+
+            modelBuilder.Entity<GenreOfRockBands>()
+                .HasIndex(x => x.Name)
+                .IsUnique();
 
             base.OnModelCreating(modelBuilder);
         }
