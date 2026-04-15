@@ -64,7 +64,6 @@ namespace WebNet23Online.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet]
         public IActionResult Reservation()
         {
             var hero = new LittleLemonHeroSectionViewModel
@@ -74,12 +73,11 @@ namespace WebNet23Online.Controllers
                 HeroImageUrl = "/images/little-lemon/images/restauranfood.jpg",
                 HeroImageAlt = "Signature Mediterranean platter at Little Lemon"
             };
-
-            var lastReservation = _webContext.littleLemonDatas.FirstOrDefault();
+            var reservation = new LittleLemonReservationViewModel();
             var pageModel = new LittleLemonReservationPageViewModel
             {
                 Hero = hero,
-                Reservation = lastReservation
+                Reservation = reservation
             };
 
             return View(pageModel);
