@@ -66,6 +66,65 @@
             </div>
         }
 
+        <section class="preferences_music edit_band_genres_form">
+            <div class="preferences_music_title">
+                <h2>Редактировать жанры существующих групп</h2>
+                <p class="add_band_form_hint">Выбери группу, затем отметь жанры и нажми “Сохранить”.</p>
+            </div>
+            <div class="preferences_music_items edit_band_genres_panel">
+                <form method="get" asp-controller="RockBands" asp-action="Index" class="edit_band_genres_toolbar">
+                    @foreach (var id in Model.SelectedGenreIds)
+                    {
+                        <input type="hidden" name="genreIds" value="@id" />
+                    }
+                    <div class="edit_band_genres_field">
+                        
+                        <select id="select_band" class="edit_band_genres_select" name="editBandId">
+                            <option value="">Выберите группу</option>
+                            @foreach (var b in Model.Bands)
+                            {
+                                <option value="@b.Id" selected="@(Model.EditBandId == b.Id)">@b.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="add_band_submit">Открыть</button>
+                </form>
+
+                @{
+                    var editBand = Model.EditBandId.HasValue
+                        ? Model.Bands.FirstOrDefault(x => x.Id == Model.EditBandId.Value)
+                        : null;
+                }
+
+                @if (editBand != null)
+                {
+                    <form method="post" asp-controller="RockBands" asp-action="UpdateGenres" class="edit_band_genres_item">
+                        <input type="hidden" name="bandId" value="@editBand.Id" />
+                        <div class="edit_band_genres_header">
+                            <strong>@editBand.Name</strong>
+                        </div>
+                        <div class="genre_filter_list genre_filter_list_compact">
+                            @foreach (var g in Model.Genres)
+                            {
+                                var inputId = $"edit_{editBand.Id}_{g.Id}";
+                                var isChecked = editBand.GenreIds != null && editBand.GenreIds.Contains(g.Id);
+                                <input class="genre_filter_checkbox"
+                                       type="checkbox"
+                                       id="@inputId"
+                                       name="selectedGenreIds"
+                                       value="@g.Id"
+                                       @(isChecked ? "checked" : null) />
+                                <label class="genre_filter_chip" for="@inputId">@g.Name</label>
+                            }
+                        </div>
+                        <div class="edit_band_genres_actions">
+                            <button type="submit" class="add_band_submit">Сохранить</button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </section>
+
         <section class="preferences_music add_band_form">
             <div class="preferences_music_title">
                 <h2>Добавить группу</h2>
@@ -85,6 +144,21 @@
                         <label for="band-image">Ссылка на фото в интернете</label>
                         <input id="band-image" type="text" inputmode="url" name="@nameof(BandBlockViewModel.ImageUrl)" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
                         <span class="add_band_field_help">Вставьте прямой URL картинки. Поле можно оставить пустым.</span>
+                    </div>
+                    <div class="add_band_field">
+                        <label>Жанры</label>
+                        <div class="genre_filter_list genre_filter_list_compact">
+                            @foreach (var g in Model.Genres)
+                            {
+                                var inputId = $"add_genre_{g.Id}";
+                                <input class="genre_filter_checkbox"
+                                       type="checkbox"
+                                       id="@inputId"
+                                       name="@nameof(BandBlockViewModel.SelectedGenreIds)"
+                                       value="@g.Id" />
+                                <label class="genre_filter_chip" for="@inputId">@g.Name</label>
+                            }
+                        </div>
                     </div>
                     <button type="submit" class="add_band_submit">Добавить в список</button>
                 </form>

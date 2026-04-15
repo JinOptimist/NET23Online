@@ -14,7 +14,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index([FromQuery] int[]? genreIds)
+        public IActionResult Index([FromQuery] int[]? genreIds, [FromQuery] int? editBandId)
         {
             var selectedGenreIds = genreIds ?? Array.Empty<int>();
             var genres = _rockBandsService.GetGenres();
@@ -28,6 +28,7 @@ namespace WebNet23Online.Controllers
                 Bands = _rockBandsService.GetBands(selectedGenreIds),
                 Genres = genres,
                 SelectedGenreIds = selectedGenreIds,
+                EditBandId = editBandId,
             };
             return View(viewModel);
         }
@@ -37,6 +38,13 @@ namespace WebNet23Online.Controllers
         {
             _rockBandsService.AddBand(viewModel);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateGenres(int bandId, int[] selectedGenreIds)
+        {
+            _rockBandsService.UpdateBandGenres(bandId, selectedGenreIds);
+            return RedirectToAction(nameof(Index), new { editBandId = bandId });
         }
     }
 }

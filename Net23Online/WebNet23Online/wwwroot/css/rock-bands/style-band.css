@@ -105,6 +105,98 @@ main.pb-3 {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
+.genre_filter_list_compact {
+    justify-content: flex-start;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+}
+
+.edit_band_genres_panel {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 18px 20px 20px;
+}
+
+.edit_band_genres_toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 12px;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.edit_band_genres_field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: min(520px, 100%);
+}
+
+.edit_band_genres_label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.edit_band_genres_select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.28);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+.edit_band_genres_item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 14px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.18);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.edit_band_genres_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.edit_band_genres_actions {
+    display: flex;
+    justify-content: center;
+}
+
+.edit_band_genres_toolbar .add_band_submit {
+    margin-top: 0;
+    height: 48px;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: inline-flex;
+    align-items: center;
+}
+
+.edit_band_genres_select {
+    height: 48px;
+}
+
 .genre_filter_checkbox {
     position: absolute;
     opacity: 0;
