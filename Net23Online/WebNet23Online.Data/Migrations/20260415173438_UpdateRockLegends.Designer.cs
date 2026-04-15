@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebNet23Online.Data;
 
@@ -11,9 +12,11 @@ using WebNet23Online.Data;
 namespace WebNet23Online.Data.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20260415173438_UpdateRockLegends")]
+    partial class UpdateRockLegends
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,37 +25,7 @@ namespace WebNet23Online.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AnimeDataAnimeGirlData", b =>
-                {
-                    b.Property<int>("AnimesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HeroesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AnimesId", "HeroesId");
-
-                    b.HasIndex("HeroesId");
-
-                    b.ToTable("AnimeDataAnimeGirlData");
-                });
-
-            modelBuilder.Entity("UserDataUserData", b =>
-                {
-                    b.Property<int>("MyFriendsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WhoIsMyFriendsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MyFriendsId", "WhoIsMyFriendsId");
-
-                    b.HasIndex("WhoIsMyFriendsId");
-
-                    b.ToTable("UserDataUserData");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.AnimeData", b =>
+            modelBuilder.Entity("WebNet23Online.Data.Models.AnimeGirlData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,25 +33,24 @@ namespace WebNet23Online.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CoverUrl")
+                    b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StudioId")
-                        .HasColumnType("int");
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudioId");
-
-                    b.ToTable("Animes");
+                    b.ToTable("AnimeGirls");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.BeastData", b =>
-            modelBuilder.Entity("WebNet23Online.Data.Models.AnimeGirlData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,15 +71,6 @@ namespace WebNet23Online.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NativeRange")
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -117,10 +80,6 @@ namespace WebNet23Online.Data.Migrations
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.FoodItemData", b =>
-                    b.ToTable("AnimeGirls");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.AnimeStudioData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,7 +91,6 @@ namespace WebNet23Online.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ingredients")
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -150,60 +108,6 @@ namespace WebNet23Online.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FoodItems");
-                    b.ToTable("AnimeStudios");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ColorOfDot")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DoneCount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HabitTrackerDataId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Percent")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WeekResults")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HabitTrackerDataId");
-
-                    b.ToTable("HabitData");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HabitTracker");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
@@ -356,38 +260,6 @@ namespace WebNet23Online.Data.Migrations
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("WebNet23Online.Data.Models.Steam.GameData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Genre")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Games");
-                });
-
             modelBuilder.Entity("WebNet23Online.Data.Models.UserData", b =>
                 {
                     b.Property<int>("Id")
@@ -403,13 +275,7 @@ namespace WebNet23Online.Data.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserProfileId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserProfileId")
-                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -424,103 +290,6 @@ namespace WebNet23Online.Data.Migrations
             modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerData", b =>
                 {
                     b.Navigation("Habits");
-            modelBuilder.Entity("WebNet23Online.Data.Models.UserProfileData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FavBook")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PetName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserProfileData");
-                });
-
-            modelBuilder.Entity("AnimeDataAnimeGirlData", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.AnimeData", null)
-                        .WithMany()
-                        .HasForeignKey("AnimesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebNet23Online.Data.Models.AnimeGirlData", null)
-                        .WithMany()
-                        .HasForeignKey("HeroesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("UserDataUserData", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.UserData", null)
-                        .WithMany()
-                        .HasForeignKey("MyFriendsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebNet23Online.Data.Models.UserData", null)
-                        .WithMany()
-                        .HasForeignKey("WhoIsMyFriendsId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.AnimeData", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.AnimeStudioData", "Studio")
-                        .WithMany("Animes")
-                        .HasForeignKey("StudioId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Studio");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.HabitTrackerData", null)
-                        .WithMany("Habits")
-                        .HasForeignKey("HabitTrackerDataId");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.UserData", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.UserProfileData", "UserProfile")
-                        .WithOne("User")
-                        .HasForeignKey("WebNet23Online.Data.Models.UserData", "UserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserProfile");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.AnimeStudioData", b =>
-                {
-                    b.Navigation("Animes");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerData", b =>
-                {
-                    b.Navigation("Habits");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.UserProfileData", b =>
-                {
-                    b.Navigation("User")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
