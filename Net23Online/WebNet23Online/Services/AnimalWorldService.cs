@@ -1,5 +1,5 @@
-﻿using WebNet23Online.Data;
-using WebNet23Online.Data.Models;
+﻿using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.AnimalWorld;
 using WebNet23Online.Services.Interfaces;
 
@@ -9,15 +9,16 @@ namespace WebNet23Online.Services
     {
         public const int START_PAGE_COUNT_ANIMALS = 2;
         public const string CANT_FIND_ANIMAL = "Не получается найти такое животное. Попробуйте изменить запрос.";
-        private WebContext _webContext;
+        private IAnimalWorldRepository _animalWorldRepository;
 
-        public AnimalWorldService(WebContext webContext)
+        public AnimalWorldService(IAnimalWorldRepository animalWorldRepository)
         {
-            _webContext = webContext;
+            _animalWorldRepository = animalWorldRepository;
         }
 
         public StartPageAnimalsViewModel GetAllAnimals()
         {
+            
             var animals = GetAllBeastsFromDatabase();
             var startPageAnimals = new StartPageAnimalsViewModel
             {
@@ -51,8 +52,7 @@ namespace WebNet23Online.Services
                 return false;
             }
 
-            var beastSearch = _webContext.Beasts.FirstOrDefault(animal => animal.BeastName.ToLower() == viewModel.BeastName.ToLower());
-            if (beastSearch == null)
+            if (!_animalWorldRepository.IsExists(viewModel.BeastName))
             {
                 BeastData beastData = new BeastData
                 {
@@ -61,8 +61,7 @@ namespace WebNet23Online.Services
                     BriefDescription = viewModel.BriefDescription,
                     FullDescription = viewModel.FullDescription,
                 };
-                _webContext.Beasts.Add(beastData);
-                _webContext.SaveChanges();
+                _animalWorldRepository.Add(beastData);
             }
 
             return true;
@@ -76,14 +75,14 @@ namespace WebNet23Online.Services
             }
 
             var beastSearch = new StartPageBeastViewModel();
-            var beastDataSearch = _webContext.Beasts.FirstOrDefault(animal => animal.BeastName.ToLower() == viewModel.BeastName.ToLower());
-            if (beastDataSearch == null)
+            if (!_animalWorldRepository.IsExists(viewModel.BeastName))
             {
                 beastSearch.NativeRange = CANT_FIND_ANIMAL;
                 beastSearch.FullDescription = CANT_FIND_ANIMAL;
             }
             else
             {
+                var beastDataSearch = _animalWorldRepository.GetBeastByName(viewModel.BeastName);
                 beastSearch.BeastName = beastDataSearch.BeastName;
                 beastSearch.NativeRange = beastDataSearch.NativeRange;
                 beastSearch.FullDescription = beastDataSearch.FullDescription;
@@ -94,7 +93,7 @@ namespace WebNet23Online.Services
 
         private List<StartPageBeastViewModel> GetAllBeastsFromDatabase()
         {
-            var beastsData = _webContext.Beasts.ToList();
+            var beastsData = _animalWorldRepository.GetAll();
             var beasts = beastsData.Select(animal => new StartPageBeastViewModel
             {
                 BeastName = animal.BeastName,
