@@ -6,6 +6,6 @@
         public string Description { get; set; }
         public string Url { get; set; }
 
-        public virtual List<AnimeData> Animes { get; set; }
+        public virtual List<AnimeData> Animes { get; set; } = new();
     }
 }
