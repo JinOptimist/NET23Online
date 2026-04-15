@@ -6,70 +6,62 @@ namespace WebNet23Online.Services
 {
     public class RockLegendsPick : IRockLegendsPick
     {
-        public RockLegendsPortalViewModel GetBandDetails(string id, List<RockLegendsData> rockLegendsDatas)
+        public RockLegendsPortalViewModel GetBandDetails(int id, RockLegendsData bandData)
         {
-            var model = new RockLegendsPortalViewModel { SelectedBand = id };
+            var model = new RockLegendsPortalViewModel { SelectedBandId = id };
 
-            var dbRow = rockLegendsDatas.FirstOrDefault();
-
-            switch (id?.ToLower())
+            if (bandData != null)
             {
-                case "kiss":
-                    model.BandName = "KISS";
-                    model.Biography = "Боги грома и рок-н-ролла...";
-                    model.PickTime = dbRow.Kiss;
-                    break;
-                case "ozzy":
-                    model.BandName = "Ozzy Osbourne";
-                    model.Biography = "Князь Тьмы, великий и ужасный...";
-                    model.PickTime = dbRow.Ozzy;
-                    break;
-                case "acdc":
-                    model.BandName = "AC/DC";
-                    model.Biography = "Гром из Австралии...";
-                    model.PickTime = dbRow.ACDC;
-                    break;
-                case "bon-jovi":
-                    model.BandName = "Bon Jovi";
-                    model.Biography = "Герои стадионного рока из Нью-Джерси...";
-                    model.PickTime = dbRow.BonJovi;
-                    break;
-                case "rammstein":
-                    model.BandName = "Rammstein";
-                    model.Biography = "Грохот немецкой индустриальной машины...";
-                    model.PickTime = dbRow.Rammstein;
-                    break;
-                case "tdg":
-                    model.BandName = "Three Days Grace";
-                    model.Biography = "Мастера альтернативного рока из Канады...";
-                    model.PickTime = dbRow.ThreeDaysGrace;
-                    break;
-                case "slipknot":
-                    model.BandName = "Slipknot";
-                    model.Biography = "Девять масок, воплощающих коллективный кошмар...";
-                    model.PickTime = dbRow.Slipknot;
-                    break;
-                case "skillet":
-                    model.BandName = "Skillet";
-                    model.Biography = "роповедники драйва и мощного альтернативного рока...";
-                    model.PickTime = dbRow.Skillet;
-                    break;
-                case "metallica":
-                    model.BandName = "Metallica";
-                    model.Biography = "Абсолютные титаны, переписавшие законы тяжелой музыки...";
-                    model.PickTime = dbRow.Metallica;
-                    break;
-                case "bmth":
-                    model.BandName = "Bring Me The Horizon";
-                    model.Biography = "Главные хамелеоны современной тяжелой сцены...";
-                    model.PickTime = dbRow.BringMeTheHorizon;
-                    break;
-                default:
-                    model.BandName = "Unknown";
-                    model.Biography = "Информация не найдена.";
-                    break;
+                model.PickTime = bandData.Likes;
+                model.BandName = bandData.GroupNames;
+                switch (bandData.GroupNames?.ToLower())
+                {
+                    case "kiss":
+                        model.BandName = "KISS";
+                        model.Biography = "Боги грома и рок-н-ролла...";
+                        break;
+                    case "ozzy":
+                        model.BandName = "Ozzy Osbourne";
+                        model.Biography = "Князь Тьмы, великий и ужасный...";
+                        break;
+                    case "acdc":
+                        model.BandName = "AC/DC";
+                        model.Biography = "Гром из Австралии...";
+                        break;
+                    case "bon-jovi":
+                        model.BandName = "Bon Jovi";
+                        model.Biography = "Герои стадионного рока из Нью-Джерси...";
+                        break;
+                    case "rammstein":
+                        model.BandName = "Rammstein";
+                        model.Biography = "Грохот немецкой индустриальной машины...";
+                        break;
+                    case "tdg":
+                        model.BandName = "Three Days Grace";
+                        model.Biography = "Мастера альтернативного рока из Канады...";
+                        break;
+                    case "slipknot":
+                        model.BandName = "Slipknot";
+                        model.Biography = "Девять масок, воплощающих коллективный кошмар...";
+                        break;
+                    case "skillet":
+                        model.BandName = "Skillet";
+                        model.Biography = "роповедники драйва и мощного альтернативного рока...";
+                        break;
+                    case "metallica":
+                        model.BandName = "Metallica";
+                        model.Biography = "Абсолютные титаны, переписавшие законы тяжелой музыки...";
+                        break;
+                    case "bmth":
+                        model.BandName = "Bring Me The Horizon";
+                        model.Biography = "Главные хамелеоны современной тяжелой сцены...";
+                        break;
+                    default:
+                        model.BandName = "Unknown";
+                        model.Biography = "Информация не найдена.";
+                        break;
+                }
             }
-
             return model;
         }
     }
