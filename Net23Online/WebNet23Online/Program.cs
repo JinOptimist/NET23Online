@@ -70,6 +70,10 @@ builder.Services.AddSingleton<IMenuTypeGenerator, MenuTypeGenerator>();
 builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 
+//JapaneseDomesticMarker DI
+builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
+builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
+
 // Repositories
 builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
