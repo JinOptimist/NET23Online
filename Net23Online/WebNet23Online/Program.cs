@@ -63,8 +63,8 @@ builder.Services.AddSingleton<ISlayTheSpire2RewardImageService, SlayTheSpire2Rew
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 //DelightBistro DI
-builder.Services.AddSingleton<IFoodItemGenerator, FoodItemGenerator>();
-builder.Services.AddSingleton<IMenuTypeGenerator, MenuTypeGenerator>();
+builder.Services.AddScoped<IFoodItemGenerator, FoodItemGenerator>();
+builder.Services.AddScoped<IMenuTypeGenerator, MenuTypeGenerator>();
 
 //HabitTracker DI
 builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
@@ -79,6 +79,7 @@ builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
 builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
+builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
 builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 
