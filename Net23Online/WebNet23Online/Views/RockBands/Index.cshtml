@@ -13,79 +13,82 @@
 
 <main>
 
-    <div class="preferences_music">
-        <div class="preferences_music_title">
-            <h2>Выбери то, что предпочитаешь ты:</h2>
-        </div>
-
-        <form method="get" asp-controller="RockBands" asp-action="Index">
-            <div class="preferences_music_items">
-                @foreach (var g in Model.Genres)
-                {
-                    var inputId = $"genre_{g.Id}";
-                    <input type="checkbox"
-                           id="@inputId"
-                           name="genreIds"
-                           value="@g.Id"
-                           @(g.IsSelected ? "checked" : null) />
-                    <label for="@inputId">@g.Name</label>
-                }
+    <div class="rock_bands_page">
+        <section class="genre_filter">
+            <div class="preferences_music_title">
+                <h2>Выбери то, что предпочитаешь ты:</h2>
             </div>
 
-            <div class="preferences_music_items" style="gap: 12px; margin-top: 12px;">
-                <button type="submit" class="add_band_submit">Показать</button>
-                <a class="add_band_submit" asp-controller="RockBands" asp-action="Index">Сбросить</a>
-            </div>
-        </form>
-    </div>
-
-    @foreach (var band in Model.Bands)
-    {
-        <div class="band">
-            <div class="band_thumb">
-                @if (!string.IsNullOrWhiteSpace(band.ImageUrl))
-                {
-                    <img src="@band.ImageUrl" alt="@band.Name" width="640" height="360" loading="lazy" referrerpolicy="no-referrer">
-                }
-                else
-                {
-                    <img alt="@band.Name">
-                }
-            </div>
-            <div class="band_body">
-                <h2>@band.Name</h2>
-                <p>@band.Description</p>
-
-                @if (band.Genres != null && band.Genres.Count > 0)
-                {
-                    <p><strong>Жанры:</strong> @string.Join(", ", band.Genres)</p>
-                }
-            </div>
-        </div>
-    }
-
-    <div class="preferences_music add_band_form">
-        <div class="preferences_music_title">
-            <h2>Добавить группу</h2>
-            <p class="add_band_form_hint">Новая карточка появится в списке в том же формате, что и остальные.</p>
-        </div>
-        <div class="preferences_music_items add_band_form_panel">
-            <form method="post" class="add_band_form_fields">
-                <div class="add_band_field">
-                    <label for="band-name">Название</label>
-                    <input id="band-name" type="text" name="@nameof(BandBlockViewModel.Name)" placeholder="Например, Arctic Monkeys" autocomplete="off" />
+            <form method="get" asp-controller="RockBands" asp-action="Index">
+                <div class="genre_filter_list">
+                    @foreach (var g in Model.Genres)
+                    {
+                        var inputId = $"genre_{g.Id}";
+                        <input class="genre_filter_checkbox"
+                               type="checkbox"
+                               id="@inputId"
+                               name="genreIds"
+                               value="@g.Id"
+                               @(g.IsSelected ? "checked" : null) />
+                        <label class="genre_filter_chip" for="@inputId">@g.Name</label>
+                    }
                 </div>
-                <div class="add_band_field">
-                    <label for="band-description">Описание</label>
-                    <textarea id="band-description" name="@nameof(BandBlockViewModel.Description)" placeholder="Коротко о группе и звучании" rows="4"></textarea>
+
+                <div class="genre_filter_actions">
+                    <button type="submit" class="add_band_submit">Показать</button>
+                    <a class="add_band_submit" asp-controller="RockBands" asp-action="Index">Сбросить</a>
                 </div>
-                <div class="add_band_field">
-                    <label for="band-image">Ссылка на фото в интернете</label>
-                    <input id="band-image" type="text" inputmode="url" name="@nameof(BandBlockViewModel.ImageUrl)" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
-                    <span class="add_band_field_help">Вставьте прямой URL картинки. Поле можно оставить пустым.</span>
-                </div>
-                <button type="submit" class="add_band_submit">Добавить в список</button>
             </form>
-        </div>
+        </section>
+
+        @foreach (var band in Model.Bands)
+        {
+            <div class="band">
+                <div class="band_thumb">
+                    @if (!string.IsNullOrWhiteSpace(band.ImageUrl))
+                    {
+                        <img src="@band.ImageUrl" alt="@band.Name" width="640" height="360" loading="lazy" referrerpolicy="no-referrer">
+                    }
+                    else
+                    {
+                        <img alt="@band.Name">
+                    }
+                </div>
+                <div class="band_body">
+                    <h2>@band.Name</h2>
+                    <p>@band.Description</p>
+
+                    @if (band.Genres != null && band.Genres.Count > 0)
+                    {
+                        <p><strong>Жанры:</strong> @string.Join(", ", band.Genres)</p>
+                    }
+                </div>
+            </div>
+        }
+
+        <section class="preferences_music add_band_form">
+            <div class="preferences_music_title">
+                <h2>Добавить группу</h2>
+                <p class="add_band_form_hint">Новая карточка появится в списке в том же формате, что и остальные.</p>
+            </div>
+            <div class="preferences_music_items add_band_form_panel">
+                <form method="post" class="add_band_form_fields">
+                    <div class="add_band_field">
+                        <label for="band-name">Название</label>
+                        <input id="band-name" type="text" name="@nameof(BandBlockViewModel.Name)" placeholder="Например, Arctic Monkeys" autocomplete="off" />
+                    </div>
+                    <div class="add_band_field">
+                        <label for="band-description">Описание</label>
+                        <textarea id="band-description" name="@nameof(BandBlockViewModel.Description)" placeholder="Коротко о группе и звучании" rows="4"></textarea>
+                    </div>
+                    <div class="add_band_field">
+                        <label for="band-image">Ссылка на фото в интернете</label>
+                        <input id="band-image" type="text" inputmode="url" name="@nameof(BandBlockViewModel.ImageUrl)" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
+                        <span class="add_band_field_help">Вставьте прямой URL картинки. Поле можно оставить пустым.</span>
+                    </div>
+                    <button type="submit" class="add_band_submit">Добавить в список</button>
+                </form>
+            </div>
+        </section>
     </div>
 </main>
