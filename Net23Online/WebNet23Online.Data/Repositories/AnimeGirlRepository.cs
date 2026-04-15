@@ -21,5 +21,13 @@ namespace WebNet23Online.Data.Repositories
         {
             return !_dbSet.Any(x => x.Name == name);
         }
+
+        public void Test()
+        {
+            var animeGirl = _dbSet.First();
+            
+            // null
+            // animeGirl.AnimeWhereImMainHero.PrmiapryHeroes
+        }
     }
 }

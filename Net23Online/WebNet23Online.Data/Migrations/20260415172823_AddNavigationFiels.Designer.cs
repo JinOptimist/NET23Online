@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebNet23Online.Data;
 
@@ -11,9 +12,11 @@ using WebNet23Online.Data;
 namespace WebNet23Online.Data.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20260415172823_AddNavigationFiels")]
+    partial class AddNavigationFiels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,21 +40,6 @@ namespace WebNet23Online.Data.Migrations
                     b.ToTable("AnimeDataAnimeGirlData");
                 });
 
-            modelBuilder.Entity("UserDataUserData", b =>
-                {
-                    b.Property<int>("MyFriendsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WhoIsMyFriendsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MyFriendsId", "WhoIsMyFriendsId");
-
-                    b.HasIndex("WhoIsMyFriendsId");
-
-                    b.ToTable("UserDataUserData");
-                });
-
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimeData", b =>
                 {
                     b.Property<int>("Id")
@@ -71,7 +59,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasIndex("StudioId");
 
-                    b.ToTable("Animes");
+                    b.ToTable("AnimeData");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimeGirlData", b =>
@@ -113,7 +101,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnimeStudios");
+                    b.ToTable("AnimeStudioData");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.BeastData", b =>
@@ -418,27 +406,12 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("UserDataUserData", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.UserData", null)
-                        .WithMany()
-                        .HasForeignKey("MyFriendsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebNet23Online.Data.Models.UserData", null)
-                        .WithMany()
-                        .HasForeignKey("WhoIsMyFriendsId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimeData", b =>
                 {
                     b.HasOne("WebNet23Online.Data.Models.AnimeStudioData", "Studio")
                         .WithMany("Animes")
                         .HasForeignKey("StudioId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Studio");
