@@ -18,7 +18,6 @@ namespace WebNet23Online.Services
         public List<BandBlockViewModel> GetBands()
         {
             return _rockBandsRepository
-                .AsNoTracking()
                 .OrderBy(b => b.Id)
                 .Select(b => new BandBlockViewModel
                 {

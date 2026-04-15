@@ -9,11 +9,6 @@ namespace WebNet23Online.Data.Repositories
     {
         public RockBandsRepository(WebContext webContext) : base(webContext) { }
 
-        public IQueryable<RockBandsData> AsNoTracking()
-        {
-            return _dbSet.AsNoTracking();
-        }
-
         public override void Add(RockBandsData model)
         {
             var normalizedName = model.Name?.Trim().ToLower();
