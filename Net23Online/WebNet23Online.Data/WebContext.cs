@@ -15,6 +15,8 @@ namespace WebNet23Online.Data
         // public DbSet<HabitData> Habit { get; set; }
         public DbSet<BeastData> Beasts { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
+        DbSet<GenreOfRockBands> RockBandGenresDictionary { get; set; }
+        DbSet<RockBandGenreData> RockBandGenres { get; set; }
         public DbSet<FoodItemData> FoodItems { get; set; }
 
         public DbSet<RockLegendsData> RockLegends { get; set; }
@@ -41,6 +43,9 @@ namespace WebNet23Online.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.MyFriends)
                 .WithMany(x => x.WhoIsMyFriends);
+
+            modelBuilder.Entity<RockBandGenreData>()
+                        .HasKey(x => new { x.RockBandId, x.GenreId });
 
             base.OnModelCreating(modelBuilder);
         }
