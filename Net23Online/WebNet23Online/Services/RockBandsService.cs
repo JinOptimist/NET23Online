@@ -9,6 +9,7 @@ namespace WebNet23Online.Services
     public class RockBandsService : IRockBandsService
     {
         private readonly WebContext _webContext;
+        private 
 
         public RockBandsService(WebContext webContext)
         {
