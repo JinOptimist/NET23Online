@@ -8,7 +8,7 @@ namespace WebNet23Online.Services
     public class FoodItemGenerator : IFoodItemGenerator
     {
         private List<FoodItemViewModel> _foodItems;
-        private const string SEPARATOR=",";
+        private const string SEPARATOR = ",";
         private IFoodItemRepository _foodItemRepository;
         public FoodItemGenerator(IFoodItemRepository foodItemRepository)
         {
@@ -180,7 +180,7 @@ namespace WebNet23Online.Services
 
         public void CreateOrChangeFoodItemData(FoodItemViewModel foodItem, FoodItemData changedFoodItemData = null)
         {
-            string ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
+            var ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
 
             if (changedFoodItemData != null)
             {
@@ -189,7 +189,7 @@ namespace WebNet23Online.Services
                 changedFoodItemData.ImgURL = foodItem.ImgURL;
                 changedFoodItemData.MenuType = foodItem.MenuType;
                 changedFoodItemData.Ingredients = ingredients;
-                _foodItemRepository.SaveChanges();
+                _foodItemRepository.UpdateData(changedFoodItemData);
             }
             else
             {
@@ -224,13 +224,15 @@ namespace WebNet23Online.Services
 
         public void FeelDataBase()
         {
-            if (!_foodItemRepository.Any())
+            if (_foodItemRepository.Any())
             {
-                var foodItems = GenerateFoodItems();
-                foreach (var foodItemVM in foodItems)
-                {
-                    CreateOrChangeFoodItemData(foodItemVM);
-                }
+                return;
+            }
+
+            var foodItems = GenerateFoodItems();
+            foreach (var foodItemVM in foodItems)
+            {
+                CreateOrChangeFoodItemData(foodItemVM);
             }
         }
 

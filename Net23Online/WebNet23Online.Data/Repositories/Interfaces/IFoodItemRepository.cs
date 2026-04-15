@@ -5,8 +5,5 @@ namespace WebNet23Online.Data.Repositories.Interfaces
 {
     public interface IFoodItemRepository : IBaseRepository<FoodItemData>
     {
-        FoodItemData? Get(int id);
-        void SaveChanges();
-        bool Any();
     }
 }
