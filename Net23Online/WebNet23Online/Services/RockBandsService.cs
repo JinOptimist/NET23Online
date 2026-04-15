@@ -8,10 +8,14 @@ namespace WebNet23Online.Services
     public class RockBandsService : IRockBandsService
     {
         private IRockBandsRepository _rockBandsRepository;
+        private IGenreOfRockBandsRepository _genreOfRockBandsRepository;
 
-        public RockBandsService(IRockBandsRepository rockBandsRepository)
+        public RockBandsService(
+            IRockBandsRepository rockBandsRepository,
+            IGenreOfRockBandsRepository genreOfRockBandsRepository)
         {
             _rockBandsRepository = rockBandsRepository;
+            _genreOfRockBandsRepository = genreOfRockBandsRepository;
         }
 
         public List<BandBlockViewModel> GetBands(int[]? genreIds = null)
@@ -33,6 +37,20 @@ namespace WebNet23Online.Services
                             .ToList(),
                    })
                    .ToList();
+        }
+
+        public List<GenreFilterItemViewModel> GetGenres()
+        {
+            return _genreOfRockBandsRepository
+                .GetAll()
+                .OrderBy(g => g.Name)
+                .Select(g => new GenreFilterItemViewModel
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    IsSelected = false,
+                })
+                .ToList();
         }
 
         public void AddBand(BandBlockViewModel viewModel)
