@@ -70,10 +70,19 @@ builder.Services.AddSingleton<IMenuTypeGenerator, MenuTypeGenerator>();
 builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 
+//JapaneseDomesticMarker DI
+builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
+builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
+
 // Repositories
+builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
 builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
+builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
+builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
+
+builder.Services.AddScoped<IGameRepository, GameRepository>();
 
 var app = builder.Build();
 

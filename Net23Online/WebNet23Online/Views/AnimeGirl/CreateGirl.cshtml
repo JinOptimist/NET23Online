@@ -15,6 +15,9 @@
         @Html.TextBoxFor(x => x.Url, new { placeholder = "Url" })
     </div>
     <div>
+        @Html.DropDownListFor(x => x.AnimeId, Model.Animes)
+    </div>
+    <div>
         <button type="submit">Save</button>
     </div>
 </form>

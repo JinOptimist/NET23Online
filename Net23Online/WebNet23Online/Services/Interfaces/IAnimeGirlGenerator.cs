@@ -7,5 +7,6 @@ namespace WebNet23Online.Services.Interfaces
     {
         AnimeGirlImageInfoViewModel Generate();
         List<AnimeGirlImageInfoViewModel> GenerateList(List<AnimeGirlData> animeGirlDatas);
+        List<IndexAnimeViewModel> AnimeMap(List<AnimeData> animes);
     }
 }
