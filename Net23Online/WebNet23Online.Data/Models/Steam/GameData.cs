@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebNet23Online.Data.Models.Steam.Enums;
+using WebNet23Online.Data.Enums.Steam;
 
 namespace WebNet23Online.Data.Models.Steam
 {
