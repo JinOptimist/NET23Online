@@ -71,6 +71,7 @@ builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 // Repositories
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
+builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 
 var app = builder.Build();
 
