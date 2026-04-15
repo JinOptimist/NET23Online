@@ -9,6 +9,6 @@ namespace WebNet23Online.Data.Models
     public class GenreOfRockBands : BaseModel
     {
         public string Name { get; set; }
-        public ICollection<RockBandGenreData> rockBandGenres { get; set; }
+        public ICollection<RockBandGenreData> RockBandGenres { get; set; }
     }   
 }
