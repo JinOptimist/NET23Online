@@ -5,6 +5,6 @@ document.getElementById('month-label').textContent =
 const total = 30;
 
 document.querySelectorAll('.progress-fill').forEach(bar => {
-    const percent = bar.dataset.percent;
+    const percent = parseFloat(bar.dataset.percent.replace(',', '.'));
     bar.style.width = percent + '%';
 });

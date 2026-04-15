@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.HabitTracker;
 using WebNet23Online.Services;
 
@@ -11,19 +12,17 @@ public class HabitTrackerController : Controller
     private IHabitTrackerService _habitService;
     private IHabitStatisticsService _statisticsService;
     
-    private WebContext _webContext;
-
-    public HabitTrackerController(IHabitTrackerService habitService, IHabitStatisticsService statisticsService,  WebContext webContext)
+    private IHabitTrackerRepository _habitTrackerRepository;
+    public HabitTrackerController(IHabitTrackerService habitService, IHabitStatisticsService statisticsService,  IHabitTrackerRepository habitTrackerRepository)
     {
         _habitService = habitService;
         _statisticsService = statisticsService;
-        _webContext = webContext;
+        _habitTrackerRepository = habitTrackerRepository;
     }
     public IActionResult Index()
     {
-        var habitTrackerData = _webContext.HabitTracker
-            .Include(h => h.Habits)
-            .FirstOrDefault();
+        //пока нет авторизации, так что только одно id
+        var habitTrackerData = _habitTrackerRepository.Get(1);
 
         var model = _habitService.GenerateHabitTracker(habitTrackerData);
         return View(model);
@@ -32,9 +31,7 @@ public class HabitTrackerController : Controller
     [HttpGet]
     public IActionResult Statistics()
     {
-        var habitTrackerData = _webContext.HabitTracker
-            .Include(h => h.Habits)
-            .FirstOrDefault();
+        var habitTrackerData = _habitTrackerRepository.Get(1);
 
         var model = _habitService.GenerateHabitTracker(habitTrackerData);
         _statisticsService.CreateStatisticsInfo(model);
@@ -57,9 +54,7 @@ public class HabitTrackerController : Controller
     [HttpPost]
     public IActionResult CreateHabit(HabitViewModel  habit)
     {
-        var habitTrackerData = _webContext.HabitTracker
-            .Include(h => h.Habits)
-            .FirstOrDefault();
+        var habitTrackerData = _habitTrackerRepository.Get(1);
 
         var model = _habitService.GenerateHabitTracker(habitTrackerData);
         
@@ -71,8 +66,21 @@ public class HabitTrackerController : Controller
         
         var newHabit = _habitService.CreateHabit(habit, habitTrackerData.Habits.Count);
         habitTrackerData.Habits.Add(newHabit);
-        _webContext.SaveChanges();
-        
+        _habitTrackerRepository.Save(habitTrackerData);
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public IActionResult TogglePoint(int habitId, int dayIndex)
+    {
+        var habitTrackerData = _habitTrackerRepository.Get(1);
+
+        var habit = habitTrackerData.Habits.FirstOrDefault(h => h.Id == habitId);
+        if (habit != null)
+        {
+            _habitService.ChangeDayPointStatus(habit, dayIndex);
+            _habitTrackerRepository.Save(habitTrackerData);
+        }
         return RedirectToAction(nameof(Index));
     }
 }

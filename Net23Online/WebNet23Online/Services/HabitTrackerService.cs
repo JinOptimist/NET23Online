@@ -16,6 +16,7 @@ public class HabitTrackerService : IHabitTrackerService
             UserName = habitTrackerData.UserName,
             Habits = habitTrackerData.Habits.Select(habit => new HabitViewModel
             {
+                Id = habit.Id,
                 DoneCount = habit.DoneCount,
                 Percent = habit.Percent,
                 Title = habit.Title,
@@ -38,7 +39,9 @@ public class HabitTrackerService : IHabitTrackerService
             DoneCount = modelHabit.DoneCount,
             Percent = modelHabit.Percent,
             Title = modelHabit.Title,
-            WeekResults = modelHabit.WeekResults,
+            WeekResults = modelHabit.WeekResults?.Count == 7 
+                ? modelHabit.WeekResults 
+                : new List<bool> { false, false, false, false, false, false, false },
         };
 
         return habit;
@@ -52,5 +55,10 @@ public class HabitTrackerService : IHabitTrackerService
     public bool IsHabitUnique(HabitTrackerViewModel model, HabitViewModel  habit)
     {
         return model.Habits.Any(h => h.Title == habit.Title);
+    }
+
+    public void ChangeDayPointStatus(HabitData habit, int  dayIndex)
+    {
+        habit.WeekResults[dayIndex] = !habit.WeekResults[dayIndex];
     }
 }
