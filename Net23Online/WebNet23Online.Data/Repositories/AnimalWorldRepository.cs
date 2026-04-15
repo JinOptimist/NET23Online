@@ -6,13 +6,15 @@ namespace WebNet23Online.Data.Repositories
 {
     public class AnimalWorldRepository : BaseRepository<BeastData>, IAnimalWorldRepository
     {
+        public const int START_PAGE_COUNT_ANIMALS = 2;
+
         public AnimalWorldRepository(WebContext webContext) : base(webContext)
         {
         }
 
         public List<BeastData> GetRandomBeasts()
         {
-            return _dbSet.OrderBy(r => EF.Functions.Random()).Take(2).ToList();
+            return _dbSet.OrderBy(r => EF.Functions.Random()).Take(START_PAGE_COUNT_ANIMALS).ToList();
         }
 
         public bool IsExists(string beastName)
