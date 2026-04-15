@@ -16,8 +16,17 @@ namespace WebNet23Online.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupNames = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Likes = table.Column<int>(type: "int", nullable: false)
+                    AllUsers = table.Column<int>(type: "int", nullable: false),
+                    Kiss = table.Column<int>(type: "int", nullable: false),
+                    Ozzy = table.Column<int>(type: "int", nullable: false),
+                    ACDC = table.Column<int>(type: "int", nullable: false),
+                    BonJovi = table.Column<int>(type: "int", nullable: false),
+                    Rammstein = table.Column<int>(type: "int", nullable: false),
+                    ThreeDaysGrace = table.Column<int>(type: "int", nullable: false),
+                    Slipknot = table.Column<int>(type: "int", nullable: false),
+                    Skillet = table.Column<int>(type: "int", nullable: false),
+                    Metallica = table.Column<int>(type: "int", nullable: false),
+                    BringMeTheHorizon = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

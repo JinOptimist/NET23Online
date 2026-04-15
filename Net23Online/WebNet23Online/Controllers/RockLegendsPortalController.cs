@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NAudio.Codecs;
 using WebNet23Online.Data;
 using WebNet23Online.Data.Models;
-using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.RockLegendsPortal;
 using WebNet23Online.Services.Interfaces;
 
@@ -11,13 +9,13 @@ namespace WebNet23Online.Controllers
     public class RockLegendsPortalController : Controller
     {
         private readonly IRockLegendsPick _rockService;
-        private IRockLegendsRepository _rockLegendsRepository;
+        private WebContext _webContext;
 
 
-        public RockLegendsPortalController(IRockLegendsPick rockService, IRockLegendsRepository rockLegendsRepository)
+        public RockLegendsPortalController(IRockLegendsPick rockService, WebContext webContext)
         {
             _rockService = rockService;
-            _rockLegendsRepository = rockLegendsRepository;
+            _webContext = webContext;
         }
 
         [HttpGet]
@@ -28,24 +26,38 @@ namespace WebNet23Online.Controllers
         {
             if (!string.IsNullOrEmpty(viewModel.SelectedBand))
             {
-                var allbands = _rockLegendsRepository.GetAll();
-                var targetBand = allbands.FirstOrDefault(x => x.GroupNames == viewModel.SelectedBand); //.ToLower()
 
-                if (targetBand != null)
+                var record = _webContext.RockLegends.FirstOrDefault();
+
+                if (record != null)
                 {
-                    targetBand.Likes++;
-                    _rockLegendsRepository.Update(targetBand);
+
+                    switch (viewModel.SelectedBand.ToLower())
+                    {
+                        case "kiss": record.Kiss++; break;
+                        case "ozzy": record.Ozzy++; break;
+                        case "acdc": record.ACDC++; break;
+                        case "bon-jovi": record.BonJovi++; break;
+                        case "rammstein": record.Rammstein++; break;
+                        case "tdg": record.ThreeDaysGrace++; break;
+                        case "slipknot": record.Slipknot++; break;
+                        case "skillet": record.Skillet++; break;
+                        case "metallica": record.Metallica++; break;
+                        case "bmth": record.BringMeTheHorizon++; break;
+                    }
+
+                    _webContext.SaveChanges();
                 }
 
-                return RedirectToAction("Details", new { name = viewModel.SelectedBand });
+                return RedirectToAction("Details", new { id = viewModel.SelectedBand });
             }
             return View();
         }
 
-        public IActionResult Details(string name)
+        public IActionResult Details(string id)
         {
-            var rockDataList = _rockLegendsRepository.GetAll().ToList();
-            var model = _rockService.GetBandDetails(name, rockDataList);
+            var rockDataList = _webContext.RockLegends.ToList();
+            var model = _rockService.GetBandDetails(id, rockDataList);
             return View(model);
         }
     }
