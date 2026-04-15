@@ -1,0 +1,30 @@
+@using WebNet23Online.Models.SlayTheSpire2
+@model HeroesViewModel
+@{
+    Layout = "_LayoutSLayTheSpire";
+    ViewData["Title"] = Model.Found ? Model.Name : "Герой";
+}
+
+<div class="spire-heroes-detail">
+    <p class="spire-heroes-back">
+        <a asp-controller="SlayTheSpire2" asp-action="Index" class="spire-navbar-link">← На главную Slay the Spire 2</a>
+    </p>
+
+    @if (Model.Found)
+    {
+        <h1 class="spire-heroes-detail-title">@Model.Name</h1>
+        <dl class="spire-heroes-detail-list">
+            <dt>Идентификатор в базе</dt>
+            <dd>@Model.HeroId</dd>
+            <dt>Имя</dt>
+            <dd>@Model.Name</dd>
+            <dt>Цвет (из базы данных)</dt>
+            <dd>@Model.Color</dd>
+        </dl>
+    }
+    else
+    {
+        <h1 class="spire-heroes-detail-title">Герой не найден</h1>
+        <p>Для идентификатора <strong>@Model.HeroId</strong> в таблице Heroes нет записи. Обратитесь к высшим силам что бы добавить вашего героя в БД</p>
+    }
+</div>
