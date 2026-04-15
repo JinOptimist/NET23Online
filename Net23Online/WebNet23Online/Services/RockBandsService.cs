@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebNet23Online.Data;
 using WebNet23Online.Data.Models;
-using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
@@ -47,8 +45,7 @@ namespace WebNet23Online.Services
                     : viewModel.ImageUrl.Trim(),
             };
 
-            _webContext.RockBand.Add(newBand);
-            _webContext.SaveChanges();
+            _rockBandsRepository.Add(newBand);
         }
     }
 }

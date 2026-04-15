@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 
@@ -9,6 +11,11 @@ namespace WebNet23Online.Data.Repositories
     {
         public RockBandsRepository(WebContext webContext) : base(webContext) { }
 
+        public IQueryable<RockBandsData> AsNoTracking()
+        {
+            return _dbSet.AsNoTracking();
+        }
+
         public override void Add(RockBandsData model)
         {
             var normalizedName = model.Name?.Trim().ToLower();
@@ -17,10 +24,7 @@ namespace WebNet23Online.Data.Repositories
                 throw new InvalidOperationException($"Rock band with name '{normalizedName}' already exists.");
             }
 
-            model.Name = normalizedName.Length == 1
-               ? normalizedName.ToUpper()
-               : char.ToUpper(normalizedName[0]) + normalizedName.Substring(1);
-            base.Add(model);
+            model.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(normalizedName);
             base.Add(model);
         }
     }
