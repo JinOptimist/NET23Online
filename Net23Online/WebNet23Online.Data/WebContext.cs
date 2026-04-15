@@ -15,8 +15,8 @@ namespace WebNet23Online.Data
         // public DbSet<HabitData> Habit { get; set; }
         public DbSet<BeastData> Beasts { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
-        DbSet<GenreOfRockBands> RockBandGenresDictionary { get; set; }
-        DbSet<RockBandGenreData> RockBandGenres { get; set; }
+        public DbSet<GenreOfRockBands> RockBandGenresDictionary { get; set; }
+        public DbSet<RockBandGenreData> RockBandGenres { get; set; }
         public DbSet<FoodItemData> FoodItems { get; set; }
 
         public DbSet<RockLegendsData> RockLegends { get; set; }
