@@ -20,5 +20,29 @@ namespace WebNet23Online.Data.Repositories
             model.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(normalizedName);
             base.Add(model);
         }
+
+        public List<RockBandsData> GetAllWithGenres()
+        {
+            return _dbSet
+                .Include(b => b.RockBandGenres)
+                .ThenInclude(bg => bg.Genre)
+                .OrderBy(b => b.Id)
+                .ToList();
+        }
+
+        public List<RockBandsData> GetByGenreIdsWithGenres(int[] genreIds)
+        {
+            if (genreIds == null || genreIds.Length == 0)
+            {
+                return GetAllWithGenres();
+            }
+            return _dbSet
+                .Include(b => b.RockBandGenres)
+                .ThenInclude(bg => bg.Genre)
+                .Where(b => b.RockBandGenres.Any(bg => genreIds.Contains(bg.GenreId)))
+                .OrderBy(b => b.Id)
+                .ToList();
+        }
     }
+
 }

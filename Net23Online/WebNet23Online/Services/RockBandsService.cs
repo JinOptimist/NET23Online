@@ -14,18 +14,25 @@ namespace WebNet23Online.Services
             _rockBandsRepository = rockBandsRepository;
         }
 
-        public List<BandBlockViewModel> GetBands()
+        public List<BandBlockViewModel> GetBands(int[]? genreIds = null)
         {
-            return _rockBandsRepository
-                .GetAll()
-                .OrderBy(b => b.Id)
-                .Select(b => new BandBlockViewModel
-                {
-                    Name = b.Name,
-                    Description = b.Description,
-                    ImageUrl = string.IsNullOrWhiteSpace(b.Url) ? null : b.Url,
-                })
-                .ToList();
+            var bandsData = (genreIds is { Length: > 0 })
+                ? _rockBandsRepository.GetByGenreIdsWithGenres(genreIds)
+                : _rockBandsRepository.GetAllWithGenres();
+
+            return bandsData
+                   .OrderBy(b => b.Id)
+                   .Select(b => new BandBlockViewModel
+                   {
+                       Name = b.Name,
+                       Description = b.Description,
+                       ImageUrl = string.IsNullOrWhiteSpace(b.Url) ? null : b.Url,
+                       Genres = b.RockBandGenres
+                            .Select(bg => bg.Genre.Name)
+                            .OrderBy(x => x)
+                            .ToList(),
+                   })
+                   .ToList();
         }
 
         public void AddBand(BandBlockViewModel viewModel)

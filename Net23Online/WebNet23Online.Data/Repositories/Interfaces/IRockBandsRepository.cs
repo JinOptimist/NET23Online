@@ -5,6 +5,7 @@ namespace WebNet23Online.Data.Repositories.Interfaces
 {
     public interface IRockBandsRepository : IBaseRepository<RockBandsData>
     {
-
+        List<RockBandsData> GetAllWithGenres();
+        List<RockBandsData> GetByGenreIdsWithGenres(int[] genreIds);
     }
 }
