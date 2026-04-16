@@ -6,7 +6,7 @@ namespace WebNet23Online.Services.Interfaces
     {
         public StartPageAnimalsViewModel GetAllAnimals();
         StartPageAnimalsViewModel GetRandomAnimals();
-        bool AddAnimal(StartPageBeastViewModel viewModel);
-        StartPageBeastViewModel SearchAnimal(StartPageBeastViewModel viewModel);
+        bool AddAnimal(AnimalSpeciesViewModel viewModel);
+        AnimalSpeciesViewModel SearchAnimal(AnimalSpeciesViewModel viewModel);
     }
 }

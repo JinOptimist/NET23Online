@@ -42,7 +42,7 @@ namespace WebNet23Online.Services
             return startPageAnimals;
         }
 
-        public bool AddAnimal(StartPageBeastViewModel viewModel)
+        public bool AddAnimal(AnimalSpeciesViewModel viewModel)
         {
             if (string.IsNullOrEmpty(viewModel.BeastName)
                 || string.IsNullOrEmpty(viewModel.BriefDescription)
@@ -67,14 +67,14 @@ namespace WebNet23Online.Services
             return true;
         }
 
-        public StartPageBeastViewModel SearchAnimal(StartPageBeastViewModel viewModel)
+        public AnimalSpeciesViewModel SearchAnimal(AnimalSpeciesViewModel viewModel)
         {
             if (string.IsNullOrEmpty(viewModel.BeastName))
             {
                 return null;
             }
 
-            var beastSearch = new StartPageBeastViewModel();
+            var beastSearch = new AnimalSpeciesViewModel();
             if (!_animalWorldRepository.IsExists(viewModel.BeastName))
             {
                 beastSearch.NativeRange = CANT_FIND_ANIMAL;
@@ -91,10 +91,10 @@ namespace WebNet23Online.Services
             return beastSearch;
         }
 
-        private List<StartPageBeastViewModel> GetAllBeastsFromDatabase()
+        private List<AnimalSpeciesViewModel> GetAllBeastsFromDatabase()
         {
             var beastsData = _animalWorldRepository.GetAll();
-            var beasts = beastsData.Select(animal => new StartPageBeastViewModel
+            var beasts = beastsData.Select(animal => new AnimalSpeciesViewModel
             {
                 BeastName = animal.BeastName,
                 NativeRange = animal.NativeRange,

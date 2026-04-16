@@ -25,7 +25,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAnimal(StartPageBeastViewModel viewModel)
+        public IActionResult AddAnimal(AnimalSpeciesViewModel viewModel)
         {
             if (_animalWorldService.AddAnimal(viewModel))
             {
@@ -36,7 +36,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
-        public IActionResult AnimalSearch(StartPageBeastViewModel viewModel)
+        public IActionResult AnimalSearch(AnimalSpeciesViewModel viewModel)
         {
             return PartialView(_animalWorldService.SearchAnimal(viewModel));
         }

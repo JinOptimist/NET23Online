@@ -1,4 +1,4 @@
-﻿@model WebNet23Online.Models.AnimalWorld.StartPageBeastViewModel
+﻿@model WebNet23Online.Models.AnimalWorld.AnimalSpeciesViewModel
 <div class="find-animal">
     <form class="find-animal-form" method="post" asp-action="AnimalSearch" data-ajax="true" data-ajax-update="#search-result-container" data-ajax-mode="replace">
         @Html.TextBoxFor(animal => animal.BeastName, new { @class = "form-input", type = "text", placeholder = "Напишите название..." })
