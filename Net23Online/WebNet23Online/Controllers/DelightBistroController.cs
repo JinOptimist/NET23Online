@@ -65,5 +65,20 @@ namespace WebNet23Online.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult CreateMenu()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateMenu(CreateMenuViewModel viewModel)
+        {
+            //var viewModel2=new MenuTypeViewModel();
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

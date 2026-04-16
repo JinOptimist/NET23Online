@@ -1,8 +1,9 @@
-﻿using WebNet23Online.Services.Interfaces;
+﻿using WebNet23Online.Data.Models;
+using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Models.DelightBistro
 {
-    public class MenuTypeViewModel
+    public class MenuTypeViewModel : BaseModel
     {
         public string MenuType { get; set; }
         public string TypeName { get; set; }
