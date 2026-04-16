@@ -13,7 +13,9 @@ namespace WebNet23Online.Controllers
         private IFoodItemGenerator _foodItemGenerator;
         private IMenuTypeGenerator _menuTypeGenerator;
 
-        private IFoodItemRepository _foodItemRepository;// Хотим ли мы создавать поле репозиторя в сервисе?
+        private IFoodItemRepository _foodItemRepository;
+        private IMenuRepository _menuRepository; //MenuTypeData
+        private IIngredientsRepository _ingredientsRepository; //IngredientData
 
         public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator, IFoodItemRepository foodItemRepository)
         {

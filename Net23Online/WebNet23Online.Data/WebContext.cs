@@ -15,8 +15,9 @@ namespace WebNet23Online.Data
         // public DbSet<HabitData> Habit { get; set; }
         public DbSet<BeastData> Beasts { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
-        public DbSet<FoodItemData> FoodItems { get; set; }
-
+        public DbSet<FoodItemData> FoodItems { get; set; } // DB
+        public DbSet<IngredientData> Ingredients { get; set; } // DB
+        public DbSet<MenuData> Menus { get; set; } // DB
         public DbSet<RockLegendsData> RockLegends { get; set; }
         public DbSet<GameData> Games { get; set; }
 
@@ -41,6 +42,16 @@ namespace WebNet23Online.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.MyFriends)
                 .WithMany(x => x.WhoIsMyFriends);
+
+            //Delight Bistro
+            modelBuilder.Entity<MenuData>()
+                .HasMany(x => x.FoodItems)
+                .WithOne(x => x.MenuData);
+
+            modelBuilder.Entity<FoodItemData>()
+                .HasMany(x => x.IngredientsList)
+                .WithMany(x => x.FoodItems);
+
 
             base.OnModelCreating(modelBuilder);
         }
