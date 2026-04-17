@@ -1,0 +1,31 @@
+@{
+    Layout = "_LayoutAnimalWorld";
+    ViewData["Title"] = "Добавление данных";
+}
+
+<div class="main-place">
+    <div class="green-title">
+        <h2>Добавление данных о животных</h2>
+    </div>
+    <hr class="green-line">
+    <p>Выберите, какую информацию хотите добавить:</p>
+    @if (TempData["AnimalWorldAddMessage"] is string addMessage)
+    {
+        <p class="empty-list-note">@addMessage</p>
+    }
+
+    <div class="add-links-grid">
+        <a class="find-animal-button add-link-button" asp-controller="AnimalWorld" asp-action="AddZoo">
+            Добавить зоопарк
+        </a>
+        <a class="find-animal-button add-link-button" asp-controller="AnimalWorld" asp-action="AddFamily">
+            Добавить род животных
+        </a>
+        <a class="find-animal-button add-link-button" asp-controller="AnimalWorld" asp-action="AddSpecies">
+            Добавить вид животных
+        </a>
+        <a class="find-animal-button add-link-button" asp-controller="AnimalWorld" asp-action="BindZooFamily">
+            Привязать зоопарк к родам
+        </a>
+    </div>
+</div>

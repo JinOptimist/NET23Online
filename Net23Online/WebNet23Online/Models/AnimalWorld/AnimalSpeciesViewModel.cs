@@ -1,8 +1,10 @@
-﻿namespace WebNet23Online.Models.AnimalWorld
+namespace WebNet23Online.Models.AnimalWorld
 {
     public class AnimalSpeciesViewModel
     {
         public string AnimalSpeciesName { get; set; }
+
+        public string AnimalFamilyName { get; set; }
 
         public string NativeRange { get; set; }
 
