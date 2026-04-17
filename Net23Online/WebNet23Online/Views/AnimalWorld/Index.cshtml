@@ -1,8 +1,9 @@
 @model WebNet23Online.Models.AnimalWorld.StartPageAnimalWorldInfoViewModel
 @{
     Layout = "_LayoutAnimalWorld";
-    ViewData["Title"] = "Мир животных";
 }
+
+<title>Мир животных</title>
 
 <div class="main-place">
     <div class="green-title">
@@ -11,21 +12,15 @@
     <hr class="green-line">
     <p>Земля населена миллионами удивительных существ. От крошечных насекомых до гигантских синих китов.</p>
     <div class="image-container">
-        <img src="~/images/animal-world/animals.jpg" alt="Разнообразие животных на планете" />
+        <img src="~/images/animal-world/animals.jpg" />
     </div>
-    <div class="index-actions">
-        <a class="find-animal-button add-link-button" asp-controller="AnimalWorld" asp-action="Add">
-            Перейти к добавлению данных
-        </a>
-    </div>
-
     <div class="green-title">
         <h2>Зоопарки</h2>
     </div>
     <hr class="green-line">
-    @if (Model?.ZooList?.Any() == true)
+    @if (Model.Zoos.Any())
     {
-        @foreach (var zoo in Model.ZooList)
+        @foreach (var zoo in Model.Zoos)
         {
             <div class="animal entity-card">
                 <h3>@zoo.ZooName</h3>
@@ -38,14 +33,13 @@
     {
         <p class="empty-list-note">Пока нет данных о зоопарках.</p>
     }
-
     <div class="green-title">
-        <h2>Роды животных</h2>
+        <h2>Животные</h2>
     </div>
     <hr class="green-line">
-    @if (Model?.AnimalFamilyList?.Any() == true)
+    @if (Model.AnimalFamilies.Any())
     {
-        @foreach (var family in Model.AnimalFamilyList)
+        @foreach (var family in Model.AnimalFamilies)
         {
             <div class="animal entity-card">
                 <h3>@family.AnimalFamilyName</h3>
@@ -55,16 +49,16 @@
     }
     else
     {
-        <p class="empty-list-note">Пока нет данных о родах животных.</p>
+        <p class="empty-list-note">Пока нет данных о животных.</p>
     }
 
     <div class="green-title">
         <h2>Виды животных</h2>
     </div>
     <hr class="green-line">
-    @if (Model?.AnimalSpeciesList?.Any() == true)
+    @if (Model.AnimalSpecies.Any())
     {
-        @foreach (var species in Model.AnimalSpeciesList)
+        @foreach (var species in Model.AnimalSpecies)
         {
             <div class="animal entity-card">
                 <h3>@species.AnimalSpeciesName</h3>
@@ -77,7 +71,4 @@
     {
         <p class="empty-list-note">Пока нет данных о видах животных.</p>
     }
-</div>
-<div class="footer-body">
-    <p>&copy; 2026 Мир Животных. Берегите природу!</p>
 </div>

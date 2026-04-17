@@ -1,20 +1,21 @@
 @model WebNet23Online.Models.AnimalWorld.AnimalFamilyViewModel
 @{
     Layout = "_LayoutAnimalWorld";
-    ViewData["Title"] = "Добавить род";
 }
+
+<title>Добавление рода животных</title>
 
 <div class="main-place">
     <div class="green-title">
         <h2>Добавление рода животных</h2>
     </div>
     <hr class="green-line">
-    <form method="post" asp-controller="AnimalWorld" asp-action="AddFamily" class="entity-form">
+    <form method="post">
         <div class="form-group">
             <div class="green-title">
                 <h6>Название рода</h6>
             </div>
-            @Html.TextBoxFor(family => family.AnimalFamilyName, new { @class = "form-input", type = "text", placeholder = "Например: Panthera" })
+            @Html.TextBoxFor(family => family.AnimalFamilyName, new { @class = "form-input", type = "text", placeholder = "Например: Кошки" })
         </div>
 
         <div class="form-group">
@@ -26,7 +27,6 @@
 
         <div class="button-group">
             <button class="find-animal-button" type="submit">Сохранить</button>
-            <a class="find-animal-button add-link-button secondary-action" asp-controller="AnimalWorld" asp-action="Add">Назад</a>
         </div>
     </form>
 </div>

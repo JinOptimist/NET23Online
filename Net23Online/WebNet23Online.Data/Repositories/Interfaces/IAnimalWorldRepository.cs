@@ -1,13 +1,13 @@
-﻿using WebNet23Online.Data.Models;
+﻿using WebNet23Online.Data.Models.AnimalWorld;
 
 namespace WebNet23Online.Data.Repositories.Interfaces
 {
-    public interface IAnimalWorldRepository : IBaseRepository<BeastData>
+    public interface IAnimalWorldRepository : IBaseRepository<AnimalSpeciesData>
     {
         bool IsExists(string beastName);
 
-        List<BeastData> GetRandomBeasts();
+        List<AnimalSpeciesData> GetRandomBeasts();
 
-        BeastData GetBeastByName(string beastName);
+        AnimalSpeciesData GetBeastByName(string beastName);
     }
 }

@@ -1,4 +1,4 @@
-﻿using WebNet23Online.Data.Models;
+﻿using WebNet23Online.Data.Models.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.AnimalWorld;
 using WebNet23Online.Services.Interfaces;
@@ -54,12 +54,12 @@ namespace WebNet23Online.Services
 
             if (!_animalWorldRepository.IsExists(viewModel.BeastName))
             {
-                BeastData beastData = new BeastData
+                AnimalSpeciesData beastData = new AnimalSpeciesData
                 {
-                    BeastName = viewModel.BeastName,
-                    NativeRange = viewModel.NativeRange,
-                    BriefDescription = viewModel.BriefDescription,
-                    FullDescription = viewModel.FullDescription,
+                    AnimalSpeciesName = viewModel.BeastName,
+                    AnimalFamilyName = viewModel.NativeRange,
+                    NativeRange = viewModel.BriefDescription,
+                    Description = viewModel.FullDescription,
                 };
                 _animalWorldRepository.Add(beastData);
             }
@@ -83,9 +83,9 @@ namespace WebNet23Online.Services
             else
             {
                 var beastDataSearch = _animalWorldRepository.GetBeastByName(viewModel.BeastName);
-                beastSearch.BeastName = beastDataSearch.BeastName;
-                beastSearch.NativeRange = beastDataSearch.NativeRange;
-                beastSearch.FullDescription = beastDataSearch.FullDescription;
+                beastSearch.BeastName = beastDataSearch.AnimalSpeciesName;
+                beastSearch.NativeRange = beastDataSearch.AnimalFamilyName;
+                beastSearch.FullDescription = beastDataSearch.Description;
             }
 
             return beastSearch;
@@ -96,10 +96,10 @@ namespace WebNet23Online.Services
             var beastsData = _animalWorldRepository.GetAll();
             var beasts = beastsData.Select(animal => new AnimalSpeciesViewModel
             {
-                BeastName = animal.BeastName,
-                NativeRange = animal.NativeRange,
-                BriefDescription = animal.BriefDescription,
-                FullDescription = animal.FullDescription,
+                BeastName = animal.AnimalSpeciesName,
+                NativeRange = animal.AnimalFamilyName,
+                BriefDescription = animal.NativeRange,
+                FullDescription = animal.Description,
             });
             return beasts.ToList();
         }

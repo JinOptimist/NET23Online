@@ -1,29 +1,28 @@
 @model WebNet23Online.Models.AnimalWorld.ZooViewModel
 @{
     Layout = "_LayoutAnimalWorld";
-    ViewData["Title"] = "Добавить зоопарк";
 }
+
+<title>Добавление зоопарка</title>
 
 <div class="main-place">
     <div class="green-title">
         <h2>Добавление зоопарка</h2>
     </div>
     <hr class="green-line">
-    <form method="post" asp-controller="AnimalWorld" asp-action="AddZoo" class="entity-form">
+    <form method="post">
         <div class="form-group">
             <div class="green-title">
                 <h6>Название зоопарка</h6>
             </div>
-            @Html.TextBoxFor(zoo => zoo.ZooName, new { @class = "form-input", type = "text", placeholder = "Например: Московский зоопарк" })
+            @Html.TextBoxFor(zoo => zoo.ZooName, new { @class = "form-input", type = "text", placeholder = "Например: Сингапурский зоопарк" })
         </div>
-
         <div class="form-group">
             <div class="green-title">
                 <h6>Адрес</h6>
             </div>
             @Html.TextBoxFor(zoo => zoo.Address, new { @class = "form-input", type = "text", placeholder = "Город, улица, дом" })
         </div>
-
         <div class="form-group">
             <div class="green-title">
                 <h6>Описание</h6>
@@ -33,7 +32,6 @@
 
         <div class="button-group">
             <button class="find-animal-button" type="submit">Сохранить</button>
-            <a class="find-animal-button add-link-button secondary-action" asp-controller="AnimalWorld" asp-action="Add">Назад</a>
         </div>
     </form>
 </div>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Models.AnimalWorld;
 using WebNet23Online.Data.Models.Steam;
 
 namespace WebNet23Online.Data
@@ -13,7 +14,9 @@ namespace WebNet23Online.Data
         public DbSet<MazeData> Mazes { get; set; }
         public DbSet<HabitTrackerData> HabitTracker { get; set; }
         // public DbSet<HabitData> Habit { get; set; }
-        public DbSet<BeastData> Beasts { get; set; }
+        public DbSet<AnimalFamilyData> AnimalFamilies { get; set; }
+        public DbSet<AnimalSpeciesData> AnimalSpecies { get; set; }
+        public DbSet<ZooData> Zoos {  get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
         public DbSet<FoodItemData> FoodItems { get; set; }
 
@@ -32,6 +35,14 @@ namespace WebNet23Online.Data
                 .HasMany(x => x.Animes)
                 .WithOne(x => x.Studio)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ZooData>()
+                .HasMany(x => x.AnimalSpecies)
+                .WithMany(x => x.ZooData);
+
+            modelBuilder.Entity<AnimalFamilyData>()
+                .HasMany(x => x.Species)
+                .WithOne(x => x.AnimalFamily);
 
             modelBuilder.Entity<UserData>()
                 .HasOne(x => x.UserProfile)
