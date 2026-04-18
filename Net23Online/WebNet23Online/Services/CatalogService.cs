@@ -1,27 +1,30 @@
-﻿using WebNet23Online.Data;
+﻿
+using WebNet23Online.Data.Enums.Steam;
+using WebNet23Online.Data.HelperModels;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Models.Steam;
-using WebNet23Online.Data.Models.Steam.Enums;
+using WebNet23Online.Data.Repositories.Interfaces;
+
 using WebNet23Online.Models.Steam;
+
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services
 {
     public class CatalogService : ICatalogService
-    {
-        public const int SPECIAL_OFFERS_PREVIEW_COUNT = 6;
-        private readonly WebContext _context;
+    {       
+        private readonly IGameRepository _gameRepository;
 
-        public CatalogService(WebContext context)
+        public CatalogService(IGameRepository gameRepository)
         {
-            _context = context;
+            _gameRepository = gameRepository;
         }
 
         public SteamHomeViewModel GetGamesForHomePage()
-        {
+        {     
             var viewModel = new SteamHomeViewModel
             {
-                Featured = _context.Games
-                   .Skip(SPECIAL_OFFERS_PREVIEW_COUNT)
+                Featured = _gameRepository.GetFeaturedForHomePage()
                    .Select(g => new SteamGameViewModel
                    {
                        Title = g.Title,
@@ -32,8 +35,7 @@ namespace WebNet23Online.Services
                    })
                    .ToList(),
 
-                SpecialOffers = _context.Games
-                   .Take(SPECIAL_OFFERS_PREVIEW_COUNT)
+                SpecialOffers = _gameRepository.GetSpecialOffersForHomePage()
                    .Select(g => new SteamGameViewModel
                    {
                        Title = g.Title,
@@ -56,17 +58,13 @@ namespace WebNet23Online.Services
                              .Cast<GameGenre>()
                              .ToList();
 
-            var games = _context.Games.AsQueryable();
-
-            if (!string.IsNullOrEmpty(filter.Genre) && filter.Genre != "All")
+            var repoFilter = new GameFilter
             {
-                games = games.Where(g => g.Genre.ToString() == filter.Genre);
-            }
+                Genre = ParseGenre(filter.Genre),
+                MaxPrice = filter.MaxPrice
+            };
 
-            if (filter.MaxPrice.HasValue)
-            {
-                games = games.Where(g => g.Price <= filter.MaxPrice);
-            }
+            var games = _gameRepository.GetFiltered(repoFilter);
 
             return new CatalogViewModel
             {
@@ -101,8 +99,17 @@ namespace WebNet23Online.Services
                 Genre = viewModel.Genre
             };
 
-            _context.Games.Add(gameEntity);
-            _context.SaveChanges();
+            _gameRepository.Add(gameEntity);     
+        }
+
+        private GameGenre? ParseGenre(string genreString)
+        {
+            if (string.IsNullOrEmpty(genreString) || genreString == "All")
+            {
+                return null;
+            }
+
+            return Enum.TryParse<GameGenre>(genreString, out var genre) ? genre : null;
         }
     }
 }

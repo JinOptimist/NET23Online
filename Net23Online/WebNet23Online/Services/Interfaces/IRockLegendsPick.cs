@@ -5,6 +5,6 @@ namespace WebNet23Online.Services.Interfaces
 {
     public interface IRockLegendsPick
     {
-        RockLegendsPortalViewModel GetBandDetails(string id, List<RockLegendsData> rockLegendsDatas);
+        RockLegendsPortalViewModel GetBandDetails(int id, RockLegendsData bandData);
     }
 }

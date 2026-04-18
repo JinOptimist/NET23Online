@@ -8,8 +8,9 @@ namespace WebNet23Online.Services
     {
         private IEpicMeanlessPhraseGenerator _phraseGenerator;
         private IRandomBuilder _randomBuilder;
+        private const string DEFAULT_COVER = "https://i.pinimg.com/736x/49/58/8b/49588bb573d521482b58174210adbb77.jpg";
 
-        public AnimeGirlGenerator(IEpicMeanlessPhraseGenerator epicMeanlessPhraseGenerator, 
+        public AnimeGirlGenerator(IEpicMeanlessPhraseGenerator epicMeanlessPhraseGenerator,
             IRandomBuilder randomBuilder)
         {
             _phraseGenerator = epicMeanlessPhraseGenerator;
@@ -18,28 +19,14 @@ namespace WebNet23Online.Services
 
         public List<AnimeGirlImageInfoViewModel> GenerateList(List<AnimeGirlData> animeGirlDatas)
         {
-            //viewModels.Add(new AnimeGirlImageInfoViewModel
-            //{
-            //    Url = "https://img.freepik.com/premium-photo/hand-drawn-cartoon-anime-girl-illustration-camouflage-uniform_561641-5662.jpg",
-            //    Title = _phraseGenerator.Generate()
-            //});
-            //viewModels.Add(new AnimeGirlImageInfoViewModel
-            //{
-            //    Url = "https://img.freepik.com/free-photo/anime-character-winter_23-2151843487.jpg?semt=ais_hybrid&amp;w=740",
-            //    Title = _phraseGenerator.Generate()
-            //});
-            //viewModels.Add(new AnimeGirlImageInfoViewModel
-            //{
-            //    Url = "https://i.pinimg.com/474x/ed/3a/e8/ed3ae86ab479861a1e10e8d0caaf04de.jpg?nii=t",
-            //    Title = _phraseGenerator.Generate()
-            //});
-
             var viewModels = animeGirlDatas
                 .Select(x => new AnimeGirlImageInfoViewModel
-            {
-                Url = x.Url,
-                Title = x.Name
-            });
+                {
+                    Id = x.Id,
+                    Url = x.Url,
+                    Title = x.Name,
+                    ConnectedAnimeTitles = string.Join(", ", x.Animes.Select(a => a.Name!))
+                });
 
             return viewModels
                 .ToList();
@@ -50,8 +37,20 @@ namespace WebNet23Online.Services
             return new AnimeGirlImageInfoViewModel
             {
                 Url = "https://i.pinimg.com/474x/ed/3a/e8/ed3ae86ab479861a1e10e8d0caaf04de.jpg?nii=t",
-                Title = _phraseGenerator.Generate()
+                Title = _phraseGenerator.Generate(),
+                ConnectedAnimeTitles = string.Empty
             };
+        }
+
+        public List<IndexAnimeViewModel> AnimeMap(List<AnimeData> animes)
+        {
+            return animes
+                .Select(x => new IndexAnimeViewModel
+                {
+                    Name = x.Name,
+                    Id = x.Id,
+                    Url = x.CoverUrl ?? DEFAULT_COVER
+                }).ToList();
         }
     }
 }
