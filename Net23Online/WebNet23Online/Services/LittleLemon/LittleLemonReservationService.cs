@@ -1,16 +1,17 @@
-﻿using WebNet23Online.Data;
+﻿
 using WebNet23Online.Services.Interfaces.LittleLemon;
-using WebNet23Online.Data.Models;
 using WebNet23Online.Models.LittleLemon;
+using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Data.Models;
 namespace WebNet23Online.Services.LittleLemon
 {
     public class LittleLemonReservationService: ILittleLemonReservationService
     {
-        private WebContext _webContext;
+        private ILittleLemonReservationRepository _reservationDataRepo;
 
-        public LittleLemonReservationService(WebContext webContext)
+        public LittleLemonReservationService(ILittleLemonReservationRepository reservationDataRepo)
         {
-            _webContext = webContext;
+            _reservationDataRepo = reservationDataRepo;
         }
 
         public int CreateReservation(LittleLemonReservationViewModel viewModel)
@@ -25,14 +26,14 @@ namespace WebNet23Online.Services.LittleLemon
                 UserComments = viewModel.UserComments,
                 UserName = viewModel.UserName,
             };
-            _webContext.LittleLemonDatas.Add(reservationData);
-            _webContext.SaveChanges();
+            _reservationDataRepo.Add(reservationData);
             return reservationData.Id;
         }
 
         public LittleLemonReservationViewModel GetReservationViewModelById(int id)
         {
-            var reservationDataById = _webContext.LittleLemonDatas.Find(id);
+            var reservationDataById = _reservationDataRepo.Get(id);
+            
             return new LittleLemonReservationViewModel
             {
                 NumberOfGuests = reservationDataById.NumberOfGuests,

@@ -86,6 +86,7 @@ builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
 builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
 builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
+builder.Services.AddScoped<ILittleLemonReservationRepository, LittleLemonReservationRepository>();
 
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 
