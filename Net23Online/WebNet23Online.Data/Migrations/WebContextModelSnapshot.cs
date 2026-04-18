@@ -76,6 +76,7 @@ namespace WebNet23Online.Data.Migrations
 
                 b.ToTable("Animes");
             });
+
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimeGirlData", b =>
             {
                 b.Property<int>("Id")
@@ -141,31 +142,31 @@ namespace WebNet23Online.Data.Migrations
                     b.ToTable("littleLemonDatas");
                 });
 
-           
+
             modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                b.Property<string>("Description")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                b.Property<string>("Url")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                b.HasKey("Id");
+                    b.HasKey("Id");
 
-                b.ToTable("AnimeGirls");
-            });
+                    b.ToTable("AnimeGirls");
+                });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimeStudioData", b =>
             {
