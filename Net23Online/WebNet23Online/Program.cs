@@ -55,7 +55,11 @@ builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
 
 builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
 builder.Services.AddSingleton<IMazeService, MazeService>();
+
+//AnimalWorld DI
 builder.Services.AddScoped<IAnimalWorldService, AnimalWorldService>();
+builder.Services.AddScoped<IAnimalWorldMapper, AnimalWorldMapper>();
+
 builder.Services.AddScoped<IRockBandsService, RockBandsService>();
 
 builder.Services.AddSingleton<IRockLegendsPick, RockLegendsPick>();
@@ -77,6 +81,8 @@ builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomestic
 builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
 
 // Repositories
+builder.Services.AddScoped<IZooRepository, ZooRepository>();
+builder.Services.AddScoped<IAnimalFamilyRepository, AnimalFamilyRepository>();
 builder.Services.AddScoped<IAnimalSpeciesRepository, AnimalSpeciesRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();

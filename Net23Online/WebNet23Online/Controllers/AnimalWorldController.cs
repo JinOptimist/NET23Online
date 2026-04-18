@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebNet23Online.Models.AnimalWorld;
+using WebNet23Online.Models.AnimeGirl;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
@@ -15,7 +17,7 @@ namespace WebNet23Online.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(_animalWorldService.GetStartInfo());
         }
 
         public IActionResult Add()
@@ -32,7 +34,12 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddZoo(ZooViewModel viewModel)
         {
-            return RedirectToAction("Add");
+            if (_animalWorldService.AddZoo(viewModel))
+            {
+                return RedirectToAction("Add");
+            }
+            
+            return View();
         }
 
         [HttpGet]
@@ -44,19 +51,29 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddFamily(AnimalFamilyViewModel viewModel)
         {
-            return RedirectToAction("Add");
+            if (_animalWorldService.AddAnimalFamily(viewModel))
+            {
+                return RedirectToAction("Add");
+            }
+
+            return View();
         }
 
         [HttpGet]
         public IActionResult AddSpecies()
         {
-            return View();
+            return View(_animalWorldService.GetAnimalSpeciesPageInfo());
         }
 
         [HttpPost]
         public IActionResult AddSpecies(AnimalSpeciesViewModel viewModel)
         {
-            return RedirectToAction("Add");
+            if (_animalWorldService.AddAnimalSpecies(viewModel))
+            {
+                return RedirectToAction("Add");
+            }
+
+            return View();
         }
 
         [HttpGet]
@@ -68,7 +85,12 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult BindZooFamily(BindZooWithAnimalSpeciesViewModel viewModel)
         {
-            return RedirectToAction("Add");
+            //if (_animalWorldService.BindZooWithAnimalSpecies(viewModel))
+            //{
+            //    return RedirectToAction("Index");
+            //}
+
+            return View();
         }
     }
 }

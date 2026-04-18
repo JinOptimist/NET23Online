@@ -1,4 +1,5 @@
-﻿using WebNet23Online.Data.Models.AnimalWorld;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebNet23Online.Data.Models.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Models.AnimalWorld;
 using WebNet23Online.Services.Interfaces;
@@ -32,6 +33,35 @@ namespace WebNet23Online.Services
                 AnimalSpecies = animalSpecies,
             };
             return startPageInfo;
+        }
+
+        public AnimalSpeciesViewModel GetAnimalSpeciesPageInfo()
+        {
+            var animalFamilies = GetAnimalFamilies();
+            var animalFamilyListItems = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "Выберите род животного",
+                    Value = ""
+                }
+            };
+            animalFamilyListItems.AddRange(animalFamilies.Select(animalFamily => new SelectListItem
+            {
+                Text = animalFamily.AnimalFamilyName,
+                Value = animalFamily.Id.ToString()
+            }));
+            var viewModel = new AnimalSpeciesViewModel
+            {
+                AnimalFamilyNames = animalFamilyListItems
+            };
+
+            return viewModel;
+        }
+
+        private List<AnimalFamilyData> GetAnimalFamilies()
+        {
+            return _animalFamilyRepository.GetAll();
         }
 
         public bool AddZoo(ZooViewModel viewModel)
