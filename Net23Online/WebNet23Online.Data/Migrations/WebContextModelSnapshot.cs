@@ -76,6 +76,30 @@ namespace WebNet23Online.Data.Migrations
 
                 b.ToTable("Animes");
             });
+            modelBuilder.Entity("WebNet23Online.Data.Models.AnimeGirlData", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
+
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("Url")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("Id");
+
+                b.ToTable("AnimeGirls");
+            });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.LittleLemonData", b =>
                 {
