@@ -117,7 +117,7 @@ namespace WebNet23Online.Data.Migrations
                     b.ToTable("littleLemonDatas");
                 });
 
-           >
+           
             modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
                 {
                     b.Property<int>("Id")

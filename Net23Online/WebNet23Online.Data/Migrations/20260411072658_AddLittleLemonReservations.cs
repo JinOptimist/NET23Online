@@ -11,7 +11,7 @@ namespace WebNet23Online.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "littleLemonDatas",
+                name: "LittleLemonDatas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -26,7 +26,7 @@ namespace WebNet23Online.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_littleLemonDatas", x => x.Id);
+                    table.PrimaryKey("PK_LittleLemonDatas", x => x.Id);
                 });
         }
 
@@ -34,7 +34,7 @@ namespace WebNet23Online.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "littleLemonDatas");
+                name: "LittleLemonDatas");
         }
     }
 }

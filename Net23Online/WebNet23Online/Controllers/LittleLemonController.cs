@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Models.LittleLemon;
 using WebNet23Online.Services.Interfaces;
-using WebNet23Online.Data;
-using WebNet23Online.Data.Models;
+using WebNet23Online.Services.Interfaces.LittleLemon;
 
 namespace WebNet23Online.Controllers
 {
@@ -11,17 +10,17 @@ namespace WebNet23Online.Controllers
         private ILittleLemonMenuService _littleLemonMenuService;
         private ILittleLemonTestimonialService _littleLemonTestimonialService;
         private ILittleLemonSubscribeService _littleLemonSubscribeService;
+        private ILittleLemonReservationService _littleLemonReservationService;
 
-        private WebContext _webContext;
         public LittleLemonController(ILittleLemonMenuService littleLemonMenuService,
                                      ILittleLemonTestimonialService littleLemonTestimonialService,
                                      ILittleLemonSubscribeService littleLemonSubscribeService,
-                                     WebContext webContext )
+                                     ILittleLemonReservationService littleLemonReservationService)
         {
             _littleLemonMenuService = littleLemonMenuService;
             _littleLemonTestimonialService = littleLemonTestimonialService;
             _littleLemonSubscribeService = littleLemonSubscribeService;
-            _webContext = webContext;
+            _littleLemonReservationService = littleLemonReservationService;
         }
 
         public IActionResult Index(string category)
@@ -85,24 +84,13 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult Reservation(LittleLemonReservationViewModel viewModel )
         {
-            var littleLemonData = new LittleLemonData
-            {
-                NumberOfGuests = viewModel.NumberOfGuests,
-                SeatingPreference = viewModel.SeatingPreference,
-                AvailableTimesOnly = viewModel.AvailableTime,
-                ReservationDateOnly = viewModel.ReservationDateOnly,
-                Occasion = viewModel.Occasion,
-                UserComments = viewModel.UserComments,
-                UserName = viewModel.UserName,
-            };
-            _webContext.littleLemonDatas.Add( littleLemonData );
-            _webContext.SaveChanges();
-            return RedirectToAction(nameof(Confirmation),new { reservationId = littleLemonData.Id });
+            var reservationId = _littleLemonReservationService.CreateReservation(viewModel);
+            return RedirectToAction(nameof(Confirmation), new { reservationId });
 
         }
         public IActionResult Confirmation(int reservationId)
         {
-            var reservation = _webContext.littleLemonDatas.Find(reservationId);
+            var reservation = _littleLemonReservationService.GetReservationViewModelById(reservationId);
             if (reservation == null)
             {
                 return RedirectToAction(nameof(Reservation));
@@ -121,6 +109,5 @@ namespace WebNet23Online.Controllers
             };
             return View(pageModel);
         }
-
     }
 }

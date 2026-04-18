@@ -13,7 +13,7 @@ namespace WebNet23Online.Data
         public DbSet<MazeData> Mazes { get; set; }
         public DbSet<HabitTrackerData> HabitTracker { get; set; }
        // public DbSet<HabitData> Habit { get; set; }
-        public DbSet<LittleLemonData> littleLemonDatas { get; set; }
+        public DbSet<LittleLemonData> LittleLemonDatas { get; set; }
         public DbSet<BeastData> Beasts { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
         public DbSet<FoodItemData> FoodItems { get; set; }

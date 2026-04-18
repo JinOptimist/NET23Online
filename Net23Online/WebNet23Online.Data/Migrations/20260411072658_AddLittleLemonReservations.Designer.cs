@@ -86,7 +86,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("littleLemonDatas");
+                    b.ToTable("LittleLemonDatas");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.MazeData", b =>
