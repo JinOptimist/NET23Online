@@ -3,7 +3,9 @@ using MazeCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data;
 using WebNet23Online.Data.Repositories;
+using WebNet23Online.Data.Repositories.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
@@ -75,7 +77,7 @@ builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomestic
 builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
 
 // Repositories
-builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
+builder.Services.AddScoped<IAnimalSpeciesRepository, AnimalSpeciesRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
 builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();

@@ -15,10 +15,9 @@ namespace WebNet23Online.Controllers
 
         public IActionResult Index()
         {
-            return View(_animalWorldService.GetAllAnimals());
+            return View();
         }
 
-        [HttpGet]
         public IActionResult Add()
         {
             return View();
@@ -33,7 +32,6 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddZoo(ZooViewModel viewModel)
         {
-            TempData["AnimalWorldAddMessage"] = "Форма добавления зоопарка отправлена.";
             return RedirectToAction("Add");
         }
 
@@ -46,7 +44,6 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddFamily(AnimalFamilyViewModel viewModel)
         {
-            TempData["AnimalWorldAddMessage"] = "Форма добавления рода отправлена.";
             return RedirectToAction("Add");
         }
 
@@ -59,7 +56,6 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddSpecies(AnimalSpeciesViewModel viewModel)
         {
-            TempData["AnimalWorldAddMessage"] = "Форма добавления вида отправлена.";
             return RedirectToAction("Add");
         }
 
@@ -70,27 +66,9 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
-        public IActionResult BindZooFamily(BindZooFamilyViewModel viewModel)
+        public IActionResult BindZooFamily(BindZooWithAnimalSpeciesViewModel viewModel)
         {
-            TempData["AnimalWorldAddMessage"] = "Привязка зоопарка к родам отправлена.";
             return RedirectToAction("Add");
-        }
-
-        [HttpPost]
-        public IActionResult AddAnimal(AnimalSpeciesViewModel viewModel)
-        {
-            if (_animalWorldService.AddAnimal(viewModel))
-            {
-                return RedirectToAction("Index");
-            }
-
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult AnimalSearch(AnimalSpeciesViewModel viewModel)
-        {
-            return PartialView(_animalWorldService.SearchAnimal(viewModel));
         }
     }
 }

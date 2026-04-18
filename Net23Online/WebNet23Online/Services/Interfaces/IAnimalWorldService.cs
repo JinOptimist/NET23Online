@@ -4,9 +4,12 @@ namespace WebNet23Online.Services.Interfaces
 {
     public interface IAnimalWorldService
     {
-        public StartPageAnimalsViewModel GetAllAnimals();
-        StartPageAnimalsViewModel GetRandomAnimals();
-        bool AddAnimal(AnimalSpeciesViewModel viewModel);
-        AnimalSpeciesViewModel SearchAnimal(AnimalSpeciesViewModel viewModel);
+        public StartPageAnimalWorldInfoViewModel GetStartInfo();
+
+        bool AddZoo(ZooViewModel viewModel);
+
+        bool AddAnimalFamily(AnimalFamilyViewModel viewModel);
+
+        bool AddAnimalSpecies(AnimalSpeciesViewModel viewModel);
     }
 }
