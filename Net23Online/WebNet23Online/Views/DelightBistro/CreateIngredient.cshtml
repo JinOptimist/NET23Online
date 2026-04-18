@@ -3,11 +3,11 @@
 @{
     Layout = "_LayoutimagesDelightBistro";
 }
-@model CreateMenuViewModel
+@model IngredientViewModel
 
 <link rel="stylesheet" href="\css\delight-bistro\style.css" />
 <div class="create-food-box">
-    <div class="form-title">Введите имя для меню</div>
+    <div class="form-title">Введите имя для ингредиента</div>
     <form method="post">
         <div class="input-box">
             @Html.TextBoxFor(x => x.Name, new { type = "text", required = "required", placeholder = "Name" })

@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebNet23Online.Data;
+using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services;
@@ -17,11 +20,14 @@ namespace WebNet23Online.Controllers
         private IMenuRepository _menuRepository; //MenuTypeData
         private IIngredientsRepository _ingredientsRepository; //IngredientData
 
-        public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator, IFoodItemRepository foodItemRepository)
+        public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator
+            , IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository)
         {
             _foodItemGenerator = foodItemGenerator;
             _menuTypeGenerator = menuTypeGenerator;
             _foodItemRepository = foodItemRepository;
+            _menuRepository = menuRepository;
+            _ingredientsRepository = ingredientsRepository;
         }
 
         public IActionResult Index(string menuType)
@@ -69,16 +75,73 @@ namespace WebNet23Online.Controllers
         [HttpGet]
         public IActionResult CreateMenu()
         {
+            //var viewModel = new CreateMenuViewModel();
             return View();
         }
 
         [HttpPost]
         public IActionResult CreateMenu(CreateMenuViewModel viewModel)
         {
-            //var viewModel2=new MenuTypeViewModel();
+            var menuData= new MenuData
+            {
+                Name = viewModel.Name,
+            };
 
+            _menuRepository.Add(menuData);
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public IActionResult CreateIngredient()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateIngredient(IngredientViewModel viewModel)
+        {
+            var ingredientData = new IngredientData
+            {
+                Name = viewModel.Name,
+            };
+
+            _ingredientsRepository.Add(ingredientData);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult FoodBuilderData()
+        {
+            var selectMenu = _menuRepository.GetAll();
+            var menuListItems = new List<SelectListItem>();
+            menuListItems.AddRange(selectMenu.Select(x => new SelectListItem
+            {
+                Text=x.Name,
+                Value=x.Id.ToString()
+            }));
+            var createFoodItemVM = new CreateFoodItemViewModel()
+            {
+                Menus= menuListItems,
+            };
+
+            return View(createFoodItemVM);
+        }
+
+        [HttpPost]
+        public IActionResult FoodBuilderData(CreateFoodItemViewModel viewModel)
+        {
+
+            var foodItemData = new FoodItemData
+            {
+                Name = viewModel.Name,
+                Price = viewModel.Price,
+                ImgURL = viewModel.ImgURL,
+                //MenuData = viewModel.Menus
+
+            };
+
+            _foodItemRepository.Add(foodItemData);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
