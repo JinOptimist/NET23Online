@@ -139,7 +139,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("littleLemonDatas");
+                    b.ToTable("LittleLemonDatas");
                 });
 
 
