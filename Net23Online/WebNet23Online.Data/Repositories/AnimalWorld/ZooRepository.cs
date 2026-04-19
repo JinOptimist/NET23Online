@@ -14,12 +14,20 @@ namespace WebNet23Online.Data.Repositories.AnimalWorld
 
         public List<ZooData> GetRandomElements()
         {
-            return _dbSet.OrderBy(r => EF.Functions.Random()).Take(START_PAGE_COUNT_ANIMAL_SPECIES).ToList();
+            return _dbSet.Include(zoo => zoo.AnimalSpecies).OrderBy(r => EF.Functions.Random()).Take(START_PAGE_COUNT_ANIMAL_SPECIES).ToList();
         }
 
         public ZooData GetElementByName(string name)
         {
             return _dbSet.FirstOrDefault(animal => animal.ZooName.ToLower() == name.ToLower());
+        }
+
+        public void AddAnimalSpecies(int zooId, int animalSpeciesId)
+        {
+            var zoo = _dbSet.First(zoo => zoo.Id == zooId);
+            var animalSpecies = _context.AnimalSpecies.First(animalSpecies => animalSpecies.Id == animalSpeciesId);
+            zoo.AnimalSpecies = [animalSpecies];
+            _context.SaveChanges();
         }
     }
 }

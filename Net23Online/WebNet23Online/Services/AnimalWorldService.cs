@@ -39,13 +39,6 @@ namespace WebNet23Online.Services
         {
             var animalFamilies = GetAnimalFamilies();
             var animalFamilyListItems = new List<SelectListItem>();
-            //{
-            //    new SelectListItem
-            //    {
-            //        Text = "Выберите род животного",
-            //        Value = ""
-            //    }
-            //};
             animalFamilyListItems.AddRange(animalFamilies.Select(animalFamily => new SelectListItem
             {
                 Text = animalFamily.AnimalFamilyName,
@@ -62,6 +55,30 @@ namespace WebNet23Online.Services
         private List<AnimalFamilyData> GetAnimalFamilies()
         {
             return _animalFamilyRepository.GetAll();
+        }
+
+        public BindZooWithAnimalSpeciesViewModel GetBingZooAndAnimalSpeciesInfo()
+        {
+            var zoos = _zooRepository.GetAll();
+            var zoosListItems = new List<SelectListItem>();
+            zoosListItems.AddRange(zoos.Select(zoos => new SelectListItem
+            {
+                Text = zoos.ZooName,
+                Value = zoos.Id.ToString()
+            }));
+            var animalSpecies = _animalSpeciesRepository.GetAll();
+            var animalSpeciesListItems = new List<SelectListItem>();
+            animalSpeciesListItems.AddRange(animalSpecies.Select(animalSpecies => new SelectListItem
+            {
+                Text = animalSpecies.AnimalSpeciesName,
+                Value = animalSpecies.Id.ToString()
+            }));
+            var bindModel = new BindZooWithAnimalSpeciesViewModel
+            {
+                Zoos = zoosListItems,
+                AnimalSpecies = animalSpeciesListItems
+            };
+            return bindModel;
         }
 
         public bool AddZoo(ZooViewModel viewModel)
@@ -131,6 +148,17 @@ namespace WebNet23Online.Services
                 animalFamily.Species.Add(animalSpeciesData);
             }
 
+            return true;
+        }
+
+        public bool BindZooWithAnimalSpecies(int zooId, int animalSpeciesId)
+        {
+            if (zooId  < 0 || animalSpeciesId < 0)
+            {
+                return false;
+            }
+
+            _zooRepository.AddAnimalSpecies(zooId, animalSpeciesId);
             return true;
         }
     }

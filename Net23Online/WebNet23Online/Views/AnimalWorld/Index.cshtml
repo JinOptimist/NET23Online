@@ -26,6 +26,14 @@
                 <h3>@zoo.ZooName</h3>
                 <p><strong>Адрес:</strong> @zoo.Address</p>
                 <p>@zoo.Description</p>
+                @if (zoo.AnimalSpecies.Any())
+                {
+                    <p><strong>Виды животных:</strong></p>
+                    @foreach (var animalSpecies in zoo.AnimalSpecies)
+                    {
+                        <p>@animalSpecies.AnimalSpeciesName</p>
+                    }
+                }
             </div>
         }
     }

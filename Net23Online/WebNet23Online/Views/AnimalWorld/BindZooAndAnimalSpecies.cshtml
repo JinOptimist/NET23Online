@@ -10,24 +10,24 @@
         <h2>Настрока связи между зоопарками и видами животных</h2>
     </div>
     <hr class="green-line">
-    <p>Сначала выберите зоопарк, затем один или несколько родов животных.</p>
+    <p>Сначала выберите зоопарк, затем вид животного.</p>
     <form method="post">
         <div class="form-group">
             <div class="green-title">
                 <h6>Зоопарк</h6>
             </div>
-            @Html.DropDownListFor(zoo => zoo.ZooName, Model.Zoos, "Выберите зоопарк", new { @class = "form-input" })
+            @Html.DropDownListFor(zoo => zoo.ZooId, Model.Zoos, "Выберите зоопарк", new { @class = "form-input" })
         </div>
 
         <div class="form-group">
             <div class="green-title">
-                <h6>Роды животных</h6>
+                <h6>Виды животных</h6>
             </div>
-            @Html.ListBoxFor(binding => binding.AnimalSpecies, Model.AnimalSpecies, new { @class = "form-input multi-select-input" })
+            @Html.DropDownListFor(binding => binding.AnimalSpeciesId, Model.AnimalSpecies, "Выберите вид животного", new { @class = "form-input" })
         </div>
 
         <div class="button-group">
-            <button class="find-animal-button" type="submit">Сохранить связи</button>
+            <button class="find-animal-button" type="submit">Сохранить связь</button>
         </div>
     </form>
 </div>

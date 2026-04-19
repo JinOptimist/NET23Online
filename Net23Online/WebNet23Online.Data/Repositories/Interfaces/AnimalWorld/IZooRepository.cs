@@ -4,5 +4,6 @@ namespace WebNet23Online.Data.Repositories.Interfaces.AnimalWorld
 {
     public interface IZooRepository : IAnimalWorldRepository<ZooData>
     {
+        void AddAnimalSpecies(int zooId, int animalSpeciesId);
     }
 }

@@ -12,7 +12,7 @@ namespace WebNet23Online.Services
             {
                 ZooName = zoo.ZooName,
                 Address = zoo.Address,
-                //AnimalSpecies = FromAnimalSpeciesDataToAnimalSpeciesViewModel(zoo.AnimalSpecies),
+                AnimalSpecies = FromAnimalSpeciesDataToAnimalSpeciesViewModel(zoo.AnimalSpecies),
                 Description = zoo.Description,
             });
             return zoos.ToList();

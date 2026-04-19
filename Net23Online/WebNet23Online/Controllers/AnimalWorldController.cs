@@ -75,18 +75,18 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult BindZooFamily()
+        public IActionResult BindZooAndAnimalSpecies()
         {
-            return View();
+            return View(_animalWorldService.GetBingZooAndAnimalSpeciesInfo());
         }
 
         [HttpPost]
-        public IActionResult BindZooFamily(BindZooWithAnimalSpeciesViewModel viewModel)
+        public IActionResult BindZooAndAnimalSpecies(BindZooWithAnimalSpeciesViewModel viewModel)
         {
-            //if (_animalWorldService.BindZooWithAnimalSpecies(viewModel))
-            //{
-            //    return RedirectToAction("Index");
-            //}
+            if (_animalWorldService.BindZooWithAnimalSpecies(viewModel.ZooId, viewModel.AnimalSpeciesId))
+            {
+                return RedirectToAction("Index");
+            }
 
             return View();
         }
