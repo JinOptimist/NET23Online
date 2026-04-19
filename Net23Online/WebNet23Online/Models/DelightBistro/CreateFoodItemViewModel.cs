@@ -10,7 +10,8 @@ namespace WebNet23Online.Models.DelightBistro
         public string ImgURL { get; set; }
 
         // Свойства для связзи в базы данных
-        public List<IngredientViewModel> Ingredients { get; set; }
+        public List<int> SelectedIngredientsId {  get; set; }
+        public List<CreateIngredientViewModel> Ingredients { get; set; }
 
         public int? MenuId { get; set; } // длЯ связи в бд. одно меню на разные FI 
         public List<SelectListItem> Menus { get; set; } = new(); //Выпадающий список для выбора одного меню для FI

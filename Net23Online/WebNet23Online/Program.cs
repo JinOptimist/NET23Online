@@ -5,6 +5,7 @@ using WebNet23Online.Data;
 using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Services;
+using WebNet23Online.Services.DelightBistro;
 using WebNet23Online.Services.Interfaces;
 
 
@@ -65,6 +66,8 @@ builder.Services.AddScoped<ICatalogService, CatalogService>();
 //DelightBistro DI
 builder.Services.AddScoped<IFoodItemGenerator, FoodItemGenerator>();
 builder.Services.AddScoped<IMenuTypeGenerator, MenuTypeGenerator>();
+builder.Services.AddScoped<IIngredientGenerator, IngredientGenerator>();
+
 
 //HabitTracker DI
 builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();

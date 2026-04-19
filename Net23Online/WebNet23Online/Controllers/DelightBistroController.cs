@@ -51,7 +51,7 @@ namespace WebNet23Online.Controllers
             }
 
             var foodItemData = _foodItemRepository.Get(id);
-            var changedFoodItemViewModel = _foodItemGenerator.ConvertDataToVM(foodItemData);
+            var changedFoodItemViewModel = _foodItemGenerator.ConvertFoodItemToVM(foodItemData);
 
             return View(changedFoodItemViewModel);
         }
@@ -82,7 +82,7 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult CreateMenu(CreateMenuViewModel viewModel)
         {
-            var menuData= new MenuData
+            var menuData = new MenuData
             {
                 Name = viewModel.Name,
             };
@@ -98,7 +98,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateIngredient(IngredientViewModel viewModel)
+        public IActionResult CreateIngredient(CreateIngredientViewModel viewModel)
         {
             var ingredientData = new IngredientData
             {
@@ -116,12 +116,13 @@ namespace WebNet23Online.Controllers
             var menuListItems = new List<SelectListItem>();
             menuListItems.AddRange(selectMenu.Select(x => new SelectListItem
             {
-                Text=x.Name,
-                Value=x.Id.ToString()
+                Text = x.Name,
+                Value = x.Id.ToString()
             }));
+
             var createFoodItemVM = new CreateFoodItemViewModel()
             {
-                Menus= menuListItems,
+                Menus = menuListItems,
             };
 
             return View(createFoodItemVM);
@@ -130,18 +131,27 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult FoodBuilderData(CreateFoodItemViewModel viewModel)
         {
+            var menuID = viewModel.Menus;
 
             var foodItemData = new FoodItemData
             {
                 Name = viewModel.Name,
                 Price = viewModel.Price,
                 ImgURL = viewModel.ImgURL,
-                //MenuData = viewModel.Menus
+                //IngredientsList = "",
+                MenuData = _menuRepository.Get(viewModel.MenuId.Value)
 
             };
 
             _foodItemRepository.Add(foodItemData);
             return RedirectToAction(nameof(Index));
+        }
+        public IActionResult MainIndex(/*string menuType*/)
+        {
+                       
+            var allMenusVM = _menuTypeGenerator.GetAllMenusViewModel();
+
+            return View(allMenusVM);
         }
     }
 }

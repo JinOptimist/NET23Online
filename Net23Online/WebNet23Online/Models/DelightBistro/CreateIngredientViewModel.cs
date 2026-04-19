@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using WebNet23Online.Data.Models;
 
 namespace WebNet23Online.Models.DelightBistro
 {
-    public class CreateMenuViewModel
+    public class CreateIngredientViewModel : BaseModel
     {
         public string Name { get; set; }
     }

@@ -3,7 +3,7 @@ using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services.Interfaces;
 
-namespace WebNet23Online.Services
+namespace WebNet23Online.Services.DelightBistro
 {
     public class FoodItemGenerator : IFoodItemGenerator
     {
@@ -170,10 +170,12 @@ namespace WebNet23Online.Services
                 Name = x.Name,
                 Price = x.Price,
                 ImgURL = x.ImgURL,
-                MenuType = x.MenuType,
-
-                Ingredients = x.Ingredients.Split(SEPARATOR
-                , StringSplitOptions.RemoveEmptyEntries).ToList(),
+                MenuType = x.MenuData?.Name ?? "Общее меню",
+                //MenuType=x.MenuType, //Change
+                //    Ingredients = x.FoodItemIngredients
+                //.Select(fi => fi.Ingredient.Name)
+                //.ToList()
+                //Ingredients = x.IngredientsList,
             });
             return foodItemsViewModels.ToList();
         }
@@ -187,8 +189,8 @@ namespace WebNet23Online.Services
                 changedFoodItemData.Name = foodItem.Name;
                 changedFoodItemData.Price = foodItem.Price;
                 changedFoodItemData.ImgURL = foodItem.ImgURL;
-                changedFoodItemData.MenuType = foodItem.MenuType;
-                changedFoodItemData.Ingredients = ingredients;
+                //changedFoodItemData.MenuType = foodItem.MenuType;
+                //changedFoodItemData.Ingredients = ingredients;
                 _foodItemRepository.UpdateData(changedFoodItemData);
             }
             else
@@ -199,14 +201,14 @@ namespace WebNet23Online.Services
                     Name = foodItem.Name,
                     Price = foodItem.Price,
                     ImgURL = foodItem.ImgURL,
-                    MenuType = foodItem.MenuType,
-                    Ingredients = ingredients,
+                    //MenuData = foodItem.MenuType,
+                    //Ingredients = ingredients,
                 };
                 _foodItemRepository.Add(newFoodItemData);
             }
         }
 
-        public FoodItemViewModel ConvertDataToVM(FoodItemData foodItemData)
+        public FoodItemViewModel ConvertFoodItemToVM(FoodItemData foodItemData)
         {
             var foodItemViewModel = new FoodItemViewModel
             {
@@ -214,9 +216,12 @@ namespace WebNet23Online.Services
                 Name = foodItemData.Name,
                 Price = foodItemData.Price,
                 ImgURL = foodItemData.ImgURL,
-                MenuType = foodItemData.MenuType,
-                Ingredients = foodItemData.Ingredients.Split(SEPARATOR,
-                    StringSplitOptions.RemoveEmptyEntries).ToList(),
+                MenuType = foodItemData.MenuData?.Name ?? "Общее меню",
+
+                //Ingredients = foodItemData.Ingredients.Split(SEPARATOR,
+                //    StringSplitOptions.RemoveEmptyEntries).ToList(),
+                Ingredients = (foodItemData.IngredientsList??new List<IngredientData>())
+                .Select(fi => fi.Name).ToList()
             };
 
             return foodItemViewModel;
@@ -234,6 +239,23 @@ namespace WebNet23Online.Services
             {
                 CreateOrChangeFoodItemData(foodItemVM);
             }
+        }
+        public List<FoodItemViewModel> GenerateFoodItemsFromDB(List<FoodItemData> foodItemDatas)
+        {
+            var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Price = x.Price,
+                ImgURL = x.ImgURL,
+                MenuType = x.MenuData?.Name ?? "Общее меню",
+                //MenuType=x.MenuType, //Change
+                //    Ingredients = x.FoodItemIngredients
+                //.Select(fi => fi.Ingredient.Name)
+                //.ToList()
+                //Ingredients = x.IngredientsList,
+            });
+            return foodItemsViewModels.ToList();
         }
 
     }

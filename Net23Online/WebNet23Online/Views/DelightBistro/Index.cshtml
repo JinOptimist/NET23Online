@@ -28,7 +28,7 @@
         @foreach (var category in Model)
         {
             <div class="type-of-food">
-                <div class="type-name center">@category.TypeName</div>
+                <div class="type-name center">@category.Name</div>
                 <div class="menu">
 
                     @foreach (var foodItem in category.FoodItems)
@@ -92,6 +92,7 @@
             <li><a href="\DelightBistro\CreateMenu">Создать меню</a> </li>
             <li><a href="\DelightBistro\CreateMenu">Создать ингредиенты</a> </li>
             <li><a href="\DelightBistro\FoodBuilderData">Создать FI data</a> </li>
+            <li><a href="\DelightBistro\MainIndex">MainIndex from DATA</a> </li>
 
 
 
