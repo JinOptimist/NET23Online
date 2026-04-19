@@ -15,5 +15,7 @@ namespace WebNet23Online.Data.Models
         public string Occasion { get; set; }
         public string UserComments { get; set; }
         public string UserName { get; set; }
+        public virtual UserData User { get; set; }
+        public int UserId { get; set; }
     }
 }

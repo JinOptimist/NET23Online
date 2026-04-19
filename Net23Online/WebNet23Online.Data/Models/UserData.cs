@@ -1,4 +1,4 @@
-﻿using WebNet23Online.Data.Enums;
+using WebNet23Online.Data.Enums;
 
 namespace WebNet23Online.Data.Models
 {
@@ -11,5 +11,6 @@ namespace WebNet23Online.Data.Models
         public virtual List<UserData> MyFriends { get; set; }
         public virtual List<UserData> WhoIsMyFriends { get; set; }
         public virtual UserProfileData UserProfile { get; set; }
+        public virtual List<LittleLemonData> LittleLemonDatas { get; set; }
     }
 }

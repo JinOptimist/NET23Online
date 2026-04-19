@@ -12,7 +12,7 @@ namespace WebNet23Online.Data
         public DbSet<UserData> Users { get; set; }
         public DbSet<MazeData> Mazes { get; set; }
         public DbSet<HabitTrackerData> HabitTracker { get; set; }
-        
+
         // public DbSet<HabitData> Habit { get; set; }
         public DbSet<LittleLemonData> LittleLemonDatas { get; set; }
         public DbSet<BeastData> Beasts { get; set; }
@@ -43,6 +43,12 @@ namespace WebNet23Online.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.MyFriends)
                 .WithMany(x => x.WhoIsMyFriends);
+
+            modelBuilder.Entity<LittleLemonData>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.LittleLemonDatas)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }
