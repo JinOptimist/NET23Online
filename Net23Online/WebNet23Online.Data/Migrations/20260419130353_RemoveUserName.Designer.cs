@@ -12,8 +12,8 @@ using WebNet23Online.Data;
 namespace WebNet23Online.Data.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20260419014337_AddUserId")]
-    partial class AddUserId
+    [Migration("20260419130353_RemoveUserName")]
+    partial class RemoveUserName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -247,6 +247,9 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("GuestId")
+                        .HasColumnType("int");
+
                     b.Property<int>("NumberOfGuests")
                         .HasColumnType("int");
 
@@ -266,18 +269,28 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("GuestId");
+
+                    b.ToTable("LittleLemonDatas");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.LittleLemonGuestData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("UserName")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("LittleLemonDatas");
+                    b.ToTable("LittleLemonGuests");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.MazeData", b =>
@@ -477,13 +490,13 @@ namespace WebNet23Online.Data.Migrations
 
             modelBuilder.Entity("WebNet23Online.Data.Models.LittleLemonData", b =>
                 {
-                    b.HasOne("WebNet23Online.Data.Models.UserData", "User")
-                        .WithMany("LittleLemonDatas")
-                        .HasForeignKey("UserId")
+                    b.HasOne("WebNet23Online.Data.Models.LittleLemonGuestData", "Guest")
+                        .WithMany("Reservations")
+                        .HasForeignKey("GuestId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Guest");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.UserData", b =>
@@ -507,9 +520,9 @@ namespace WebNet23Online.Data.Migrations
                     b.Navigation("Habits");
                 });
 
-            modelBuilder.Entity("WebNet23Online.Data.Models.UserData", b =>
+            modelBuilder.Entity("WebNet23Online.Data.Models.LittleLemonGuestData", b =>
                 {
-                    b.Navigation("LittleLemonDatas");
+                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.UserProfileData", b =>

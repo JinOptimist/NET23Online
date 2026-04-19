@@ -15,6 +15,7 @@ namespace WebNet23Online.Data
 
         // public DbSet<HabitData> Habit { get; set; }
         public DbSet<LittleLemonData> LittleLemonDatas { get; set; }
+        public DbSet<LittleLemonGuestData> LittleLemonGuests { get; set; }
         public DbSet<BeastData> Beasts { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
         public DbSet<FoodItemData> FoodItems { get; set; }
@@ -45,9 +46,9 @@ namespace WebNet23Online.Data
                 .WithMany(x => x.WhoIsMyFriends);
 
             modelBuilder.Entity<LittleLemonData>()
-                .HasOne(x => x.User)
-                .WithMany(x => x.LittleLemonDatas)
-                .HasForeignKey(x => x.UserId)
+                .HasOne(x => x.Guest)
+                .WithMany(x => x.Reservations)
+                .HasForeignKey(x => x.GuestId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);

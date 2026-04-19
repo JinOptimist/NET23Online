@@ -7,10 +7,23 @@
 @Html.Partial("_LittleLemonHeroSection", Model.Hero)
 <section class="booking-section">
 	<h2>Choose Your Loving Place!</h2>
+	
+	<form class="booking-form" method="post" asp-controller="LittleLemon" asp-action="CreateGuest">
+		<div>
+			<label for="guest-name">Create new guest (name):</label>
+			<input type="text" id="guest-name" name="guestName" required />
+		</div>
+		<input type="submit" value="Create guest and get GuestId" class="btn" />
+	</form>
 	<form class="booking-form" method="post" asp-controller="LittleLemon" asp-action="Reservation">
 		<div>
-			<label for="name">Name:</label>
-			<input type="text" id="name" name="UserName" required />
+			<label for="guest-id">Guest Id :</label>
+			<input type="number"
+				   id="guest-id"
+				   name="GuestId"
+				   min="1"
+				   value="@(Model.Reservation.GuestId > 0 ? Model.Reservation.GuestId : null)"
+				   required />
 		</div>
 		<div>
 			<label for="reserve-date">Choose Date:</label>

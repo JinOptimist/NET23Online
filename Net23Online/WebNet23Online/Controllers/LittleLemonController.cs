@@ -63,7 +63,7 @@ namespace WebNet23Online.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Reservation()
+        public IActionResult Reservation(int guestId)
         {
             var hero = new LittleLemonHeroSectionViewModel
             {
@@ -72,7 +72,10 @@ namespace WebNet23Online.Controllers
                 HeroImageUrl = "/images/little-lemon/images/restauranfood.jpg",
                 HeroImageAlt = "Signature Mediterranean platter at Little Lemon"
             };
-            var reservation = new LittleLemonReservationViewModel();
+            var reservation = new LittleLemonReservationViewModel
+            {
+                GuestId = guestId 
+            };
             var pageModel = new LittleLemonReservationPageViewModel
             {
                 Hero = hero,
@@ -88,6 +91,28 @@ namespace WebNet23Online.Controllers
             return RedirectToAction(nameof(Confirmation), new { reservationId });
 
         }
+
+        [HttpPost]
+        public IActionResult CreateGuest(string guestName)
+        {
+                var guestId = _littleLemonReservationService.CreateGuest(guestName);
+                
+                return RedirectToAction(nameof(Reservation), new { guestId });
+            
+        }
+
+        [HttpPost]
+        public IActionResult LinkReservationToGuest(int reservationId, int guestId)
+        {
+            var isLinked = _littleLemonReservationService.LinkReservationToGuest(reservationId, guestId);
+            if (!isLinked)
+            {
+                return RedirectToAction(nameof(Reservation));
+            }
+
+            return RedirectToAction(nameof(Confirmation), new { reservationId });
+        }
+
         public IActionResult Confirmation(int reservationId)
         {
             var reservation = _littleLemonReservationService.GetReservationViewModelById(reservationId);
