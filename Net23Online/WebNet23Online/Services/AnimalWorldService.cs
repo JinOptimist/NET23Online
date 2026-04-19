@@ -38,14 +38,14 @@ namespace WebNet23Online.Services
         public AnimalSpeciesViewModel GetAnimalSpeciesPageInfo()
         {
             var animalFamilies = GetAnimalFamilies();
-            var animalFamilyListItems = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text = "Выберите род животного",
-                    Value = ""
-                }
-            };
+            var animalFamilyListItems = new List<SelectListItem>();
+            //{
+            //    new SelectListItem
+            //    {
+            //        Text = "Выберите род животного",
+            //        Value = ""
+            //    }
+            //};
             animalFamilyListItems.AddRange(animalFamilies.Select(animalFamily => new SelectListItem
             {
                 Text = animalFamily.AnimalFamilyName,
@@ -118,13 +118,17 @@ namespace WebNet23Online.Services
 
             if (_animalSpeciesRepository.GetElementByName(viewModel.AnimalSpeciesName) == null)
             {
-                AnimalSpeciesData animalSpeciesData = new AnimalSpeciesData
+                var animalFamily = _animalFamilyRepository.Get(viewModel.AnimalFamilyId);
+                var animalSpeciesData = new AnimalSpeciesData
                 {
                     AnimalSpeciesName = viewModel.AnimalSpeciesName,
+                    AnimalFamily = animalFamily,
                     NativeRange = viewModel.NativeRange,
                     Description = viewModel.Description
                 };
                 _animalSpeciesRepository.Add(animalSpeciesData);
+                animalSpeciesData = _animalSpeciesRepository.GetElementByName(viewModel.AnimalSpeciesName);
+                animalFamily.Species.Add(animalSpeciesData);
             }
 
             return true;

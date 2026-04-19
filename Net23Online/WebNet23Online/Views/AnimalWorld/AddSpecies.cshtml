@@ -22,7 +22,7 @@
             <div class="green-title">
                 <h6>Род</h6>
             </div>
-            @Html.DropDownListFor(species => species.AnimalFamilyNames, Model.AnimalFamilyNames, "Выберите род", new { @class = "form-input" })
+            @Html.DropDownListFor(species => species.AnimalFamilyId, Model.AnimalFamilyNames, "Выберите род животного", new { @class = "form-input" })
         </div>
 
         <div class="form-group">

@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebNet23Online.Models.AnimalWorld;
-using WebNet23Online.Models.AnimeGirl;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
