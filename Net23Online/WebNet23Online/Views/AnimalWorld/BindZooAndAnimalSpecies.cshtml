@@ -18,14 +18,13 @@
             </div>
             @Html.DropDownListFor(zoo => zoo.ZooId, Model.Zoos, "Выберите зоопарк", new { @class = "form-input" })
         </div>
-
         <div class="form-group">
             <div class="green-title">
                 <h6>Виды животных</h6>
             </div>
             @Html.DropDownListFor(binding => binding.AnimalSpeciesId, Model.AnimalSpecies, "Выберите вид животного", new { @class = "form-input" })
         </div>
-
+        <br />
         <div class="button-group">
             <button class="find-animal-button" type="submit">Сохранить связь</button>
         </div>

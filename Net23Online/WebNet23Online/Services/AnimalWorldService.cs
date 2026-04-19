@@ -92,7 +92,7 @@ namespace WebNet23Online.Services
 
             if (_zooRepository.GetElementByName(viewModel.ZooName) == null)
             {
-                ZooData zooData = new ZooData
+                var zooData = new ZooData
                 {
                     ZooName = viewModel.ZooName,
                     Address = viewModel.Address,
@@ -114,7 +114,7 @@ namespace WebNet23Online.Services
 
             if (_animalFamilyRepository.GetElementByName(viewModel.AnimalFamilyName) == null)
             {
-                AnimalFamilyData animalFamilyData = new AnimalFamilyData
+                var animalFamilyData = new AnimalFamilyData
                 {
                     AnimalFamilyName = viewModel.AnimalFamilyName,
                     Description = viewModel.Description

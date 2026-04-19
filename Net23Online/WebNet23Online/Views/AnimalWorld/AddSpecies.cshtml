@@ -17,28 +17,24 @@
             </div>
             @Html.TextBoxFor(species => species.AnimalSpeciesName, new { @class = "form-input", type = "text", placeholder = "Например: Лесной кот" })
         </div>
-
         <div class="form-group">
             <div class="green-title">
                 <h6>Род</h6>
             </div>
             @Html.DropDownListFor(species => species.AnimalFamilyId, Model.AnimalFamilyNames, "Выберите род животного", new { @class = "form-input" })
         </div>
-
         <div class="form-group">
             <div class="green-title">
                 <h6>Ареал обитания</h6>
             </div>
             @Html.TextBoxFor(species => species.NativeRange, new { @class = "form-input", type = "text", placeholder = "Например: территория Европы и Малой Азии" })
         </div>
-
         <div class="form-group">
             <div class="green-title">
                 <h6>Описание вида</h6>
             </div>
             @Html.TextAreaFor(species => species.Description, new { @class = "form-input", placeholder = "Описание вида..." })
         </div>
-
         <div class="button-group">
             <button class="find-animal-button" type="submit">Добавить</button>
         </div>
