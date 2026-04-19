@@ -19,6 +19,7 @@ namespace WebNet23Online.Data
 
         public DbSet<RockLegendsData> RockLegends { get; set; }
         public DbSet<GameData> Games { get; set; }
+        public DbSet<PublisherData> Publishers { get; set; }
 
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
 
@@ -41,6 +42,12 @@ namespace WebNet23Online.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.MyFriends)
                 .WithMany(x => x.WhoIsMyFriends);
+
+            modelBuilder.Entity<GameData>()
+               .HasOne(x => x.Publisher)
+               .WithMany(x => x.Games)
+               .HasForeignKey(x => x.PublisherId);
+
 
             base.OnModelCreating(modelBuilder);
         }
