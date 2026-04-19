@@ -6,6 +6,7 @@ using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services;
+using WebNet23Online.Services.DelightBistro;
 using WebNet23Online.Services.Interfaces;
 
 
@@ -15,18 +16,23 @@ namespace WebNet23Online.Controllers
     {
         private IFoodItemGenerator _foodItemGenerator;
         private IMenuTypeGenerator _menuTypeGenerator;
+        private IIngredientGenerator _ingredientGenerator;
+
 
         private IFoodItemRepository _foodItemRepository;
-        private IMenuRepository _menuRepository; //MenuTypeData
-        private IIngredientsRepository _ingredientsRepository; //IngredientData
+        private IMenuRepository _menuRepository;
+        private IIngredientsRepository _ingredientsRepository;
 
         public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator
-            , IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository)
+            , IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository, IIngredientGenerator ingredientGenerator)
         {
             _foodItemGenerator = foodItemGenerator;
-            _menuTypeGenerator = menuTypeGenerator;
             _foodItemRepository = foodItemRepository;
+
+            _menuTypeGenerator = menuTypeGenerator; 
             _menuRepository = menuRepository;
+
+            _ingredientGenerator = ingredientGenerator;
             _ingredientsRepository = ingredientsRepository;
         }
 
@@ -35,8 +41,12 @@ namespace WebNet23Online.Controllers
             _foodItemGenerator.FeelDataBase();
 
             var foodItemsDatas = _foodItemRepository.GetAll();
-            var foodItemsVM = _foodItemGenerator.GenerateFoodItems(foodItemsDatas);
-            var viewModel = _menuTypeGenerator.GetMenuTypesFromFoodItems(foodItemsVM, menuType);
+            //var foodItemsVM = _foodItemGenerator.GenerateFoodItems(foodItemsDatas);
+            //var foodItemsVM = _foodItemGenerator.GenerateFoodItemsFromDB(foodItemsDatas);
+
+            //var viewModel = _menuTypeGenerator.GetMenuTypesFromFoodItems(foodItemsVM, menuType);
+            var viewModel = _menuTypeGenerator.GetAllMenusIncludesFoodItemAndIngredientsViewModel(menuType);
+
 
             return View(viewModel);
         }
@@ -62,12 +72,12 @@ namespace WebNet23Online.Controllers
             // create new element
             if (foodItem.Id == 0)
             {
-                _foodItemGenerator.CreateOrChangeFoodItemData(foodItem);
+                _foodItemGenerator.CreateFoodItemData(foodItem);
                 return RedirectToAction(nameof(Index));
             }
             // change element
             var changedFoodItemData = _foodItemRepository.Get(foodItem.Id);
-            _foodItemGenerator.CreateOrChangeFoodItemData(foodItem, changedFoodItemData);
+            _foodItemGenerator.ChangeFoodItemData(foodItem, changedFoodItemData);
 
             return RedirectToAction(nameof(Index));
         }
@@ -120,9 +130,13 @@ namespace WebNet23Online.Controllers
                 Value = x.Id.ToString()
             }));
 
+            var allIngredientsDatas= _ingredientsRepository.GetAll();
+            var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
+
             var createFoodItemVM = new CreateFoodItemViewModel()
             {
                 Menus = menuListItems,
+                Ingredients = allIngredientVM
             };
 
             return View(createFoodItemVM);
@@ -132,26 +146,24 @@ namespace WebNet23Online.Controllers
         public IActionResult FoodBuilderData(CreateFoodItemViewModel viewModel)
         {
             var menuID = viewModel.Menus;
+            var selectedIngredients= _ingredientsRepository.GetAll()
+                .Where(x=> viewModel.SelectedIngredientsId.Contains(x.Id)).ToList();
+
 
             var foodItemData = new FoodItemData
             {
                 Name = viewModel.Name,
                 Price = viewModel.Price,
                 ImgURL = viewModel.ImgURL,
-                //IngredientsList = "",
-                MenuData = _menuRepository.Get(viewModel.MenuId.Value)
+                MenuData = _menuRepository.Get(viewModel.MenuId.Value),
 
-            };
+                IngredientsList = selectedIngredients
+
+            }; 
 
             _foodItemRepository.Add(foodItemData);
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult MainIndex(/*string menuType*/)
-        {
-                       
-            var allMenusVM = _menuTypeGenerator.GetAllMenusViewModel();
-
-            return View(allMenusVM);
-        }
+        
     }
 }

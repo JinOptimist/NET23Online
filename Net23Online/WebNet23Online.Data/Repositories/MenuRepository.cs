@@ -15,24 +15,27 @@ namespace WebNet23Online.Data.Repositories
         {
 
         }
-        public List<MenuData> GetAllIncludeFoodItemsWithIngredients()
+        public List<MenuData> GetAllIncludeFoodItemsWithIngredients(string sortMenuName)
         {
-            var menus = _dbSet
+            var allMenus = _dbSet
                 .Include(x => x.FoodItems)
                 .ThenInclude(x => x.IngredientsList)
                 .ToList();
 
-            foreach (var menu in menus)
+            if (!string.IsNullOrEmpty(sortMenuName))
             {
-                menu.FoodItems ??= new List<FoodItemData>();
-                foreach (var foodItem in menu.FoodItems)
-                {
-                    foodItem.IngredientsList ??= new List<IngredientData>();
-
-                }
-
+                allMenus= allMenus.Where(x=>x.Name==sortMenuName).ToList();
             }
-            return menus;
+            
+            return allMenus;
+        }
+
+        public void Link(int foodItemId, int menuId)
+        {
+            var foodItem = _context.FoodItems.First(x => x.Id == foodItemId);
+            var menu = _context.Menus.First(x => x.Id == menuId);
+            menu.FoodItems.Add(foodItem);
+            _context.SaveChanges();
         }
     }
 }

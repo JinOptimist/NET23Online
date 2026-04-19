@@ -152,7 +152,8 @@ namespace WebNet23Online.Services.DelightBistro
                 }
             };
         }
-
+        
+        //delete?
         public void AddFoodItem(FoodItemViewModel foodItem)
         {
             _foodItems.Add(foodItem);
@@ -164,6 +165,7 @@ namespace WebNet23Online.Services.DelightBistro
         }
         public List<FoodItemViewModel> GenerateFoodItems(List<FoodItemData> foodItemDatas)
         {
+            //Для создания нужен FoodItemVM
             var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
             {
                 Id = x.Id,
@@ -171,7 +173,7 @@ namespace WebNet23Online.Services.DelightBistro
                 Price = x.Price,
                 ImgURL = x.ImgURL,
                 MenuType = x.MenuData?.Name ?? "Общее меню",
-                //MenuType=x.MenuType, //Change
+                
                 //    Ingredients = x.FoodItemIngredients
                 //.Select(fi => fi.Ingredient.Name)
                 //.ToList()
@@ -180,21 +182,10 @@ namespace WebNet23Online.Services.DelightBistro
             return foodItemsViewModels.ToList();
         }
 
-        public void CreateOrChangeFoodItemData(FoodItemViewModel foodItem, FoodItemData changedFoodItemData = null)
+        public void CreateFoodItemData(FoodItemViewModel foodItem)
         {
             var ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
-
-            if (changedFoodItemData != null)
-            {
-                changedFoodItemData.Name = foodItem.Name;
-                changedFoodItemData.Price = foodItem.Price;
-                changedFoodItemData.ImgURL = foodItem.ImgURL;
-                //changedFoodItemData.MenuType = foodItem.MenuType;
-                //changedFoodItemData.Ingredients = ingredients;
-                _foodItemRepository.UpdateData(changedFoodItemData);
-            }
-            else
-            {
+                        
                 var newFoodItemData = new FoodItemData()
                 {
                     Id = foodItem.Id,
@@ -205,7 +196,21 @@ namespace WebNet23Online.Services.DelightBistro
                     //Ingredients = ingredients,
                 };
                 _foodItemRepository.Add(newFoodItemData);
+            
+        }
+        public void ChangeFoodItemData(FoodItemViewModel foodItem, FoodItemData changedFoodItemData)
+        {
+            var ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
+
+            if (changedFoodItemData != null)
+            {
+                changedFoodItemData.Name = foodItem.Name;
+                changedFoodItemData.Price = foodItem.Price;
+                changedFoodItemData.ImgURL = foodItem.ImgURL;
+
+                _foodItemRepository.UpdateData(changedFoodItemData);
             }
+
         }
 
         public FoodItemViewModel ConvertFoodItemToVM(FoodItemData foodItemData)
@@ -220,7 +225,7 @@ namespace WebNet23Online.Services.DelightBistro
 
                 //Ingredients = foodItemData.Ingredients.Split(SEPARATOR,
                 //    StringSplitOptions.RemoveEmptyEntries).ToList(),
-                Ingredients = (foodItemData.IngredientsList??new List<IngredientData>())
+                Ingredients = (foodItemData.IngredientsList ?? new List<IngredientData>())
                 .Select(fi => fi.Name).ToList()
             };
 
@@ -237,9 +242,10 @@ namespace WebNet23Online.Services.DelightBistro
             var foodItems = GenerateFoodItems();
             foreach (var foodItemVM in foodItems)
             {
-                CreateOrChangeFoodItemData(foodItemVM);
+                CreateFoodItemData(foodItemVM);
             }
         }
+
         public List<FoodItemViewModel> GenerateFoodItemsFromDB(List<FoodItemData> foodItemDatas)
         {
             var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
@@ -249,7 +255,7 @@ namespace WebNet23Online.Services.DelightBistro
                 Price = x.Price,
                 ImgURL = x.ImgURL,
                 MenuType = x.MenuData?.Name ?? "Общее меню",
-                //MenuType=x.MenuType, //Change
+                
                 //    Ingredients = x.FoodItemIngredients
                 //.Select(fi => fi.Ingredient.Name)
                 //.ToList()

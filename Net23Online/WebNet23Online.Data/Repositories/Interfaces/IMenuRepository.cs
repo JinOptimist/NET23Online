@@ -4,6 +4,6 @@ namespace WebNet23Online.Data.Repositories.Interfaces
 {
     public interface IMenuRepository : IBaseRepository<MenuData>
     {
-        List<MenuData> GetAllIncludeFoodItemsWithIngredients();
+        List<MenuData> GetAllIncludeFoodItemsWithIngredients(string sortMenuName);
     }
 }

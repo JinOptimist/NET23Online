@@ -26,6 +26,7 @@ namespace WebNet23Online.Services.DelightBistro
                 }).ToList();
         }
 
+        //delete?
         public CreateIngredientViewModel ConvertDataToVM(IngredientData ingredientData)
         {
             var ingredientViewModel = new CreateIngredientViewModel
@@ -35,11 +36,11 @@ namespace WebNet23Online.Services.DelightBistro
             };
             return ingredientViewModel;
         }
-        
-        public List<CreateIngredientViewModel> GenerateIngredients()
-        {
-            return _ingredients;
-        }
+
+        //public List<CreateIngredientViewModel> GenerateIngredients()
+        //{
+        //    return _ingredients;
+        //}
 
         //FromData
         public List<CreateIngredientViewModel> GenerateIngredients(List<IngredientData> ingredientsData)
@@ -53,15 +54,15 @@ namespace WebNet23Online.Services.DelightBistro
             return ingredientsViewModel.ToList();
         }
 
-        public void CreateIngredient(CreateIngredientViewModel viewModel)
-        {
-            var ingredientData = new IngredientData
-            {
-                Name = viewModel.Name,
-            };
+        //public void CreateIngredient(CreateIngredientViewModel viewModel)
+        //{
+        //    var ingredientData = new IngredientData
+        //    {
+        //        Name = viewModel.Name,
+        //    };
 
-            _ingredientsRepository.Add(ingredientData);
-        }
+        //    _ingredientsRepository.Add(ingredientData);
+        //}
 
     }
 }

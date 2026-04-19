@@ -46,17 +46,17 @@ namespace WebNet23Online.Services.DelightBistro
             }
             return OneMenuType;
         }
+        //delete
+        //public List<MenuTypeViewModel> GetMenuFromData()
+        //{
+        //    var menus = _menuRepository.GetAll();
+        //    var menuVM = menus.Select(x => new MenuTypeViewModel
+        //    {
+        //        Name = x.Name,
+        //    });
 
-        public List<MenuTypeViewModel> GetMenuFromData()
-        {
-            var menus = _menuRepository.GetAll();
-            var menuVM = menus.Select(x => new MenuTypeViewModel
-            {
-                Name = x.Name,
-            });
-
-            return menuVM.ToList();
-        }
+        //    return menuVM.ToList();
+        //}
 
         public MenuTypeViewModel ConvertMenuDataToViewModel(MenuData menuData)
         {
@@ -71,9 +71,9 @@ namespace WebNet23Online.Services.DelightBistro
             };
 
         }
-        public List<MenuTypeViewModel> GetAllMenusViewModel()
+        public List<MenuTypeViewModel> GetAllMenusIncludesFoodItemAndIngredientsViewModel(string sortName)
         {
-            var menuListDatas = _menuRepository.GetAllIncludeFoodItemsWithIngredients();
+            var menuListDatas = _menuRepository.GetAllIncludeFoodItemsWithIngredients(sortName);
             var menuVMList = menuListDatas.Select(ConvertMenuDataToViewModel).ToList();
 
             return menuVMList;
