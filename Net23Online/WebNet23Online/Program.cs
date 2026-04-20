@@ -78,6 +78,7 @@ builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
 builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
+builder.Services.AddScoped<IHabitTrackerRepository, HabitTrackerRepository>();
 builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
 builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
 builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
