@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using WebNet23Online.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebNet23Online;Integrated Security=True;Connect Timeout=30;";

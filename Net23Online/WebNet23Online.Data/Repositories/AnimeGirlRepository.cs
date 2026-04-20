@@ -21,7 +21,6 @@ namespace WebNet23Online.Data.Repositories
             {
                 throw new Exception("Be more creative");
             }
-
             base.Add(model);
         }
 

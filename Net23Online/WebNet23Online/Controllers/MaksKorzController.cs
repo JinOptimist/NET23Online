@@ -11,22 +11,23 @@ namespace WebNet23Online.Controllers
         {
             return View();
         }
-        [HttpPost]
+        
         public IActionResult FormUser()
         {
-            var resulDataNow = "";
-            if(authorization.GetDataNow() == "Morning")
-            {
-                resulDataNow = "Good Morning, " + user.LastName;
-            }
-            if (authorization.GetDataNow() == "Afternoon")
-            {
-                resulDataNow = "Good Afternoon, " + user.LastName;
-            }
-            if (authorization.GetDataNow() == "Evening")
-            {
-                resulDataNow = "Good Evening, " + user.LastName;
-            }
+            //var resulDataNow = "";
+            //if(authorization.GetDataNow() == "Morning")
+            //{
+            //    resulDataNow = "Good Morning, " + user.LastName;
+            //}
+            //if (authorization.GetDataNow() == "Afternoon")
+            //{
+            //    resulDataNow = "Good Afternoon, " + user.LastName;
+            //}
+            //if (authorization.GetDataNow() == "Evening")
+            //{
+            //    resulDataNow = "Good Evening, " + user.LastName;
+            //}
+
             return View();
         }
         [HttpPost]
@@ -45,9 +46,11 @@ namespace WebNet23Online.Controllers
             else
             {
                 status.Status = "Cовершенолетний!";
+                return RedirectToAction("FormUser", "MaksKorz");
+
             }
-            return View("/Views/MaksKorz/FormUser.cshtml");
-            //return View();
+            return View();
+            
         }
     }
 }
