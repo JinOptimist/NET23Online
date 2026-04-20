@@ -15,6 +15,7 @@ namespace WebNet23Online.Services.DelightBistro
         private IFoodItemRepository _foodItemRepository;
         private IMenuRepository _menuRepository;
         private IIngredientsRepository _ingredientsRepository;
+        private IIngredientGenerator _ingredientGenerator;
         public FoodItemGenerator(IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository)
         {
             _foodItemRepository = foodItemRepository;
@@ -220,6 +221,35 @@ namespace WebNet23Online.Services.DelightBistro
             return foodItemViewModel;
         }
 
+        public CreateFoodItemViewModel ConvertToCreateFoodItemVM(FoodItemData foodItemData)
+        {
+            var allIngredientsDatas = _ingredientsRepository.GetAll();
+            var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
+            var selectMenu = _menuRepository.GetAll();
+            var menuListItems = new List<SelectListItem>();
+            menuListItems.AddRange(selectMenu.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }));
+
+            var viewModel = new CreateFoodItemViewModel
+            {
+                Id = foodItemData.Id,
+                Name = foodItemData.Name,
+                Price = foodItemData.Price,
+                ImgURL = foodItemData.ImgURL ?? string.Empty,
+
+                MenuId = foodItemData.MenuData?.Id,
+                SelectedIngredientsId = foodItemData.IngredientsList
+                .Select(x => x.Id).ToList() ?? new List<int>(), //null?
+
+                Ingredients = allIngredientVM,
+                Menus= menuListItems
+            };
+
+            return viewModel;
+        }
         public void FeelDataBase()
         {
             if (_foodItemRepository.Any())

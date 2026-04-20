@@ -9,11 +9,12 @@ namespace WebNet23Online.Services.Interfaces
 
         //void AddFoodItem(FoodItemViewModel foodItem);
         void CreateFoodItemData(CreateFoodItemViewModel foodItem);
-        void ChangeFoodItemData(FoodItemViewModel foodItem, FoodItemData changedFoodItemData);
+        void ChangeFoodItemData(CreateFoodItemViewModel foodItem, FoodItemData changedFoodItemData);
 
 
         FoodItemViewModel ConvertToFoodItemVM(FoodItemData foodItemData);
         List<FoodItemViewModel> GenerateFoodItemsFromDB(List<FoodItemData> foodItemDatas);
         void FeelDataBase();
+        CreateFoodItemViewModel ConvertToCreateFoodItemVM(FoodItemData foodItemData);
     }
 }

@@ -78,7 +78,7 @@ namespace WebNet23Online.Controllers
             }
             // change element
             var changedFoodItemData = _foodItemRepository.Get(foodItem.Id);
-            _foodItemGenerator.ChangeFoodItemData(foodItem, changedFoodItemData);
+            //_foodItemGenerator.ChangeFoodItemData(foodItem, changedFoodItemData);
 
             return RedirectToAction(nameof(Index));
         }
@@ -112,7 +112,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult FoodBuilderData()
+        public IActionResult FoodBuilderData(int id)
         {
             var selectMenu = _menuRepository.GetAll();
             var menuListItems = new List<SelectListItem>();
@@ -125,13 +125,20 @@ namespace WebNet23Online.Controllers
             var allIngredientsDatas = _ingredientsRepository.GetAll();
             var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
 
-            var createFoodItemVM = new CreateFoodItemViewModel()
+            if (id == 0)
             {
-                Menus = menuListItems,
-                Ingredients = allIngredientVM
-            };
+                var createFoodItemVM = new CreateFoodItemViewModel()
+                {
+                    Menus = menuListItems,
+                    Ingredients = allIngredientVM
+                };
+                return View(createFoodItemVM);
+            }
 
-            return View(createFoodItemVM);
+            var changeFoodItemData = _foodItemRepository.Get(id);
+            var changeFoodItemVD = _foodItemGenerator.ConvertToCreateFoodItemVM(changeFoodItemData);
+
+            return View(changeFoodItemVD);
         }
 
         [HttpPost]
