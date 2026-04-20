@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebNet23Online.Data;
 
@@ -11,9 +12,11 @@ using WebNet23Online.Data;
 namespace WebNet23Online.Data.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20260420142604_RenameHeroesTableToSlayTheSpire2Heroes")]
+    partial class RenameHeroesTableToSlayTheSpire2Heroes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +47,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnimeGirls", (string)null);
+                    b.ToTable("AnimeGirls");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.BeastData", b =>
@@ -73,7 +76,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Beasts", (string)null);
+                    b.ToTable("Beasts");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.FoodItemData", b =>
@@ -104,7 +107,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FoodItems", (string)null);
+                    b.ToTable("FoodItems");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
@@ -140,7 +143,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasIndex("HabitTrackerDataId");
 
-                    b.ToTable("HabitData", (string)null);
+                    b.ToTable("HabitData");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerData", b =>
@@ -157,7 +160,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HabitTracker", (string)null);
+                    b.ToTable("HabitTracker");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.MazeData", b =>
@@ -177,7 +180,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Mazes", (string)null);
+                    b.ToTable("Mazes");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.RockBandsData", b =>
@@ -202,7 +205,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RockBand", (string)null);
+                    b.ToTable("RockBand");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.RockLegendsData", b =>
@@ -248,7 +251,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RockLegends", (string)null);
+                    b.ToTable("RockLegends");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.SlayTheSpire2HeroesData", b =>
@@ -301,7 +304,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Games", (string)null);
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.UserData", b =>
@@ -321,7 +324,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
