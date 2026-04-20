@@ -46,7 +46,7 @@ builder.Services.AddScoped<ILittleLemonSubscribeService, LittleLemonSubscribeSer
 //             Life Time
 // Transient < Scoped < Singleton
 
-builder.Services.AddScoped<IAnimeGirlGenerator, AnimeGirlGenerator>();
+builder.Services.AddScoped<IAnimeGirlService, AnimeGirlGenerator>();
 builder.Services.AddScoped<IEpicMeanlessPhraseGenerator, EpicMeanlessPhraseGenerator>();
 builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
 
