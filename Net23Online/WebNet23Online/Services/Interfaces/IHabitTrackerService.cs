@@ -5,8 +5,9 @@ namespace WebNet23Online.Services;
 
 public interface IHabitTrackerService
 {
-    public HabitTrackerViewModel GenerateHabitTracker(HabitTrackerData habitTrackerData);
+    HabitTrackerViewModel GenerateHabitTracker(HabitTrackerData habitTrackerData);
     HabitData CreateHabit(HabitViewModel habit, int habitsCount);
-    public bool IsHabitHasTitle(HabitViewModel habit);
-    public bool IsHabitUnique(HabitTrackerViewModel model, HabitViewModel habit);
+    bool IsHabitHasTitle(HabitViewModel habit);
+    bool IsHabitUnique(HabitTrackerViewModel model, HabitViewModel habit);
+    void ChangeDayPointStatus(HabitData habit, int dayIndex);
 }

@@ -1,0 +1,17 @@
+﻿@using WebNet23Online.Models.AnimeGirl
+@model CreateAnimeViewModel
+@{
+    Layout = "_LayoutAnime";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Name" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.CoverUrl, new { placeholder = "CoverUrl" })
+    </div>
+    <div>
+        <button type="submit">Save</button>
+    </div>
+</form>

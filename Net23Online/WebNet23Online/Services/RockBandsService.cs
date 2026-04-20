@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebNet23Online.Data;
-using WebNet23Online.Data.Models;
+﻿using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
 
@@ -8,17 +7,17 @@ namespace WebNet23Online.Services
 {
     public class RockBandsService : IRockBandsService
     {
-        private readonly WebContext _webContext;
+        private IRockBandsRepository _rockBandsRepository;
 
-        public RockBandsService(WebContext webContext)
+        public RockBandsService(IRockBandsRepository rockBandsRepository)
         {
-            _webContext = webContext;
+            _rockBandsRepository = rockBandsRepository;
         }
 
         public List<BandBlockViewModel> GetBands()
         {
-            return _webContext.RockBand
-                .AsNoTracking()
+            return _rockBandsRepository
+                .GetAll()
                 .OrderBy(b => b.Id)
                 .Select(b => new BandBlockViewModel
                 {
@@ -45,8 +44,7 @@ namespace WebNet23Online.Services
                     : viewModel.ImageUrl.Trim(),
             };
 
-            _webContext.RockBand.Add(newBand);
-            _webContext.SaveChanges();
+            _rockBandsRepository.Add(newBand);
         }
     }
 }

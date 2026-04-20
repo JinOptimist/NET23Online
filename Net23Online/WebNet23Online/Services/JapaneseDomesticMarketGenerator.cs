@@ -1,0 +1,76 @@
+﻿using WebNet23Online.Models.DelightBistro;
+using WebNet23Online.Models.JapaneseDomesticMarket;
+using WebNet23Online.Services.Interfaces;
+
+namespace WebNet23Online.Services
+{
+    public class JapaneseDomesticMarketGenerator : IJapaneseDomesticMarketGenerator
+    {
+        private List<JapaneseDomesticMarketViewModels> _jdmItems;
+        public JapaneseDomesticMarketGenerator()
+        {
+            _jdmItems = new List<JapaneseDomesticMarketViewModels>
+            {
+                new JapaneseDomesticMarketViewModels
+                 {
+                    ManufacturerType="Toyota",
+                    Marka = "Toyota",
+                    Model = "Supra",
+                    Price = 21000,
+                    Url = "/images/japanese-domestic-market/toyota-chaser.jpg"
+                 },
+
+                 new JapaneseDomesticMarketViewModels
+                 {
+                    ManufacturerType="Mitsubishi",
+                    Marka = "Mitsubishi",
+                    Model = "Evolution",
+                    Price = 32000,
+                    Url = "/images/japanese-domestic-market/mitsubishi_evo.jpg"
+                 },
+
+                 new JapaneseDomesticMarketViewModels
+                 {
+                    ManufacturerType="Honda",
+                    Marka = "Honda",
+                    Model = "NSX",
+                    Price = 150000,
+                    Url = "/images/japanese-domestic-market/honda-nsx.jpg"
+                 },
+                 new JapaneseDomesticMarketViewModels
+                 {
+                    ManufacturerType="Nissan",
+                    Marka = "Nissan",
+                    Model = "370Z",
+                    Price = 27000,
+                    Url = "/images/japanese-domestic-market/nissan-370z.jpg"
+                 },
+                 new JapaneseDomesticMarketViewModels
+                 {
+                    ManufacturerType="Acura",
+                    Marka = "Acura",
+                    Model = "RSX",
+                    Price = 38000,
+                    Url = "/images/japanese-domestic-market/acura-rsx.jpg"
+                 },
+                 new JapaneseDomesticMarketViewModels
+                 {
+                    ManufacturerType="Mazda",
+                    Marka = "Mazda",
+                    Model = "MX-5",
+                    Price = 42000,
+                    Url = "/images/japanese-domestic-market/mazda-mx-5.jpg"
+                 }
+            };
+        }
+        public void AddJDMItem(JapaneseDomesticMarketViewModels jdmItem)
+        {
+            _jdmItems.Add(jdmItem);
+        }
+
+        public List<JapaneseDomesticMarketViewModels> GenerateJDMCarsItems()
+        {
+            return _jdmItems;
+        }
+    }
+}

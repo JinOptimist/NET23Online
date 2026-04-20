@@ -1,4 +1,5 @@
 ﻿using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services.Interfaces;
 
@@ -7,9 +8,13 @@ namespace WebNet23Online.Services
     public class FoodItemGenerator : IFoodItemGenerator
     {
         private List<FoodItemViewModel> _foodItems;
-        public string Separator { get; set; }
-        public FoodItemGenerator()
+        private const string SEPARATOR = ",";
+        private IFoodItemRepository _foodItemRepository;
+        public FoodItemGenerator(IFoodItemRepository foodItemRepository)
         {
+            _foodItemRepository = foodItemRepository;
+
+            //DataBase Is Empty
             _foodItems = new List<FoodItemViewModel>
             {
                 new FoodItemViewModel
@@ -167,28 +172,69 @@ namespace WebNet23Online.Services
                 ImgURL = x.ImgURL,
                 MenuType = x.MenuType,
 
-                Ingredients = x.Ingredients.Split(Separator
+                Ingredients = x.Ingredients.Split(SEPARATOR
                 , StringSplitOptions.RemoveEmptyEntries).ToList(),
             });
             return foodItemsViewModels.ToList();
         }
 
-        public FoodItemData ConvertVMtoData(FoodItemViewModel foodItemVM)
+        public void CreateOrChangeFoodItemData(FoodItemViewModel foodItem, FoodItemData changedFoodItemData = null)
         {
-            string ingredients = string.Join(Separator, foodItemVM.Ingredients);
+            var ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
 
-            var newFoodItemData = new FoodItemData()
+            if (changedFoodItemData != null)
             {
-                Id = foodItemVM.Id ?? 0,
-                Name = foodItemVM.Name,
-                Price = foodItemVM.Price,
-                ImgURL = string.IsNullOrEmpty(foodItemVM.ImgURL) ? null : foodItemVM.ImgURL,
-                MenuType = foodItemVM.MenuType,
-                Ingredients = ingredients,
-            };
-            return newFoodItemData;
+                changedFoodItemData.Name = foodItem.Name;
+                changedFoodItemData.Price = foodItem.Price;
+                changedFoodItemData.ImgURL = foodItem.ImgURL;
+                changedFoodItemData.MenuType = foodItem.MenuType;
+                changedFoodItemData.Ingredients = ingredients;
+                _foodItemRepository.Update(changedFoodItemData);
+            }
+            else
+            {
+                var newFoodItemData = new FoodItemData()
+                {
+                    Id = foodItem.Id,
+                    Name = foodItem.Name,
+                    Price = foodItem.Price,
+                    ImgURL = foodItem.ImgURL,
+                    MenuType = foodItem.MenuType,
+                    Ingredients = ingredients,
+                };
+                _foodItemRepository.Add(newFoodItemData);
+            }
         }
 
+        public FoodItemViewModel ConvertDataToVM(FoodItemData foodItemData)
+        {
+            var foodItemViewModel = new FoodItemViewModel
+            {
+                Id = foodItemData.Id,
+                Name = foodItemData.Name,
+                Price = foodItemData.Price,
+                ImgURL = foodItemData.ImgURL,
+                MenuType = foodItemData.MenuType,
+                Ingredients = foodItemData.Ingredients.Split(SEPARATOR,
+                    StringSplitOptions.RemoveEmptyEntries).ToList(),
+            };
+
+            return foodItemViewModel;
+        }
+
+        public void FeelDataBase()
+        {
+            if (_foodItemRepository.Any())
+            {
+                return;
+            }
+
+            var foodItems = GenerateFoodItems();
+            foreach (var foodItemVM in foodItems)
+            {
+                CreateOrChangeFoodItemData(foodItemVM);
+            }
+        }
 
     }
 }

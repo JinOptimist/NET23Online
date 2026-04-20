@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-
-using WebNet23Online.Data.Models.Steam.Enums;
+using WebNet23Online.Data.Enums.Steam;
 using WebNet23Online.Models.Steam;
 using WebNet23Online.Services.Interfaces;
 
