@@ -143,7 +143,7 @@ namespace WebNet23Online.Services
             game.Genre = viewModel.Genre;
             game.PublisherId = viewModel.PublisherId;
 
-            _gameRepository.UpdateData(game);
+            _gameRepository.Update(game);
         }
 
         private GameGenre? ParseGenre(string genreString)
