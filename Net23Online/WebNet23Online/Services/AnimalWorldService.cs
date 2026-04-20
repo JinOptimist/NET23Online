@@ -83,13 +83,6 @@ namespace WebNet23Online.Services
 
         public bool AddZoo(ZooViewModel viewModel)
         {
-            if (string.IsNullOrEmpty(viewModel.ZooName)
-                || string.IsNullOrEmpty(viewModel.Address)
-                || string.IsNullOrEmpty(viewModel.Description))
-            {
-                return false;
-            }
-
             if (_zooRepository.GetElementByName(viewModel.ZooName) == null)
             {
                 var zooData = new ZooData
@@ -106,12 +99,6 @@ namespace WebNet23Online.Services
 
         public bool AddAnimalFamily(AnimalFamilyViewModel viewModel)
         {
-            if (string.IsNullOrEmpty(viewModel.AnimalFamilyName)
-                || string.IsNullOrEmpty(viewModel.Description))
-            {
-                return false;
-            }
-
             if (_animalFamilyRepository.GetElementByName(viewModel.AnimalFamilyName) == null)
             {
                 var animalFamilyData = new AnimalFamilyData
@@ -127,12 +114,6 @@ namespace WebNet23Online.Services
 
         public bool AddAnimalSpecies(AnimalSpeciesViewModel viewModel)
         {
-            if (string.IsNullOrEmpty(viewModel.AnimalSpeciesName)
-                || string.IsNullOrEmpty(viewModel.Description))
-            {
-                return false;
-            }
-
             if (_animalSpeciesRepository.GetElementByName(viewModel.AnimalSpeciesName) == null)
             {
                 var animalFamily = _animalFamilyRepository.Get(viewModel.AnimalFamilyId);
