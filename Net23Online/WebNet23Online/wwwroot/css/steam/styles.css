@@ -279,3 +279,81 @@ textarea.form-control {
 select.form-control {
     cursor: pointer;
 }
+
+.game-header {
+    margin-bottom: 30px;
+}
+
+.game-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    background: #121a24;
+    border-radius: 8px;
+    padding: 30px;
+}
+
+.game-image img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.game-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #c7d5e0;
+}
+
+.game-meta {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.game-genre, .game-publisher {
+    background: #1b2838;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #c7d5e0;
+    border: 1px solid #2a475e;
+}
+
+.game-price {
+    margin-bottom: 25px;
+}
+
+.game-price span {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ff6b35;
+}
+
+.game-price .free {
+    color: #4caf50;
+}
+
+.game-description {
+    margin-bottom: 30px;
+}
+
+.game-description h3 {
+    color: #c7d5e0;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.game-description p {
+    color: #c7d5e0;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.game-actions {
+    display: flex;
+    gap: 15px;
+}

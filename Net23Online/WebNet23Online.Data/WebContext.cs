@@ -25,6 +25,7 @@ namespace WebNet23Online.Data
 
         public DbSet<GameData> Games { get; set; }
         public DbSet<SlayTheSpire2HeroesData> SlayTheSpire2Heroes { get; set; }
+        public DbSet<PublisherData> Publishers { get; set; }
 
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
 
@@ -61,6 +62,12 @@ namespace WebNet23Online.Data
                 .WithMany(x => x.Groups)
                 .HasForeignKey(x => x.RockLegendsGenresId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<GameData>()
+               .HasOne(x => x.Publisher)
+               .WithMany(x => x.Games)
+               .HasForeignKey(x => x.PublisherId);
+
 
             base.OnModelCreating(modelBuilder);
         }
