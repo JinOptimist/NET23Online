@@ -24,9 +24,9 @@ namespace WebNet23Online.Data.Repositories.AnimalWorld
 
         public void AddAnimalSpecies(int zooId, int animalSpeciesId)
         {
-            var zoo = _dbSet.First(zoo => zoo.Id == zooId);
+            var zoo = _dbSet.Include(animal => animal.AnimalSpecies).First(zoo => zoo.Id == zooId);
             var animalSpecies = _context.AnimalSpecies.First(animalSpecies => animalSpecies.Id == animalSpeciesId);
-            zoo.AnimalSpecies = [animalSpecies];
+            zoo.AnimalSpecies.Add(animalSpecies);
             _context.SaveChanges();
         }
     }
