@@ -15,9 +15,9 @@ namespace WebNet23Online.Data
         // public DbSet<HabitData> Habit { get; set; }
         public DbSet<BeastData> Beasts { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
-        public DbSet<FoodItemData> FoodItems { get; set; } // DB
-        public DbSet<IngredientData> Ingredients { get; set; } // DB
-        public DbSet<MenuData> Menus { get; set; } // DB
+        public DbSet<FoodItemData> FoodItems { get; set; } 
+        public DbSet<IngredientData> Ingredients { get; set; } 
+        public DbSet<MenuData> Menus { get; set; } 
         public DbSet<RockLegendsData> RockLegends { get; set; }
         public DbSet<GameData> Games { get; set; }
 

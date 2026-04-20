@@ -7,8 +7,6 @@ namespace WebNet23Online.Services.Interfaces
     {
         void CreateMenuData(CreateMenuViewModel viewModel);
         void FeelDataBase();
-
-        //List<MenuTypeViewModel> GetMenuTypesFromFoodItems(List<FoodItemViewModel> foodItems, string sortMenuType);
         List<MenuTypeViewModel> GetAllMenuViewModel(string sortMenuName);
     }
 }

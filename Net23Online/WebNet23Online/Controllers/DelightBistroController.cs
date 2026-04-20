@@ -42,46 +42,41 @@ namespace WebNet23Online.Controllers
             _ingredientGenerator.FeelDataBase();
             _menuTypeGenerator.FeelDataBase();
 
-            //var foodItemsDatas = _foodItemRepository.GetAll();
-            //var foodItemsVM = _foodItemGenerator.GenerateFoodItemsFromDataBase(foodItemsDatas);
-            //var foodItemsVM = _foodItemGenerator.GenerateFoodItemsFromDB(foodItemsDatas);
-
-            //var viewModel = _menuTypeGenerator.GetMenuTypesFromFoodItems(foodItemsVM, menuType);
             var viewModel = _menuTypeGenerator.GetAllMenuViewModel(menuType);
 
             return View(viewModel);
         }
 
-        [HttpGet]
-        public IActionResult FoodBuilder(int id)
-        {
-            if (id == 0)
-            {
-                var foodItemViewModel = new FoodItemViewModel();
-                return View(foodItemViewModel);
-            }
+        //[HttpGet]
+        //public IActionResult FoodBuilder(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        var foodItemViewModel = new FoodItemViewModel();
+        //        return View(foodItemViewModel);
+        //    }
 
-            var foodItemData = _foodItemRepository.Get(id);
-            var changedFoodItemViewModel = _foodItemGenerator.ConvertToFoodItemVM(foodItemData);
+        //    var foodItemData = _foodItemRepository.Get(id);
+        //    var changedFoodItemViewModel = _foodItemGenerator.ConvertToFoodItemVM(foodItemData);
 
-            return View(changedFoodItemViewModel);
-        }
+        //    return View(changedFoodItemViewModel);
+        //}
 
-        [HttpPost]
-        public IActionResult FoodBuilder(FoodItemViewModel foodItem)
-        {
-            // create new element
-            if (foodItem.Id == 0)
-            {
-                //_foodItemGenerator.CreateFoodItemData(foodItem);
-                return RedirectToAction(nameof(Index));
-            }
-            // change element
-            var changedFoodItemData = _foodItemRepository.Get(foodItem.Id);
-            //_foodItemGenerator.ChangeFoodItemData(foodItem, changedFoodItemData);
+        //[HttpPost]
+        //public IActionResult FoodBuilder(FoodItemViewModel foodItem)
+        //{
+        //    //create new element
+        //    if (foodItem.Id == 0)
+        //    {
+        //        _foodItemGenerator.CreateFoodItemData(foodItem);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    //change element
+        //    var changedFoodItemData = _foodItemRepository.Get(foodItem.Id);
+        //    _foodItemGenerator.ChangeFoodItemData(foodItem, changedFoodItemData);
 
-            return RedirectToAction(nameof(Index));
-        }
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         [HttpGet]
         public IActionResult CreateMenu()
@@ -112,7 +107,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult FoodBuilderData(int id)
+        public IActionResult FoodBuilderData()
         {
             var selectMenu = _menuRepository.GetAll();
             var menuListItems = new List<SelectListItem>();
@@ -125,20 +120,13 @@ namespace WebNet23Online.Controllers
             var allIngredientsDatas = _ingredientsRepository.GetAll();
             var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
 
-            if (id == 0)
+            var createFoodItemVM = new CreateFoodItemViewModel()
             {
-                var createFoodItemVM = new CreateFoodItemViewModel()
-                {
-                    Menus = menuListItems,
-                    Ingredients = allIngredientVM
-                };
-                return View(createFoodItemVM);
-            }
+                Menus = menuListItems,
+                Ingredients = allIngredientVM
+            };
 
-            var changeFoodItemData = _foodItemRepository.Get(id);
-            var changeFoodItemVD = _foodItemGenerator.ConvertToCreateFoodItemVM(changeFoodItemData);
-
-            return View(changeFoodItemVD);
+            return View(createFoodItemVM);
         }
 
         [HttpPost]

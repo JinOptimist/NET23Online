@@ -73,6 +73,5 @@ namespace WebNet23Online.Services.DelightBistro
             _ingredientsRepository.Add(ingredientData);
         }
 
-
     }
 }

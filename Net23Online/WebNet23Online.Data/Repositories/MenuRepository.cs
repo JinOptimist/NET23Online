@@ -30,13 +30,6 @@ namespace WebNet23Online.Data.Repositories
             
             return allMenus;
         }
-
-        //public void Link(int foodItemId, int menuId)
-        //{
-        //    var foodItem = _context.FoodItems.First(x => x.Id == foodItemId);
-        //    var menu = _context.Menus.First(x => x.Id == menuId);
-        //    menu.FoodItems.Add(foodItem);
-        //    _context.SaveChanges();
-        //}
+                
     }
 }

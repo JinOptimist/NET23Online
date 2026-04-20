@@ -53,15 +53,7 @@
                 }
             </div>
         </div>
-        <div>
-            @* <div>Введите ингредиенты через запятую</div>
-             <div class="input-box url-box">
-                <input type="text"
-                       name="Ingredients"
-                       value="@(Model.Ingredients != null ? string.Join(",", Model.Ingredients) : "")"
-                       placeholder="Ингредиенты через запятую" />
-            </div> *@
-        </div>
+        
         <div class="input-box url-box">
             @Html.TextBoxFor(x => x.ImgURL, new { type = "string", placeholder = "Добавьте URL изображения" })
         </div>

@@ -54,37 +54,6 @@ namespace WebNet23Online.Services.DelightBistro
             _menuRepository.Add(menuData);
         }
 
-        //public List<MenuTypeViewModel> GetMenuTypesFromFoodItems(List<FoodItemViewModel> foodItems, string sortMenuType)
-        //{
-
-        //    var allMenuTypes = new List<MenuTypeViewModel>
-        //    {
-        //        new MenuTypeViewModel()
-        //        {
-        //            Name = "soups",
-        //            FoodItems = foodItems.Where(x => x.MenuType=="soups").ToList(),
-        //        },
-        //        new MenuTypeViewModel()
-        //        {
-        //            Name = "hot",
-
-        //         FoodItems = foodItems.Where(x => x.MenuType=="hot").ToList(),
-        //        },
-        //        new MenuTypeViewModel()
-        //        {
-        //            Name = "salads",
-        //            FoodItems = foodItems.Where(x => x.MenuType=="salads").ToList(), //change x => x.MenuType=="salads"
-        //        }
-        //    };
-
-        //    var OneMenuType = allMenuTypes.Where(x => x.Name == sortMenuType).ToList();
-        //    if (string.IsNullOrEmpty(sortMenuType))
-        //    {
-        //        return allMenuTypes;
-        //    }
-        //    return OneMenuType;
-        //}
-
         public MenuTypeViewModel ConvertMenuDataToViewModel(MenuData menuData)
         {
 
