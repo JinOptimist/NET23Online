@@ -9,7 +9,6 @@ using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebNet23Online;Integrated Security=True;Connect Timeout=30;";
@@ -70,28 +69,25 @@ builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 //DelightBistro DI
 builder.Services.AddScoped<IFoodItemGenerator, FoodItemGenerator>();
-builder.Services.AddScoped<IMenuTypeGenerator, MenuTypeGenerator>();
+builder.Services.AddSingleton<IMenuTypeGenerator, MenuTypeGenerator>();
 
 //HabitTracker DI
 builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
-
-//JapaneseDomesticMarker DI
-builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
-builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
 
 // Repositories
 builder.Services.AddScoped<IZooRepository, ZooRepository>();
 builder.Services.AddScoped<IAnimalFamilyRepository, AnimalFamilyRepository>();
 builder.Services.AddScoped<IAnimalSpeciesRepository, AnimalSpeciesRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
-builder.Services.AddScoped<IMazeRepository, MazeRepository>();
-builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
-builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
-builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
-
+builder.Services.AddScoped<IMazeRepository, MazeRepository>();
+builder.Services.AddScoped<ISlayTheSpire2HeroesRepository, SlayTheSpire2HeroesRepository>();
+builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
+builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
+builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
 
 var app = builder.Build();
 
@@ -102,6 +98,14 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+/*builder.Services.AddScoped<IAnimeGirlGenerator, AnimeGirlGenerator>();
+builder.Services.AddScoped<IEpicMeanlessPhraseGenerator, EpicMeanlessPhraseGenerator>();
+builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
+
+builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
+builder.Services.AddSingleton<IMazeService, MazeService>();*/
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

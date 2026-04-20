@@ -29,7 +29,13 @@
           
           @for(var d = 0; d < 7; d++)
           {
-            <div class="dot-cell"><span class="dot @habit.ColorOfDot"></span></div>
+            
+            <div class="dot-cell">
+              <span class="dot @habit.ColorOfDot @(habit.WeekResults.Count > d && habit.WeekResults[d] ? "active" : "")" 
+                    data-habit-id="@habit.Id" 
+                    data-day-index="@d">
+              </span>
+            </div>
           }
         </div>
       }

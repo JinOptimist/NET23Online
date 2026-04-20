@@ -189,7 +189,7 @@ namespace WebNet23Online.Services
                 changedFoodItemData.ImgURL = foodItem.ImgURL;
                 changedFoodItemData.MenuType = foodItem.MenuType;
                 changedFoodItemData.Ingredients = ingredients;
-                _foodItemRepository.UpdateData(changedFoodItemData);
+                _foodItemRepository.Update(changedFoodItemData);
             }
             else
             {
