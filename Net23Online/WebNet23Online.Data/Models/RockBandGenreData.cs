@@ -4,7 +4,7 @@
     {
         public int RockBandId { get; set; }
         public int GenreId { get; set; }
-        public RockBandsData RockBand { get; set; } = null!;
-        public GenreOfRockBandsData Genre { get; set; } = null!;
+        public virtual RockBandsData RockBand { get; set; } = null!;
+        public virtual GenreOfRockBandsData Genre { get; set; } = null!;
     }
 }

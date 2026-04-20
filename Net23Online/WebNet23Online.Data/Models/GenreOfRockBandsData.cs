@@ -10,6 +10,6 @@ namespace WebNet23Online.Data.Models
     public class GenreOfRockBandsData : BaseModel
     {
         public string Name { get; set; } = string.Empty;
-        public ICollection<RockBandGenreData> RockBandGenres { get; set; } = new List<RockBandGenreData>();
+        public virtual ICollection<RockBandGenreData> RockBandGenres { get; set; } = new List<RockBandGenreData>();
     }   
 }
