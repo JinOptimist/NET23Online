@@ -3,10 +3,11 @@ using MazeCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data;
 using WebNet23Online.Data.Repositories;
+using WebNet23Online.Data.Repositories.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,7 +54,11 @@ builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
 
 builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
 builder.Services.AddSingleton<IMazeService, MazeService>();
+
+//AnimalWorld DI
 builder.Services.AddScoped<IAnimalWorldService, AnimalWorldService>();
+builder.Services.AddScoped<IAnimalWorldMapper, AnimalWorldMapper>();
+
 builder.Services.AddScoped<IRockBandsService, RockBandsService>();
 
 builder.Services.AddSingleton<IRockLegendsPick, RockLegendsPick>();
@@ -64,26 +69,25 @@ builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 //DelightBistro DI
 builder.Services.AddScoped<IFoodItemGenerator, FoodItemGenerator>();
-builder.Services.AddScoped<IMenuTypeGenerator, MenuTypeGenerator>();
+builder.Services.AddSingleton<IMenuTypeGenerator, MenuTypeGenerator>();
 
 //HabitTracker DI
 builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 
-//JapaneseDomesticMarker DI
-builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
-builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
-
 // Repositories
-builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
+builder.Services.AddScoped<IZooRepository, ZooRepository>();
+builder.Services.AddScoped<IAnimalFamilyRepository, AnimalFamilyRepository>();
+builder.Services.AddScoped<IAnimalSpeciesRepository, AnimalSpeciesRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
-builder.Services.AddScoped<IMazeRepository, MazeRepository>();
-builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
-builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
-builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
-
+builder.Services.AddScoped<IMazeRepository, MazeRepository>();
+builder.Services.AddScoped<ISlayTheSpire2HeroesRepository, SlayTheSpire2HeroesRepository>();
+builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IRockLegendsGenresRepository, RockLegendsGenresRepository>();
+builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
+builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 
 var app = builder.Build();
@@ -95,6 +99,14 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+/*builder.Services.AddScoped<IAnimeGirlGenerator, AnimeGirlGenerator>();
+builder.Services.AddScoped<IEpicMeanlessPhraseGenerator, EpicMeanlessPhraseGenerator>();
+builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
+
+builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
+builder.Services.AddSingleton<IMazeService, MazeService>();*/
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
