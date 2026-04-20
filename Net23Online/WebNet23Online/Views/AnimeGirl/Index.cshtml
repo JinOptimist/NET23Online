@@ -1,5 +1,5 @@
 ﻿@using WebNet23Online.Models.AnimeGirl
-@model List<AnimeGirlImageInfoViewModel>
+@model MainIndexViewModel
 @{
     Layout = "_LayoutAnime";
 }
@@ -23,17 +23,74 @@
 </header>
 
 <main>
-    <section class="section section-anime" id="anime">
-        <h2 class="section-title">Аниме</h2>
-        <p class="section-intro">То, что цепляет стилем, историей или просто настроением.</p>
+    <section class="section section-link" id="link-anime-hero" aria-labelledby="link-anime-hero-title">
+        <h2 class="section-title" id="link-anime-hero-title">Связать персонажа с аниме</h2>
+        <p class="section-intro">Выберите аниме и персонажа — сохранение связи подключим позже.</p>
+        <form action="/AnimeGirl/LinkAnimeAndGirl" method="post">
+            <div class="link-toolbar" role="group" aria-label="Выбор аниме и персонажа">
+                <div class="link-field">
+                    <label class="link-label" for="select-anime">Аниме</label>
+                    <select id="select-anime" class="link-select" name="animeId">
+                        <option value="">Выберите аниме</option>
+                        @foreach (var anime in Model.Animes)
+                        {
+                            <option value="@anime.Id">@anime.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="link-field">
+                    <label class="link-label" for="select-hero">Персонаж</label>
+                    <select id="select-hero" class="link-select" name="heroId">
+                        <option value="">Выберите персонажа</option>
+                        @foreach (var girl in Model.AnimeGirls)
+                        {
+                            var optLabel = string.IsNullOrEmpty(girl.ConnectedAnimeTitles)
+                                ? girl.Title
+                                : $"{girl.Title} — {girl.ConnectedAnimeTitles}";
+                            <option value="@girl.Id" title="@optLabel">@optLabel</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="link-button">Связать</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="section section-anime-catalog" id="anime-catalog" aria-labelledby="anime-catalog-title">
+        <h2 class="section-title" id="anime-catalog-title">Каталог аниме</h2>
+        <p class="section-intro">Обложки и названия — то, что уже в коллекции.</p>
+        <div class="anime-catalog-grid">
+            @foreach (var anime in Model.Animes)
+            {
+                <article class="anime-catalog-card">
+                    <div class="anime-catalog-card__cover">
+                        <img src="@anime.Url" alt="Обложка: @anime.Name" width="480" height="720" loading="lazy" decoding="async">
+                    </div>
+                    <div class="anime-catalog-card__body">
+                        <h3 class="anime-catalog-card__title">@anime.Name</h3>
+                    </div>
+                </article>
+            }
+        </div>
+    </section>
+
+    <section class="section section-heroes" id="heroes" aria-labelledby="heroes-title">
+        <h2 class="section-title" id="heroes-title">Персонажи</h2>
+        <p class="section-intro">Иллюстрации и аниме, где персонаж числится в списке героев.</p>
         <div class="card-grid">
-            @foreach (var girl in Model)
+            @foreach (var girl in Model.AnimeGirls)
             {
                 <article class="media-card">
                     <div class="media-card__img-wrap">
-                        <img src="@girl.Url" alt="Иллюстрация аниме-девочки в камуфляже" width="400" height="500" loading="lazy" decoding="async">
+                        <img src="@girl.Url" alt="Персонаж @girl.Title" width="400" height="500" loading="lazy" decoding="async">
                     </div>
-                    <p class="media-card__caption">@girl.Title</p>
+                    <div class="media-card__text">
+                        <p class="media-card__name">@girl.Title</p>
+                        @if (!string.IsNullOrEmpty(girl.ConnectedAnimeTitles))
+                        {
+                            <p class="media-card__animes">@girl.ConnectedAnimeTitles</p>
+                        }
+                    </div>
                 </article>
             }
         </div>

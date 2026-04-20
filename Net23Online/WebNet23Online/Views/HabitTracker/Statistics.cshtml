@@ -1,0 +1,31 @@
+﻿@model WebNet23Online.Models.HabitTracker.HabitTrackerViewModel
+@{
+    Layout = "_LayoutHabitTracker";
+}
+
+<link rel="stylesheet" href="/css/habit-tracker/statistics.css">
+
+<div class="tracker">
+    <div class="tracker-title">Статистика за месяц</div>
+    <div class="tracker-date" id="month-label"></div>
+
+    <div class="table-tracker stats-container">
+
+        @foreach (var habit in Model.Habits)
+        {
+            <div class="stat-item">
+                <div class="stat-header">
+                    <span class="stat-name">@habit.Title</span>
+                    <span class="stat-value">@habit.DoneCount / @habit.WeekResults.Count</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill @habit.ColorOfDot" data-percent="@habit.Percent"></div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/js/habit-tracker/statistics.js"></script>
+}

@@ -1,0 +1,50 @@
+﻿@model WebNet23Online.Models.AnimalWorld.StartPageBeastViewModel
+@{
+    Layout = "_LayoutAnimalWorld";
+}
+
+<title>Добавление животного</title>
+
+<div class="main-place">
+    <div class="green-title">
+        <h2>Добавление нового животного</h2>
+    </div>
+    <hr class="green-line">
+    <p>Заполните форму ниже, чтобы рассказать о новом животном на нашем сайте.</p>
+    <form method="post">
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Название животного</h6>
+            </div>
+            @Html.TextBoxFor(animal => animal.BeastName, new { @class = "form-input", type = "text", placeholder = "Например: Зебра" })
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Место обитания</h6>
+            </div>
+            @Html.TextBoxFor(animal => animal.NativeRange, new { @class = "form-input", type = "text", placeholder = "Например: Африка" })
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Краткое описание</h6>
+            </div>
+            @Html.TextAreaFor(animal => animal.BriefDescription, new { @class = "form-input", type = "text", placeholder = "Опишите в одном предложении..." })
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Полное описание</h6>
+            </div>
+            @Html.TextAreaFor(animal => animal.FullDescription, new { @class = "form-input", type = "text", placeholder = "Вся известная информация..." })
+        </div>
+        <hr />
+        <div class="button-group">
+            <button class="find-animal-button" type="submit">Добавить</button>
+        </div>
+    </form>
+</div>
+<div class="footer-body">
+    <p>&copy; 2026 Мир Животных. Берегите природу!</p>
+</div>

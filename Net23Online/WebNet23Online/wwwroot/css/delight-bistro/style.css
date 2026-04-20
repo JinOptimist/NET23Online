@@ -55,8 +55,8 @@ body {
 }
 
 .plate {
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 .type-name {
@@ -215,3 +215,66 @@ body,
 .menu {
     background-color: #382e2e;
 }
+
+.create-food-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    font-size: 20px;
+}
+
+.input-box input {
+    border-radius: 10px;
+    width: 200px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.url-box input {
+    width: 400px;
+}
+.ingredients-box input {
+    width: 400px;
+}
+
+.radio-box-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.radio-box label, input {
+    cursor: pointer;
+}
+
+.food-create-button button {
+    width: 400px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #ebae09;
+    cursor: pointer;
+}
+
+.change-food {
+    text-align: center;
+}
+
+    .change-food img {
+        border-radius: 20px;
+        margin: 20px;
+        width: 300px;
+        max-height: 300px;
+        object-fit: cover;
+    }
+

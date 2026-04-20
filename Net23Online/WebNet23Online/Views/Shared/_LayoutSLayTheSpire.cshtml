@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebNet23Online.styles.css" asp-append-version="true" />
 
-    <link rel="stylesheet" href="/css/slay-the-spire-2/style.css">
+    <link rel="stylesheet" href="~/css/slay-the-spire-2/style.css" asp-append-version="true" />
 </head>
 <body>
     <header class="spire-navbar">
-        <a class="spire-navbar__brand" asp-area="" asp-controller="Home" asp-action="Index">WebNet23Online</a>
-        <nav class="spire-navbar__nav" aria-label="Меню">
-            <a class="spire-navbar__link" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+        <a class="spire-navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebNet23Online</a>
+        <nav class="spire-navbar-nav" aria-label="Меню">
+            <a class="spire-navbar-link" asp-area="" asp-controller="SlayTheSpire2" asp-action="Index">Главная</a>
         </nav>
     </header>
     <div class="container">
@@ -21,11 +21,5 @@
             @RenderBody()
         </main>
     </div>
-
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

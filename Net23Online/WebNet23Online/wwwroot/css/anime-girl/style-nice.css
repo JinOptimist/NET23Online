@@ -107,6 +107,130 @@ main {
     font-size: 0.98rem;
 }
 
+.link-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem 1.25rem;
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    padding: 1.25rem 1.35rem 1.35rem;
+}
+
+.link-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: min(100%, 220px);
+    flex: 1 1 200px;
+}
+
+.link-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-soft);
+}
+
+.link-select {
+    font: inherit;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(232, 141, 168, 0.35);
+    border-radius: var(--radius-sm);
+    padding: 0.55rem 0.75rem;
+    width: 100%;
+    cursor: pointer;
+}
+
+.link-select:focus {
+    outline: 2px solid rgba(232, 141, 168, 0.55);
+    outline-offset: 2px;
+}
+
+.link-button {
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 1.35rem;
+    background: linear-gradient(145deg, var(--accent), var(--accent-deep));
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(201, 107, 138, 0.35);
+    align-self: flex-end;
+    white-space: nowrap;
+}
+
+.link-button:hover {
+    filter: brightness(1.03);
+}
+
+.link-button:active {
+    transform: translateY(1px);
+}
+
+.anime-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.15rem;
+}
+
+.anime-catalog-card {
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.anime-catalog-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 44px rgba(180, 140, 160, 0.2);
+}
+
+.anime-catalog-card__cover {
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--lavender), var(--mint));
+}
+
+.anime-catalog-card__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+}
+
+.anime-catalog-card:hover .anime-catalog-card__cover img {
+    transform: scale(1.03);
+}
+
+.anime-catalog-card__body {
+    padding: 0.75rem 0.85rem 0.95rem;
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+}
+
+.anime-catalog-card__title {
+    margin: 0;
+    font-family: "Nunito", system-ui, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--text);
+}
+
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -147,13 +271,25 @@ main {
     transform: scale(1.04);
 }
 
-.media-card__caption {
-    margin: 0;
-    padding: 0.9rem 1rem 1.1rem;
-    font-weight: 600;
-    font-size: 0.95rem;
+.media-card__text {
+    padding: 0.85rem 1rem 1.05rem;
     text-align: center;
+}
+
+.media-card__name {
+    margin: 0;
+    font-weight: 700;
+    font-size: 0.95rem;
     color: var(--text);
+    line-height: 1.3;
+}
+
+.media-card__animes {
+    margin: 0.4rem 0 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--text-soft);
 }
 
 .section-placeholder .placeholder-box {
@@ -196,7 +332,9 @@ main {
     }
 
     .media-card,
-    .media-card__img-wrap img {
+    .media-card__img-wrap img,
+    .anime-catalog-card,
+    .anime-catalog-card__cover img {
         transition: none;
     }
 
@@ -207,4 +345,12 @@ main {
             .media-card:hover .media-card__img-wrap img {
                 transform: none;
             }
+
+    .anime-catalog-card:hover {
+        transform: none;
+    }
+
+        .anime-catalog-card:hover .anime-catalog-card__cover img {
+            transform: none;
+        }
 }

@@ -1,0 +1,71 @@
+﻿@using WebNet23Online.Models.LittleLemon
+@model LittleLemonHeroSectionViewModel
+@{
+    Layout = "_LayoutLittleLemon";
+}
+<title>Reservation</title>
+@Html.Partial("_LittleLemonHeroSection", Model)
+      <section class="booking-section">
+        <h2>Choose Your Loving Place!</h2>
+        <form action="#" class="booking-form">
+          <div>
+            <label for="reserve-date">Choose Date:</label>
+            <input type="date" id="reserve-date" name="reserve-date" required />
+          </div>
+          <div>
+            <label for="reserve-time">Choose Time:</label>
+            <select id="reserve-time" name="availableTimes" required>
+              <option value="17:00">17:00</option>
+              <option value="18:00">18:00</option>
+              <option value="19:00">19:00</option>
+              <option value="20:00">20:00</option>
+              <option value="21:00">21:00</option>
+              <option value="22:00">22:00</option>
+            </select>
+          </div>
+          <div>
+            <label for="guests">Number of Guests:</label>
+            <input
+              type="number"
+              placeholder="1"
+              min="1"
+              max="10"
+              id="guests"
+              name="guests"
+              required
+            />
+          </div>
+          <div>
+            <label for="seating">Seating preference:</label>
+            <select id="seating" name="seating">
+              <option value="no-preference">No preference</option>
+              <option value="indoor">Indoor dining room</option>
+              <option value="patio">Patio / outdoor</option>
+              <option value="window">Window table (if available)</option>
+            </select>
+          </div>
+          <div>
+            <label for="occasion">Occasion:</label>
+            <div>
+              <select id="occasion" name="occasion" required>
+                <option>None</option>
+                <option>Birthday</option>
+                <option>Anniversary</option>
+                <option>Other</option>
+              </select>
+            </div>
+           
+          </div>
+          <div>
+            <label for="text-area"> Do You want to add anything else ? </label>
+            <textarea
+              name="textArea"
+              id="text-area"
+              cols="2"
+              rows="3"
+              placeholder="Remember, be nice!"
+            ></textarea>
+          </div>
+          <input type="submit" value="Make your reservation" class="btn" />
+        </form>
+      </section>
