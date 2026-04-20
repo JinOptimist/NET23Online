@@ -2,7 +2,7 @@
 
 namespace WebNet23Online.Data.Repositories.Interfaces
 {
-    public interface IBaseRepository<DataModel> 
+    public interface IBaseRepository<DataModel>
         where DataModel : BaseModel
     {
         void Add(DataModel model);
@@ -10,5 +10,6 @@ namespace WebNet23Online.Data.Repositories.Interfaces
         void Remove(DataModel model);
         DataModel? Get(int id);
         void Update(DataModel model);
+        bool Any();
     }
 }
