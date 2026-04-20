@@ -85,6 +85,7 @@ builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IRockLegendsGenresRepository, RockLegendsGenresRepository>();
 
 var app = builder.Build();
 

@@ -1,0 +1,20 @@
+﻿@model WebNet23Online.Data.Models.RockLegendsGenres
+@{
+    Layout = "_LayoutRockLegends";
+}
+<link rel="stylesheet" href="/css/rock-legends-portal/style.css">
+
+<div class="main-container">
+    <div class="content-wrapper" style="justify-content: center;">
+        <div class="poll-container" style="width: 100%; max-width: 500px;">
+            <h2>Добавить новый жанр</h2>
+            <form asp-action="AddGenre" method="post">
+                <div class="poll-controls" style="flex-direction: column; gap: 15px;">
+                    <input asp-for="Name" class="form-control" placeholder="Название жанра (например, Heavy Metal)" required />
+                    <input asp-for="CoverUrl" class="form-control" placeholder="URL обложки (картинка)" />
+                    <button type="submit" class="poll-button">Сохранить жанр</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

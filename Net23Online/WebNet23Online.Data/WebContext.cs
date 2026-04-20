@@ -18,6 +18,8 @@ namespace WebNet23Online.Data
         public DbSet<FoodItemData> FoodItems { get; set; }
 
         public DbSet<RockLegendsData> RockLegends { get; set; }
+        public DbSet<RockLegendsGenres> RockLegendsGenres { get; set; }
+
         public DbSet<GameData> Games { get; set; }
 
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
@@ -41,6 +43,12 @@ namespace WebNet23Online.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.MyFriends)
                 .WithMany(x => x.WhoIsMyFriends);
+
+            modelBuilder.Entity<RockLegendsData>()
+                .HasOne(x => x.Genres)
+                .WithMany(x => x.Groups)
+                .HasForeignKey(x => x.RockLegendsGenresId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }
