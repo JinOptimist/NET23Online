@@ -3,7 +3,9 @@ using MazeCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data;
 using WebNet23Online.Data.Repositories;
+using WebNet23Online.Data.Repositories.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
@@ -52,7 +54,11 @@ builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
 
 builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
 builder.Services.AddSingleton<IMazeService, MazeService>();
+
+//AnimalWorld DI
 builder.Services.AddScoped<IAnimalWorldService, AnimalWorldService>();
+builder.Services.AddScoped<IAnimalWorldMapper, AnimalWorldMapper>();
+
 builder.Services.AddScoped<IRockBandsService, RockBandsService>();
 
 builder.Services.AddSingleton<IRockLegendsPick, RockLegendsPick>();
@@ -70,6 +76,9 @@ builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 
 // Repositories
+builder.Services.AddScoped<IZooRepository, ZooRepository>();
+builder.Services.AddScoped<IAnimalFamilyRepository, AnimalFamilyRepository>();
+builder.Services.AddScoped<IAnimalSpeciesRepository, AnimalSpeciesRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
