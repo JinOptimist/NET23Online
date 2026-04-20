@@ -21,11 +21,11 @@ namespace WebNet23Online.Services
 
         public List<BandBlockViewModel> GetBands(int[]? genreIds = null)
         {
-            var bandsData = (genreIds != null && genreIds.Length > 0)
+            var bandsBlockViewData = (genreIds != null && genreIds.Length > 0)
                 ? _rockBandsRepository.GetByGenreIdsWithGenres(genreIds)
                 : _rockBandsRepository.GetAllWithGenres();
 
-            return bandsData
+            return bandsBlockViewData
                    .OrderBy(b => b.Id)
                    .Select(b => new BandBlockViewModel
                    {

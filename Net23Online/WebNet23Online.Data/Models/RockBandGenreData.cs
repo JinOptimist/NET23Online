@@ -1,6 +1,6 @@
 ﻿namespace WebNet23Online.Data.Models
 {
-    public class RockBandGenreData : BaseModel
+    public class RockBandGenreData
     {
         public int RockBandId { get; set; }
         public int GenreId { get; set; }
