@@ -8,8 +8,8 @@ namespace WebNet23Online.Data.Repositories.Interfaces
         void Add(DataModel model);
         List<DataModel> GetAll();
         void Remove(DataModel model);
-        bool Any();
         DataModel? Get(int id);
-        void UpdateData(DataModel model);
+        void Update(DataModel model);
+        bool Any();
     }
 }

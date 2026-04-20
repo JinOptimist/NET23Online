@@ -236,3 +236,47 @@ body {
     border: 1px solid rgba(212, 175, 95, 0.25);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
+
+.spire-heroes-detail {
+    max-width: 36rem;
+    margin: 0 auto;
+    padding: 1rem 0 2.5rem;
+    color: #e8e6e3;
+}
+
+.spire-heroes-back {
+    margin: 0 0 1.25rem;
+}
+
+.spire-heroes-detail-title {
+    margin: 0 0 1rem;
+    font-size: clamp(1.25rem, 3vw, 1.6rem);
+    letter-spacing: 0.04em;
+    color: #f0e6d8;
+}
+
+.spire-heroes-detail-list {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.spire-heroes-detail-list dt {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(212, 175, 95, 0.85);
+}
+
+.spire-heroes-detail-list dt:first-child {
+    margin-top: 0;
+}
+
+.spire-heroes-detail-list dd {
+    margin: 0.25rem 0 0;
+    font-size: 1.05rem;
+}

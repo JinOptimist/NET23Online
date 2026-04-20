@@ -1,4 +1,4 @@
-﻿body {
+body {
     margin: 0;
     background-color: #B3DED1;
     justify-content: center;
@@ -92,4 +92,48 @@
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
+}
+
+.entity-card {
+    margin-bottom: 14px;
+}
+
+.entity-card h3 {
+    margin-top: 0;
+}
+
+.empty-list-note {
+    font-style: italic;
+    color: #2e7d32;
+}
+
+.index-actions {
+    margin: 18px 0 22px;
+    text-align: center;
+}
+
+.add-links-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.add-link-button {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.entity-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.secondary-action {
+    background-color: #546e7a;
+}
+
+.multi-select-input {
+    min-height: 140px;
 }

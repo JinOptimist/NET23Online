@@ -1,0 +1,30 @@
+@model WebNet23Online.Models.AnimalWorld.AnimalFamilyViewModel
+@{
+    Layout = "_LayoutAnimalWorld";
+}
+
+<title>Добавление рода животных</title>
+
+<div class="main-place">
+    <div class="green-title">
+        <h2>Добавление рода животных</h2>
+    </div>
+    <hr class="green-line">
+    <form method="post">
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Название рода</h6>
+            </div>
+            @Html.TextBoxFor(family => family.AnimalFamilyName, new { @class = "form-input", type = "text", placeholder = "Например: Кошки" })
+        </div>
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Описание</h6>
+            </div>
+            @Html.TextAreaFor(family => family.Description, new { @class = "form-input", placeholder = "Ключевые особенности рода..." })
+        </div>
+        <div class="button-group">
+            <button class="find-animal-button" type="submit">Добавить</button>
+        </div>
+    </form>
+</div>

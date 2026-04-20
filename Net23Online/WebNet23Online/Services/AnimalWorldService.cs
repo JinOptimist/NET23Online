@@ -1,5 +1,6 @@
-﻿using WebNet23Online.Data.Models;
-using WebNet23Online.Data.Repositories.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebNet23Online.Data.Models.AnimalWorld;
+using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Models.AnimalWorld;
 using WebNet23Online.Services.Interfaces;
 
@@ -7,101 +8,158 @@ namespace WebNet23Online.Services
 {
     public class AnimalWorldService : IAnimalWorldService
     {
-        public const int START_PAGE_COUNT_ANIMALS = 2;
-        public const string CANT_FIND_ANIMAL = "Не получается найти такое животное. Попробуйте изменить запрос.";
-        private IAnimalWorldRepository _animalWorldRepository;
+        private IZooRepository _zooRepository;
+        private IAnimalFamilyRepository _animalFamilyRepository;
+        private IAnimalSpeciesRepository _animalSpeciesRepository;
+        private IAnimalWorldMapper _animalWorldMapper;
 
-        public AnimalWorldService(IAnimalWorldRepository animalWorldRepository)
+        public AnimalWorldService(IZooRepository zooRepository, IAnimalFamilyRepository animalFamilyRepository, IAnimalSpeciesRepository animalSpeciesRepository, IAnimalWorldMapper animalWorldMapper)
         {
-            _animalWorldRepository = animalWorldRepository;
+            _zooRepository = zooRepository;
+            _animalFamilyRepository = animalFamilyRepository;
+            _animalSpeciesRepository = animalSpeciesRepository;
+            _animalWorldMapper = animalWorldMapper;
         }
 
-        public StartPageAnimalsViewModel GetAllAnimals()
+        public StartPageAnimalWorldInfoViewModel GetStartInfo()
         {
-            
-            var animals = GetAllBeastsFromDatabase();
-            var startPageAnimals = new StartPageAnimalsViewModel
+            var zoos = _animalWorldMapper.FromZooDataToZooViewModel(_zooRepository.GetRandomElements());
+            var animalFamilies = _animalWorldMapper.FromAnimalFamilyDataToAnimalFamilyViewModel(_animalFamilyRepository.GetRandomElements());
+            var animalSpecies = _animalWorldMapper.FromAnimalSpeciesDataToAnimalSpeciesViewModel(_animalSpeciesRepository.GetRandomElements());
+            var startPageInfo = new StartPageAnimalWorldInfoViewModel
             {
-                Animals = animals,
-                Beast = null,
+                Zoos = zoos,
+                AnimalFamilies = animalFamilies,
+                AnimalSpecies = animalSpecies,
             };
-            return startPageAnimals;
+            return startPageInfo;
         }
 
-        public StartPageAnimalsViewModel GetRandomAnimals()
+        public AnimalSpeciesViewModel GetAnimalSpeciesPageInfo()
         {
-            var animals = GetAllBeastsFromDatabase();
-            var copy = animals.ToArray();
-            Random.Shared.Shuffle(copy);
-            var startPageAnimalsList = copy.Take(START_PAGE_COUNT_ANIMALS).ToList();
-            var startPageAnimals = new StartPageAnimalsViewModel
+            var animalFamilies = GetAnimalFamilies();
+            var animalFamilyListItems = new List<SelectListItem>();
+            animalFamilyListItems.AddRange(animalFamilies.Select(animalFamily => new SelectListItem
             {
-                Animals = startPageAnimalsList,
-                Beast = null,
+                Text = animalFamily.AnimalFamilyName,
+                Value = animalFamily.Id.ToString()
+            }));
+            var viewModel = new AnimalSpeciesViewModel
+            {
+                AnimalFamilyNames = animalFamilyListItems
             };
-            return startPageAnimals;
+
+            return viewModel;
         }
 
-        public bool AddAnimal(StartPageBeastViewModel viewModel)
+        private List<AnimalFamilyData> GetAnimalFamilies()
         {
-            if (string.IsNullOrEmpty(viewModel.BeastName)
-                || string.IsNullOrEmpty(viewModel.BriefDescription)
-                || string.IsNullOrEmpty(viewModel.BriefDescription)
-                || string.IsNullOrEmpty(viewModel.FullDescription))
+            return _animalFamilyRepository.GetAll();
+        }
+
+        public BindZooWithAnimalSpeciesViewModel GetBingZooAndAnimalSpeciesInfo()
+        {
+            var zoos = _zooRepository.GetAll();
+            var zoosListItems = new List<SelectListItem>();
+            zoosListItems.AddRange(zoos.Select(zoos => new SelectListItem
+            {
+                Text = zoos.ZooName,
+                Value = zoos.Id.ToString()
+            }));
+            var animalSpecies = _animalSpeciesRepository.GetAll();
+            var animalSpeciesListItems = new List<SelectListItem>();
+            animalSpeciesListItems.AddRange(animalSpecies.Select(animalSpecies => new SelectListItem
+            {
+                Text = animalSpecies.AnimalSpeciesName,
+                Value = animalSpecies.Id.ToString()
+            }));
+            var bindModel = new BindZooWithAnimalSpeciesViewModel
+            {
+                Zoos = zoosListItems,
+                AnimalSpecies = animalSpeciesListItems
+            };
+            return bindModel;
+        }
+
+        public bool AddZoo(ZooViewModel viewModel)
+        {
+            if (string.IsNullOrEmpty(viewModel.ZooName)
+                || string.IsNullOrEmpty(viewModel.Address)
+                || string.IsNullOrEmpty(viewModel.Description))
             {
                 return false;
             }
 
-            if (!_animalWorldRepository.IsExists(viewModel.BeastName))
+            if (_zooRepository.GetElementByName(viewModel.ZooName) == null)
             {
-                BeastData beastData = new BeastData
+                var zooData = new ZooData
                 {
-                    BeastName = viewModel.BeastName,
-                    NativeRange = viewModel.NativeRange,
-                    BriefDescription = viewModel.BriefDescription,
-                    FullDescription = viewModel.FullDescription,
+                    ZooName = viewModel.ZooName,
+                    Address = viewModel.Address,
+                    Description = viewModel.Description
                 };
-                _animalWorldRepository.Add(beastData);
+                _zooRepository.Add(zooData);
             }
 
             return true;
         }
 
-        public StartPageBeastViewModel SearchAnimal(StartPageBeastViewModel viewModel)
+        public bool AddAnimalFamily(AnimalFamilyViewModel viewModel)
         {
-            if (string.IsNullOrEmpty(viewModel.BeastName))
+            if (string.IsNullOrEmpty(viewModel.AnimalFamilyName)
+                || string.IsNullOrEmpty(viewModel.Description))
             {
-                return null;
+                return false;
             }
 
-            var beastSearch = new StartPageBeastViewModel();
-            if (!_animalWorldRepository.IsExists(viewModel.BeastName))
+            if (_animalFamilyRepository.GetElementByName(viewModel.AnimalFamilyName) == null)
             {
-                beastSearch.NativeRange = CANT_FIND_ANIMAL;
-                beastSearch.FullDescription = CANT_FIND_ANIMAL;
-            }
-            else
-            {
-                var beastDataSearch = _animalWorldRepository.GetBeastByName(viewModel.BeastName);
-                beastSearch.BeastName = beastDataSearch.BeastName;
-                beastSearch.NativeRange = beastDataSearch.NativeRange;
-                beastSearch.FullDescription = beastDataSearch.FullDescription;
+                var animalFamilyData = new AnimalFamilyData
+                {
+                    AnimalFamilyName = viewModel.AnimalFamilyName,
+                    Description = viewModel.Description
+                };
+                _animalFamilyRepository.Add(animalFamilyData);
             }
 
-            return beastSearch;
+            return true;
         }
 
-        private List<StartPageBeastViewModel> GetAllBeastsFromDatabase()
+        public bool AddAnimalSpecies(AnimalSpeciesViewModel viewModel)
         {
-            var beastsData = _animalWorldRepository.GetAll();
-            var beasts = beastsData.Select(animal => new StartPageBeastViewModel
+            if (string.IsNullOrEmpty(viewModel.AnimalSpeciesName)
+                || string.IsNullOrEmpty(viewModel.Description))
             {
-                BeastName = animal.BeastName,
-                NativeRange = animal.NativeRange,
-                BriefDescription = animal.BriefDescription,
-                FullDescription = animal.FullDescription,
-            });
-            return beasts.ToList();
+                return false;
+            }
+
+            if (_animalSpeciesRepository.GetElementByName(viewModel.AnimalSpeciesName) == null)
+            {
+                var animalFamily = _animalFamilyRepository.Get(viewModel.AnimalFamilyId);
+                var animalSpeciesData = new AnimalSpeciesData
+                {
+                    AnimalSpeciesName = viewModel.AnimalSpeciesName,
+                    AnimalFamily = animalFamily,
+                    NativeRange = viewModel.NativeRange,
+                    Description = viewModel.Description
+                };
+                _animalSpeciesRepository.Add(animalSpeciesData);
+                animalSpeciesData = _animalSpeciesRepository.GetElementByName(viewModel.AnimalSpeciesName);
+                animalFamily.Species.Add(animalSpeciesData);
+            }
+
+            return true;
+        }
+
+        public bool BindZooWithAnimalSpecies(int zooId, int animalSpeciesId)
+        {
+            if (zooId  < 0 || animalSpeciesId < 0)
+            {
+                return false;
+            }
+
+            _zooRepository.AddAnimalSpecies(zooId, animalSpeciesId);
+            return true;
         }
     }
 }

@@ -1,10 +1,19 @@
-const now = new Date();
-document.getElementById('month-label').textContent =
-    now.toLocaleString('ru-RU', { month: 'long', year: 'numeric' });
+document.addEventListener('DOMContentLoaded', function () {
+    const now = new Date();
+    const monthLabel = document.getElementById('month-label');
 
-const total = 30;
+    if (monthLabel) {
+        monthLabel.textContent =
+            now.toLocaleString('ru-RU', { month: 'long', year: 'numeric' });
+    }
 
-document.querySelectorAll('.progress-fill').forEach(bar => {
-    const percent = bar.dataset.percent;
-    bar.style.width = percent + '%';
+    document.querySelectorAll('.progress-fill').forEach(bar => {
+        const raw = bar.dataset.percent;
+        if (!raw) return;
+
+        const percent = parseFloat(raw.replace(',', '.'));
+        if (!Number.isNaN(percent)) {
+            bar.style.width = percent + '%';
+        }
+    });
 });

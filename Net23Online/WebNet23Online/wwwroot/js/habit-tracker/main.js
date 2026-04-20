@@ -1,18 +1,18 @@
 const dots = document.querySelectorAll('.dot');
 
-const saved = JSON.parse(localStorage.getItem('habits') || '{}');
-
-dots.forEach((dot, index) => {
-    if (saved[index]) dot.classList.add('active');
-
+dots.forEach(dot => {
     dot.addEventListener('click', function() {
+        const habitId = parseInt(this.dataset.habitId);
+        const dayIndex = parseInt(this.dataset.dayIndex);
+
         this.classList.toggle('active');
-        
-        const state = {};
-        dots.forEach((d, i) => {
-            state[i] = d.classList.contains('active');
+        fetch('/HabitTracker/TogglePoint', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `habitId=${habitId}&dayIndex=${dayIndex}`
         });
-        localStorage.setItem('habits', JSON.stringify(state));
     });
 });
 
