@@ -19,6 +19,7 @@ namespace WebNet23Online.Data
 
         public DbSet<RockLegendsData> RockLegends { get; set; }
         public DbSet<GameData> Games { get; set; }
+        public DbSet<SlayTheSpire2HeroesData> SlayTheSpire2Heroes { get; set; }
 
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
 
