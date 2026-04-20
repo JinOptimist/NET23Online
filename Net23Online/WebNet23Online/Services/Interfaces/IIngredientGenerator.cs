@@ -7,5 +7,7 @@ namespace WebNet23Online.Services.Interfaces
     {
         CreateIngredientViewModel ConvertDataToVM(IngredientData ingredientData);
         List<CreateIngredientViewModel> GenerateIngredients(List<IngredientData> ingredientsData);
+        void CreateIngredientData(CreateIngredientViewModel ingredient);
+        void FeelDataBase();
     }
 }

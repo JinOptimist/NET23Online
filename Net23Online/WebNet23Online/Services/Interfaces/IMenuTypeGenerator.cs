@@ -5,7 +5,10 @@ namespace WebNet23Online.Services.Interfaces
 {
     public interface IMenuTypeGenerator
     {
-        List<MenuTypeViewModel> GetMenuTypesFromFoodItems(List<FoodItemViewModel> foodItems, string sortMenuType);
-        List<MenuTypeViewModel> GetAllMenusIncludesFoodItemAndIngredientsViewModel(string sortMenuName);
+        void CreateMenuData(CreateMenuViewModel viewModel);
+        void FeelDataBase();
+
+        //List<MenuTypeViewModel> GetMenuTypesFromFoodItems(List<FoodItemViewModel> foodItems, string sortMenuType);
+        List<MenuTypeViewModel> GetAllMenuViewModel(string sortMenuName);
     }
 }

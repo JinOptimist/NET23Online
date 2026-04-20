@@ -1,4 +1,7 @@
-﻿using WebNet23Online.Data.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
+using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services.Interfaces;
@@ -10,9 +13,13 @@ namespace WebNet23Online.Services.DelightBistro
         private List<FoodItemViewModel> _foodItems;
         private const string SEPARATOR = ",";
         private IFoodItemRepository _foodItemRepository;
-        public FoodItemGenerator(IFoodItemRepository foodItemRepository)
+        private IMenuRepository _menuRepository;
+        private IIngredientsRepository _ingredientsRepository;
+        public FoodItemGenerator(IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository)
         {
             _foodItemRepository = foodItemRepository;
+            _menuRepository = menuRepository;
+            _ingredientsRepository = ingredientsRepository;
 
             //DataBase Is Empty
             _foodItems = new List<FoodItemViewModel>
@@ -149,58 +156,41 @@ namespace WebNet23Online.Services.DelightBistro
                         "Чёрный молотый перец",
                         "Оливковое масло"
                     }
+
                 }
             };
         }
-        
-        //delete?
-        public void AddFoodItem(FoodItemViewModel foodItem)
-        {
-            _foodItems.Add(foodItem);
-        }
 
-        public List<FoodItemViewModel> GenerateFoodItems()
+
+        public void CreateFoodItemData(CreateFoodItemViewModel viewModel)
         {
-            return _foodItems;
-        }
-        public List<FoodItemViewModel> GenerateFoodItems(List<FoodItemData> foodItemDatas)
-        {
-            //Для создания нужен FoodItemVM
-            var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
+            //var menuID = viewModel.Menus;
+            var selectedIngredients = new List<IngredientData>();
+            if (!viewModel.SelectedIngredientsId.IsNullOrEmpty())
             {
-                Id = x.Id,
-                Name = x.Name,
-                Price = x.Price,
-                ImgURL = x.ImgURL,
-                MenuType = x.MenuData?.Name ?? "Общее меню",
-                
-                //    Ingredients = x.FoodItemIngredients
-                //.Select(fi => fi.Ingredient.Name)
-                //.ToList()
-                //Ingredients = x.IngredientsList,
-            });
-            return foodItemsViewModels.ToList();
+                selectedIngredients = _ingredientsRepository.GetAll()
+                    .Where(x => viewModel.SelectedIngredientsId.Contains(x.Id)).ToList();
+            }
+            MenuData menuData = null;
+            if (viewModel.MenuId != null)
+            {
+                menuData = _menuRepository.Get(viewModel.MenuId.Value);
+            }
+            var newFoodItemData = new FoodItemData()
+            {
+                Name = viewModel.Name,
+                Price = viewModel.Price,
+                ImgURL = viewModel.ImgURL,
+
+                MenuData = /*_menuRepository.Get(viewModel.MenuId.Value)*/menuData,
+                IngredientsList = selectedIngredients
+            };
+
+            _foodItemRepository.Add(newFoodItemData);
         }
 
-        public void CreateFoodItemData(FoodItemViewModel foodItem)
+        public void ChangeFoodItemData(CreateFoodItemViewModel foodItem, FoodItemData changedFoodItemData)
         {
-            var ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
-                        
-                var newFoodItemData = new FoodItemData()
-                {
-                    Id = foodItem.Id,
-                    Name = foodItem.Name,
-                    Price = foodItem.Price,
-                    ImgURL = foodItem.ImgURL,
-                    //MenuData = foodItem.MenuType,
-                    //Ingredients = ingredients,
-                };
-                _foodItemRepository.Add(newFoodItemData);
-            
-        }
-        public void ChangeFoodItemData(FoodItemViewModel foodItem, FoodItemData changedFoodItemData)
-        {
-            var ingredients = string.Join(SEPARATOR, foodItem.Ingredients);
 
             if (changedFoodItemData != null)
             {
@@ -213,7 +203,7 @@ namespace WebNet23Online.Services.DelightBistro
 
         }
 
-        public FoodItemViewModel ConvertFoodItemToVM(FoodItemData foodItemData)
+        public FoodItemViewModel ConvertToFoodItemVM(FoodItemData foodItemData)
         {
             var foodItemViewModel = new FoodItemViewModel
             {
@@ -223,8 +213,6 @@ namespace WebNet23Online.Services.DelightBistro
                 ImgURL = foodItemData.ImgURL,
                 MenuType = foodItemData.MenuData?.Name ?? "Общее меню",
 
-                //Ingredients = foodItemData.Ingredients.Split(SEPARATOR,
-                //    StringSplitOptions.RemoveEmptyEntries).ToList(),
                 Ingredients = (foodItemData.IngredientsList ?? new List<IngredientData>())
                 .Select(fi => fi.Name).ToList()
             };
@@ -239,13 +227,14 @@ namespace WebNet23Online.Services.DelightBistro
                 return;
             }
 
-            var foodItems = GenerateFoodItems();
+            var foodItems = _foodItems;
             foreach (var foodItemVM in foodItems)
             {
-                CreateFoodItemData(foodItemVM);
+                //CreateFoodItemData(foodItemVM);
             }
         }
 
+        //delete
         public List<FoodItemViewModel> GenerateFoodItemsFromDB(List<FoodItemData> foodItemDatas)
         {
             var foodItemsViewModels = foodItemDatas.Select(x => new FoodItemViewModel
@@ -255,14 +244,17 @@ namespace WebNet23Online.Services.DelightBistro
                 Price = x.Price,
                 ImgURL = x.ImgURL,
                 MenuType = x.MenuData?.Name ?? "Общее меню",
-                
-                //    Ingredients = x.FoodItemIngredients
-                //.Select(fi => fi.Ingredient.Name)
-                //.ToList()
-                //Ingredients = x.IngredientsList,
+
+                Ingredients = (x.IngredientsList ?? new List<IngredientData>())
+                .Select(fi => fi.Name).ToList()
+
             });
             return foodItemsViewModels.ToList();
         }
+
+
+
+
 
     }
 }
