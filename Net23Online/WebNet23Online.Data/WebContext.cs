@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Data;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Models.Steam;
+
 
 namespace WebNet23Online.Data
 {
@@ -16,6 +18,7 @@ namespace WebNet23Online.Data
         public DbSet<BeastData> Beasts { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
         public DbSet<FoodItemData> FoodItems { get; set; }
+        public DbSet<DataUserData> DataUser { get; set; }//*
 
         public DbSet<RockLegendsData> RockLegends { get; set; }
         public DbSet<GameData> Games { get; set; }
