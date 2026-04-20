@@ -43,7 +43,7 @@ namespace WebNet23Online.Data.Repositories
             return _dbSet.ToList();
         }
 
-        public virtual void Save(DataModel model)
+        public virtual void Update(DataModel model)
         {
             _dbSet.Update(model);
             _context.SaveChanges();

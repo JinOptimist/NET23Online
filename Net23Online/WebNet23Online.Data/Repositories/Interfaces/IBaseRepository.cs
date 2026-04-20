@@ -9,6 +9,6 @@ namespace WebNet23Online.Data.Repositories.Interfaces
         List<DataModel> GetAll();
         void Remove(DataModel model);
         DataModel? Get(int id);
-        void Save(DataModel model);
+        void Update(DataModel model);
     }
 }

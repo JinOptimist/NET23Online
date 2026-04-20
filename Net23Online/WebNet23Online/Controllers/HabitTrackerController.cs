@@ -66,7 +66,7 @@ public class HabitTrackerController : Controller
         
         var newHabit = _habitService.CreateHabit(habit, habitTrackerData.Habits.Count);
         habitTrackerData.Habits.Add(newHabit);
-        _habitTrackerRepository.Save(habitTrackerData);
+        _habitTrackerRepository.Update(habitTrackerData);
         return RedirectToAction(nameof(Index));
     }
 
@@ -76,11 +76,13 @@ public class HabitTrackerController : Controller
         var habitTrackerData = _habitTrackerRepository.Get(1);
 
         var habit = habitTrackerData.Habits.FirstOrDefault(h => h.Id == habitId);
-        if (habit != null)
+        if (habit == null)
         {
-            _habitService.ChangeDayPointStatus(habit, dayIndex);
-            _habitTrackerRepository.Save(habitTrackerData);
+            return RedirectToAction(nameof(Index));
         }
+        
+        _habitService.ChangeDayPointStatus(habit, dayIndex);
+        _habitTrackerRepository.Update(habitTrackerData);
         return RedirectToAction(nameof(Index));
     }
 }
