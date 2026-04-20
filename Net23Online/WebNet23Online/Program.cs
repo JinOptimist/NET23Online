@@ -86,6 +86,7 @@ builder.Services.AddScoped<ISlayTheSpire2HeroesRepository, SlayTheSpire2HeroesRe
 builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
 builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IRockLegendsGenresRepository, RockLegendsGenresRepository>();
 builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
 builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
 

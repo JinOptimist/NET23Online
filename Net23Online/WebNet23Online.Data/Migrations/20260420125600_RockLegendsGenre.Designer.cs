@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebNet23Online.Data;
 
@@ -11,9 +12,11 @@ using WebNet23Online.Data;
 namespace WebNet23Online.Data.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20260420125600_RockLegendsGenre")]
+    partial class RockLegendsGenre
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace WebNet23Online.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AnimalSpeciesDataZooData", b =>
-                {
-                    b.Property<int>("AnimalSpeciesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ZooDataId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AnimalSpeciesId", "ZooDataId");
-
-                    b.HasIndex("ZooDataId");
-
-                    b.ToTable("AnimalSpeciesDataZooData");
-                });
 
             modelBuilder.Entity("AnimeDataAnimeGirlData", b =>
                 {
@@ -65,82 +53,6 @@ namespace WebNet23Online.Data.Migrations
                     b.HasIndex("WhoIsMyFriendsId");
 
                     b.ToTable("UserDataUserData");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.AnimalWorld.AnimalFamilyData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AnimalFamilyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AnimalFamilies");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.AnimalWorld.AnimalSpeciesData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AnimalFamilyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("AnimalSpeciesName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NativeRange")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnimalFamilyId");
-
-                    b.ToTable("AnimalSpecies");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.AnimalWorld.ZooData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ZooName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Zoos");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimeData", b =>
@@ -208,6 +120,35 @@ namespace WebNet23Online.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AnimeStudios");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.BeastData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BeastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BriefDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NativeRange")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Beasts");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.FoodItemData", b =>
@@ -467,21 +408,6 @@ namespace WebNet23Online.Data.Migrations
                     b.ToTable("UserProfileData");
                 });
 
-            modelBuilder.Entity("AnimalSpeciesDataZooData", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.AnimalWorld.AnimalSpeciesData", null)
-                        .WithMany()
-                        .HasForeignKey("AnimalSpeciesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebNet23Online.Data.Models.AnimalWorld.ZooData", null)
-                        .WithMany()
-                        .HasForeignKey("ZooDataId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("AnimeDataAnimeGirlData", b =>
                 {
                     b.HasOne("WebNet23Online.Data.Models.AnimeData", null)
@@ -510,17 +436,6 @@ namespace WebNet23Online.Data.Migrations
                         .HasForeignKey("WhoIsMyFriendsId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.AnimalWorld.AnimalSpeciesData", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.AnimalWorld.AnimalFamilyData", "AnimalFamily")
-                        .WithMany("Species")
-                        .HasForeignKey("AnimalFamilyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AnimalFamily");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimeData", b =>
@@ -559,11 +474,6 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("UserProfile");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.AnimalWorld.AnimalFamilyData", b =>
-                {
-                    b.Navigation("Species");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimeStudioData", b =>
