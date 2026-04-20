@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebNet23Online.Data.Models
 {
-    public class GenreOfRockBands : BaseModel
+    public class GenreOfRockBandsData : BaseModel
     {
         public string Name { get; set; } = string.Empty;
         public ICollection<RockBandGenreData> RockBandGenres { get; set; } = new List<RockBandGenreData>();

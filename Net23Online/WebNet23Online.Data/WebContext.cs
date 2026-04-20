@@ -15,7 +15,7 @@ namespace WebNet23Online.Data
         // public DbSet<HabitData> Habit { get; set; }
         public DbSet<BeastData> Beasts { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
-        public DbSet<GenreOfRockBands> RockBandGenresDictionary { get; set; }
+        public DbSet<GenreOfRockBandsData> RockBandGenresDictionary { get; set; }
         public DbSet<RockBandGenreData> RockBandGenres { get; set; }
         public DbSet<FoodItemData> FoodItems { get; set; }
 
@@ -57,7 +57,7 @@ namespace WebNet23Online.Data
                 .WithMany(x => x.RockBandGenres)
                 .HasForeignKey(x => x.GenreId);
 
-            modelBuilder.Entity<GenreOfRockBands>()
+            modelBuilder.Entity<GenreOfRockBandsData>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
 

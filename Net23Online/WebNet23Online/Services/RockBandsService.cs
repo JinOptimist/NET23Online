@@ -1,4 +1,5 @@
-﻿using WebNet23Online.Data.Models;
+﻿using NAudio.Codecs;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
@@ -20,7 +21,7 @@ namespace WebNet23Online.Services
 
         public List<BandBlockViewModel> GetBands(int[]? genreIds = null)
         {
-            var bandsData = (genreIds is { Length: > 0 })
+            var bandsData = (genreIds != null && genreIds.Length > 0)
                 ? _rockBandsRepository.GetByGenreIdsWithGenres(genreIds)
                 : _rockBandsRepository.GetAllWithGenres();
 

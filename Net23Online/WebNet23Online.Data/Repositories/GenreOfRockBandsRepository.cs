@@ -3,7 +3,7 @@ using WebNet23Online.Data.Repositories.Interfaces;
 
 namespace WebNet23Online.Data.Repositories
 {
-    public class GenreOfRockBandsRepository : BaseRepository<GenreOfRockBands>, IGenreOfRockBandsRepository
+    public class GenreOfRockBandsRepository : BaseRepository<GenreOfRockBandsData>, IGenreOfRockBandsRepository
     {
         public GenreOfRockBandsRepository(WebContext context) : base(context) { }
     }
