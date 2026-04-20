@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data.HelperModels;
 using WebNet23Online.Data.Models.Steam;
 using WebNet23Online.Data.Repositories.Interfaces;
@@ -42,6 +43,14 @@ namespace WebNet23Online.Data.Repositories
             var specialOffers = _dbSet.Take(SPECIAL_OFFERS_PREVIEW_COUNT).ToList();
             
             return specialOffers;
+        }
+
+        public GameData GetGameWithPublisher(int id)
+        {
+            var gameData = _dbSet
+                .Include(g => g.Publisher)
+                .FirstOrDefault(g => g.Id == id);
+            return gameData;
         }
     }
 }
