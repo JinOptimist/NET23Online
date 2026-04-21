@@ -23,10 +23,8 @@ namespace WebNet23Online.Services.DelightBistro
             _ingredientGenerator = ingredientGenerator;
         }
 
-
         public void CreateFoodItemData(CreateFoodItemViewModel viewModel)
         {
-            //var selectedIngredients = GetSelectedIngredients(viewModel.Ingredients);
             var selectedIngredients = new List<IngredientData>();
             if (!viewModel.SelectedIngredientsId.IsNullOrEmpty())
             {
@@ -54,7 +52,6 @@ namespace WebNet23Online.Services.DelightBistro
 
         public void ChangeFoodItemData(CreateFoodItemViewModel viewModel)
         {
-            //var selectedIngredients = GetSelectedIngredients(viewModel.Ingredients);
 
             var selectedIngredients = new List<IngredientData>();
             if (!viewModel.SelectedIngredientsId.IsNullOrEmpty())
@@ -70,10 +67,6 @@ namespace WebNet23Online.Services.DelightBistro
 
             var changedFoodItemData = _foodItemRepository.Get(viewModel.Id);
             changedFoodItemData.IngredientsList.Clear();
-            //if (changedFoodItemData == null)
-            //{
-            //    throw new InvalidOperationException($"FoodItem с ID {foodItem.Id} не найден");
-            //}
 
             changedFoodItemData.Name = viewModel.Name;
             changedFoodItemData.Price = viewModel.Price;
@@ -113,14 +106,6 @@ namespace WebNet23Online.Services.DelightBistro
 
             var allIngredientsDatas = _ingredientsRepository.GetAll();
             var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
-
-
-            //var selectedIngredients = foodItemData.IngredientsList.Select(x => x.Id).ToList();
-
-            //foreach (var ingredinet in allIngredientVM)
-            //{
-            //    ingredinet.IsSelected = selectedIngredients.Contains(ingredinet.Id);
-            //}
 
             if (foodItemData == null)
             {
@@ -166,24 +151,5 @@ namespace WebNet23Online.Services.DelightBistro
             };
             _foodItemRepository.Add(foodItemData);
         }
-
-        //private List<IngredientData> GetSelectedIngredients(List<CreateIngredientViewModel> allIngredients)
-        //{
-
-        //    var selectedIds = allIngredients
-        //        .Where(i => i.IsSelected)
-        //        .Select(i => i.Id)
-        //        .ToList();
-
-        //    if (!selectedIds.Any())
-        //    {
-        //        return new List<IngredientData>();
-        //    }
-
-        //    return _ingredientsRepository.GetAll()
-        //        .Where(x => selectedIds.Contains(x.Id))
-        //        .ToList();
-
-        //}
     }
 }

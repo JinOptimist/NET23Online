@@ -19,7 +19,7 @@ namespace WebNet23Online.Controllers
         private IIngredientGenerator _ingredientGenerator;
 
         private IFoodItemRepository _foodItemRepository;
-       
+
 
         public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator
             , IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository, IIngredientGenerator ingredientGenerator)
@@ -30,7 +30,7 @@ namespace WebNet23Online.Controllers
             _menuTypeGenerator = menuTypeGenerator;
 
             _ingredientGenerator = ingredientGenerator;
-            
+
         }
 
         public IActionResult Index(string menuType)
@@ -84,24 +84,6 @@ namespace WebNet23Online.Controllers
 
             }
             var createFoodItemVM = _foodItemGenerator.ConvertToCreateFoodItemVM();
-
-            ////MenuSelectList
-            //var selectMenu = _menuRepository.GetAll();
-            //var menuListItems = new List<SelectListItem>();
-            //menuListItems.AddRange(selectMenu.Select(x => new SelectListItem
-            //{
-            //    Text = x.Name,
-            //    Value = x.Id.ToString()
-            //}));
-            ////allIngredientBox
-            //var allIngredientsDatas = _ingredientsRepository.GetAll();
-            //var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
-
-            //var createFoodItemVM = new CreateFoodItemViewModel()
-            //{
-            //    Menus = menuListItems,
-            //    Ingredients = allIngredientVM
-            //};
 
             return View(createFoodItemVM);
         }
