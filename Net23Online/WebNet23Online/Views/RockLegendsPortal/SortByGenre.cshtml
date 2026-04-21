@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebNet23Online.Data.Models.RockLegendsGenres>
+@{
+    Layout = "_LayoutRockLegends";
+}
+<link rel="stylesheet" href="/css/rock-legends-portal/style.css">
+
+<div class="main-container">
+    <div class="content-wrapper" style="flex-direction: column; align-items: center;">
+        
+        <div class="poll-container" style="margin-bottom: 50px; width: 100%; max-width: 600px;">
+            <p>Связать группу с жанром</p>
+            <form asp-action="LinkGroupToGenre" method="post">
+                <div class="poll-controls">
+                    <select name="bandId" class="form-control">
+                        @foreach (var band in ViewBag.AllBands)
+                        {
+                            <option value="@band.Id">@band.GroupNames</option>
+                        }
+                    </select>
+                    <select name="genreId" class="form-control">
+                        @foreach (var genre in Model)
+                        {
+                            <option value="@genre.Id">@genre.Name</option>
+                        }
+                    </select>
+                    <button type="submit" class="poll-button">Связать</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="genres-list" style="width: 100%; max-width: 800px;">
+            @foreach (var genre in Model)
+            {
+                <div class="genre-item" style="margin-bottom: 10px;">
+                    <button class="poll-button" style="width: 100%; text-align: left; background: #222;"
+                            onclick="toggleGenre('@genre.Id')">
+                        @genre.Name (Групп: @genre.Groups.Count)
+                    </button>
+                    
+                    <div id="genre-@genre.Id" style="display: none; background: rgba(0,0,0,0.5); padding: 15px; border-left: 3px solid #ff0000;">
+                        @if (genre.Groups.Any())
+                        {
+                            foreach (var group in genre.Groups)
+                            {
+                                <div style="color: #fff; padding: 5px 0;">🎸 @group.GroupNames</div>
+                            }
+                        }
+                        else
+                        {
+                            <div style="color: #666;">В этом жанре пока нет групп.</div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleGenre(id) {
+        const element = document.getElementById('genre-' + id);
+        element.style.display = (element.style.display === "none") ? "block" : "none";
+    }
+</script>

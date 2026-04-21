@@ -1,0 +1,84 @@
+﻿@using WebNet23Online.Models.Steam
+@model EditGameViewModel
+@{
+    Layout = "_LayoutSteam";
+}
+<main class="page">
+    <section class="section">
+        <h1 class="page-title">Add New Game</h1>
+        <div class="catalog-header">
+            <p><a class="btn" href="/Steam/Catalog">← Back to Catalog</a></p>
+        </div>
+    </section>
+
+    <section class="section">
+        <form method="post">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Title, "Title")
+                @Html.TextBoxFor(x => x.Title, new {
+                @class = "form-control",
+                                placeholder = "Enter game title",
+                                required = "required"
+                                })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.ImageUrl, "Image URL")
+                @Html.TextBoxFor(x => x.ImageUrl, new {
+                                @class = "form-control",
+                                placeholder = "https://example.com/image.jpg",
+                                type = "url"
+                                })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Description, "Description")
+                @Html.TextAreaFor(x => x.Description, new {
+                                @class = "form-control",
+                                rows = "5",
+                                placeholder = "Enter game description"
+                                })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Price, "Price ($)")
+                @Html.TextBoxFor(x => x.Price, new {
+                                @class = "form-control",
+                                placeholder = "0.00",
+                                type = "number",
+                                step = "0.01",
+                                required = "required"
+                                })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Genre, "Genre")
+                <select id="Genre" name="Genre" class="form-control" required>
+                    @foreach (var genre in Model.AllGenres)
+                    {
+                        var isSelected = genre == Model.Genre;
+                        <option value="@genre" selected="@isSelected">@genre</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.PublisherId, "Publisher")
+                <select id="PublisherId" name="PublisherId" class="form-control">
+                    @foreach (var publisher in Model.Publishers)
+                    {
+                        <option value="@publisher.Value" selected="@publisher.Selected">
+                            @publisher.Text
+                        </option>
+                    }
+                </select>
+            </div>
+
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary">Save Game</button>
+                <a href="/Steam/Catalog" class="btn">Cancel</a>
+            </div>
+        </form>
+    </section>
+</main>

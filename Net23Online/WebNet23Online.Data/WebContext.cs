@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Models.AnimalWorld;
 using WebNet23Online.Data.Models.Steam;
 
 namespace WebNet23Online.Data
@@ -13,13 +14,19 @@ namespace WebNet23Online.Data
         public DbSet<MazeData> Mazes { get; set; }
         public DbSet<HabitTrackerData> HabitTracker { get; set; }
         // public DbSet<HabitData> Habit { get; set; }
-        public DbSet<BeastData> Beasts { get; set; }
+        public DbSet<AnimalFamilyData> AnimalFamilies { get; set; }
+        public DbSet<AnimalSpeciesData> AnimalSpecies { get; set; }
+        public DbSet<ZooData> Zoos {  get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
         public DbSet<FoodItemData> FoodItems { get; set; } 
         public DbSet<IngredientData> Ingredients { get; set; } 
         public DbSet<MenuData> Menus { get; set; } 
         public DbSet<RockLegendsData> RockLegends { get; set; }
+        public DbSet<RockLegendsGenres> RockLegendsGenres { get; set; }
+
         public DbSet<GameData> Games { get; set; }
+        public DbSet<SlayTheSpire2HeroesData> SlayTheSpire2Heroes { get; set; }
+        public DbSet<PublisherData> Publishers { get; set; }
 
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
 
@@ -33,6 +40,14 @@ namespace WebNet23Online.Data
                 .HasMany(x => x.Animes)
                 .WithOne(x => x.Studio)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ZooData>()
+                .HasMany(x => x.AnimalSpecies)
+                .WithMany(x => x.ZooData);
+
+            modelBuilder.Entity<AnimalFamilyData>()
+                .HasMany(x => x.Species)
+                .WithOne(x => x.AnimalFamily);
 
             modelBuilder.Entity<UserData>()
                 .HasOne(x => x.UserProfile)
@@ -51,6 +66,18 @@ namespace WebNet23Online.Data
             modelBuilder.Entity<FoodItemData>()
                 .HasMany(x => x.IngredientsList)
                 .WithMany(x => x.FoodItems);
+
+
+            modelBuilder.Entity<RockLegendsData>()
+                .HasOne(x => x.Genres)
+                .WithMany(x => x.Groups)
+                .HasForeignKey(x => x.RockLegendsGenresId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<GameData>()
+               .HasOne(x => x.Publisher)
+               .WithMany(x => x.Games)
+               .HasForeignKey(x => x.PublisherId);
 
 
             base.OnModelCreating(modelBuilder);

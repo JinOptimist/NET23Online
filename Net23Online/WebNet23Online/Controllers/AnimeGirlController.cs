@@ -12,15 +12,15 @@ namespace WebNet23Online.Controllers
 
     public class AnimeGirlController : Controller
     {
-        private IAnimeGirlGenerator _animeGirlGenerator;
+        private IAnimeGirlService _animeGirlService;
         private IAnimeGirlRepository _animeGirlRepository;
         private IAnimeRepository _animeRepository;
 
-        public AnimeGirlController(IAnimeGirlGenerator animeGirlGenerator,
+        public AnimeGirlController(IAnimeGirlService animeGirlGenerator,
             IAnimeGirlRepository animeGirlRepository,
             IAnimeRepository animeRepository)
         {
-            _animeGirlGenerator = animeGirlGenerator;
+            _animeGirlService = animeGirlGenerator;
             _animeGirlRepository = animeGirlRepository;
             _animeRepository = animeRepository;
         }
@@ -31,8 +31,8 @@ namespace WebNet23Online.Controllers
             var animeGirlDatas = _animeGirlRepository.GetAllIncludeAnime();
             var animeDatas = _animeRepository.GetAll();
 
-            var viewModels = _animeGirlGenerator.GenerateList(animeGirlDatas);
-            var animeViewModels = _animeGirlGenerator.AnimeMap(animeDatas);
+            var viewModels = _animeGirlService.GenerateList(animeGirlDatas);
+            var animeViewModels = _animeGirlService.AnimeMap(animeDatas);
 
             var mainViewModel = new MainIndexViewModel
             {
@@ -46,22 +46,9 @@ namespace WebNet23Online.Controllers
         [HttpGet]
         public IActionResult CreateGirl()
         {
-            var animes = _animeRepository.GetAll();
-            var animeListItems = new List<SelectListItem>();
-            animeListItems.Add(new SelectListItem
-            {
-                Text = "SelectAnime",
-                Value = ""
-            });
-            animeListItems.AddRange(animes.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }));
-            
             var viewModel = new CreateAnimeGirlViewModel
             {
-                Animes = animeListItems
+                Animes = _animeGirlService.GetListItemsWithAnime()
             };
 
             return View(viewModel);
@@ -70,6 +57,12 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult CreateGirl(CreateAnimeGirlViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                viewModel.Animes = _animeGirlService.GetListItemsWithAnime();
+                return View(viewModel);
+            }
+
             var animeGirlData = new AnimeGirlData
             {
                 Description = viewModel.Description,
