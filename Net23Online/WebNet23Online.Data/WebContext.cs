@@ -13,10 +13,13 @@ namespace WebNet23Online.Data
         public DbSet<UserData> Users { get; set; }
         public DbSet<MazeData> Mazes { get; set; }
         public DbSet<HabitTrackerData> HabitTracker { get; set; }
+
         // public DbSet<HabitData> Habit { get; set; }
         public DbSet<AnimalFamilyData> AnimalFamilies { get; set; }
         public DbSet<AnimalSpeciesData> AnimalSpecies { get; set; }
         public DbSet<ZooData> Zoos {  get; set; }
+        public DbSet<LittleLemonData> LittleLemon { get; set; }
+        public DbSet<LittleLemonGuestData> LittleLemonGuests { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
         public DbSet<FoodItemData> FoodItems { get; set; } 
         public DbSet<IngredientData> Ingredients { get; set; } 
@@ -79,6 +82,12 @@ namespace WebNet23Online.Data
                .WithMany(x => x.Games)
                .HasForeignKey(x => x.PublisherId);
 
+
+            modelBuilder.Entity<LittleLemonData>()
+                .HasOne(x => x.Guest)
+                .WithMany(x => x.Reservations)
+                .HasForeignKey(x => x.GuestId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }

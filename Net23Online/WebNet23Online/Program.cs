@@ -9,6 +9,8 @@ using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Services;
 using WebNet23Online.Services.DelightBistro;
 using WebNet23Online.Services.Interfaces;
+using WebNet23Online.Services.Interfaces.LittleLemon;
+using WebNet23Online.Services.LittleLemon;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ILittleLemonMenuService, LittleLemonMenuService>();
 builder.Services.AddScoped<ILittleLemonTestimonialService, LittleLemonTestimonialService>();
 builder.Services.AddScoped<ILittleLemonSubscribeService, LittleLemonSubscribeService>();
+builder.Services.AddScoped<ILittleLemonReservationService, LittleLemonReservationService>();
+
 // Register Services
 //builder.Services.AddScoped<IAnimeGirlGenerator, AnimeGirlGenerator>(diContainer =>
 //{
@@ -96,6 +100,8 @@ builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 builder.Services.AddScoped<IIngredientsRepository, IngredientsRepository>();
 builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
+builder.Services.AddScoped<ILittleLemonReservationRepository, LittleLemonReservationRepository>();
+builder.Services.AddScoped<ILittleLemonGuestRepository, LittleLemonGuestRepository>();
 
 
 
