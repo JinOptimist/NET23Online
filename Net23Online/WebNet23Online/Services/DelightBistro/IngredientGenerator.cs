@@ -9,7 +9,6 @@ namespace WebNet23Online.Services.DelightBistro
 {
     public class IngredientGenerator : IIngredientGenerator
     {
-        private List<CreateIngredientViewModel> _ingredients;
         private IIngredientsRepository _ingredientsRepository;
         private const string SEPARATOR = ",";
 
@@ -27,13 +26,15 @@ namespace WebNet23Online.Services.DelightBistro
 
             var ingredients = "Креветки, Шампиньоны, Лайм, Паста";
 
-            _ingredients = ingredients.Split(SEPARATOR, StringSplitOptions.RemoveEmptyEntries)
+            var createIngredients = new List<CreateIngredientViewModel>();
+
+            createIngredients = ingredients.Split(SEPARATOR, StringSplitOptions.RemoveEmptyEntries)
                 .Select(x => new CreateIngredientViewModel
                 {
                     Name = x.Trim()
                 }).ToList();
 
-            var ingredientsVM = _ingredients;
+            var ingredientsVM = createIngredients;
             foreach (var ingredientVM in ingredientsVM)
             {
                 CreateIngredientData(ingredientVM);
@@ -51,16 +52,16 @@ namespace WebNet23Online.Services.DelightBistro
             return ingredientViewModel;
         }
 
-        //FromData 
         public List<CreateIngredientViewModel> GenerateIngredients(List<IngredientData> ingredientsData)
         {
             var ingredientsViewModel = ingredientsData.Select(x => new CreateIngredientViewModel
             {
                 Id = x.Id,
                 Name = x.Name,
-            });
+                IsSelected = false
+            }).ToList();
 
-            return ingredientsViewModel.ToList();
+            return ingredientsViewModel;
         }
 
         public void CreateIngredientData(CreateIngredientViewModel ingredient)

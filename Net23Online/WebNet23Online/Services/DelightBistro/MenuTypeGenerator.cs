@@ -11,9 +11,6 @@ namespace WebNet23Online.Services.DelightBistro
     {
         private IMenuRepository _menuRepository;
         private IFoodItemGenerator _foodItemGenerator;
-        private List<CreateMenuViewModel> _menus;
-        private const string SEPARATOR = ",";
-
 
         public MenuTypeGenerator(IMenuRepository menuRepository, IFoodItemGenerator foodItemGenerator)
         {
@@ -23,25 +20,14 @@ namespace WebNet23Online.Services.DelightBistro
 
         public void FeelDataBase()
         {
-
             if (_menuRepository.Any())
             {
                 return;
             }
 
-            var menus = "soups, hot, salads";
-
-            _menus = menus.Split(SEPARATOR, StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => new CreateMenuViewModel
-                {
-                    Name = x.Trim()
-                }).ToList();
-
-            var menusVM = _menus;
-            foreach (var menu in menusVM)
-            {
-                CreateMenuData(menu);
-            }
+            _menuRepository.Add(new MenuData { Name = "Soups" });
+            _menuRepository.Add(new MenuData { Name = "Hot" });
+            _menuRepository.Add(new MenuData { Name = "Salads" });
         }
 
         public void CreateMenuData(CreateMenuViewModel viewModel)
@@ -67,9 +53,9 @@ namespace WebNet23Online.Services.DelightBistro
             };
         }
 
-        public List<MenuTypeViewModel> GetAllMenuViewModel(string sortName)
+        public List<MenuTypeViewModel> GetAllMenuViewModel(string filterName)
         {
-            var menuListDatas = _menuRepository.GetAllIncludeFoodItemsWithIngredients(sortName);
+            var menuListDatas = _menuRepository.GetAllIncludeFoodItemsWithIngredients(filterName);
             var menuVMList = menuListDatas.Select(ConvertMenuDataToViewModel).ToList();
 
             return menuVMList;

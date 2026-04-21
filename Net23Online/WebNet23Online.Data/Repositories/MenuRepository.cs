@@ -11,25 +11,22 @@ namespace WebNet23Online.Data.Repositories
 {
     public class MenuRepository : BaseRepository<MenuData>, IMenuRepository
     {
-        public MenuRepository(WebContext webContext) : base(webContext)
-        {
-
-        }
-        public List<MenuData> GetAllIncludeFoodItemsWithIngredients(string sortMenuName)
+        public MenuRepository(WebContext webContext) : base(webContext) { }
+        
+        public List<MenuData> GetAllIncludeFoodItemsWithIngredients(string filterMenuName)
         {
             var allMenus = _dbSet
                 .Include(x => x.FoodItems)
-                .ThenInclude(x => x.IngredientsList)
-                .ToList();
+                .ThenInclude(x => x.IngredientsList);
 
-            if (!string.IsNullOrEmpty(sortMenuName))
+            if (!string.IsNullOrEmpty(filterMenuName))
             {
-                var sortMenu= allMenus.Where(x=>x.Name==sortMenuName).ToList();
-                return sortMenu;
+                var filterMenu = allMenus.Where(x => x.Name == filterMenuName).ToList();
+                return filterMenu;
             }
-            
-            return allMenus;
+
+            return allMenus.ToList();
         }
-                
+
     }
 }

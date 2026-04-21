@@ -18,10 +18,8 @@ namespace WebNet23Online.Controllers
         private IMenuTypeGenerator _menuTypeGenerator;
         private IIngredientGenerator _ingredientGenerator;
 
-
         private IFoodItemRepository _foodItemRepository;
-        private IMenuRepository _menuRepository;
-        private IIngredientsRepository _ingredientsRepository;
+       
 
         public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator
             , IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository, IIngredientGenerator ingredientGenerator)
@@ -30,10 +28,9 @@ namespace WebNet23Online.Controllers
             _foodItemRepository = foodItemRepository;
 
             _menuTypeGenerator = menuTypeGenerator;
-            _menuRepository = menuRepository;
 
             _ingredientGenerator = ingredientGenerator;
-            _ingredientsRepository = ingredientsRepository;
+            
         }
 
         public IActionResult Index(string menuType)
@@ -46,37 +43,6 @@ namespace WebNet23Online.Controllers
 
             return View(viewModel);
         }
-
-        //[HttpGet]
-        //public IActionResult FoodBuilder(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        var foodItemViewModel = new FoodItemViewModel();
-        //        return View(foodItemViewModel);
-        //    }
-
-        //    var foodItemData = _foodItemRepository.Get(id);
-        //    var changedFoodItemViewModel = _foodItemGenerator.ConvertToFoodItemVM(foodItemData);
-
-        //    return View(changedFoodItemViewModel);
-        //}
-
-        //[HttpPost]
-        //public IActionResult FoodBuilder(FoodItemViewModel foodItem)
-        //{
-        //    //create new element
-        //    if (foodItem.Id == 0)
-        //    {
-        //        _foodItemGenerator.CreateFoodItemData(foodItem);
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    //change element
-        //    var changedFoodItemData = _foodItemRepository.Get(foodItem.Id);
-        //    _foodItemGenerator.ChangeFoodItemData(foodItem, changedFoodItemData);
-
-        //    return RedirectToAction(nameof(Index));
-        //}
 
         [HttpGet]
         public IActionResult CreateMenu()
@@ -107,24 +73,35 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult FoodBuilderData()
+        public IActionResult FoodBuilderData(int id)
         {
-            var selectMenu = _menuRepository.GetAll();
-            var menuListItems = new List<SelectListItem>();
-            menuListItems.AddRange(selectMenu.Select(x => new SelectListItem
+            if (id > 0)
             {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }));
+                var changedFoodItemData = _foodItemRepository.Get(id);
 
-            var allIngredientsDatas = _ingredientsRepository.GetAll();
-            var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
+                var viewModel = _foodItemGenerator.ConvertToCreateFoodItemVM(changedFoodItemData);
+                return View(viewModel);
 
-            var createFoodItemVM = new CreateFoodItemViewModel()
-            {
-                Menus = menuListItems,
-                Ingredients = allIngredientVM
-            };
+            }
+            var createFoodItemVM = _foodItemGenerator.ConvertToCreateFoodItemVM();
+
+            ////MenuSelectList
+            //var selectMenu = _menuRepository.GetAll();
+            //var menuListItems = new List<SelectListItem>();
+            //menuListItems.AddRange(selectMenu.Select(x => new SelectListItem
+            //{
+            //    Text = x.Name,
+            //    Value = x.Id.ToString()
+            //}));
+            ////allIngredientBox
+            //var allIngredientsDatas = _ingredientsRepository.GetAll();
+            //var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
+
+            //var createFoodItemVM = new CreateFoodItemViewModel()
+            //{
+            //    Menus = menuListItems,
+            //    Ingredients = allIngredientVM
+            //};
 
             return View(createFoodItemVM);
         }
@@ -132,10 +109,25 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult FoodBuilderData(CreateFoodItemViewModel viewModel)
         {
-            _foodItemGenerator.CreateFoodItemData(viewModel);
+            if (viewModel.Id == 0)
+            {
+                _foodItemGenerator.CreateFoodItemData(viewModel);
+                return RedirectToAction(nameof(Index));
+            }
+            _foodItemGenerator.ChangeFoodItemData(viewModel);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AllFoodItems));
         }
+
+        public IActionResult AllFoodItems()
+        {
+
+            var foodItemsData = _foodItemRepository.GetAllIncludeMenuAndIngredients();
+            var viewModel = foodItemsData.Select(_foodItemGenerator.ConvertToFoodItemVM).ToList();
+
+            return View(viewModel);
+        }
+
 
     }
 }
