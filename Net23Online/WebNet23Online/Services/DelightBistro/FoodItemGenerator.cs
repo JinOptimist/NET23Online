@@ -74,7 +74,7 @@ namespace WebNet23Online.Services.DelightBistro
             changedFoodItemData.MenuData = menuData;
             changedFoodItemData.IngredientsList = selectedIngredients;
 
-            _foodItemRepository.UpdateData(changedFoodItemData);
+            _foodItemRepository.Update(changedFoodItemData);
         }
 
         public FoodItemViewModel ConvertToFoodItemVM(FoodItemData foodItemData)
