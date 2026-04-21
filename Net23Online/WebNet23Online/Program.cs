@@ -6,6 +6,7 @@ using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
+using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
 using WebNet23Online.Services;
 using WebNet23Online.Services.DelightBistro;
 using WebNet23Online.Services.Interfaces;

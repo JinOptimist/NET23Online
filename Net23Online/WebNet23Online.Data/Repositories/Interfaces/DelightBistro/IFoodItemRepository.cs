@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data.Models;
 
-namespace WebNet23Online.Data.Repositories.Interfaces
+namespace WebNet23Online.Data.Repositories.Interfaces.DelightBistro
 {
-    public interface IFoodItemRepository : IBaseRepository<FoodItemData>
+    public interface IFoodItemRepository : IDelightBistro<FoodItemData>
     {
         List<FoodItemData> GetAllIncludeMenuAndIngredients();
     }

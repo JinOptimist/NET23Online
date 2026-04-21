@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories;
-using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
 using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services.Interfaces;
 using static System.Net.WebRequestMethods;
@@ -21,6 +21,22 @@ namespace WebNet23Online.Services.DelightBistro
             _menuRepository = menuRepository;
             _ingredientsRepository = ingredientsRepository;
             _ingredientGenerator = ingredientGenerator;
+        }
+        public void FeelDataBase()
+        {
+            if (_foodItemRepository.Any())
+            {
+                return;
+            }
+
+            var foodItemData = new FoodItemData
+            {
+                Name = "Вода",
+                Price = 5,
+                ImgURL = "https://png.klev.club/uploads/posts/2024-03/png-klev-club-p-stakan-vodi-png-9.png",
+
+            };
+            _foodItemRepository.Add(foodItemData);
         }
 
         public void CreateFoodItemData(CreateFoodItemViewModel viewModel)
@@ -96,23 +112,12 @@ namespace WebNet23Online.Services.DelightBistro
 
         public CreateFoodItemViewModel ConvertToCreateFoodItemVM(FoodItemData foodItemData = null)
         {
-            var selectMenu = _menuRepository.GetAll();
-            var menuListItems = new List<SelectListItem>();
-            menuListItems.AddRange(selectMenu.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }));
-
-            var allIngredientsDatas = _ingredientsRepository.GetAll();
-            var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
-
             if (foodItemData == null)
             {
                 var createFoodItemVM = new CreateFoodItemViewModel()
                 {
-                    Menus = menuListItems,
-                    Ingredients = allIngredientVM
+                    Menus = SelectMenu(),
+                    Ingredients = ChekBoxIngredients()
                 };
 
                 return createFoodItemVM;
@@ -129,27 +134,30 @@ namespace WebNet23Online.Services.DelightBistro
                 SelectedIngredientsId = foodItemData.IngredientsList
                 .Select(x => x.Id).ToList(),
 
-                Ingredients = allIngredientVM,
-                Menus = menuListItems
+                Ingredients = ChekBoxIngredients(),
+                Menus = SelectMenu()
             };
 
             return viewModel;
         }
-        public void FeelDataBase()
+        
+        public List<SelectListItem> SelectMenu()
         {
-            if (_foodItemRepository.Any())
+            var selectMenu = _menuRepository.GetAll();
+            var menuListItems = new List<SelectListItem>();
+            menuListItems.AddRange(selectMenu.Select(x => new SelectListItem
             {
-                return;
-            }
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }));
+            return menuListItems;
+        }
 
-            var foodItemData = new FoodItemData
-            {
-                Name = "Вода",
-                Price = 5,
-                ImgURL = "https://png.klev.club/uploads/posts/2024-03/png-klev-club-p-stakan-vodi-png-9.png",
-
-            };
-            _foodItemRepository.Add(foodItemData);
+        public List<CreateIngredientViewModel> ChekBoxIngredients()
+        {
+            var allIngredientsDatas = _ingredientsRepository.GetAll();
+            var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
+            return allIngredientVM;
         }
     }
 }
