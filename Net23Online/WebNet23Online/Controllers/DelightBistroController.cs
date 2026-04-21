@@ -22,7 +22,7 @@ namespace WebNet23Online.Controllers
 
 
         public DelightBistroController(IFoodItemGenerator foodItemGenerator, IMenuTypeGenerator menuTypeGenerator
-            , IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository, IIngredientGenerator ingredientGenerator)
+            , IFoodItemRepository foodItemRepository, IIngredientGenerator ingredientGenerator)
         {
             _foodItemGenerator = foodItemGenerator;
             _foodItemRepository = foodItemRepository;
