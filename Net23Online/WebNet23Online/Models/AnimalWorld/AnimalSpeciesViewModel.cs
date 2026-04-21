@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
+using WebNet23Online.Models.CustomValidatioAttributes;
 
 namespace WebNet23Online.Models.AnimalWorld
 {
     public class AnimalSpeciesViewModel
     {
         [Required]
+        [UniqueName(typeof(IAnimalSpeciesRepository))]
         public string AnimalSpeciesName { get; set; }
 
         [Required]

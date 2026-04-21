@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data.Models.AnimalWorld;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 
 namespace WebNet23Online.Data.Repositories.AnimalWorld
@@ -28,6 +29,11 @@ namespace WebNet23Online.Data.Repositories.AnimalWorld
             var animalSpecies = _context.AnimalSpecies.First(animalSpecies => animalSpecies.Id == animalSpeciesId);
             zoo.AnimalSpecies.Add(animalSpecies);
             _context.SaveChanges();
+        }
+
+        object INameCheckable.GetElementByName(string name)
+        {
+            return GetElementByName(name);
         }
     }
 }
