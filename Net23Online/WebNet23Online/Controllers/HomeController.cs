@@ -17,7 +17,6 @@ namespace WebNet23Online.Controllers
         {     
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();

@@ -87,7 +87,7 @@ namespace WebNet23Online.Services.LittleLemon
             }
 
             reservation.GuestId = guestId;
-            _reservationDataRepo.UpdateData(reservation);
+            _reservationDataRepo.Update(reservation);
             return true;
         }
     }

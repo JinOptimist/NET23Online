@@ -1,20 +1,25 @@
-﻿using WebNet23Online.Data.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.AnimeGirl;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services
 {
-    public class AnimeGirlGenerator : IAnimeGirlGenerator
+    public class AnimeGirlGenerator : IAnimeGirlService
     {
         private IEpicMeanlessPhraseGenerator _phraseGenerator;
         private IRandomBuilder _randomBuilder;
+        private IAnimeRepository _animeRepository;
         private const string DEFAULT_COVER = "https://i.pinimg.com/736x/49/58/8b/49588bb573d521482b58174210adbb77.jpg";
 
         public AnimeGirlGenerator(IEpicMeanlessPhraseGenerator epicMeanlessPhraseGenerator,
-            IRandomBuilder randomBuilder)
+            IRandomBuilder randomBuilder,
+            IAnimeRepository animeRepository)
         {
             _phraseGenerator = epicMeanlessPhraseGenerator;
             _randomBuilder = randomBuilder;
+            _animeRepository = animeRepository;
         }
 
         public List<AnimeGirlImageInfoViewModel> GenerateList(List<AnimeGirlData> animeGirlDatas)
@@ -51,6 +56,23 @@ namespace WebNet23Online.Services
                     Id = x.Id,
                     Url = x.CoverUrl ?? DEFAULT_COVER
                 }).ToList();
+        }
+
+        public List<SelectListItem> GetListItemsWithAnime()
+        {
+            var animes = _animeRepository.GetAll();
+            var animeListItems = new List<SelectListItem>();
+            animeListItems.Add(new SelectListItem
+            {
+                Text = "SelectAnime",
+                Value = ""
+            });
+            animeListItems.AddRange(animes.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }));
+            return animeListItems;
         }
     }
 }
