@@ -5,12 +5,12 @@ namespace WebNet23Online.Services.Interfaces
 {
     public interface IFoodItemGenerator
     {
-        List<FoodItemViewModel> GenerateFoodItems();
-        List<FoodItemViewModel> GenerateFoodItems(List<FoodItemData> foodItems);
-        void AddFoodItem(FoodItemViewModel foodItem);
-        void CreateOrChangeFoodItemData(FoodItemViewModel foodItem,
-            FoodItemData changedFoodItemData = null);
-        FoodItemViewModel ConvertDataToVM(FoodItemData foodItemData);
+        
+        void CreateFoodItemData(CreateFoodItemViewModel foodItem);
+        void ChangeFoodItemData(CreateFoodItemViewModel foodItem);
+
+        FoodItemViewModel ConvertToFoodItemVM(FoodItemData foodItemData);
         void FeelDataBase();
+        CreateFoodItemViewModel ConvertToCreateFoodItemVM(FoodItemData foodItemData=null);
     }
 }

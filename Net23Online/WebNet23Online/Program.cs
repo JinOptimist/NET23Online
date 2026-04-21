@@ -7,6 +7,7 @@ using WebNet23Online.Data.Repositories.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Services;
+using WebNet23Online.Services.DelightBistro;
 using WebNet23Online.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,11 +70,17 @@ builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 //DelightBistro DI
 builder.Services.AddScoped<IFoodItemGenerator, FoodItemGenerator>();
-builder.Services.AddSingleton<IMenuTypeGenerator, MenuTypeGenerator>();
+builder.Services.AddScoped<IMenuTypeGenerator, MenuTypeGenerator>();
+builder.Services.AddScoped<IIngredientGenerator, IngredientGenerator>();
+
 
 //HabitTracker DI
 builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
+
+//JapaneseDomesticMarker DI
+builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
+builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
 
 // Repositories
 builder.Services.AddScoped<IZooRepository, ZooRepository>();
@@ -83,7 +90,15 @@ builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
 builder.Services.AddScoped<ISlayTheSpire2HeroesRepository, SlayTheSpire2HeroesRepository>();
+builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
+builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
+builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+builder.Services.AddScoped<IIngredientsRepository, IngredientsRepository>();
 builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
+builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
+
+
+
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IRockLegendsGenresRepository, RockLegendsGenresRepository>();
 builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
