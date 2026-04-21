@@ -96,14 +96,8 @@ builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
 builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 builder.Services.AddScoped<IIngredientsRepository, IngredientsRepository>();
 builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
-builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
-
-
-
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IRockLegendsGenresRepository, RockLegendsGenresRepository>();
-builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
-builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 
 var app = builder.Build();
