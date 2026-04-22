@@ -40,7 +40,7 @@ namespace WebNet23Online.Controllers
             if (!ModelState.IsValid)
             {
                 var genres = _rockBandsService.GetGenres();
-                var vm = new RockBandsIndexViewModel
+                var startViewModel = new RockBandsIndexViewModel
                 {
                     Bands = _rockBandsService.GetBands(Array.Empty<int>()),
                     Genres = genres,
@@ -48,7 +48,7 @@ namespace WebNet23Online.Controllers
                     EditBandId = null,
                     BandBlock = band,
                 };
-                return View(vm);
+                return View(startViewModel);
             }
 
             _rockBandsService.AddBand(band);
