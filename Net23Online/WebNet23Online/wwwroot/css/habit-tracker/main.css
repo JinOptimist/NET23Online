@@ -185,12 +185,12 @@ nav a.active {
     transform: scale(1.15);
 }
 
-.dot.pink { border-color: var(--habit-pink); }
-.dot.blue { border-color: var(--habit-blue); }
-.dot.green { border-color: var(--habit-green); }
-.dot.purple { border-color: var(--habit-purple); }
+.dot.color-0 { border-color: var(--habit-pink); }
+.dot.color-1 { border-color: var(--habit-blue); }
+.dot.color-2 { border-color: var(--habit-green); }
+.dot.color-3 { border-color: var(--habit-purple); }
 
-.dot.pink.active { background-color: var(--habit-pink); }
-.dot.blue.active { background-color: var(--habit-blue); }
-.dot.green.active { background-color: var(--habit-green); }
-.dot.purple.active { background-color: var(--habit-purple); }
+.dot.color-0.active { background-color: var(--habit-pink); }
+.dot.color-1.active { background-color: var(--habit-blue); }
+.dot.color-2.active { background-color: var(--habit-green); }
+.dot.color-3.active { background-color: var(--habit-purple); }
