@@ -15,6 +15,7 @@
         <form method="post">
             <div class="form-group">
                 @Html.LabelFor(x => x.Title, "Title")
+                @Html.ValidationMessageFor(x => x.Title)
                 @Html.TextBoxFor(x => x.Title, new {
                 @class = "form-control",
                                 placeholder = "Enter game title",
@@ -24,6 +25,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(x => x.ImageUrl, "Image URL")
+                @Html.ValidationMessageFor(x => x.ImageUrl)
                 @Html.TextBoxFor(x => x.ImageUrl, new {
                                 @class = "form-control",
                                 placeholder = "https://example.com/image.jpg",
@@ -33,6 +35,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Description, "Description")
+                @Html.ValidationMessageFor(x => x.Description)
                 @Html.TextAreaFor(x => x.Description, new {
                                 @class = "form-control",
                                 rows = "5",
@@ -42,6 +45,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Price, "Price ($)")
+                @Html.ValidationMessageFor(x => x.Price)
                 @Html.TextBoxFor(x => x.Price, new {
                                 @class = "form-control",
                                 placeholder = "0.00",
@@ -54,7 +58,7 @@
             <div class="form-group">
                 @Html.LabelFor(x => x.Genre, "Genre")
                 <select id="Genre" name="Genre" class="form-control" required>
-                    @foreach (var genre in Model.AllGenres)
+                    @foreach (var genre in Model.Genres)
                     {
                         var isSelected = genre == Model.Genre;
                         <option value="@genre" selected="@isSelected">@genre</option>

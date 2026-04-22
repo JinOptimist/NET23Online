@@ -10,5 +10,6 @@ namespace WebNet23Online.Data.Repositories.Interfaces
         List<GameData> GetFeaturedForHomePage();
         List<GameData> GetSpecialOffersForHomePage();
         GameData GetGameWithPublisher(int id);
+        bool IsTitleFree(string title, int excludeGameId = 0);
     }
 }

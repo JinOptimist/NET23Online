@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebNet23Online.Data.Enums.Steam;
 using WebNet23Online.Data.HelperModels;
 using WebNet23Online.Data.Models.Steam;
@@ -115,12 +116,7 @@ namespace WebNet23Online.Services
             _gameRepository.Add(gameEntity);
         }
 
-        public List<PublisherData> GetPublishers()
-        {
-            var publishers = _publisherRepository.GetAll();
-            return publishers;
-        }
-
+    
         public GameData GetGameDetails(int id)
         {
             var game = _gameRepository.GetGameWithPublisher(id);
@@ -154,6 +150,27 @@ namespace WebNet23Online.Services
             }
 
             return Enum.TryParse<GameGenre>(genreString, out var genre) ? genre : null;
-        }      
+        }
+
+        public List<SelectListItem> GetListItemsWithPublishers()
+        {
+            var publishers = _publisherRepository.GetAll();
+            var publisherListItems = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "SelectPublisher",
+                    Value = ""
+                }
+            };
+
+            publisherListItems.AddRange(publishers.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }));
+
+            return publisherListItems;
+        }
     }
 }

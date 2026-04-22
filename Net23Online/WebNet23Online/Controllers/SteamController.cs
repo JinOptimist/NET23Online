@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebNet23Online.Data.Enums.Steam;
 using WebNet23Online.Models.Steam;
 using WebNet23Online.Services.Interfaces;
-
 
 namespace WebNet23Online.Controllers
 {
@@ -42,29 +40,13 @@ namespace WebNet23Online.Controllers
         [HttpGet]
         public IActionResult AddGame()
         {
-            var publishers = _catalogService.GetPublishers();
-            var publisherListItems = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text = "SelectPublisher",
-                    Value = ""
-                }
-            };
-
-            publisherListItems.AddRange(publishers.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }));
-
             var viewModel = new AddGameViewModel
             {
-                AllGenres = Enum.GetValues(typeof(GameGenre))
+                Genres = Enum.GetValues(typeof(GameGenre))
                                 .Cast<GameGenre>()
                                 .Where(g => g != GameGenre.All)
                                 .ToList(),
-                Publishers = publisherListItems
+                Publishers = _catalogService.GetListItemsWithPublishers()
             };
 
             return View(viewModel);
@@ -73,6 +55,15 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddGame(AddGameViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                viewModel.Genres = Enum.GetValues(typeof(GameGenre))
+                                .Cast<GameGenre>()
+                                .Where(g => g != GameGenre.All)
+                                .ToList();
+                viewModel.Publishers = _catalogService.GetListItemsWithPublishers();
+                return View(viewModel);
+            }
             _catalogService.AddGame(viewModel);
 
             return RedirectToAction(nameof(Catalog));
@@ -113,24 +104,6 @@ namespace WebNet23Online.Controllers
                 return NotFound();
             }
 
-            var publishers = _catalogService.GetPublishers();
-
-            var publisherListItems = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text = "Select Publisher",
-                    Value = ""
-                }
-            };
-
-            publisherListItems.AddRange(publishers.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString(),
-                Selected = x.Id == game.PublisherId
-            }));
-
             var viewModel = new EditGameViewModel
             {
                 Id = game.Id,
@@ -140,11 +113,11 @@ namespace WebNet23Online.Controllers
                 Price = game.Price,
                 Genre = game.Genre,
                 PublisherId = game.PublisherId,
-                AllGenres = Enum.GetValues(typeof(GameGenre))
+                Genres = Enum.GetValues(typeof(GameGenre))
                                 .Cast<GameGenre>()
                                 .Where(g => g != GameGenre.All)
                                 .ToList(),
-                Publishers = publisherListItems
+                Publishers = _catalogService.GetListItemsWithPublishers()
             };
 
             return View(viewModel);
@@ -153,6 +126,17 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult EditGame(EditGameViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                viewModel.Genres = Enum.GetValues(typeof(GameGenre))
+                       .Cast<GameGenre>()
+                       .Where(g => g != GameGenre.All)
+                       .ToList();
+                viewModel.Publishers = _catalogService.GetListItemsWithPublishers();
+
+                return View(viewModel);
+            }
+
             _catalogService.UpdateGame(viewModel);
 
             return RedirectToAction(nameof(GameDetails), new { id = viewModel.Id });
