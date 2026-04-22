@@ -34,9 +34,24 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(BandBlockViewModel viewModel)
+        public IActionResult Index(RockBandsIndexViewModel viewModel)
         {
-            _rockBandsService.AddBand(viewModel);
+            var band = viewModel.BandBlock;
+            if (!ModelState.IsValid)
+            {
+                var genres = _rockBandsService.GetGenres();
+                var vm = new RockBandsIndexViewModel
+                {
+                    Bands = _rockBandsService.GetBands(Array.Empty<int>()),
+                    Genres = genres,
+                    SelectedGenreIds = Array.Empty<int>(),
+                    EditBandId = null,
+                    BandBlock = band,
+                };
+                return View(vm);
+            }
+
+            _rockBandsService.AddBand(band);
             return RedirectToAction(nameof(Index));
         }
 

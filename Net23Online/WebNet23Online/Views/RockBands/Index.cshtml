@@ -134,16 +134,19 @@
                 <form method="post" class="add_band_form_fields">
                     <div class="add_band_field">
                         <label for="band-name">Название</label>
-                        <input id="band-name" type="text" name="@nameof(BandBlockViewModel.Name)" placeholder="Например, Arctic Monkeys" autocomplete="off" />
+                        <input id="band-name" type="text" asp-for="BandBlock.Name" placeholder="Например, Arctic Monkeys" autocomplete="off" />
+                        @Html.ValidationMessageFor(m => m.BandBlock.Name)
                     </div>
                     <div class="add_band_field">
                         <label for="band-description">Описание</label>
-                        <textarea id="band-description" name="@nameof(BandBlockViewModel.Description)" placeholder="Коротко о группе и звучании" rows="4"></textarea>
+                        <textarea id="band-description" asp-for="BandBlock.Description" placeholder="Коротко о группе и звучании" rows="4"></textarea>
+                        @Html.ValidationMessageFor(m => m.BandBlock.Description)
                     </div>
                     <div class="add_band_field">
                         <label for="band-image">Ссылка на фото в интернете</label>
-                        <input id="band-image" type="text" inputmode="url" name="@nameof(BandBlockViewModel.ImageUrl)" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
+                        <input id="band-image" type="text" inputmode="url" asp-for="BandBlock.ImageUrl" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
                         <span class="add_band_field_help">Вставьте прямой URL картинки. Поле можно оставить пустым.</span>
+                        @Html.ValidationMessageFor(m => m.BandBlock.ImageUrl)
                     </div>
                     <div class="add_band_field">
                         <label>Жанры</label>
@@ -154,7 +157,7 @@
                                 <input class="genre_filter_checkbox"
                                        type="checkbox"
                                        id="@inputId"
-                                       name="@nameof(BandBlockViewModel.SelectedGenreIds)"
+                                       name="BandBlock.SelectedGenreIds"
                                        value="@g.Id" />
                                 <label class="genre_filter_chip" for="@inputId">@g.Name</label>
                             }
