@@ -29,7 +29,7 @@ namespace WebNet23Online.Models.CustomValidatioAttributes
             if (wordsCount < _minWords || wordsCount > _maxWords)
             {
                 return new ValidationResult(
-                    ErrorMessage ?? $"Текст должен содержать от {_minWords} до {_maxWords} слов.");
+                    ErrorMessage ?? $"The text must contain from {_minWords} to {_maxWords} words.");
             }
 
             return ValidationResult.Success;
