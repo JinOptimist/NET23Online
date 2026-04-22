@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
@@ -44,6 +45,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult CreateGirl()
         {
             var viewModel = new CreateAnimeGirlViewModel
@@ -55,6 +57,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult CreateGirl(CreateAnimeGirlViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -88,12 +91,14 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult CreateAnime()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult CreateAnime(CreateAnimeViewModel viewModel)
         {
             var anime = new AnimeData
