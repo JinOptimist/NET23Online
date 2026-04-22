@@ -16,18 +16,21 @@
                 <h6>Название зоопарка</h6>
             </div>
             @Html.TextBoxFor(zoo => zoo.ZooName, new { @class = "form-input", type = "text", placeholder = "Например: Сингапурский зоопарк" })
+            @Html.ValidationMessageFor(zoo => zoo.ZooName)
         </div>
         <div class="form-group">
             <div class="green-title">
                 <h6>Адрес</h6>
             </div>
             @Html.TextBoxFor(zoo => zoo.Address, new { @class = "form-input", type = "text", placeholder = "Город, улица, дом" })
+            @Html.ValidationMessageFor(zoo => zoo.Address)
         </div>
         <div class="form-group">
             <div class="green-title">
                 <h6>Описание</h6>
             </div>
             @Html.TextAreaFor(zoo => zoo.Description, new { @class = "form-input", placeholder = "Кратко о зоопарке..." })
+            @Html.ValidationMessageFor(zoo => zoo.Description)
         </div>
         <div class="button-group">
             <button class="find-animal-button" type="submit">Добавить</button>
