@@ -83,81 +83,48 @@ namespace WebNet23Online.Services
 
         public bool AddZoo(ZooViewModel viewModel)
         {
-            if (string.IsNullOrEmpty(viewModel.ZooName)
-                || string.IsNullOrEmpty(viewModel.Address)
-                || string.IsNullOrEmpty(viewModel.Description))
+            var zooData = new ZooData
             {
-                return false;
-            }
-
-            if (_zooRepository.GetElementByName(viewModel.ZooName) == null)
-            {
-                var zooData = new ZooData
-                {
-                    ZooName = viewModel.ZooName,
-                    Address = viewModel.Address,
-                    Description = viewModel.Description
-                };
-                _zooRepository.Add(zooData);
-            }
+                ZooName = viewModel.ZooName,
+                Address = viewModel.Address,
+                Description = viewModel.Description
+            };
+            _zooRepository.Add(zooData);
 
             return true;
         }
 
         public bool AddAnimalFamily(AnimalFamilyViewModel viewModel)
         {
-            if (string.IsNullOrEmpty(viewModel.AnimalFamilyName)
-                || string.IsNullOrEmpty(viewModel.Description))
+            var animalFamilyData = new AnimalFamilyData
             {
-                return false;
-            }
-
-            if (_animalFamilyRepository.GetElementByName(viewModel.AnimalFamilyName) == null)
-            {
-                var animalFamilyData = new AnimalFamilyData
-                {
-                    AnimalFamilyName = viewModel.AnimalFamilyName,
-                    Description = viewModel.Description
-                };
-                _animalFamilyRepository.Add(animalFamilyData);
-            }
+                AnimalFamilyName = viewModel.AnimalFamilyName,
+                Description = viewModel.Description
+            };
+            _animalFamilyRepository.Add(animalFamilyData);
 
             return true;
         }
 
         public bool AddAnimalSpecies(AnimalSpeciesViewModel viewModel)
         {
-            if (string.IsNullOrEmpty(viewModel.AnimalSpeciesName)
-                || string.IsNullOrEmpty(viewModel.Description))
+            var animalFamily = _animalFamilyRepository.Get(viewModel.AnimalFamilyId);
+            var animalSpeciesData = new AnimalSpeciesData
             {
-                return false;
-            }
-
-            if (_animalSpeciesRepository.GetElementByName(viewModel.AnimalSpeciesName) == null)
-            {
-                var animalFamily = _animalFamilyRepository.Get(viewModel.AnimalFamilyId);
-                var animalSpeciesData = new AnimalSpeciesData
-                {
-                    AnimalSpeciesName = viewModel.AnimalSpeciesName,
-                    AnimalFamily = animalFamily,
-                    NativeRange = viewModel.NativeRange,
-                    Description = viewModel.Description
-                };
-                _animalSpeciesRepository.Add(animalSpeciesData);
-                animalSpeciesData = _animalSpeciesRepository.GetElementByName(viewModel.AnimalSpeciesName);
-                animalFamily.Species.Add(animalSpeciesData);
-            }
+                AnimalSpeciesName = viewModel.AnimalSpeciesName,
+                AnimalFamily = animalFamily,
+                NativeRange = viewModel.NativeRange,
+                Description = viewModel.Description
+            };
+            _animalSpeciesRepository.Add(animalSpeciesData);
+            animalSpeciesData = _animalSpeciesRepository.GetElementByName(viewModel.AnimalSpeciesName);
+            animalFamily.Species.Add(animalSpeciesData);
 
             return true;
         }
 
         public bool BindZooWithAnimalSpecies(int zooId, int animalSpeciesId)
         {
-            if (zooId  < 0 || animalSpeciesId < 0)
-            {
-                return false;
-            }
-
             _zooRepository.AddAnimalSpecies(zooId, animalSpeciesId);
             return true;
         }

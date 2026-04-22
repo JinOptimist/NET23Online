@@ -16,12 +16,14 @@
                 <h6>Название рода</h6>
             </div>
             @Html.TextBoxFor(family => family.AnimalFamilyName, new { @class = "form-input", type = "text", placeholder = "Например: Кошки" })
+            @Html.ValidationMessageFor(family => family.AnimalFamilyName)
         </div>
         <div class="form-group">
             <div class="green-title">
                 <h6>Описание</h6>
             </div>
             @Html.TextAreaFor(family => family.Description, new { @class = "form-input", placeholder = "Ключевые особенности рода..." })
+            @Html.ValidationMessageFor(family => family.Description)
         </div>
         <div class="button-group">
             <button class="find-animal-button" type="submit">Добавить</button>

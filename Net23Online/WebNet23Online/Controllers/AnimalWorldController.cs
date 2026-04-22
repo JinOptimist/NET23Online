@@ -32,6 +32,11 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddZoo(ZooViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             if (_animalWorldService.AddZoo(viewModel))
             {
                 return RedirectToAction("Add");
@@ -49,6 +54,11 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddFamily(AnimalFamilyViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             if (_animalWorldService.AddAnimalFamily(viewModel))
             {
                 return RedirectToAction("Add");
@@ -66,6 +76,12 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult AddSpecies(AnimalSpeciesViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                viewModel.AnimalFamilyNames = _animalWorldService.GetAnimalSpeciesPageInfo().AnimalFamilyNames;
+                return View(viewModel);
+            }
+
             if (_animalWorldService.AddAnimalSpecies(viewModel))
             {
                 return RedirectToAction("Add");
@@ -83,6 +99,14 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult BindZooAndAnimalSpecies(BindZooWithAnimalSpeciesViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                var bindings = _animalWorldService.GetBingZooAndAnimalSpeciesInfo();
+                viewModel.Zoos = bindings.Zoos;
+                viewModel.AnimalSpecies = bindings.AnimalSpecies;
+                return View(viewModel);
+            }
+
             if (_animalWorldService.BindZooWithAnimalSpecies(viewModel.ZooId, viewModel.AnimalSpeciesId))
             {
                 return RedirectToAction("Index");
