@@ -1,13 +1,12 @@
 using System.ComponentModel.DataAnnotations;
-using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
-using WebNet23Online.Models.CustomValidatioAttributes;
+using WebNet23Online.Models.CustomValidatioAttributes.AnimalWorld;
 
 namespace WebNet23Online.Models.AnimalWorld
 {
     public class ZooViewModel
     {
         [Required]
-        [UniqueName(typeof(IZooRepository))]
+        [ZooUniqueName]
         public string ZooName { get; set; }
 
         [Required]

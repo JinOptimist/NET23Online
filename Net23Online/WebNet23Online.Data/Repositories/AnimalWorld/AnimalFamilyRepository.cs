@@ -1,5 +1,4 @@
 ﻿using WebNet23Online.Data.Models.AnimalWorld;
-using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 
 namespace WebNet23Online.Data.Repositories.AnimalWorld
@@ -20,11 +19,6 @@ namespace WebNet23Online.Data.Repositories.AnimalWorld
         public AnimalFamilyData GetElementByName(string name)
         {
             return _dbSet.FirstOrDefault(animal => animal.AnimalFamilyName.ToLower() == name.ToLower());
-        }
-
-        object INameCheckable.GetElementByName(string name)
-        {
-            return GetElementByName(name);
         }
     }
 }
