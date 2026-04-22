@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NAudio.Codecs;
 using WebNet23Online.Data;
 using WebNet23Online.Data.Models;
@@ -26,32 +27,49 @@ namespace WebNet23Online.Controllers
         public IActionResult AddGenre() => View();
 
         [HttpPost]
-        public IActionResult AddGenre(RockLegendsGenres genre)
+        public IActionResult AddGenre(CreateGenreViewModel viewModel)
         {
-            if (!string.IsNullOrEmpty(genre.Name))
+            if (!ModelState.IsValid)
             {
-                _genreRepository.Add(genre);
-                return RedirectToAction("SortByGenre");
+                return View(viewModel);
             }
-            return View(genre);
+
+            var genre = new RockLegendsGenres
+            {
+                Name = viewModel.Name,
+                CoverUrl = viewModel.CoverUrl
+            };
+            _genreRepository.Add(genre);
+
+            return RedirectToAction("SortByGenre");
         }
 
         [HttpGet]
         public IActionResult SortByGenre()
         {
-            ViewBag.AllBands = _rockLegendsRepository.GetAll();
+            var genres = _genreRepository.GetAllWithGroups();
+            var bands = _rockLegendsRepository.GetAll();
 
-            var genresWithGroups = _genreRepository.GetAllWithGroups();
-            return View(genresWithGroups);
+            var viewModel = new SortByGenreViewModel
+            {
+                Genres = genres,
+                Bands = bands.Select(x => new SelectListItem
+                {
+                    Text = x.GroupNames,
+                    Value = x.Id.ToString()
+                }).ToList()
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult LinkGroupToGenre(int bandId, int genreId)
+        public IActionResult LinkGroupToGenre(SortByGenreViewModel viewModel)
         {
-            var band = _rockLegendsRepository.GetById(bandId);
+            var band = _rockLegendsRepository.GetById(viewModel.SelectedBandId);
             if (band != null)
             {
-                band.RockLegendsGenresId = genreId;
+                band.RockLegendsGenresId = viewModel.SelectedGenreId;
                 _rockLegendsRepository.Update(band);
             }
             return RedirectToAction("SortByGenre");

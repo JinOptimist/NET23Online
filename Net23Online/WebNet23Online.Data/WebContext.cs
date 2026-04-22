@@ -26,7 +26,6 @@ namespace WebNet23Online.Data
         public DbSet<MenuData> Menus { get; set; } 
         public DbSet<GenreOfRockBandsData> RockBandGenresDictionary { get; set; }
         public DbSet<RockBandGenreData> RockBandGenres { get; set; }
-        public DbSet<FoodItemData> FoodItems { get; set; }
 
         public DbSet<RockLegendsData> RockLegends { get; set; }
         public DbSet<RockLegendsGenres> RockLegendsGenres { get; set; }
