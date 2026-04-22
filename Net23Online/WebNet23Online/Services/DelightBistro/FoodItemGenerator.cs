@@ -140,7 +140,7 @@ namespace WebNet23Online.Services.DelightBistro
 
             return viewModel;
         }
-        
+
         public List<SelectListItem> SelectMenu()
         {
             var selectMenu = _menuRepository.GetAll();

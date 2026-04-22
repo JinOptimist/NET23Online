@@ -12,7 +12,7 @@ namespace WebNet23Online.Data.Repositories
     public class MenuRepository : BaseRepository<MenuData>, IMenuRepository
     {
         public MenuRepository(WebContext webContext) : base(webContext) { }
-        
+
         public List<MenuData> GetAllIncludeFoodItemsWithIngredients(string filterMenuName)
         {
             var allMenus = _dbSet

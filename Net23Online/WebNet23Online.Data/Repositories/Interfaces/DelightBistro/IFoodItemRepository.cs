@@ -3,7 +3,7 @@ using WebNet23Online.Data.Models;
 
 namespace WebNet23Online.Data.Repositories.Interfaces.DelightBistro
 {
-    public interface IFoodItemRepository : IDelightBistro<FoodItemData>
+    public interface IFoodItemRepository : IDelightBistroRepository<FoodItemData>, IBaseRepository<FoodItemData>
     {
         List<FoodItemData> GetAllIncludeMenuAndIngredients();
     }
