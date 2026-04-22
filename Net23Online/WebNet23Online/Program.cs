@@ -99,6 +99,7 @@ builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
 builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 builder.Services.AddScoped<IIngredientsRepository, IngredientsRepository>();
 builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
+builder.Services.AddScoped<IGenreOfRockBandsRepository, GenreOfRockBandsRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 builder.Services.AddScoped<ILittleLemonReservationRepository, LittleLemonReservationRepository>();
 builder.Services.AddScoped<ILittleLemonGuestRepository, LittleLemonGuestRepository>();

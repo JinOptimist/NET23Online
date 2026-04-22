@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WebNet23Online.Data.Models
 {
-    public class RockBandsData : BaseModel
+    public class GenreOfRockBandsData : BaseModel
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Url { get; set; }
+        public string Name { get; set; } = string.Empty;
         public virtual ICollection<RockBandGenreData> RockBandGenres { get; set; } = new List<RockBandGenreData>();
-    }
+    }   
 }
