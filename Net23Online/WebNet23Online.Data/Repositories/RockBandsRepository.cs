@@ -11,14 +11,30 @@ namespace WebNet23Online.Data.Repositories
 
         public override void Add(RockBandsData model)
         {
-            var normalizedName = model.Name?.Trim().ToLower();
-            if (_dbSet.Any(x => x.Name.ToLower() == normalizedName))
+            var normalizedName = model.Name?.Trim();
+            if (string.IsNullOrWhiteSpace(normalizedName))
+            {
+                throw new ArgumentException("Rock band name is required.", nameof(model));
+            }
+
+            if (IsBandNameTaken(normalizedName))
             {
                 throw new InvalidOperationException($"Rock band with name '{normalizedName}' already exists.");
             }
 
-            model.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(normalizedName);
+            model.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(normalizedName.ToLowerInvariant());
             base.Add(model);
+        }
+
+        public bool IsBandNameTaken(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return false;
+            }
+
+            var normalizedName = name.Trim();
+            return _dbSet.Any(x => x.Name != null && x.Name.Trim().ToLower() == normalizedName.ToLower());
         }
 
         public List<RockBandsData> GetAllWithGenres()

@@ -16,9 +16,7 @@ namespace WebNet23Online.Models.CustomValidatioAttributes
             var normalizedName = name.Trim();
             var repository = validationContext.GetRequiredService<IRockBandsRepository>();
 
-            var isNameTaken = repository
-                .GetAll()
-                .Any(x => string.Equals(x.Name?.Trim(), normalizedName, StringComparison.OrdinalIgnoreCase));
+            var isNameTaken = repository.IsBandNameTaken(normalizedName);
 
             if (isNameTaken)
             {

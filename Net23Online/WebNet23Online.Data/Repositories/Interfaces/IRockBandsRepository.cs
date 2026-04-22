@@ -8,5 +8,6 @@ namespace WebNet23Online.Data.Repositories.Interfaces
         List<RockBandsData> GetAllWithGenres();
         List<RockBandsData> GetByGenreIdsWithGenres(int[] genreIds);
         void UpdateBandGenres(int bandId, int[] genreIds);
+        bool IsBandNameTaken(string name);
     }
 }
