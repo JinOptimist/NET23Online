@@ -14,10 +14,10 @@ namespace WebNet23Online.Data.Migrations
                 name: "LittleLemonDatas",
                 newName: "LittleLemon");
 
-            migrationBuilder.RenameIndex(
-                name: "IX_LittleLemonDatas_GuestId",
-                table: "LittleLemon",
-                newName: "IX_LittleLemon_GuestId");
+            //migrationBuilder.RenameIndex(
+            //    name: "IX_LittleLemonDatas_GuestId",
+            //    table: "LittleLemon",
+            //    newName: "IX_LittleLemon_GuestId");
         }
 
         /// <inheritdoc />
