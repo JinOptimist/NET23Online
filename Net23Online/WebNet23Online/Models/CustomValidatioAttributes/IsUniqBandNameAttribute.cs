@@ -22,7 +22,7 @@ namespace WebNet23Online.Models.CustomValidatioAttributes
 
             if (isNameTaken)
             {
-                return new ValidationResult(ErrorMessage ?? "Такая группа уже существует");
+                return new ValidationResult(ErrorMessage ?? "Such a group already exists");
             }
 
             return ValidationResult.Success;
