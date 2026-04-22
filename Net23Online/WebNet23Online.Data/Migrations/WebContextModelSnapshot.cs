@@ -297,7 +297,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasIndex("GuestId");
 
-                    b.ToTable("LittleLemon", (string)null);
+                    b.ToTable("LittleLemon");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.LittleLemonGuestData", b =>
