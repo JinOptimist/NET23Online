@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data.Models;
-using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
 
 namespace WebNet23Online.Data.Repositories
 {
@@ -14,6 +14,10 @@ namespace WebNet23Online.Data.Repositories
 
             return allFoods.ToList();
         }
-        
+
+        public bool IsNameFree(string name)
+        {
+            return !_dbSet.Any(x => x.Name == name);
+        }
     }
 }

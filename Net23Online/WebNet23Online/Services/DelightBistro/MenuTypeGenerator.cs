@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories;
-using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
 using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services.Interfaces;
 

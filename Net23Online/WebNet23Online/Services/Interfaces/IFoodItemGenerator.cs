@@ -1,4 +1,5 @@
-﻿using WebNet23Online.Data.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Models.DelightBistro;
 
 namespace WebNet23Online.Services.Interfaces
@@ -12,5 +13,7 @@ namespace WebNet23Online.Services.Interfaces
         FoodItemViewModel ConvertToFoodItemVM(FoodItemData foodItemData);
         void FeelDataBase();
         CreateFoodItemViewModel ConvertToCreateFoodItemVM(FoodItemData foodItemData=null);
+        List<SelectListItem> SelectMenu();
+        List<CreateIngredientViewModel> ChekBoxIngredients();
     }
 }
