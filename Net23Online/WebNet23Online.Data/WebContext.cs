@@ -15,7 +15,6 @@ namespace WebNet23Online.Data
         public DbSet<HabitData> Habits { get; set; }
         public DbSet<HabitDoneDatesData> HabitDoneDates { get; set; }
         public DbSet<HabitTrackerDiaryData> DiaryEntries { get; set; }
-        public DbSet<BeastData> Beasts { get; set; }
         public DbSet<AnimalFamilyData> AnimalFamilies { get; set; }
         public DbSet<AnimalSpeciesData> AnimalSpecies { get; set; }
         public DbSet<ZooData> Zoos {  get; set; }
