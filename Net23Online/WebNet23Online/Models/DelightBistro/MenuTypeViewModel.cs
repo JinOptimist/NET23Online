@@ -8,5 +8,7 @@ namespace WebNet23Online.Models.DelightBistro
         public int Id { get; set; }
         public string Name { get; set; }
         public List<FoodItemViewModel> FoodItems { get; set; }
+        public string? CreatorName { get; set; }
+
     }
 }

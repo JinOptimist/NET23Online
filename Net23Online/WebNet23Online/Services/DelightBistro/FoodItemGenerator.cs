@@ -62,7 +62,7 @@ namespace WebNet23Online.Services.DelightBistro
                 MenuData = menuData,
                 IngredientsList = selectedIngredients
             };
-
+            //authService.GetUser().Name <= из coockie
             _foodItemRepository.Add(newFoodItemData);
         }
 
