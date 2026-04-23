@@ -72,3 +72,14 @@ select {
 .booking-section .btn:hover {
   color: var(--clr-white);
 }
+.confirmation-list ul {
+    display: grid;
+    column-gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--clr-white);
+    box-shadow: var(--dark-shadow);
+}

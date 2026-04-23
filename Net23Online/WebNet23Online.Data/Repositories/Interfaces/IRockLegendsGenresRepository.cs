@@ -4,6 +4,7 @@ namespace WebNet23Online.Data.Repositories.Interfaces
 {
     public interface IRockLegendsGenresRepository : IBaseRepository<RockLegendsGenres>
     {
+        bool IsNameFree(string name);
         List<RockLegendsGenres> GetAllWithGroups();
     }
 }

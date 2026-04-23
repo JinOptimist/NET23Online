@@ -12,5 +12,10 @@ namespace WebNet23Online.Data.Repositories
         {
             return _dbSet.Include(x => x.Groups).ToList();
         }
+
+        public bool IsNameFree(string name)
+        {
+            return !_dbSet.Any(x => x.Name == name);
+        }
     }
 }

@@ -14,17 +14,52 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] int[]? genreIds, [FromQuery] int? editBandId)
         {
-            var viewModel = new RockBandsIndexViewModel { Bands = _rockBandsService.GetBands() };
+            var selectedGenreIds = genreIds ?? Array.Empty<int>();
+            var genres = _rockBandsService.GetGenres();
+            foreach (var g in genres)
+            {
+                g.IsSelected = selectedGenreIds.Contains(g.Id);
+            }
+
+            var viewModel = new RockBandsIndexViewModel
+            {
+                Bands = _rockBandsService.GetBands(selectedGenreIds),
+                Genres = genres,
+                SelectedGenreIds = selectedGenreIds,
+                EditBandId = editBandId,
+            };
             return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Index(BandBlockViewModel viewModel)
+        public IActionResult Index(RockBandsIndexViewModel viewModel)
         {
-            _rockBandsService.AddBand(viewModel);
+            var band = viewModel.BandBlock;
+            if (!ModelState.IsValid)
+            {
+                var genres = _rockBandsService.GetGenres();
+                var startViewModel = new RockBandsIndexViewModel
+                {
+                    Bands = _rockBandsService.GetBands(Array.Empty<int>()),
+                    Genres = genres,
+                    SelectedGenreIds = Array.Empty<int>(),
+                    EditBandId = null,
+                    BandBlock = band,
+                };
+                return View(startViewModel);
+            }
+
+            _rockBandsService.AddBand(band);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateGenres(int bandId, int[] selectedGenreIds)
+        {
+            _rockBandsService.UpdateBandGenres(bandId, selectedGenreIds);
+            return RedirectToAction(nameof(Index), new { editBandId = bandId });
         }
     }
 }

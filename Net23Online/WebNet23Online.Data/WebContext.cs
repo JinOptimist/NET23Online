@@ -13,14 +13,20 @@ namespace WebNet23Online.Data
         public DbSet<UserData> Users { get; set; }
         public DbSet<MazeData> Mazes { get; set; }
         public DbSet<HabitTrackerData> HabitTracker { get; set; }
+
         // public DbSet<HabitData> Habit { get; set; }
         public DbSet<AnimalFamilyData> AnimalFamilies { get; set; }
         public DbSet<AnimalSpeciesData> AnimalSpecies { get; set; }
         public DbSet<ZooData> Zoos {  get; set; }
+        public DbSet<LittleLemonData> LittleLemon { get; set; }
+        public DbSet<LittleLemonGuestData> LittleLemonGuests { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
         public DbSet<FoodItemData> FoodItems { get; set; } 
         public DbSet<IngredientData> Ingredients { get; set; } 
         public DbSet<MenuData> Menus { get; set; } 
+        public DbSet<GenreOfRockBandsData> RockBandGenresDictionary { get; set; }
+        public DbSet<RockBandGenreData> RockBandGenres { get; set; }
+
         public DbSet<RockLegendsData> RockLegends { get; set; }
         public DbSet<RockLegendsGenres> RockLegendsGenres { get; set; }
 
@@ -79,6 +85,29 @@ namespace WebNet23Online.Data
                .WithMany(x => x.Games)
                .HasForeignKey(x => x.PublisherId);
 
+
+            modelBuilder.Entity<LittleLemonData>()
+                .HasOne(x => x.Guest)
+                .WithMany(x => x.Reservations)
+                .HasForeignKey(x => x.GuestId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RockBandGenreData>()
+                .HasKey(x => new { x.RockBandId, x.GenreId });
+
+            modelBuilder.Entity<RockBandGenreData>()
+                .HasOne(x => x.RockBand)
+                .WithMany(x => x.RockBandGenres)
+                .HasForeignKey(x => x.RockBandId);
+
+            modelBuilder.Entity<RockBandGenreData>()
+                .HasOne(x => x.Genre)
+                .WithMany(x => x.RockBandGenres)
+                .HasForeignKey(x => x.GenreId);
+
+            modelBuilder.Entity<GenreOfRockBandsData>()
+                .HasIndex(x => x.Name)
+                .IsUnique();
 
             base.OnModelCreating(modelBuilder);
         }
