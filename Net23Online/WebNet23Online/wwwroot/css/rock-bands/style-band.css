@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 html {
     position: relative;
     min-height: 100%;
@@ -72,6 +78,175 @@ main.pb-3 {
     gap: 20px;
     padding: 20px;
     margin: 0 auto;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.rock_bands_page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.genre_filter {
+    display: flex;
+    flex-direction: column;
+}
+
+.genre_filter_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 12px;
+    border-radius: 0 0 10px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.genre_filter_list_compact {
+    justify-content: flex-start;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+}
+
+.edit_band_genres_panel {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 18px 20px 20px;
+}
+
+.edit_band_genres_toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 12px;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.edit_band_genres_field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: min(520px, 100%);
+}
+
+.edit_band_genres_label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.edit_band_genres_select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.28);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+.edit_band_genres_item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 14px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.18);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.edit_band_genres_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.edit_band_genres_actions {
+    display: flex;
+    justify-content: center;
+}
+
+.edit_band_genres_toolbar .add_band_submit {
+    margin-top: 0;
+    height: 48px;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: inline-flex;
+    align-items: center;
+}
+
+.edit_band_genres_select {
+    height: 48px;
+}
+
+.genre_filter_checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.genre_filter_chip {
+    /* Make genre chips visually consistent with site buttons */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.25s, border-color 0.25s;
+}
+
+.genre_filter_chip:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.28);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+}
+
+.genre_filter_checkbox:focus + .genre_filter_chip {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+}
+
+.genre_filter_checkbox:checked + .genre_filter_chip {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.38);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+}
+
+.genre_filter_actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
 }
 
 footer.footer {
@@ -107,11 +282,11 @@ footer.footer {
     }
 }
 
-.band-thumb {
+.band_thumb {
     margin: 0;
 }
 
-    .band-thumb img {
+    .band_thumb img {
         display: block;
         width: 100%;
         height: auto;
@@ -121,8 +296,7 @@ footer.footer {
         border-radius: 10px;
     }
 
-.band--body h2,
-.band-body h2 {
+.band_body h2 {
     margin-top: 0;
 }
 
@@ -131,7 +305,7 @@ footer.footer {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
-.preferences-music-title {
+.preferences_music_title {
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -142,7 +316,7 @@ footer.footer {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-.preferences-music-items {
+.preferences_music_items {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -151,13 +325,14 @@ footer.footer {
     border-radius: 0 0 10px 10px;
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    flex-wrap: wrap;
 }
 
-.add-band-form .preferences-music-title {
+.add_band_form .preferences_music_title {
     gap: 6px;
 }
 
-.add-band-form-hint {
+.add_band_form_hint {
     margin: 0;
     font-size: 0.95rem;
     font-weight: normal;
@@ -165,7 +340,7 @@ footer.footer {
     line-height: 1.4;
 }
 
-.add-band-form-panel {
+.add_band_form_panel {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
@@ -173,7 +348,7 @@ footer.footer {
     padding: 18px 20px 20px;
 }
 
-.add-band-form-fields {
+.add_band_form_fields {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -182,11 +357,11 @@ footer.footer {
     margin: 0 auto;
 }
 
-.add-band-field {
+.add_band_field {
     text-align: left;
 }
 
-    .add-band-field label {
+    .add_band_field label {
         display: block;
         margin-bottom: 8px;
         font-size: 0.9rem;
@@ -195,7 +370,7 @@ footer.footer {
         color: rgba(255, 255, 255, 0.88);
     }
 
-    .add-band-field__help {
+    .add_band_field_help {
         display: block;
         margin-top: 8px;
         font-size: 0.8rem;
@@ -203,8 +378,8 @@ footer.footer {
         line-height: 1.35;
     }
 
-    .add-band-field input[type="text"],
-    .add-band-field textarea {
+    .add_band_field input[type="text"],
+    .add_band_field textarea {
         width: 100%;
         box-sizing: border-box;
         padding: 12px 14px;
@@ -218,31 +393,31 @@ footer.footer {
         transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
     }
 
-    .add-band-field textarea {
+    .add_band_field textarea {
         min-height: 100px;
         resize: vertical;
     }
 
-    .add-band-field input::placeholder,
-    .add-band-field textarea::placeholder {
+    .add_band_field input::placeholder,
+    .add_band_field textarea::placeholder {
         color: rgba(255, 255, 255, 0.42);
     }
 
-    .add-band-field input:hover,
-    .add-band-field textarea:hover {
+    .add_band_field input:hover,
+    .add_band_field textarea:hover {
         border-color: rgba(255, 255, 255, 0.22);
         background: rgba(0, 0, 0, 0.22);
     }
 
-    .add-band-field input:focus,
-    .add-band-field textarea:focus {
+    .add_band_field input:focus,
+    .add_band_field textarea:focus {
         outline: none;
         border-color: rgba(255, 255, 255, 0.35);
         box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
         background: rgba(0, 0, 0, 0.32);
     }
 
-.add-band-submit {
+.add_band_submit {
     align-self: center;
     margin-top: 4px;
     padding: 12px 28px;
@@ -257,18 +432,18 @@ footer.footer {
     transition: transform 0.25s, box-shadow 0.25s, background 0.25s, border-color 0.25s;
 }
 
-    .add-band-submit:hover {
+    .add_band_submit:hover {
         background: rgba(255, 255, 255, 0.16);
         border-color: rgba(255, 255, 255, 0.28);
         transform: translateY(-3px);
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
     }
 
-    .add-band-submit:focus {
+    .add_band_submit:focus {
         outline: none;
         box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
     }
 
-    .add-band-submit:active {
+    .add_band_submit:active {
         transform: translateY(-1px);
     }

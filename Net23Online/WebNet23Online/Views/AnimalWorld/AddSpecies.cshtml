@@ -1,0 +1,46 @@
+@model WebNet23Online.Models.AnimalWorld.AnimalSpeciesViewModel
+@{
+    Layout = "_LayoutAnimalWorld";
+}
+
+<title>Добавление вида животного</title>
+
+<div class="main-place">
+    <div class="green-title">
+        <h2>Добавление вида животных</h2>
+    </div>
+    <hr class="green-line">
+    <form method="post">
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Название вида</h6>
+            </div>
+            @Html.TextBoxFor(species => species.AnimalSpeciesName, new { @class = "form-input", type = "text", placeholder = "Например: Лесной кот" })
+            @Html.ValidationMessageFor(species => species.AnimalSpeciesName)
+        </div>
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Род</h6>
+            </div>
+            @Html.DropDownListFor(species => species.AnimalFamilyId, Model.AnimalFamilyNames, "Выберите род животного", new { @class = "form-input" })
+            @Html.ValidationMessageFor(species => species.AnimalFamilyId)
+        </div>
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Ареал обитания</h6>
+            </div>
+            @Html.TextBoxFor(species => species.NativeRange, new { @class = "form-input", type = "text", placeholder = "Например: территория Европы и Малой Азии" })
+            @Html.ValidationMessageFor(species => species.NativeRange)
+        </div>
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Описание вида</h6>
+            </div>
+            @Html.TextAreaFor(species => species.Description, new { @class = "form-input", placeholder = "Описание вида..." })
+            @Html.ValidationMessageFor(species => species.Description)
+        </div>
+        <div class="button-group">
+            <button class="find-animal-button" type="submit">Добавить</button>
+        </div>
+    </form>
+</div>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NAudio.Codecs;
 using WebNet23Online.Data;
 using WebNet23Online.Data.Models;
@@ -11,13 +12,67 @@ namespace WebNet23Online.Controllers
     public class RockLegendsPortalController : Controller
     {
         private readonly IRockLegendsPick _rockService;
-        private IRockLegendsRepository _rockLegendsRepository;
+        private readonly IRockLegendsRepository _rockLegendsRepository;
+        private readonly IRockLegendsGenresRepository _genreRepository;
 
 
-        public RockLegendsPortalController(IRockLegendsPick rockService, IRockLegendsRepository rockLegendsRepository)
+        public RockLegendsPortalController(IRockLegendsPick rockService,IRockLegendsRepository rockLegendsRepository,IRockLegendsGenresRepository genreRepository)
         {
             _rockService = rockService;
             _rockLegendsRepository = rockLegendsRepository;
+            _genreRepository = genreRepository;
+        }
+
+        [HttpGet]
+        public IActionResult AddGenre() => View();
+
+        [HttpPost]
+        public IActionResult AddGenre(CreateGenreViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var genre = new RockLegendsGenres
+            {
+                Name = viewModel.Name,
+                CoverUrl = viewModel.CoverUrl
+            };
+            _genreRepository.Add(genre);
+
+            return RedirectToAction("SortByGenre");
+        }
+
+        [HttpGet]
+        public IActionResult SortByGenre()
+        {
+            var genres = _genreRepository.GetAllWithGroups();
+            var bands = _rockLegendsRepository.GetAll();
+
+            var viewModel = new SortByGenreViewModel
+            {
+                Genres = genres,
+                Bands = bands.Select(x => new SelectListItem
+                {
+                    Text = x.GroupNames,
+                    Value = x.Id.ToString()
+                }).ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult LinkGroupToGenre(SortByGenreViewModel viewModel)
+        {
+            var band = _rockLegendsRepository.GetById(viewModel.SelectedBandId);
+            if (band != null)
+            {
+                band.RockLegendsGenresId = viewModel.SelectedGenreId;
+                _rockLegendsRepository.Update(band);
+            }
+            return RedirectToAction("SortByGenre");
         }
 
         [HttpGet]

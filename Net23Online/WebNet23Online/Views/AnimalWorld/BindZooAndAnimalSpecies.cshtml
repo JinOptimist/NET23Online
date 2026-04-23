@@ -1,0 +1,34 @@
+@model WebNet23Online.Models.AnimalWorld.BindZooWithAnimalSpeciesViewModel
+@{
+    Layout = "_LayoutAnimalWorld";
+}
+
+<title>Связи между зоопарками и видами животных</title>
+
+<div class="main-place">
+    <div class="green-title">
+        <h2>Настрока связи между зоопарками и видами животных</h2>
+    </div>
+    <hr class="green-line">
+    <p>Сначала выберите зоопарк, затем вид животного.</p>
+    <form method="post">
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Зоопарк</h6>
+            </div>
+            @Html.DropDownListFor(zoo => zoo.ZooId, Model.Zoos, "Выберите зоопарк", new { @class = "form-input" })
+            @Html.ValidationMessageFor(zoo => zoo.ZooId)
+        </div>
+        <div class="form-group">
+            <div class="green-title">
+                <h6>Виды животных</h6>
+            </div>
+            @Html.DropDownListFor(animalSpecies => animalSpecies.AnimalSpeciesId, Model.AnimalSpecies, "Выберите вид животного", new { @class = "form-input" })
+            @Html.ValidationMessageFor(animalSpecies => animalSpecies.AnimalSpeciesId)
+        </div>
+        <br />
+        <div class="button-group">
+            <button class="find-animal-button" type="submit">Сохранить связь</button>
+        </div>
+    </form>
+</div>

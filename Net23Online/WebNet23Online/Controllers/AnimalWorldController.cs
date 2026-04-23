@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Models.AnimalWorld;
 using WebNet23Online.Services.Interfaces;
 
@@ -15,30 +15,104 @@ namespace WebNet23Online.Controllers
 
         public IActionResult Index()
         {
-            return View(_animalWorldService.GetAllAnimals());
+            return View(_animalWorldService.GetStartInfo());
+        }
+
+        public IActionResult Add()
+        {
+            return View();
         }
 
         [HttpGet]
-        public IActionResult AddAnimal()
+        public IActionResult AddZoo()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddAnimal(StartPageBeastViewModel viewModel)
+        public IActionResult AddZoo(ZooViewModel viewModel)
         {
-            if (_animalWorldService.AddAnimal(viewModel))
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                return View(viewModel);
+            }
+
+            if (_animalWorldService.AddZoo(viewModel))
+            {
+                return RedirectToAction("Add");
+            }
+            
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AddFamily()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddFamily(AnimalFamilyViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            if (_animalWorldService.AddAnimalFamily(viewModel))
+            {
+                return RedirectToAction("Add");
             }
 
             return View();
         }
 
-        [HttpPost]
-        public IActionResult AnimalSearch(StartPageBeastViewModel viewModel)
+        [HttpGet]
+        public IActionResult AddSpecies()
         {
-            return PartialView(_animalWorldService.SearchAnimal(viewModel));
+            return View(_animalWorldService.GetAnimalSpeciesPageInfo());
+        }
+
+        [HttpPost]
+        public IActionResult AddSpecies(AnimalSpeciesViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                viewModel.AnimalFamilyNames = _animalWorldService.GetAnimalSpeciesPageInfo().AnimalFamilyNames;
+                return View(viewModel);
+            }
+
+            if (_animalWorldService.AddAnimalSpecies(viewModel))
+            {
+                return RedirectToAction("Add");
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult BindZooAndAnimalSpecies()
+        {
+            return View(_animalWorldService.GetBingZooAndAnimalSpeciesInfo());
+        }
+
+        [HttpPost]
+        public IActionResult BindZooAndAnimalSpecies(BindZooWithAnimalSpeciesViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var bindings = _animalWorldService.GetBingZooAndAnimalSpeciesInfo();
+                viewModel.Zoos = bindings.Zoos;
+                viewModel.AnimalSpecies = bindings.AnimalSpecies;
+                return View(viewModel);
+            }
+
+            if (_animalWorldService.BindZooWithAnimalSpecies(viewModel.ZooId, viewModel.AnimalSpeciesId))
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View();
         }
     }
 }

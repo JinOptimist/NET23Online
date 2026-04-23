@@ -27,40 +27,43 @@
 
         @foreach (var category in Model)
         {
-            <div class="type-of-food">
-                <div class="type-name center">@category.TypeName</div>
-                <div class="menu">
+            if ((category.FoodItems).Any())
+            {
+                <div class="type-of-food">
+                    <div class="type-name center">@category.Name</div>
+                    <div class="menu">
 
-                    @foreach (var foodItem in category.FoodItems)
-                    {
-                        <div class="food-item" item-id="@foodItem.Id">
-                            <div class="image-container">
-                                <a href="\DelightBistro\FoodBuilder?id=@foodItem.Id"><img src=@foodItem.ImgURL alt=@foodItem.Name /></a>
-                            </div>
-                            <div class="name-price-btn">
-                                <div class="name-price">
-                                    <div class="food-name">@foodItem.Name</div>
-                                    <div class="price">@foodItem.Price р</div>
+                        @foreach (var foodItem in category.FoodItems)
+                        {
+                            <div class="food-item" item-id="@foodItem.Id">
+                                <div class="image-container">
+                                    <a href="\DelightBistro\FoodBuilderData?id=@foodItem.Id"><img src=@foodItem.ImgURL alt=@foodItem.Name /></a>
                                 </div>
-                                <div class="btnright">
-                                    <button class="add-button colorbtn">+</button>
+                                <div class="name-price-btn">
+                                    <div class="name-price">
+                                        <div class="food-name">@foodItem.Name</div>
+                                        <div class="price">@foodItem.Price р</div>
+                                    </div>
+                                    <div class="btnright">
+                                        <button class="add-button colorbtn">+</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="recept">
-                                <ul>
-                                    @if (foodItem.Ingredients is not null)
-                                    {
-                                        @foreach (var ingredient in foodItem.Ingredients)
+                                <div class="recept">
+                                    <ul>
+                                        @if (foodItem.Ingredients is not null)
                                         {
-                                            <li>@ingredient</li>
+                                            @foreach (var ingredient in foodItem.Ingredients)
+                                            {
+                                                <li>@ingredient</li>
+                                            }
                                         }
-                                    }
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
-            </div>
+            }
         }
     </div>
         
@@ -84,10 +87,22 @@
 
         <ul class="navigation">
             <li><a href="\DelightBistro\Index">Все меню</a> </li>
-            <li><a href="\DelightBistro\Index?menutype=soups">Супы</a> </li>
-            <li> <a href="\DelightBistro\Index?menutype=hot">Горячее</a> </li>
-            <li><a href="\DelightBistro\Index?menutype=salads">Салаты</a> </li>
-            <li><a href="\DelightBistro\FoodBuilder">Добавить блюдо</a> </li>
+
+            @foreach (var menu in Model)
+            {
+                <li><a href="\DelightBistro\Index?menutype=@menu.Name">@menu.Name</a> </li>
+
+            }
+            <br>
+            
+            <br>
+            <li><a href="\DelightBistro\CreateMenu">Создать меню</a> </li>
+            <li><a href="\DelightBistro\CreateIngredient">Создать ингредиенты</a> </li>
+            <li><a href="\DelightBistro\FoodBuilderData">Создать Блюдо</a> </li>
+            <br>
+            <li><a href="\DelightBistro\AllFoodItems">Все блюда</a> </li>
+
+
 
         </ul>
     </aside>
