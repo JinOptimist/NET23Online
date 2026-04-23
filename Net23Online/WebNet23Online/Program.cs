@@ -70,6 +70,7 @@ builder.Services.AddScoped<IMenuTypeGenerator, MenuTypeGenerator>();
 builder.Services.AddScoped<IHabitService, HabitService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 
+
 //JapaneseDomesticMarker DI
 builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
 builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
@@ -79,6 +80,8 @@ builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
 builder.Services.AddScoped<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddScoped<IMazeRepository, MazeRepository>();
 builder.Services.AddScoped<IHabitRepository, HabitRepository>();
+builder.Services.AddScoped<IHabitDoneDatesRepository, HabitDoneDatesRepository>();
+builder.Services.AddScoped<IHabitDiaryRepository, HabitDiaryRepository>();
 builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
 builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
 builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();

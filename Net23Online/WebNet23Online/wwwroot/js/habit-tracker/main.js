@@ -3,7 +3,7 @@ const dots = document.querySelectorAll('.dot');
 dots.forEach(dot => {
     dot.addEventListener('click', function() {
         const habitId = parseInt(this.dataset.habitId);
-        const dayIndex = parseInt(this.dataset.dayIndex);
+        const dayOfWeek = parseInt(this.dataset.dayIndex);
 
         this.classList.toggle('active');
         fetch('/HabitTracker/TogglePoint', {
@@ -11,7 +11,7 @@ dots.forEach(dot => {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: `habitId=${habitId}&dayIndex=${dayIndex}`
+            body: `habitId=${habitId}&dayOfWeek=${dayOfWeek}`
         });
     });
 });

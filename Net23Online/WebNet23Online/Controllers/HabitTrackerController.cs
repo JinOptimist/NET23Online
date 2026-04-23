@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data;
 using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.HabitTracker;
 using WebNet23Online.Services;
@@ -15,22 +16,27 @@ public class HabitTrackerController : Controller
     private IHabitStatisticsService _statisticsService;
     
     private IHabitRepository _habitRepository;
+    private IHabitDoneDatesRepository _habitDoneDatesRepository;
     private IUserRepository _userRepository;
+    private IHabitDiaryRepository _diaryRepository;
     public HabitTrackerController(IHabitService habitService, IHabitStatisticsService statisticsService,
-        IHabitRepository habitRepository, IUserRepository userRepository)
+        IHabitRepository habitRepository, IUserRepository userRepository, IHabitDiaryRepository diaryRepository,
+        IHabitDoneDatesRepository habitDoneDatesRepository)
     {
         _habitService = habitService;
         _statisticsService = statisticsService;
         _habitRepository = habitRepository;
         _userRepository = userRepository;
+        _diaryRepository = diaryRepository;
+        _habitDoneDatesRepository = habitDoneDatesRepository;
     }
     public IActionResult Index()
     {
         //пока нет авторизации
-        var user = _habitRepository.Authorise();
-        var habitData = _habitRepository.GetByUserId(user);
+        var user = _habitRepository.GetTheFisrtUser();
+        var habitData = _habitRepository.GetByUserIdWithDatesForCurrentWeek(user.Id);
         
-        _habitService.EnsureDefaultHabits(user);
+        _habitService.EnsureDefaultHabits(user, habitData);
         _userRepository.Update(user);
         
         var model = _habitService.GenerateHabitTracker(habitData);
@@ -41,18 +47,23 @@ public class HabitTrackerController : Controller
     public IActionResult Statistics()
     {
         //пока нет авторизации
-        var user = _habitRepository.Authorise();
-        var habitData = _habitRepository.GetByUserId(user);
+        var user = _habitRepository.GetTheFisrtUser();
+        var habitData = _habitRepository.GetByUserIdWithDatesForCurrentMonth(user.Id);
 
-        var model = _habitService.GenerateHabitTracker(habitData);
-        _statisticsService.CreateStatisticsInfo(model);
+        var model = _statisticsService.CreateStatisticsInfo(habitData);
         
         return View(model);
     } 
     
     [HttpGet]
-    public IActionResult Diary()
+    public IActionResult Diary(int month, int year)
     {
+        var user = _habitRepository.GetTheFisrtUser();
+        var notesData = _diaryRepository.GetByUserAndMonth(user, year, month);
+        var notes = notesData
+            .ToDictionary(n => $"{n.Date.Year}-{n.Date.Month}-{n.Date.Day}",
+                n => n.Content);
+        
         return View();
     } 
     
@@ -66,8 +77,8 @@ public class HabitTrackerController : Controller
     public IActionResult CreateHabit(HabitViewModel  habit)
     {
         //пока нет авторизации
-        var user = _habitRepository.Authorise();
-        var habitData = _habitRepository.GetByUserId(user);
+        var user = _habitRepository.GetTheFisrtUser();
+        var habitData = _habitRepository.GetByUserId(user.Id);
         
         var model = _habitService.GenerateHabitTracker(habitData);
         
@@ -83,7 +94,7 @@ public class HabitTrackerController : Controller
     }
 
     [HttpPost]
-    public IActionResult TogglePoint(int habitId, int dayIndex)
+    public IActionResult TogglePoint(int habitId, int dayOfWeek)
     {
         var habit = _habitRepository.Get(habitId);
         if (habit == null)
@@ -91,8 +102,7 @@ public class HabitTrackerController : Controller
             return RedirectToAction(nameof(Index));
         }
         
-        _habitRepository.ChangeDayPointStatus(habit, dayIndex);
-        _habitRepository.Update(habit);
+        _habitDoneDatesRepository.ChangeDayPointStatus(habitId, dayOfWeek);
         return RedirectToAction(nameof(Index));
     }
 }

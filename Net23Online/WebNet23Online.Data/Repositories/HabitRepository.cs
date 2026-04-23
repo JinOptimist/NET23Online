@@ -6,59 +6,53 @@ namespace WebNet23Online.Data.Repositories.Interfaces;
 
 public class HabitRepository : BaseRepository<HabitData>, IHabitRepository
 {
-    private IUserRepository _userRepository;
-
-    public HabitRepository(WebContext webContext, IUserRepository userRepository) : base(webContext)
-    {
-        _userRepository = userRepository;
-    }
-
-    public override HabitData? Get(int id)
-    {
-        return _dbSet
-            .Include(x => x.Results)
-            .FirstOrDefault(x => x.Id == id);
-    }
+    public HabitRepository(WebContext webContext) : base(webContext) { }
+    
     //пока нет авторизации
-    public UserData Authorise()
+    public UserData GetTheFisrtUser()
     {
-        if (!_userRepository.Any())
+        if (!_context.Users.Any())
         {
-            _userRepository.Add(new UserData()
+            _context.Users.Add(new UserData()
             {
                 Name = "Test User",
                 Role = UserRole.User
                 
             });
         }
-        var user = _userRepository.GetFirst();
-        return user;
+        return _context.Users.First();
     }
 
-
-    public List<HabitData> GetByUserId(UserData user)
+    public List<HabitData> GetByUserId(int userId)
     {
         return _dbSet
-            .Include(x => x.Results)
-            .Where(x => x.User.Id == user.Id)
+            .Where(x => x.User.Id == userId)
             .ToList();
     }
-
-    public void ChangeDayPointStatus(HabitData habit, int dayIndex)
+    
+    public List<HabitData> GetByUserIdWithDatesForCurrentWeek(int userId)
     {
-        var weekStart = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + 1);
-        var targetDate = weekStart.AddDays(dayIndex);
+        var today = DateTime.Today;
+        int diff = (7 + (today.DayOfWeek - DayOfWeek.Monday)) % 7;
+        var weekStart = today.AddDays(-1 * diff);
+        
+        return _dbSet
+            .Include(x => x.CompletedDates
+                .Where(d => d.DateOfCompletion >= weekStart && d.DateOfCompletion < weekStart.AddDays(7)))
+            .Where(x => x.User.Id == userId)
+            .ToList();
+    }
     
-        var result = habit.Results.FirstOrDefault(r => r.Date.Date == targetDate);
-    
-        if (result == null)
-        {
-            habit.Results.Add(new HabitDoneDatesData 
-                { Date = targetDate});
-        }
-        else
-        {
-            habit.Results.Remove(result);
-        }
+    public List<HabitData> GetByUserIdWithDatesForCurrentMonth(int userId)
+    {
+        var today = DateTime.Today;
+        var monthStart = new DateTime(today.Year, today.Month, 1);
+        var monthEnd = monthStart.AddMonths(1);
+        
+        return _dbSet
+            .Include(x => x.CompletedDates
+                .Where(d => d.DateOfCompletion >= monthStart && d.DateOfCompletion < monthEnd))
+            .Where(x => x.User.Id == userId)
+            .ToList();
     }
 }

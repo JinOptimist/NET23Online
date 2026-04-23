@@ -5,5 +5,5 @@ public class HabitData : BaseModel
     public string Title { get; set; } 
     
     public virtual UserData User { get; set; }
-    public virtual List<HabitDoneDatesData> Results { get; set; }
+    public virtual List<HabitDoneDatesData> CompletedDates { get; set; }
 }

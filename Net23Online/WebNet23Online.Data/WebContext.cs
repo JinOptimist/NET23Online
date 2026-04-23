@@ -44,7 +44,7 @@ namespace WebNet23Online.Data
                 .WithMany(x => x.WhoIsMyFriends);
 
             modelBuilder.Entity<HabitData>()
-                .HasMany(x => x.Results)
+                .HasMany(x => x.CompletedDates)
                 .WithOne(x => x.Habit);
 
             modelBuilder.Entity<UserData>()

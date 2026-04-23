@@ -4,7 +4,8 @@ namespace WebNet23Online.Data.Repositories.Interfaces;
 
 public interface IHabitRepository : IBaseRepository<HabitData>
 {
-    UserData Authorise();
-    public List<HabitData> GetByUserId(UserData user);
-    public void ChangeDayPointStatus(HabitData habit, int dayIndex);
+    UserData GetTheFisrtUser();
+    public List<HabitData> GetByUserId(int userId);
+    List<HabitData> GetByUserIdWithDatesForCurrentWeek(int userId);
+    List<HabitData> GetByUserIdWithDatesForCurrentMonth(int userId);
 }

@@ -13,55 +13,56 @@ public class HabitService : IHabitService
             {
                 Id = habit.Id,
                 Title = habit.Title,
-                WeekResults = GenerateWeekResult(habit)
+                WeekResults = GenerateWeekResult(habit.CompletedDates
+                    .Select(x=> x.DateOfCompletion)
+                    .ToList())
+                
             }).ToList(),
         };
         return modelHabitTracker;
     }
 
-    private List<bool> GenerateWeekResult(HabitData habit)
+    private List<bool> GenerateWeekResult(List<DateTime> results)
     {
         var today = DateTime.Today;
         int diff = (7 + (today.DayOfWeek - DayOfWeek.Monday)) % 7;
         var weekStart = today.AddDays(-1 * diff);
-        var weekEnd = weekStart.AddDays(7);
         
-        var resultsData = habit.Results
-            .Where(x => x.Date >= weekStart && x.Date <= weekEnd)
-            .OrderBy(x => x.Date)
-            .ToList();
+        var weekResults = results
+            .Select(r => r.Date)
+            .ToHashSet();   
         
-        var weekResults = new List<bool>();
-        weekResults = Enumerable.Range(0, 7)
-            .Select( day => resultsData
-                .Any( result => result.Date.Date == weekStart.AddDays(day).Date))
+        return Enumerable.Range(0, 7)
+            .Select( day => weekResults
+                .Contains(weekStart.AddDays(day)))
             .ToList();
-        return weekResults;
     }
     
-    public void EnsureDefaultHabits(UserData user)
+    public void EnsureDefaultHabits(UserData user, List<HabitData> habitData)
     {
-        if (user.Habits.Any()) return;
+        if (habitData.Any())
+        {
+            return;
+        }
 
         var defaultHabits = new List<string> { "Спорт 30 мин", "Программирование 1 час", "Вода 2л" };
     
         foreach (var title in defaultHabits)
         {
-            user.Habits.Add(new HabitData
+            habitData.Add(new HabitData
             {
                 Title = title,
                 User = user,
             });
         }
     }
-    
     public HabitData CreateHabit(HabitViewModel modelHabit, UserData user)
     {
         //поймет ли навигационное поле, что я имею ввиду?
         var habit = new HabitData()
         {
             Title = modelHabit.Title,
-            Results = new List<HabitDoneDatesData>(),
+            CompletedDates = new List<HabitDoneDatesData>(),
             User = user,
         };
 
