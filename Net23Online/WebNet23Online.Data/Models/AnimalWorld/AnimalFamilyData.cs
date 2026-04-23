@@ -6,6 +6,8 @@
 
         public string Description { get; set; }
 
-        public virtual List<AnimalSpeciesData> Species { get; set; } 
+        public virtual List<AnimalSpeciesData> Species { get; set; }
+
+        public virtual UserData User { get; set; }
     }
 }

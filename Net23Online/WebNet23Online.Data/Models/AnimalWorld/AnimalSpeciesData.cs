@@ -11,5 +11,7 @@
         public virtual AnimalFamilyData AnimalFamily { get; set; }
 
         public virtual List<ZooData> ZooData { get; set; }
+
+        public virtual UserData User { get; set; }
     }
 }

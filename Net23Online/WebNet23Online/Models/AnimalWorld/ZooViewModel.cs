@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Models.CustomValidatioAttributes.AnimalWorld;
 
 namespace WebNet23Online.Models.AnimalWorld

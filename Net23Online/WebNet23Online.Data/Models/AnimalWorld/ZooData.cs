@@ -9,5 +9,7 @@
         public string Description { get; set; }
 
         public virtual List<AnimalSpeciesData> AnimalSpecies { get; set; }
+
+        public virtual UserData User { get; set; }
     }
 }
