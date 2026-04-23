@@ -11,7 +11,6 @@ namespace WebNet23Online.Data.Repositories
         public UserData GetFirst()
         {
             return _dbSet
-                .Include(x => x.Habits)
                 .First();
         }
     }
