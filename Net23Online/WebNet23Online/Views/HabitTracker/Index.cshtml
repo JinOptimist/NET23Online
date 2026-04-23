@@ -27,7 +27,7 @@
         var habit = Model.Habits[i];
         <div class="tracker-row">
           <div class="habit-name">@habit.Title</div>
-          @for(var d = 0; d < habit.WeekResults.Count; d++)
+          @for(var d = 0; d < 7; d++)
           {
             <div class="dot-cell">
               <span class="dot color-@(i % 4) @(habit.WeekResults[d] ? "active" : "")" 

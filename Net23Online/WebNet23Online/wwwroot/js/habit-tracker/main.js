@@ -4,7 +4,7 @@ dots.forEach(dot => {
     dot.addEventListener('click', function() {
         const habitId = parseInt(this.dataset.habitId);
         const dayOfWeek = parseInt(this.dataset.dayIndex);
-
+        
         this.classList.toggle('active');
         fetch('/HabitTracker/TogglePoint', {
             method: 'POST',

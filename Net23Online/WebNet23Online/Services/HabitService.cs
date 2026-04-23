@@ -26,12 +26,12 @@ public class HabitService : IHabitService
     {
         var today = DateTime.Today;
         int diff = (7 + (today.DayOfWeek - DayOfWeek.Monday)) % 7;
-        var weekStart = today.AddDays(-1 * diff);
+        var weekStart = today.AddDays(-1*diff);
         
         var weekResults = results
             .Select(r => r.Date)
             .ToHashSet();   
-        
+
         return Enumerable.Range(0, 7)
             .Select( day => weekResults
                 .Contains(weekStart.AddDays(day)))

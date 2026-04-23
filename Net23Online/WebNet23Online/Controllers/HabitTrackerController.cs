@@ -102,7 +102,7 @@ public class HabitTrackerController : Controller
             return RedirectToAction(nameof(Index));
         }
         
-        _habitDoneDatesRepository.ChangeDayPointStatus(habitId, dayOfWeek);
+        _habitDoneDatesRepository.ChangeDayPointStatus(habit.Id, dayOfWeek);
         return RedirectToAction(nameof(Index));
     }
 }
