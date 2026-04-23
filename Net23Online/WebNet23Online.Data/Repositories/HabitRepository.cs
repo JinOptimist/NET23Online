@@ -55,4 +55,16 @@ public class HabitRepository : BaseRepository<HabitData>, IHabitRepository
             .Where(x => x.User.Id == userId)
             .ToList();
     }
+
+    public void EditHabit(int id, string title, int monthGoal)
+    {
+        var habit = _dbSet.FirstOrDefault(x => x.Id == id);
+        if (habit == null)
+        {
+            return;
+        }
+        habit.Title = title;
+        habit.MonthGoal = monthGoal;
+        Update(habit);
+    }
 }

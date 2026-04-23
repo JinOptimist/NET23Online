@@ -8,4 +8,5 @@ public interface IHabitRepository : IBaseRepository<HabitData>
     public List<HabitData> GetByUserId(int userId);
     List<HabitData> GetByUserIdWithDatesForCurrentWeek(int userId);
     List<HabitData> GetByUserIdWithDatesForCurrentMonth(int userId);
+    void EditHabit(int id, string title, int monthGoal);
 }

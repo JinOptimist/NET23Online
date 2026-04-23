@@ -261,8 +261,6 @@ namespace WebNet23Online.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -282,6 +280,9 @@ namespace WebNet23Online.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MonthGoal")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -311,7 +312,7 @@ namespace WebNet23Online.Data.Migrations
                     b.Property<int>("HabitId")
                         .HasColumnType("int");
 
-                        b.HasKey("Id");
+                    b.HasKey("Id");
 
                     b.HasIndex("HabitId");
 
@@ -515,7 +516,9 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RockLegendsGenresId");b.ToTable("RockLegends");
+                    b.HasIndex("RockLegendsGenresId");
+
+                    b.ToTable("RockLegends");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.RockLegendsGenres", b =>
@@ -583,13 +586,17 @@ namespace WebNet23Online.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("PublisherId")
-                        .HasColumnType("int");b.Property<string>("Title")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PublisherId");b.ToTable("Games");
+                    b.HasIndex("PublisherId");
+
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.Steam.PublisherData", b =>
@@ -627,7 +634,9 @@ namespace WebNet23Online.Data.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");b.Property<int>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserProfileId")
@@ -868,13 +877,6 @@ namespace WebNet23Online.Data.Migrations
                     b.Navigation("CompletedDates");
                 });
 
-            modelBuilder.Entity("WebNet23Online.Data.Models.UserData", b =>
-                {
-                    b.Navigation("DiaryEntries");
-
-                    b.Navigation("Habits");
-                });
-
             modelBuilder.Entity("WebNet23Online.Data.Models.LittleLemonGuestData", b =>
                 {
                     b.Navigation("Reservations");
@@ -898,6 +900,13 @@ namespace WebNet23Online.Data.Migrations
             modelBuilder.Entity("WebNet23Online.Data.Models.Steam.PublisherData", b =>
                 {
                     b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.UserData", b =>
+                {
+                    b.Navigation("DiaryEntries");
+
+                    b.Navigation("Habits");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.UserProfileData", b =>

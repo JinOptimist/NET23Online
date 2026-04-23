@@ -39,7 +39,7 @@ public class HabitTrackerController : Controller
         _habitService.EnsureDefaultHabits(user, habitData);
         _userRepository.Update(user);
         
-        var model = _habitService.GenerateHabitTracker(habitData);
+        var model = _habitService.GenerateHabitTrackerWithResults(habitData);
         return View(model);
     } 
     
@@ -66,11 +66,15 @@ public class HabitTrackerController : Controller
         
         return View();
     } 
-    
+
     [HttpGet]
-    public IActionResult CreateHabit()
+    public IActionResult Settings()
     {
-        return View();
+        var user = _habitRepository.GetTheFisrtUser();
+        var habitData = _habitRepository.GetByUserId(user.Id);
+        var model = _habitService.GenerateHabitList(habitData);
+        
+        return View(model);
     }
     
     [HttpPost]
@@ -78,18 +82,34 @@ public class HabitTrackerController : Controller
     {
         //пока нет авторизации
         var user = _habitRepository.GetTheFisrtUser();
-        var habitData = _habitRepository.GetByUserId(user.Id);
-        
-        var model = _habitService.GenerateHabitTracker(habitData);
+        var habitTitles = _habitRepository
+            .GetByUserId(user.Id)
+            .Select(x => x.Title)
+            .ToList();
         
         if (_habitService.IsHabitHasTitle(habit)
-            || _habitService.IsHabitUnique(model, habit))
+            || _habitService.IsHabitUnique(habitTitles, habit))
         {
             return RedirectToAction(nameof(Index));
         }
         
         var newHabit = _habitService.CreateHabit(habit, user);
         _habitRepository.Add(newHabit);
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public IActionResult DeleteHabit(HabitViewModel habit)
+    {
+        var habitData = _habitRepository.Get(habit.Id);
+        _habitRepository.Remove(habitData);
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public IActionResult EditHabit(HabitViewModel habit)
+    {
+        _habitRepository.EditHabit(habit.Id,  habit.Title, habit.MonthGoal );
         return RedirectToAction(nameof(Index));
     }
 

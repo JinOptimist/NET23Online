@@ -5,7 +5,19 @@ namespace WebNet23Online.Services;
 
 public class HabitService : IHabitService
 {
-    public HabitTrackerViewModel GenerateHabitTracker(List<HabitData> habitData)
+    public HabitTrackerViewModel GenerateHabitList(List<HabitData> habitData)
+    {
+        return new HabitTrackerViewModel
+        {
+            Habits = habitData.Select(habit => new HabitViewModel
+            {
+                Id = habit.Id,
+                Title = habit.Title,
+                MonthGoal = habit.MonthGoal
+            }).ToList()
+        };
+    }
+    public HabitTrackerViewModel GenerateHabitTrackerWithResults(List<HabitData> habitData)
     {
         var modelHabitTracker = new HabitTrackerViewModel()
         {
@@ -13,6 +25,7 @@ public class HabitService : IHabitService
             {
                 Id = habit.Id,
                 Title = habit.Title,
+                MonthGoal = habit.MonthGoal,
                 WeekResults = GenerateWeekResult(habit.CompletedDates
                     .Select(x=> x.DateOfCompletion)
                     .ToList())
@@ -62,6 +75,7 @@ public class HabitService : IHabitService
         var habit = new HabitData()
         {
             Title = modelHabit.Title,
+            MonthGoal = modelHabit.MonthGoal,
             CompletedDates = new List<HabitDoneDatesData>(),
             User = user,
         };
@@ -74,8 +88,8 @@ public class HabitService : IHabitService
         return string.IsNullOrEmpty(habit.Title);
     }
     
-    public bool IsHabitUnique(HabitTrackerViewModel model, HabitViewModel  habit)
+    public bool IsHabitUnique(List<string> habitTitles, HabitViewModel  habit)
     {
-        return model.Habits.Any(h => h.Title == habit.Title);
+        return habitTitles.Any(h => h == habit.Title);
     }
 }
