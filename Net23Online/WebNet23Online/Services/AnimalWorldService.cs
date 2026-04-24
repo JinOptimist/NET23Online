@@ -12,13 +12,15 @@ namespace WebNet23Online.Services
         private IAnimalFamilyRepository _animalFamilyRepository;
         private IAnimalSpeciesRepository _animalSpeciesRepository;
         private IAnimalWorldMapper _animalWorldMapper;
+        private IAuthService _authService;
 
-        public AnimalWorldService(IZooRepository zooRepository, IAnimalFamilyRepository animalFamilyRepository, IAnimalSpeciesRepository animalSpeciesRepository, IAnimalWorldMapper animalWorldMapper)
+        public AnimalWorldService(IZooRepository zooRepository, IAnimalFamilyRepository animalFamilyRepository, IAnimalSpeciesRepository animalSpeciesRepository, IAnimalWorldMapper animalWorldMapper, IAuthService authService)
         {
             _zooRepository = zooRepository;
             _animalFamilyRepository = animalFamilyRepository;
             _animalSpeciesRepository = animalSpeciesRepository;
             _animalWorldMapper = animalWorldMapper;
+            _authService = authService;
         }
 
         public StartPageAnimalWorldInfoViewModel GetStartInfo()
@@ -83,43 +85,46 @@ namespace WebNet23Online.Services
 
         public bool AddZoo(ZooViewModel viewModel)
         {
+            var user = _authService.GetUser();
             var zooData = new ZooData
             {
                 ZooName = viewModel.ZooName,
                 Address = viewModel.Address,
-                Description = viewModel.Description
+                Description = viewModel.Description,
+                User = user
             };
             _zooRepository.Add(zooData);
-
             return true;
         }
 
         public bool AddAnimalFamily(AnimalFamilyViewModel viewModel)
         {
+            var user = _authService.GetUser();
             var animalFamilyData = new AnimalFamilyData
             {
                 AnimalFamilyName = viewModel.AnimalFamilyName,
-                Description = viewModel.Description
+                Description = viewModel.Description,
+                User = user
             };
             _animalFamilyRepository.Add(animalFamilyData);
-
             return true;
         }
 
         public bool AddAnimalSpecies(AnimalSpeciesViewModel viewModel)
         {
+            var user = _authService.GetUser();
             var animalFamily = _animalFamilyRepository.Get(viewModel.AnimalFamilyId);
             var animalSpeciesData = new AnimalSpeciesData
             {
                 AnimalSpeciesName = viewModel.AnimalSpeciesName,
-                AnimalFamily = animalFamily,
                 NativeRange = viewModel.NativeRange,
-                Description = viewModel.Description
+                Description = viewModel.Description,
+                AnimalFamily = animalFamily,
+                User = user
             };
             _animalSpeciesRepository.Add(animalSpeciesData);
-            animalSpeciesData = _animalSpeciesRepository.GetElementByName(viewModel.AnimalSpeciesName);
-            animalFamily.Species.Add(animalSpeciesData);
-
+            //animalSpeciesData = _animalSpeciesRepository.GetElementByName(viewModel.AnimalSpeciesName);
+            //animalFamily.Species.Add(animalSpeciesData);
             return true;
         }
 

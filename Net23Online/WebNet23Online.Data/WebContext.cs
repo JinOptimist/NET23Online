@@ -64,6 +64,18 @@ namespace WebNet23Online.Data
                 .HasMany(x => x.MyFriends)
                 .WithMany(x => x.WhoIsMyFriends);
 
+            modelBuilder.Entity<UserData>()
+                .HasMany(x => x.CreatedByMeZoos)
+                .WithOne(x => x.User);
+
+            modelBuilder.Entity<UserData>()
+                .HasMany(x => x.CreatedByMeAnimalFamilies)
+                .WithOne(x => x.User);
+
+            modelBuilder.Entity<UserData>()
+                .HasMany(x => x.CreatedByMeAnimalSpecies)
+                .WithOne(x => x.User);
+
             //Delight Bistro
             modelBuilder.Entity<MenuData>()
                 .HasMany(x => x.FoodItems)

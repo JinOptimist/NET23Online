@@ -1,4 +1,5 @@
 using WebNet23Online.Data.Enums;
+using WebNet23Online.Data.Models.AnimalWorld;
 
 namespace WebNet23Online.Data.Models
 {
@@ -12,5 +13,8 @@ namespace WebNet23Online.Data.Models
         public virtual List<UserData> MyFriends { get; set; }
         public virtual List<UserData> WhoIsMyFriends { get; set; }
         public virtual UserProfileData? UserProfile { get; set; }
+        public virtual List<ZooData> CreatedByMeZoos { get; set; }
+        public virtual List<AnimalFamilyData> CreatedByMeAnimalFamilies { get; set; }
+        public virtual List<AnimalSpeciesData> CreatedByMeAnimalSpecies { get; set; }
     }
 }
