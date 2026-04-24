@@ -67,4 +67,10 @@ public class HabitRepository : BaseRepository<HabitData>, IHabitRepository
         habit.MonthGoal = monthGoal;
         Update(habit);
     }
+
+    //не привязан к конкретному юзеру
+    public bool IsHabitTitleUniq(string title)
+    {
+        return !_dbSet.Any(x => x.Title == title);
+    }
 }

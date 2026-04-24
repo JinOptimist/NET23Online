@@ -9,4 +9,5 @@ public interface IHabitRepository : IBaseRepository<HabitData>
     List<HabitData> GetByUserIdWithDatesForCurrentWeek(int userId);
     List<HabitData> GetByUserIdWithDatesForCurrentMonth(int userId);
     void EditHabit(int id, string title, int monthGoal);
+    bool IsHabitTitleUniq(string title);
 }
