@@ -76,7 +76,7 @@ namespace WebNet23Online.Data
             modelBuilder.Entity<MenuData>() //User relation
                 .HasOne(x => x.Creator)
                 .WithMany(x => x.CreatedMenus)
-                .HasForeignKey(x=>x.CreatorId); 
+                .HasForeignKey(x => x.CreatorId);
 
             modelBuilder.Entity<FoodItemData>() //User relation
                .HasOne(x => x.Creator)

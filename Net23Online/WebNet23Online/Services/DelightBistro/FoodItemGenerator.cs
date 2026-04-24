@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 using WebNet23Online.Data.Models;
-using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
 using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services.Interfaces;
-using static System.Net.WebRequestMethods;
 
 namespace WebNet23Online.Services.DelightBistro
 {
@@ -66,7 +64,6 @@ namespace WebNet23Online.Services.DelightBistro
                 IngredientsList = selectedIngredients,
                 Creator = _authService.GetUser()
             };
-            //authService.GetUser().Name <= из coockie
             _foodItemRepository.Add(newFoodItemData);
         }
 
