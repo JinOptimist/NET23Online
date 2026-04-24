@@ -24,7 +24,7 @@
 
 .progress-bar {
     height: 18px;
-    background: #e0e0e0;
+    background-color: white;
     border-radius: 7px;
     overflow: hidden;
 }
@@ -36,7 +36,7 @@
     transition: width 0.6s ease;
 }
 
-.progress-fill.pink   { background-color: #D4537E; }
-.progress-fill.blue   { background-color: #7F77DD; }
-.progress-fill.green  { background-color: #1D9E75; }
-.progress-fill.purple { background-color: #e50ae5; }
+.progress-fill.color-0 { background-color: #D4537E; }
+.progress-fill.color-1 { background-color: #7F77DD; }
+.progress-fill.color-2 { background-color: #1D9E75; }
+.progress-fill.color-3 { background-color: #e50ae5; }

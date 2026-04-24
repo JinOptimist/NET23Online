@@ -5,11 +5,11 @@ namespace WebNet23Online.Data.Repositories.Interfaces
     public interface IBaseRepository<DataModel>
         where DataModel : BaseModel
     {
-        void Add(DataModel model);
-        List<DataModel> GetAll();
-        void Remove(DataModel model);
-        DataModel? Get(int id);
-        void Update(DataModel model);
-        bool Any();
+        public void Add(DataModel model);
+        public List<DataModel> GetAll();
+        public void Remove(DataModel model);
+        public DataModel? Get(int id);
+        public void Update(DataModel model);
+        public bool Any();
     }
 }

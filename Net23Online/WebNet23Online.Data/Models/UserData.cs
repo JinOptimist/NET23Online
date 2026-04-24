@@ -17,5 +17,8 @@ namespace WebNet23Online.Data.Models
         public virtual List<FoodItemData> CreatedFoodItems { get; set; } = new();
         public virtual List<MenuData> CreatedMenus { get; set; } = new();
 
+        
+        public virtual List<HabitData> Habits { get; set; }
+        public virtual List<HabitTrackerDiaryData> DiaryEntries { get; set; }
     }
 }

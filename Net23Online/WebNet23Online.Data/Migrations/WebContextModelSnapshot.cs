@@ -266,6 +266,8 @@ namespace WebNet23Online.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -286,35 +288,21 @@ namespace WebNet23Online.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ColorOfDot")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DoneCount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HabitTrackerDataId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Percent")
-                        .HasColumnType("float");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WeekResults")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HabitTrackerDataId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("HabitData");
+                    b.ToTable("Habits");
                 });
 
-            modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerData", b =>
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitDoneDatesData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -322,13 +310,42 @@ namespace WebNet23Online.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("UserName")
+                    b.Property<DateTime>("DateOfCompletion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HabitId")
+                        .HasColumnType("int");
+
+                        b.HasKey("Id");
+
+                    b.HasIndex("HabitId");
+
+                    b.ToTable("HabitDoneDates");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerDiaryData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("HabitTracker");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DiaryEntries");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.IngredientData", b =>
@@ -513,9 +530,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RockLegendsGenresId");
-
-                    b.ToTable("RockLegends");
+                    b.HasIndex("RockLegendsGenresId");b.ToTable("RockLegends");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.RockLegendsGenres", b =>
@@ -583,17 +598,13 @@ namespace WebNet23Online.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("PublisherId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
+                        .HasColumnType("int");b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PublisherId");
-
-                    b.ToTable("Games");
+                    b.HasIndex("PublisherId");b.ToTable("Games");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.Steam.PublisherData", b =>
@@ -631,9 +642,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
+                        .HasColumnType("nvarchar(max)");b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserProfileId")
@@ -771,9 +780,35 @@ namespace WebNet23Online.Data.Migrations
 
             modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
                 {
-                    b.HasOne("WebNet23Online.Data.Models.HabitTrackerData", null)
+                    b.HasOne("WebNet23Online.Data.Models.UserData", "User")
                         .WithMany("Habits")
-                        .HasForeignKey("HabitTrackerDataId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitDoneDatesData", b =>
+                {
+                    b.HasOne("WebNet23Online.Data.Models.HabitData", "Habit")
+                        .WithMany("CompletedDates")
+                        .HasForeignKey("HabitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Habit");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerDiaryData", b =>
+                {
+                    b.HasOne("WebNet23Online.Data.Models.UserData", "User")
+                        .WithMany("DiaryEntries")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.IngredientData", b =>
@@ -867,8 +902,15 @@ namespace WebNet23Online.Data.Migrations
                     b.Navigation("RockBandGenres");
                 });
 
-            modelBuilder.Entity("WebNet23Online.Data.Models.HabitTrackerData", b =>
+            modelBuilder.Entity("WebNet23Online.Data.Models.HabitData", b =>
                 {
+                    b.Navigation("CompletedDates");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.UserData", b =>
+                {
+                    b.Navigation("DiaryEntries");
+
                     b.Navigation("Habits");
                 });
 
