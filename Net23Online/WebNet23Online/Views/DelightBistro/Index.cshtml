@@ -31,11 +31,13 @@
             {
                 <div class="type-of-food">
                     <div class="type-name center">@category.Name</div>
+                    <div>@category.Creator</div>
                     <div class="menu">
 
                         @foreach (var foodItem in category.FoodItems)
                         {
                             <div class="food-item" item-id="@foodItem.Id">
+                                <div> Creator: @foodItem.Creator</div>
                                 <div class="image-container">
                                     <a href="\DelightBistro\FoodBuilderData?id=@foodItem.Id"><img src=@foodItem.ImgURL alt=@foodItem.Name /></a>
                                 </div>

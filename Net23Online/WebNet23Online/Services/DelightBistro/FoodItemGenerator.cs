@@ -15,12 +15,14 @@ namespace WebNet23Online.Services.DelightBistro
         private IMenuRepository _menuRepository;
         private IIngredientsRepository _ingredientsRepository;
         private IIngredientGenerator _ingredientGenerator;
-        public FoodItemGenerator(IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository, IIngredientGenerator ingredientGenerator)
+        private IAuthService _authService;
+        public FoodItemGenerator(IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository, IIngredientGenerator ingredientGenerator, IAuthService authService)
         {
             _foodItemRepository = foodItemRepository;
             _menuRepository = menuRepository;
             _ingredientsRepository = ingredientsRepository;
             _ingredientGenerator = ingredientGenerator;
+            _authService = authService;
         }
         public void FeelDataBase()
         {
@@ -53,6 +55,7 @@ namespace WebNet23Online.Services.DelightBistro
             {
                 menuData = _menuRepository.Get(viewModel.MenuId.Value);
             }
+
             var newFoodItemData = new FoodItemData()
             {
                 Name = viewModel.Name,
@@ -60,7 +63,8 @@ namespace WebNet23Online.Services.DelightBistro
                 ImgURL = viewModel.ImgURL,
 
                 MenuData = menuData,
-                IngredientsList = selectedIngredients
+                IngredientsList = selectedIngredients,
+                Creator = _authService.GetUser()
             };
             //authService.GetUser().Name <= из coockie
             _foodItemRepository.Add(newFoodItemData);
@@ -103,8 +107,8 @@ namespace WebNet23Online.Services.DelightBistro
                 ImgURL = foodItemData.ImgURL,
                 MenuType = foodItemData.MenuData?.Name ?? "Общее меню",
                 Ingredients = foodItemData.IngredientsList
-                .Select(fi => fi.Name).ToList()
-
+                .Select(fi => fi.Name).ToList(),
+                Creator = foodItemData.Creator?.Name
             };
 
             return foodItemViewModel;

@@ -18,7 +18,7 @@ namespace WebNet23Online.Data.Repositories
             var allMenus = _dbSet
                 .Include(x => x.FoodItems)
                 .ThenInclude(x => x.IngredientsList)
-                /*.ThenInclude(f => f.Creator)*/;
+                .ThenInclude(f => f.Creator);
 
             if (!string.IsNullOrEmpty(filterMenuName))
             {
