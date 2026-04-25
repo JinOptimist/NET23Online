@@ -49,10 +49,10 @@
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">@game.Title</h3>
-                        @if (!string.IsNullOrWhiteSpace(game.Genre))
+                        @* @if (!string.IsNullOrWhiteSpace(game.Genre))
                         {
                             <p class="feature-text">@game.Genre</p>
-                        }
+                        } *@
                         <div class="card-footer">
                             <span class="price">$@game.Price.ToString("0.00")</span>
                             <a class="btn btn--small" href="/Steam/GameDetails/@game.Id">View</a>

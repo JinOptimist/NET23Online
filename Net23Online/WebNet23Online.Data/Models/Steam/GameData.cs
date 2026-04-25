@@ -10,9 +10,9 @@ namespace WebNet23Online.Data.Models.Steam
         public string ImageUrl { get; set; }
         public int? PublisherId {  get; set; }
         [Precision(18, 2)]
-        public decimal Price { get; set; }
-        public GameGenre Genre { get; set; }      
+        public decimal Price { get; set; }    
 
         public virtual PublisherData Publisher { get; set; } 
+        public virtual List<GameGenreData> GameGenres { get; set; }
     }
 }
