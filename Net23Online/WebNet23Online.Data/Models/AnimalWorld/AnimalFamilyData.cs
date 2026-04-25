@@ -6,6 +6,8 @@
 
         public string Description { get; set; }
 
+        public int UserId { get; set; }
+
         public virtual List<AnimalSpeciesData> Species { get; set; }
 
         public virtual UserData User { get; set; }

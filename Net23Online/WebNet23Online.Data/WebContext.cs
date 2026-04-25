@@ -53,7 +53,27 @@ namespace WebNet23Online.Data
 
             modelBuilder.Entity<AnimalFamilyData>()
                 .HasMany(x => x.Species)
-                .WithOne(x => x.AnimalFamily);
+                .WithOne(x => x.AnimalFamily)
+                .HasForeignKey(x => x.AnimalFamilyId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ZooData>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.CreatedByMeZoos)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<AnimalFamilyData>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.CreatedByMeAnimalFamilies)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<AnimalSpeciesData>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.CreatedByMeAnimalSpecies)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UserData>()
                 .HasOne(x => x.UserProfile)
@@ -63,18 +83,6 @@ namespace WebNet23Online.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.MyFriends)
                 .WithMany(x => x.WhoIsMyFriends);
-
-            modelBuilder.Entity<UserData>()
-                .HasMany(x => x.CreatedByMeZoos)
-                .WithOne(x => x.User);
-
-            modelBuilder.Entity<UserData>()
-                .HasMany(x => x.CreatedByMeAnimalFamilies)
-                .WithOne(x => x.User);
-
-            modelBuilder.Entity<UserData>()
-                .HasMany(x => x.CreatedByMeAnimalSpecies)
-                .WithOne(x => x.User);
 
             //Delight Bistro
             modelBuilder.Entity<MenuData>()
