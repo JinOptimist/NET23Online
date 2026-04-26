@@ -64,30 +64,30 @@ a {
     gap: 8px;
 }
 
-.search input {
-    width: 220px;
-    padding: 8px;
-    background: #1b2838;
-    border: 1px solid #2a475e;
-    color: #c7d5e0;
-    border-radius: 4px;
-}
+    .search input {
+        width: 220px;
+        padding: 8px;
+        background: #1b2838;
+        border: 1px solid #2a475e;
+        color: #c7d5e0;
+        border-radius: 4px;
+    }
 
-.search button,
-.install,
-.btn {
-    padding: 8px 10px;
-    background: #2a475e;
-    color: #fff;
-    border: 0;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
+    .search button,
+    .install,
+    .btn {
+        padding: 8px 10px;
+        background: #2a475e;
+        color: #fff;
+        border: 0;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
 
-.btn:hover {
-    background: #3a6e8e;
-}
+        .btn:hover {
+            background: #3a6e8e;
+        }
 
 .btn--small {
     padding: 6px 12px;
@@ -130,10 +130,10 @@ a {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.feature-card:hover {
-   transform: translateY(-2px);
-   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
+    .feature-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
 
 .feature-media {
     min-height: 280px;
@@ -141,12 +141,12 @@ a {
     overflow: hidden;
 }
 
-.feature-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
+    .feature-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
 
 .feature-card:hover .feature-media img {
     transform: scale(1.05);
@@ -185,11 +185,11 @@ a {
     transition: all 0.2s ease;
 }
 
-.game-genre:hover {
-    background: rgba(102, 192, 244, 0.3);
-    color: #ffffff;
-    border-color: #66c0f4;
-}
+    .game-genre:hover {
+        background: rgba(102, 192, 244, 0.3);
+        color: #ffffff;
+        border-color: #66c0f4;
+    }
 
 .feature-text {
     color: #a0b3c4;
@@ -201,7 +201,7 @@ a {
 
 .feature-footer {
     display: flex;
-   /* justify-content: space-between;*/
+    /* justify-content: space-between;*/
     align-items: center;
     gap: 16px;
     margin-top: auto;
@@ -209,10 +209,10 @@ a {
     border-top: 1px solid #2a475e;
 }
 
-.feature-footer .price {
-    font-size: 28px;
-    font-weight: 700;
-}
+    .feature-footer .price {
+        font-size: 28px;
+        font-weight: 700;
+    }
 
 .feature-buttons {
     display: flex;
@@ -236,11 +236,11 @@ a {
     border: 1px solid #2a475e;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    border-color: #66c0f4;
-}
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        border-color: #66c0f4;
+    }
 
 .card-media {
     height: 150px;
@@ -248,12 +248,12 @@ a {
     overflow: hidden;
 }
 
-.card-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
+    .card-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
 
 .card:hover .card-media img {
     transform: scale(1.1);
@@ -275,6 +275,7 @@ a {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+
 .card-buttons {
     display: flex;
     gap: 8px;
@@ -289,12 +290,12 @@ a {
     min-height: 36px;
 }
 
-.card-genres .game-genre {
-    background: rgba(102, 192, 244, 0.1);
-    font-size: 11px;
-    padding: 3px 8px;
-    border-radius: 12px;
-}
+    .card-genres .game-genre {
+        background: rgba(102, 192, 244, 0.1);
+        font-size: 11px;
+        padding: 3px 8px;
+        border-radius: 12px;
+    }
 
 .game-genre-more {
     background: rgba(103, 120, 150, 0.3);
@@ -310,10 +311,10 @@ a {
     border-top: 1px solid #2a475e;
 }
 
-.card-footer .price {
-    font-size: 20px;
-    font-weight: 700;
-}
+    .card-footer .price {
+        font-size: 20px;
+        font-weight: 700;
+    }
 
 /* Footer */
 .footer {
@@ -341,15 +342,15 @@ a {
     gap: 12px 20px;
 }
 
-.footer-links a {
-    font-size: 14px;
-    color: #8f98a0;
-    transition: color 0.2s ease;
-}
+    .footer-links a {
+        font-size: 14px;
+        color: #8f98a0;
+        transition: color 0.2s ease;
+    }
 
-.footer-links a:hover {
-    color: #ffffff;
-}
+        .footer-links a:hover {
+            color: #ffffff;
+        }
 
 .footer-top {
     display: flex;
@@ -383,25 +384,25 @@ a {
     align-items: center;
 }
 
-.catalog-actions p {
+    .catalog-actions p {
         margin: 0;
-}
+    }
 
 /* Form Styles */
 .form-group {
     margin-bottom: 25px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #e5e5e5;
-}
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #e5e5e5;
+    }
 
-.form-group:last-of-type {
-    margin-bottom: 0;
-}
+    .form-group:last-of-type {
+        margin-bottom: 0;
+    }
 
 .form-control {
     width: 100%;
@@ -414,15 +415,15 @@ a {
     transition: all 0.2s ease;
 }
 
-.form-control:focus {
-    outline: none;
-    border-color: #66c0f4;
-    box-shadow: 0 0 0 2px rgba(102, 192, 244, 0.2);
-}
+    .form-control:focus {
+        outline: none;
+        border-color: #66c0f4;
+        box-shadow: 0 0 0 2px rgba(102, 192, 244, 0.2);
+    }
 
-.form-control::placeholder {
-    color: #5c7e9e;
-}
+    .form-control::placeholder {
+        color: #5c7e9e;
+    }
 
 .form-actions {
     margin-top: 30px;
@@ -487,32 +488,32 @@ select.form-control {
     margin-bottom: 25px;
 }
 
-.game-price span {
-    font-size: 32px;
-    font-weight: 700;
-    color: #ff6b35;
-}
+    .game-price span {
+        font-size: 32px;
+        font-weight: 700;
+        color: #ff6b35;
+    }
 
-.game-price .free {
-    color: #4caf50;
-}
+    .game-price .free {
+        color: #4caf50;
+    }
 
 .game-description {
     margin-bottom: 30px;
 }
 
-.game-description h3 {
-    color: #c7d5e0;
-    font-size: 18px;
-    margin-bottom: 12px;
-    font-weight: 600;
-}
+    .game-description h3 {
+        color: #c7d5e0;
+        font-size: 18px;
+        margin-bottom: 12px;
+        font-weight: 600;
+    }
 
-.game-description p {
-    color: #a0b3c4;
-    line-height: 1.6;
-    font-size: 15px;
-}
+    .game-description p {
+        color: #a0b3c4;
+        line-height: 1.6;
+        font-size: 15px;
+    }
 
 .game-actions {
     display: flex;
@@ -535,17 +536,17 @@ select.form-control {
     font-weight: 500;
 }
 
-    .btn-cart:hover {
-        background: #3a6e8e;
-        transform: translateY(-1px);
-    }
+.btn-cart:hover {
+    background: #3a6e8e;
+    transform: translateY(-1px);
+}
 
-    .btn-cart:active {
-        transform: translateY(0);
-    }
+.btn-cart:active {
+    transform: translateY(0);
+}
 
-    .btn-cart i,
-    .btn-cart::before {
-        content: "🛒";
-        font-size: 14px;
-    }
+.btn-cart i,
+.btn-cart::before {
+    content: "🛒";
+    font-size: 14px;
+}

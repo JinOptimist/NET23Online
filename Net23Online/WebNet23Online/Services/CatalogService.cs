@@ -57,22 +57,19 @@ namespace WebNet23Online.Services
             return viewModel;
         }
 
-        //Filters Refactor!!!
         public CatalogViewModel GetCatalog(CatalogFilterViewModel filter = null)
         {
             filter ??= new CatalogFilterViewModel();
 
-            var genres = Enum.GetValues(typeof(GameGenre))
-                             .Cast<GameGenre>()
-                             .ToList();
+            var genres = _gameGenreRepository.GetAll();
 
-            var repoFilter = new GameFilter
+            var repositoryFilter = new GameFilter
             {
-                Genre = ParseGenre(filter.Genre),
+                GenreId = filter.GenreId,
                 MaxPrice = filter.MaxPrice
             };
 
-            var games = _gameRepository.GetFiltered(repoFilter);
+            var games = _gameRepository.GetFilteredWithGenres(repositoryFilter);
 
             return new CatalogViewModel
             {
@@ -85,10 +82,10 @@ namespace WebNet23Online.Services
                         Description = g.Description,
                         ImageUrl = g.ImageUrl,
                         Price = g.Price,
-                        //Genre = g.Genre.ToString(),
+                        Genres = g.GameGenres.Select(gg => gg.Name).ToList(),
                     })
                     .ToList(),
-                Genres = genres
+                GameGenres = GetListItemsWithGameGenres()
             };
         }
 
@@ -145,14 +142,7 @@ namespace WebNet23Online.Services
         public List<SelectListItem> GetListItemsWithGameGenres()
         {
             var gameGenres = _gameGenreRepository.GetAll();
-            var gameGenresListItems = new List<SelectListItem>
-            {
-                //new SelectListItem
-                //{
-                //    Text = "SelectGameGenre",
-                //    Value = ""
-                //}
-            };
+            var gameGenresListItems = new List<SelectListItem>();
 
             gameGenresListItems.AddRange(gameGenres.Select(x => new SelectListItem
             {
