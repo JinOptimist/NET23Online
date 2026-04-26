@@ -71,8 +71,8 @@ builder.Services.AddScoped<IHabitTrackerService, HabitTrackerService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 
 //JapaneseDomesticMarker DI
-builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
-builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
+builder.Services.AddScoped<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
+builder.Services.AddScoped<IJDMCatalogGenerator, JDMCatalogGenerator>();
 
 // Repositories
 builder.Services.AddScoped<IAnimalWorldRepository, AnimalWorldRepository>();
@@ -84,6 +84,8 @@ builder.Services.AddScoped<IRockBandsRepository, RockBandsRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IJapaneseDomesticMarketRepository, JapaneseDomesticMarketRepository>();
+builder.Services.AddScoped<IJapaneseDomesticMarketManufacturerRepository, JapaneseDomesticMarketManufacturerRepository>();
 
 var app = builder.Build();
 
