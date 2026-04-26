@@ -39,13 +39,13 @@ namespace WebNet23Online.Services.DelightBistro
             return ingredientViewModel;
         }
 
-        public List<CreateIngredientViewModel> GenerateIngredients(List<IngredientData> ingredientsData)
+        public List<CreateIngredientViewModel> GenerateIngredients(List<IngredientData> ingredientsData, FoodItemData foodItemData = null)
         {
             var ingredientsViewModel = ingredientsData.Select(x => new CreateIngredientViewModel
             {
                 Id = x.Id,
                 Name = x.Name,
-                IsSelected = false
+                IsSelected = foodItemData != null && foodItemData.IngredientsList.Any(i => i.Id == x.Id),
             }).ToList();
 
             return ingredientsViewModel;

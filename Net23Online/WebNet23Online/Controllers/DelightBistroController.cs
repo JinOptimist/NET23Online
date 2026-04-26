@@ -92,7 +92,7 @@ namespace WebNet23Online.Controllers
         {
             if (id > 0)
             {
-                var changedFoodItemData = _foodItemRepository.Get(id);
+                var changedFoodItemData = _foodItemRepository.GetByIdIncludeMenuAndIngredients(id);
 
                 var viewModel = _foodItemGenerator.ConvertToCreateFoodItemVM(changedFoodItemData);
                 return View(viewModel);
@@ -127,7 +127,6 @@ namespace WebNet23Online.Controllers
         [Authorize]
         public IActionResult AllFoodItems()
         {
-
             var foodItemsData = _foodItemRepository.GetAllIncludeMenuAndIngredients();
             var viewModel = foodItemsData.Select(_foodItemGenerator.ConvertToFoodItemVM).ToList();
 
