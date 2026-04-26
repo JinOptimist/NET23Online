@@ -3,10 +3,10 @@ using WebNet23Online.Data.Models;
 
 namespace WebNet23Online.Data.Repositories.Interfaces.DelightBistro
 {
-    public interface IDelightBistro<DataModel>: IBaseRepository<DataModel>
+    public interface IDelightBistroRepository<DataModel>
         where DataModel : BaseModel
     {
         bool IsNameFree(string name);
-        
+
     }
 }
