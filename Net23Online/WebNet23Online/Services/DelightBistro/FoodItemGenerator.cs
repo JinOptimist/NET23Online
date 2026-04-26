@@ -82,9 +82,7 @@ namespace WebNet23Online.Services.DelightBistro
                 menuData = _menuRepository.Get(viewModel.MenuId.Value);
             }
 
-            //var changedFoodItemData = _foodItemRepository.Get(viewModel.Id);
             var changedFoodItemData = _foodItemRepository.GetByIdIncludeMenuAndIngredients(viewModel.Id);
-            //changedFoodItemData.IngredientsList.Clear();
 
             changedFoodItemData.Name = viewModel.Name;
             changedFoodItemData.Price = viewModel.Price;
