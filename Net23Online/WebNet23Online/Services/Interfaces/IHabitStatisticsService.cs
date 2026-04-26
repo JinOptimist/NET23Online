@@ -1,8 +1,9 @@
+using WebNet23Online.Data.Models;
 using WebNet23Online.Models.HabitTracker;
 
 namespace WebNet23Online.Services;
 
 public interface IHabitStatisticsService
 {
-    void CreateStatisticsInfo(HabitTrackerViewModel model);
+    HabitTrackerViewModel CreateStatisticsInfo(List<HabitData> habitData);
 }
