@@ -10,10 +10,12 @@ namespace WebNet23Online.Services.DelightBistro
     public class IngredientGenerator : IIngredientGenerator
     {
         private IIngredientsRepository _ingredientsRepository;
+        private IAuthService _authService;
 
-        public IngredientGenerator(IIngredientsRepository ingredientsRepository)
+        public IngredientGenerator(IIngredientsRepository ingredientsRepository, IAuthService authService)
         {
             _ingredientsRepository = ingredientsRepository;
+            _authService = authService;
         }
         public void FeelDataBase()
         {
@@ -37,13 +39,13 @@ namespace WebNet23Online.Services.DelightBistro
             return ingredientViewModel;
         }
 
-        public List<CreateIngredientViewModel> GenerateIngredients(List<IngredientData> ingredientsData)
+        public List<CreateIngredientViewModel> GenerateIngredients(List<IngredientData> ingredientsData, FoodItemData foodItemData = null)
         {
             var ingredientsViewModel = ingredientsData.Select(x => new CreateIngredientViewModel
             {
                 Id = x.Id,
                 Name = x.Name,
-                IsSelected = false
+                IsSelected = foodItemData != null && foodItemData.IngredientsList.Any(i => i.Id == x.Id),
             }).ToList();
 
             return ingredientsViewModel;
@@ -54,6 +56,7 @@ namespace WebNet23Online.Services.DelightBistro
             var ingredientData = new IngredientData
             {
                 Name = ingredient.Name,
+                Creator = _authService.GetUser()
             };
 
             _ingredientsRepository.Add(ingredientData);
