@@ -1,4 +1,5 @@
-﻿using WebNet23Online.Data.Models;
+﻿using WebNet23Online.Data.Enums;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Services.Interfaces;
 
@@ -49,6 +50,34 @@ namespace WebNet23Online.Services
         public bool IsAuthenticated()
         {
             return _httpContextAccessor?.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
+        }
+
+        /// <summary>
+        /// You can't call this method if user not authenticated
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public UserRole GetRole()
+        {
+            if (!IsAuthenticated()) {
+                throw new InvalidOperationException();
+            }
+            var roleStr = _httpContextAccessor.HttpContext!.User.Claims
+                .First(x => x.Type == COOCKIE_ROLE_KEY)
+                .Value;
+            var role = Enum.Parse<UserRole>(roleStr);
+            return role;
+        }
+
+        public bool AtLeastModerator()
+        {
+            if (!IsAuthenticated())
+            {
+                return false;
+            }
+
+            var role = GetRole();
+            return role == UserRole.Moderator || role == UserRole.Admin;
         }
     }
 }

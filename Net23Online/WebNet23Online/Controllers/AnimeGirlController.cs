@@ -16,14 +16,17 @@ namespace WebNet23Online.Controllers
         private IAnimeGirlService _animeGirlService;
         private IAnimeGirlRepository _animeGirlRepository;
         private IAnimeRepository _animeRepository;
+        private IAuthService _authService;
 
         public AnimeGirlController(IAnimeGirlService animeGirlGenerator,
             IAnimeGirlRepository animeGirlRepository,
-            IAnimeRepository animeRepository)
+            IAnimeRepository animeRepository,
+            IAuthService authService)
         {
             _animeGirlService = animeGirlGenerator;
             _animeGirlRepository = animeGirlRepository;
             _animeRepository = animeRepository;
+            _authService = authService;
         }
 
         //    /AnimeGirl/Index
@@ -38,7 +41,8 @@ namespace WebNet23Online.Controllers
             var mainViewModel = new MainIndexViewModel
             {
                 AnimeGirls = viewModels,
-                Animes = animeViewModels
+                Animes = animeViewModels,
+                CanDeleteGirl = _authService.AtLeastModerator()
             };
 
             return View(mainViewModel);
