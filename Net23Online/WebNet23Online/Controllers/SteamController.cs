@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using WebNet23Online.Data.Enums.Steam;
+using System.Security.Claims;
 using WebNet23Online.Models.Steam;
+using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
 
@@ -40,41 +41,24 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult AddGame()
-        {
-            var publishers = _catalogService.GetPublishers();
-            var publisherListItems = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text = "SelectPublisher",
-                    Value = ""
-                }
-            };
-
-            publisherListItems.AddRange(publishers.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }));
-
+        {    
             var viewModel = new AddGameViewModel
             {
-                AllGenres = Enum.GetValues(typeof(GameGenre))
-                                .Cast<GameGenre>()
-                                .Where(g => g != GameGenre.All)
-                                .ToList(),
-                Publishers = publisherListItems
+                AllGenres = _catalogService.GetListItemsWithGameGenres(),
+                Publishers = _catalogService.GetListItemsWithPublishers()
             };
 
             return View(viewModel);
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult AddGame(AddGameViewModel viewModel)
         {
             _catalogService.AddGame(viewModel);
-
+           
             return RedirectToAction(nameof(Catalog));
         }
 
@@ -95,7 +79,9 @@ namespace WebNet23Online.Controllers
                 Description = gameData.Description,
                 ImageUrl = gameData.ImageUrl,
                 Price = gameData.Price,
-                Genre = gameData.Genre,
+                Genres = gameData.GameGenres
+                    .Select(g => g.Name)
+                    .ToList(),
                 PublisherName = gameData.Publisher?.Name ?? "Unknown",
                 PublisherId = gameData.PublisherId
             };
@@ -104,6 +90,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult EditGame(int id)
         {
             var game = _catalogService.GetGameDetails(id);
@@ -113,24 +100,6 @@ namespace WebNet23Online.Controllers
                 return NotFound();
             }
 
-            var publishers = _catalogService.GetPublishers();
-
-            var publisherListItems = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text = "Select Publisher",
-                    Value = ""
-                }
-            };
-
-            publisherListItems.AddRange(publishers.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString(),
-                Selected = x.Id == game.PublisherId
-            }));
-
             var viewModel = new EditGameViewModel
             {
                 Id = game.Id,
@@ -138,19 +107,16 @@ namespace WebNet23Online.Controllers
                 Description = game.Description,
                 ImageUrl = game.ImageUrl,
                 Price = game.Price,
-                Genre = game.Genre,
                 PublisherId = game.PublisherId,
-                AllGenres = Enum.GetValues(typeof(GameGenre))
-                                .Cast<GameGenre>()
-                                .Where(g => g != GameGenre.All)
-                                .ToList(),
-                Publishers = publisherListItems
+                AllGenres = _catalogService.GetListItemsWithGameGenres(),
+                Publishers = _catalogService.GetListItemsWithPublishers()
             };
 
             return View(viewModel);
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult EditGame(EditGameViewModel viewModel)
         {
             _catalogService.UpdateGame(viewModel);
