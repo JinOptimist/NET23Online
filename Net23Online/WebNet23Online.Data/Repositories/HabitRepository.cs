@@ -101,8 +101,8 @@ public class HabitRepository : BaseRepository<HabitData>, IHabitRepository
             .ToList();
     }
     
-    public bool IsHabitTitleUniq(string title, int userId)
+    public bool IsHabitTitleUniq(string title, int userId, int habitId)
     {
-        return !_dbSet.Any(x =>x.UserId == userId && x.Title == title);
+        return !_dbSet.Any(x =>x.UserId == userId && x.Title == title && x.Id != habitId);
     }
 }

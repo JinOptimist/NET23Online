@@ -10,6 +10,6 @@ public interface IHabitService
     HabitTrackerViewModel GenerateHabitTrackerWithResults(List<HabitData> habitData);
     HabitData CreateHabit(HabitViewModel modelHabit);
     void EditHabit(HabitViewModel updateHabit);
-    bool IsHabitTitleUniq(string title);
+    bool IsHabitTitleUniq(string title, int habitId);
 
 }

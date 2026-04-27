@@ -5,7 +5,7 @@ namespace WebNet23Online.Models.HabitTracker;
 
 public class HabitViewModel
 {
-    public int Id { get; set; }
+    public int Id { get; set; } = 0;
     
     [Required(ErrorMessage = "Enter the title")]
     [IsHabitTitleUniq]

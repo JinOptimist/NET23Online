@@ -99,9 +99,9 @@ public class HabitService : IHabitService
     
         _habitRepository.EditHabit(habitData);
     }
-    public bool IsHabitTitleUniq(string title)
+    public bool IsHabitTitleUniq(string title, int habitId)
     {
         var userId = _authService.GetUserId();
-        return _habitRepository.IsHabitTitleUniq(title, userId);
+        return _habitRepository.IsHabitTitleUniq(title, userId, habitId);
     }
 }
