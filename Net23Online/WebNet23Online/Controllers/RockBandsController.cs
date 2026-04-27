@@ -58,6 +58,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult UpdateGenres(int bandId, int[] selectedGenreIds)
         {
             _rockBandsService.UpdateBandGenres(bandId, selectedGenreIds);
