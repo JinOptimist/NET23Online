@@ -61,6 +61,11 @@ namespace WebNet23Online.Data
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<ZooData>()
+                .HasMany(x => x.AnimalSpecies)
+                .WithMany(x => x.ZooData)
+                .UsingEntity(x => x.ToTable("BindZooAndAnimalSpecies"));
+
             modelBuilder.Entity<AnimalFamilyData>()
                 .HasOne(x => x.Creator)
                 .WithMany(x => x.CreatedByMeAnimalFamilies)
@@ -89,7 +94,7 @@ namespace WebNet23Online.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.DiaryEntries)
                 .WithOne(x => x.User);
-            
+
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.Habits)
                 .WithOne(x => x.User);
