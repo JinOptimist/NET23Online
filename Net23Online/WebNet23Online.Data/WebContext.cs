@@ -33,6 +33,7 @@ namespace WebNet23Online.Data
         public DbSet<GameData> Games { get; set; }
         public DbSet<SlayTheSpire2HeroesData> SlayTheSpire2Heroes { get; set; }
         public DbSet<PublisherData> Publishers { get; set; }
+        public DbSet<DataUserForMaksKorz> DataUserMK { get; set; }
 
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
 
@@ -119,6 +120,9 @@ namespace WebNet23Online.Data
 
             modelBuilder.Entity<GenreOfRockBandsData>()
                 .HasIndex(x => x.Name)
+                .IsUnique();
+            modelBuilder.Entity<DataUserForMaksKorz>()
+                .HasIndex(x => x.Id)
                 .IsUnique();
 
             base.OnModelCreating(modelBuilder);
