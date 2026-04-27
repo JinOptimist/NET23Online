@@ -1,53 +1,61 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebNet23Online.Data;
+using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.Maks_Korz;
 
 namespace WebNet23Online.Controllers
 {
     public class MaksKorzController : Controller
     {
-        DataUser user = new DataUser();
-        Authorization authorization = new Authorization();
+        DataUserForMaksKorz _user;
+        Authorization _authorization;
+        IDataUserForMaksKorzRepository _dataUserMK;
+        public MaksKorzController(IDataUserForMaksKorzRepository dataUserMK)
+        {
+           
+        }
         public IActionResult Index()
         {
+            //var returnAllValue = _webContext.DataUserMK.ToList();
             return View();
         }
-        [HttpPost]
+
         public IActionResult FormUser()
         {
+            var returnAllValue = _dataUserMK.GetAll;
             var resulDataNow = "";
-            if(authorization.GetDataNow() == "Morning")
+            if(_authorization.GetDataNow() == "Morning")
             {
-                resulDataNow = "Good Morning, " + user.LastName;
+                resulDataNow = "Good Morning, " + _user.LastName;
             }
-            if (authorization.GetDataNow() == "Afternoon")
+            if (_authorization.GetDataNow() == "Afternoon")
             {
-                resulDataNow = "Good Afternoon, " + user.LastName;
+                resulDataNow = "Good Afternoon, " + _user.LastName;
             }
-            if (authorization.GetDataNow() == "Evening")
+            if (_authorization.GetDataNow() == "Evening")
             {
-                resulDataNow = "Good Evening, " + user.LastName;
+                resulDataNow = "Good Evening, " + _user.LastName;
             }
-            return View();
+            return View(returnAllValue);
         }
         [HttpPost]
-        public IActionResult Index(string LastName, int Age, string Country)
+        public IActionResult Index(DataUserForMaksKorz data)
         {
-            var status = new StatusUser();
-            user.LastName = LastName;
-            user.Age = Age;
-            user.Country = Country;
-            status.User = user;
-            authorization.AddNewUser(user);
-            if (Age < 18)
+            bool contains = _dataUserMK.Contains(data);
+            if (contains)
             {
-                status.Status = "Не совершенолетний!";
+                return View();
             }
-            else
+            var addNewUserForMK = new DataUserForMaksKorz
             {
-                status.Status = "Cовершенолетний!";
-            }
-            return View("/Views/MaksKorz/FormUser.cshtml");
-            //return View();
+                LastName = data.LastName,
+                Country = data.Country,
+                Age = data.Age
+            };
+            _dataUserMK.Add(addNewUserForMK);
+            return RedirectToAction("FormUser");
+            //return View("/Views/MaksKorz/FormUser.cshtml");
         }
     }
 }
