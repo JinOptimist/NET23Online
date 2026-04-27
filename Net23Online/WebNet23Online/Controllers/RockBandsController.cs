@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
 
@@ -34,6 +35,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Index(RockBandsIndexViewModel viewModel)
         {
             var band = viewModel.BandBlock;
