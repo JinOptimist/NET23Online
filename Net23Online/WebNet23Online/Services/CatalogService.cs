@@ -1,6 +1,5 @@
-﻿
-using Microsoft.AspNetCore.Mvc.Rendering;
-using WebNet23Online.Data.Enums.Steam;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 using WebNet23Online.Data.HelperModels;
 using WebNet23Online.Data.Models.Steam;
 using WebNet23Online.Data.Repositories.Interfaces.Steam;
@@ -15,14 +14,20 @@ namespace WebNet23Online.Services
         private readonly IGameRepository _gameRepository;
         private readonly IPublisherRepository _publisherRepository;
         private readonly IGameGenreRepository _gameGenreRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IAuthService _authService;
 
         public CatalogService(IGameRepository gameRepository,
             IPublisherRepository publisherRepository,
-            IGameGenreRepository gameGenreRepository)
+            IGameGenreRepository gameGenreRepository,
+            IHttpContextAccessor httpContextAccessor,
+            IAuthService authService)
         {
             _gameRepository = gameRepository;
             _publisherRepository = publisherRepository;
             _gameGenreRepository = gameGenreRepository;
+            _httpContextAccessor = httpContextAccessor;
+            _authService = authService;
         }
 
         public SteamHomeViewModel GetGamesForHomePage()
@@ -95,6 +100,8 @@ namespace WebNet23Online.Services
             {
                 throw new ArgumentNullException(nameof(viewModel), "Game data cannot be null");
             }
+            
+            var currentUserId = _authService.GetUserId();
 
             var gameEntity = new GameData
             {
@@ -103,7 +110,10 @@ namespace WebNet23Online.Services
                 ImageUrl = viewModel.ImageUrl,
                 Price = viewModel.Price,
                 GameGenres = new List<GameGenreData>(),
-                PublisherId = viewModel.PublisherId
+                PublisherId = viewModel.PublisherId,
+                CreatedByUserId = currentUserId,
+                ModifiedByUserId = currentUserId,
+                CreatedAt = DateTime.UtcNow
             };
 
             if (viewModel.SelectedGenreIds != null && viewModel.SelectedGenreIds.Any())
@@ -180,11 +190,15 @@ namespace WebNet23Online.Services
                 throw new ArgumentException($"Game not found");
             }
 
+            var currentUserId = _authService.GetUserId();
+
             game.Title = viewModel.Title;
             game.Description = viewModel.Description;
             game.ImageUrl = viewModel.ImageUrl;
             game.Price = viewModel.Price;
             game.PublisherId = viewModel.PublisherId;
+            game.ModifiedByUserId = currentUserId;
+            game.ModifiedAt = DateTime.UtcNow;
 
             if (viewModel.SelectedGenreIds != null && viewModel.SelectedGenreIds.Any())
             {
@@ -196,16 +210,6 @@ namespace WebNet23Online.Services
             }
 
             _gameRepository.Update(game);
-        }
-
-        private GameGenre? ParseGenre(string genreString)
-        {
-            if (string.IsNullOrEmpty(genreString) || genreString == "All")
-            {
-                return null;
-            }
-
-            return Enum.TryParse<GameGenre>(genreString, out var genre) ? genre : null;
         }
     }
 }

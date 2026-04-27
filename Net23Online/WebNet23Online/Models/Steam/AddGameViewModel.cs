@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using WebNet23Online.Data.Enums.Steam;
 
 namespace WebNet23Online.Models.Steam
 {

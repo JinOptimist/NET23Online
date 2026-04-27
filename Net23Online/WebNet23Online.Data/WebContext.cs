@@ -30,9 +30,11 @@ namespace WebNet23Online.Data
         public DbSet<RockLegendsData> RockLegends { get; set; }
         public DbSet<RockLegendsGenres> RockLegendsGenres { get; set; }
 
-        public DbSet<GameData> Games { get; set; }
         public DbSet<SlayTheSpire2HeroesData> SlayTheSpire2Heroes { get; set; }
+
+        public DbSet<GameData> Games { get; set; }
         public DbSet<PublisherData> Publishers { get; set; }
+        public DbSet<GameGenreData> GameGenres { get; set; }
 
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
 
@@ -97,6 +99,15 @@ namespace WebNet23Online.Data
                .WithMany(x => x.Games)
                .HasForeignKey(x => x.PublisherId);
 
+            modelBuilder.Entity<GameData>()
+               .HasOne(x => x.CreatedByUser)
+               .WithMany(x => x.CreatedGames)
+               .HasForeignKey(x => x.CreatedByUserId);
+
+            modelBuilder.Entity<GameData>()
+               .HasOne(x => x.ModifiedByUser)
+               .WithMany(x => x.ModifiedGames)
+               .HasForeignKey(x => x.ModifiedByUserId);
 
             modelBuilder.Entity<LittleLemonData>()
                 .HasOne(x => x.Guest)

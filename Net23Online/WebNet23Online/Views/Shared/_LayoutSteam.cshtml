@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@using WebNet23Online.Services
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -27,6 +29,21 @@
                 </form>
 
                 <a class="install" href="/install">Install Steam</a>
+
+                <div class="auth-buttons">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="username">Welcome, @User.FindFirstValue(AuthService.COOCKIE_NAME_KEY)!</span>
+                        <a class="logout-btn" href="/Auth/Logout">Logout</a>
+                    }
+                    else
+                    {
+                        <a class="login-btn" href="/Auth/Login">Login</a>
+                        <a class="register-btn" href="/Auth/Registration">Register</a>
+                    }
+                </div>
+
+                <a class="back-to-home" href="/Home/Index">All Projects</a>
             </div>
         </div>
     </header>
@@ -51,7 +68,7 @@
 
             <div class="footer-bottom">
                 <p>
-                    © 2026 Valve Corporation. All rights reserved. All trademarks are property of their respective owners.
+                    © 2026 Nikita Corporation. All rights reserved. All trademarks are property of their respective owners.
                 </p>
             </div>
         </div>

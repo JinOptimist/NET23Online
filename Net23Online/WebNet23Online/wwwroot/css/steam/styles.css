@@ -550,3 +550,79 @@ select.form-control {
     content: "🛒";
     font-size: 14px;
 }
+
+.auth-buttons {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 15px;
+}
+
+.username {
+    color: #66c0f4;
+    font-size: 14px;
+}
+
+.login-btn, .register-btn, .logout-btn {
+    padding: 5px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.login-btn {
+    background: linear-gradient(135deg, #2a6f8f, #1e4a6b);
+    color: white;
+}
+
+.register-btn {
+    background: linear-gradient(135deg, #4a6f2a, #2e4a1e);
+    color: white;
+}
+
+.logout-btn {
+    background: linear-gradient(135deg, #6f2a2a, #4a1e1e);
+    color: white;
+}
+
+.back-to-home {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    background: rgba(255,255,255,0.1);
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+    .back-to-home:hover {
+        background: rgba(255,255,255,0.2);
+    }
+
+.nav-list li a {
+    transition: color 0.2s ease;
+}
+
+    .nav-list li a:hover {
+        color: #ffffff;
+    }
+
+
+.nav-list li a {
+    position: relative;
+}
+
+    .nav-list li a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #66c0f4;
+        transition: width 0.2s ease;
+    }
+
+    .nav-list li a:hover::after {
+        width: 100%;
+    }

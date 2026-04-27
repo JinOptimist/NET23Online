@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Security.Claims;
 using WebNet23Online.Models.Steam;
+using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
 
@@ -39,6 +41,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult AddGame()
         {    
             var viewModel = new AddGameViewModel
@@ -51,10 +54,11 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult AddGame(AddGameViewModel viewModel)
         {
             _catalogService.AddGame(viewModel);
-
+           
             return RedirectToAction(nameof(Catalog));
         }
 
@@ -86,6 +90,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult EditGame(int id)
         {
             var game = _catalogService.GetGameDetails(id);
@@ -111,6 +116,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult EditGame(EditGameViewModel viewModel)
         {
             _catalogService.UpdateGame(viewModel);

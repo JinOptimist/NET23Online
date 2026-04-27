@@ -9,7 +9,10 @@
             <h1 class="page-title">Catalog</h1>
             <div class="catalog-actions">
                 <p><a class="btn" href="/Steam/Index">← Back to store</a></p>
-                <a class="btn btn--primary" href="/Steam/AddGame">+ Add New Game</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary" href="/Steam/AddGame">+ Add New Game</a>
+                }
             </div>
         </div>
     </section>

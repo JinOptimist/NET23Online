@@ -8,7 +8,10 @@
     <section class="section">
         <div class="game-header">
             <a class="btn" href="/Steam/Catalog">← Back to Catalog</a>
-            <a class="btn btn--edit" href="/Steam/EditGame/@Model.Id">✎ Edit Game</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn--edit" href="/Steam/EditGame/@Model.Id">✎ Edit Game</a>
+            }
         </div>
     </section>
 
