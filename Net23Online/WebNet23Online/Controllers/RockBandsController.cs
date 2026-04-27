@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebNet23Online.Services;
 using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
 
@@ -53,7 +54,10 @@ namespace WebNet23Online.Controllers
                 return View(startViewModel);
             }
 
-            _rockBandsService.AddBand(band);
+            var userIdStr = User.FindFirst(AuthService.COOCKIE_ID_KEY)?.Value;
+            var createdByUserId = int.Parse(userIdStr!);
+            
+            _rockBandsService.AddBand(band, createdByUserId);
             return RedirectToAction(nameof(Index));
         }
 

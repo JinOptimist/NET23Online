@@ -121,6 +121,12 @@ namespace WebNet23Online.Data
                 .HasIndex(x => x.Name)
                 .IsUnique();
 
+            modelBuilder.Entity<RockBandsData>()
+                .HasOne(x => x.CreatedByUser)
+                .WithMany()
+                .HasForeignKey(x => x.CreatedByUserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             base.OnModelCreating(modelBuilder);
         }
     }

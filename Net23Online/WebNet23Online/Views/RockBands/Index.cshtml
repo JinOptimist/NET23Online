@@ -57,6 +57,10 @@
                 <div class="band-body">
                     <h2>@band.Name</h2>
                     <p>@band.Description</p>
+                    @if (!string.IsNullOrWhiteSpace(band.CreatedByUserName))
+                    {
+                        <p><strong>Создано пользователем:</strong> @band.CreatedByUserName</p>
+                    }
 
                     @if (band.Genres != null && band.Genres.Count > 0)
                     {

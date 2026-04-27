@@ -33,6 +33,7 @@ namespace WebNet23Online.Services
                        Name = b.Name,
                        Description = b.Description,
                        ImageUrl = string.IsNullOrWhiteSpace(b.Url) ? null : b.Url,
+                       CreatedByUserName = b.CreatedByUser != null ? b.CreatedByUser.Name : null,
                        GenreIds = b.RockBandGenres.Select(bg => bg.GenreId).ToList(),
                        Genres = b.RockBandGenres
                             .Select(bg => bg.Genre.Name)
@@ -56,7 +57,7 @@ namespace WebNet23Online.Services
                 .ToList();
         }
 
-        public void AddBand(BandBlockViewModel viewModel)
+        public void AddBand(BandBlockViewModel viewModel, int createdByUserId)
         {
             if (viewModel == null || string.IsNullOrWhiteSpace(viewModel.Name))
             {
@@ -75,6 +76,7 @@ namespace WebNet23Online.Services
                 Url = string.IsNullOrWhiteSpace(viewModel.ImageUrl)
                     ? string.Empty
                     : viewModel.ImageUrl.Trim(),
+                CreatedByUserId = createdByUserId > 0 ? createdByUserId : null,
                 RockBandGenres = genreIds
                     .Select(id => new RockBandGenreData { GenreId = id })
                     .ToList(),
