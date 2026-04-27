@@ -82,8 +82,7 @@ namespace WebNet23Online.Services.DelightBistro
                 menuData = _menuRepository.Get(viewModel.MenuId.Value);
             }
 
-            var changedFoodItemData = _foodItemRepository.Get(viewModel.Id);
-            changedFoodItemData.IngredientsList.Clear();
+            var changedFoodItemData = _foodItemRepository.GetByIdIncludeMenuAndIngredients(viewModel.Id);
 
             changedFoodItemData.Name = viewModel.Name;
             changedFoodItemData.Price = viewModel.Price;
@@ -135,7 +134,7 @@ namespace WebNet23Online.Services.DelightBistro
                 SelectedIngredientsId = foodItemData.IngredientsList
                 .Select(x => x.Id).ToList(),
 
-                Ingredients = ChekBoxIngredients(),
+                Ingredients = ChekBoxIngredients(foodItemData),
                 Menus = SelectMenu()
             };
 
@@ -144,9 +143,9 @@ namespace WebNet23Online.Services.DelightBistro
 
         public List<SelectListItem> SelectMenu()
         {
-            var selectMenu = _menuRepository.GetAll();
+            var allMenuData = _menuRepository.GetAll();
             var menuListItems = new List<SelectListItem>();
-            menuListItems.AddRange(selectMenu.Select(x => new SelectListItem
+            menuListItems.AddRange(allMenuData.Select(x => new SelectListItem
             {
                 Text = x.Name,
                 Value = x.Id.ToString()
@@ -154,10 +153,11 @@ namespace WebNet23Online.Services.DelightBistro
             return menuListItems;
         }
 
-        public List<CreateIngredientViewModel> ChekBoxIngredients()
+        public List<CreateIngredientViewModel> ChekBoxIngredients(FoodItemData foodItemData = null)
         {
             var allIngredientsDatas = _ingredientsRepository.GetAll();
-            var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
+            var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas, foodItemData);
+
             return allIngredientVM;
         }
     }
