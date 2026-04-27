@@ -7,5 +7,5 @@ public class HabitData : BaseModel
     
     public int UserId { get; set; }  
     public virtual UserData User { get; set; }
-    public virtual List<HabitDoneDatesData> CompletedDates { get; set; }
+    public virtual List<HabitDoneDatesData> CompletedDates { get; set; } = new List<HabitDoneDatesData>();
 }

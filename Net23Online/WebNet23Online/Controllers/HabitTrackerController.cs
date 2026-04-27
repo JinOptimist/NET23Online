@@ -8,6 +8,7 @@ using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.HabitTracker;
 using WebNet23Online.Services;
+using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers;
 
@@ -15,6 +16,7 @@ public class HabitTrackerController : Controller
 {
     private IHabitService _habitService;
     private IHabitStatisticsService _statisticsService;
+    private readonly IAuthService _authService;
     
     private IHabitRepository _habitRepository;
     private IHabitDoneDatesRepository _habitDoneDatesRepository;
@@ -22,7 +24,7 @@ public class HabitTrackerController : Controller
     private IHabitDiaryRepository _diaryRepository;
     public HabitTrackerController(IHabitService habitService, IHabitStatisticsService statisticsService,
         IHabitRepository habitRepository, IUserRepository userRepository, IHabitDiaryRepository diaryRepository,
-        IHabitDoneDatesRepository habitDoneDatesRepository)
+        IHabitDoneDatesRepository habitDoneDatesRepository, IAuthService authService)
     {
         _habitService = habitService;
         _statisticsService = statisticsService;
@@ -30,6 +32,7 @@ public class HabitTrackerController : Controller
         _userRepository = userRepository;
         _diaryRepository = diaryRepository;
         _habitDoneDatesRepository = habitDoneDatesRepository;
+        _authService = authService;
     }
 
     public IActionResult Index()
@@ -41,18 +44,18 @@ public class HabitTrackerController : Controller
     [Authorize]
     public IActionResult HabitTracker()
     {
-        //пока нет авторизации
-        var user = _habitRepository.GetTheFisrtUser();
+        var userId = _authService.GetUserId();
         var habitData = new List<HabitData>();
         
-        if (!_habitRepository.UserHasHabits(user.Id))
+        if (!_habitRepository.UserHasHabits(userId))
         {
-            habitData = _habitRepository.AddDefaultHabits(user.Id);
+            habitData = _habitRepository.AddDefaultHabits(userId);
         }
         else
         {
-            habitData = _habitRepository.GetByUserIdWithDatesForCurrentWeek(user.Id);
+            habitData = _habitRepository.GetByUserIdWithDatesForCurrentWeek(userId);
         }
+        
         var model = _habitService.GenerateHabitTrackerWithResults(habitData);
         return View(model);
     } 
@@ -61,12 +64,10 @@ public class HabitTrackerController : Controller
     [Authorize]
     public IActionResult Statistics()
     {
-        //пока нет авторизации
-        var user = _habitRepository.GetTheFisrtUser();
-        var habitData = _habitRepository.GetByUserIdWithDatesForCurrentMonth(user.Id);
+        var userId = _authService.GetUserId();
+        var habitData = _habitRepository.GetByUserIdWithDatesForCurrentMonth(userId);
 
         var model = _statisticsService.CreateStatisticsInfo(habitData);
-        
         return View(model);
     } 
     
@@ -74,7 +75,10 @@ public class HabitTrackerController : Controller
     [Authorize]
     public IActionResult Diary(int month, int year)
     {
-        var user = _habitRepository.GetTheFisrtUser();
+        //
+        //уверены ли мы, что user not null, если есть атрибут [Authorize]?
+        //
+        var user = _authService.GetUser()!;
         var notesData = _diaryRepository.GetByUserAndMonth(user, year, month);
         var notes = notesData
             .ToDictionary(n => $"{n.Date.Year}-{n.Date.Month}-{n.Date.Day}",
@@ -94,10 +98,10 @@ public class HabitTrackerController : Controller
     [Authorize]
     public IActionResult CreateHabit()
     {
-        var user = _habitRepository.GetTheFisrtUser();
+        var userId = _authService.GetUserId();
         var model = new HabitViewModel
         {
-            UserId = user.Id
+            UserId = userId
         };
         return View(model);
     }
@@ -111,7 +115,6 @@ public class HabitTrackerController : Controller
             return View(habit);
         }
         
-        //пока нет авторизации
         var habitTitles = _habitRepository.GetTitlesByUserId(habit.UserId);
         
         if (!_habitService.IsHabitHasTitle(habit)
@@ -129,8 +132,8 @@ public class HabitTrackerController : Controller
     [Authorize]
     public IActionResult DeleteHabit()
     {
-        var user = _habitRepository.GetTheFisrtUser();
-        var habitData = _habitRepository.GetByUserId(user.Id);
+        var userId = _authService.GetUserId();
+        var habitData = _habitRepository.GetByUserId(userId);
 
         var model = _habitService.GenerateHabitList(habitData);
         return View(model);
@@ -159,8 +162,8 @@ public class HabitTrackerController : Controller
     [Authorize]
     public IActionResult EditHabit()
     {
-        var user = _habitRepository.GetTheFisrtUser();
-        var habitData = _habitRepository.GetByUserId(user.Id);
+        var userId = _authService.GetUserId();
+        var habitData = _habitRepository.GetByUserId(userId);
         var model = _habitService.GenerateHabitList(habitData);
         return View(model);
     }
@@ -170,12 +173,7 @@ public class HabitTrackerController : Controller
     public IActionResult EditHabit(HabitTrackerViewModel habitTracker)
     {
         var updateHabit = habitTracker.EditHabit;
-        if (updateHabit.Id == 0)
-        {
-            return View(habitTracker);
-        }
-
-        if (!ModelState.IsValid)
+        if (updateHabit.Id == 0 || !ModelState.IsValid)
         {
             return View(habitTracker);
         }

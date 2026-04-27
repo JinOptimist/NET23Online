@@ -25,6 +25,11 @@ public class HabitService : IHabitService
     }
     public HabitTrackerViewModel GenerateHabitList(List<HabitData> habitData)
     {
+        if (habitData == null)
+        {
+            throw new Exception("habitData is null");
+        }
+        
         return new HabitTrackerViewModel
         {
             Habits = habitData.Select(habit => new HabitViewModel
@@ -32,27 +37,27 @@ public class HabitService : IHabitService
                 Id = habit.Id,
                 Title = habit.Title,
                 MonthGoal = habit.MonthGoal,
-                UserId = habit.User.Id
+                UserId = habit.UserId,
             }).ToList()
         };
     }
     public HabitTrackerViewModel GenerateHabitTrackerWithResults(List<HabitData> habitData)
     {
-        var modelHabitTracker = new HabitTrackerViewModel()
+        return new HabitTrackerViewModel()
         {
             Habits = habitData.Select(habit => new HabitViewModel
             {
                 Id = habit.Id,
                 Title = habit.Title,
                 MonthGoal = habit.MonthGoal,
-                UserId = habit.User.Id,
-                WeekResults = GenerateWeekResult(habit.CompletedDates
+                UserId = habit.UserId,
+                WeekResults = GenerateWeekResult(habit.CompletedDates?
                     .Select(x=> x.DateOfCompletion)
-                    .ToList())
-                
+                    .ToList()
+                ?? new List<DateTime>()
+                )
             }).ToList(),
         };
-        return modelHabitTracker;
     }
     private List<bool> GenerateWeekResult(List<DateTime> results)
     {
@@ -71,12 +76,10 @@ public class HabitService : IHabitService
     }
     public HabitData CreateHabit(HabitViewModel modelHabit)
     {
-        //поймет ли навигационное поле, что я имею ввиду?
         var habit = new HabitData()
         {
             Title = modelHabit.Title,
             MonthGoal = modelHabit.MonthGoal,
-            CompletedDates = new List<HabitDoneDatesData>(),
             UserId = modelHabit.UserId,
         };
 

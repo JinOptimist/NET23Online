@@ -64,19 +64,20 @@ public class HabitRepository : BaseRepository<HabitData>, IHabitRepository
     public List<HabitData> AddDefaultHabits(int userId)
     {
         var habitData = new List<HabitData>();
-        var defaultHabits = new List<string> { "Спорт 30 мин", "Программирование 1 час", "Вода 2л" };
+        var defaultHabits = new List<string> { "Спорт 30 мин", "Вода 2л" };
         
         foreach (var title in defaultHabits)
         {
-            habitData.Add(new HabitData
+            var habit = new HabitData()
             {
                 Title = title,
                 MonthGoal = 30, //default
-                CompletedDates = new List<HabitDoneDatesData>(),
-                UserId = userId,
-            });
+                UserId = userId
+            };
+            habitData.Add(habit);
+            _dbSet.Add(habit);
+            _context.SaveChanges();
         }
-        
         return habitData;
     }
         
