@@ -5,9 +5,12 @@ namespace WebNet23Online.Data.Repositories.Interfaces;
 public interface IHabitRepository : IBaseRepository<HabitData>
 {
     UserData GetTheFisrtUser();
+    bool UserHasHabits(int userId);
     public List<HabitData> GetByUserId(int userId);
     List<HabitData> GetByUserIdWithDatesForCurrentWeek(int userId);
     List<HabitData> GetByUserIdWithDatesForCurrentMonth(int userId);
-    void EditHabit(int id, string title, int monthGoal);
+    List<HabitData> AddDefaultHabits(int userId);
+    void EditHabit(HabitData habitData);
+    List<string> GetTitlesByUserId(int userId);
     bool IsHabitTitleUniq(string title);
 }

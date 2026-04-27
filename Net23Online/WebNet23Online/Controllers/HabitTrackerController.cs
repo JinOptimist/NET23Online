@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data;
 using WebNet23Online.Data.Enums;
@@ -30,20 +31,34 @@ public class HabitTrackerController : Controller
         _diaryRepository = diaryRepository;
         _habitDoneDatesRepository = habitDoneDatesRepository;
     }
+
     public IActionResult Index()
+    {
+        return View();
+    }
+    
+    [HttpGet]
+    [Authorize]
+    public IActionResult HabitTracker()
     {
         //пока нет авторизации
         var user = _habitRepository.GetTheFisrtUser();
-        var habitData = _habitRepository.GetByUserIdWithDatesForCurrentWeek(user.Id);
+        var habitData = new List<HabitData>();
         
-        _habitService.EnsureDefaultHabits(user, habitData);
-        _userRepository.Update(user);
-        
+        if (!_habitRepository.UserHasHabits(user.Id))
+        {
+            habitData = _habitRepository.AddDefaultHabits(user.Id);
+        }
+        else
+        {
+            habitData = _habitRepository.GetByUserIdWithDatesForCurrentWeek(user.Id);
+        }
         var model = _habitService.GenerateHabitTrackerWithResults(habitData);
         return View(model);
     } 
     
     [HttpGet]
+    [Authorize]
     public IActionResult Statistics()
     {
         //пока нет авторизации
@@ -56,6 +71,7 @@ public class HabitTrackerController : Controller
     } 
     
     [HttpGet]
+    [Authorize]
     public IActionResult Diary(int month, int year)
     {
         var user = _habitRepository.GetTheFisrtUser();
@@ -66,63 +82,119 @@ public class HabitTrackerController : Controller
         
         return View();
     } 
-
+    
     [HttpGet]
+    [Authorize]
     public IActionResult Settings()
     {
+        return View();
+    }
+    
+    [HttpGet]
+    [Authorize]
+    public IActionResult CreateHabit()
+    {
         var user = _habitRepository.GetTheFisrtUser();
-        var habitData = _habitRepository.GetByUserId(user.Id);
-        var model = _habitService.GenerateHabitList(habitData);
-        
+        var model = new HabitViewModel
+        {
+            UserId = user.Id
+        };
         return View(model);
     }
     
     [HttpPost]
+    [Authorize]
     public IActionResult CreateHabit(HabitViewModel  habit)
     {
-        //пока нет авторизации
-        var user = _habitRepository.GetTheFisrtUser();
-        var habitTitles = _habitRepository
-            .GetByUserId(user.Id)
-            .Select(x => x.Title)
-            .ToList();
-        
-        if (_habitService.IsHabitHasTitle(habit)
-            || _habitService.IsHabitUnique(habitTitles, habit))
+        if (!ModelState.IsValid)
         {
-            return RedirectToAction(nameof(Index));
+            return View(habit);
         }
         
-        var newHabit = _habitService.CreateHabit(habit, user);
+        //пока нет авторизации
+        var habitTitles = _habitRepository.GetTitlesByUserId(habit.UserId);
+        
+        if (!_habitService.IsHabitHasTitle(habit)
+            || !_habitService.IsHabitUnique(habitTitles, habit.Title))
+        {
+            return RedirectToAction(nameof(HabitTracker));
+        }
+        
+        var newHabit = _habitService.CreateHabit(habit);
         _habitRepository.Add(newHabit);
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(HabitTracker));
+    }
+    
+    [HttpGet]
+    [Authorize]
+    public IActionResult DeleteHabit()
+    {
+        var user = _habitRepository.GetTheFisrtUser();
+        var habitData = _habitRepository.GetByUserId(user.Id);
+
+        var model = _habitService.GenerateHabitList(habitData);
+        return View(model);
     }
 
     [HttpPost]
-    public IActionResult DeleteHabit(HabitViewModel habit)
+    [Authorize]
+    public IActionResult DeleteHabit(int habitId)
     {
-        var habitData = _habitRepository.Get(habit.Id);
+        if (habitId == 0)
+        {
+            return RedirectToAction(nameof(DeleteHabit));
+        }
+        
+        var habitData = _habitRepository.Get(habitId);
+        if (habitData == null)
+        {
+            return RedirectToAction(nameof(DeleteHabit));
+        }
+        
         _habitRepository.Remove(habitData);
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(HabitTracker));
     }
-
-    [HttpPost]
-    public IActionResult EditHabit(HabitViewModel habit)
+    
+    [HttpGet]
+    [Authorize]
+    public IActionResult EditHabit()
     {
-        _habitRepository.EditHabit(habit.Id,  habit.Title, habit.MonthGoal );
-        return RedirectToAction(nameof(Index));
+        var user = _habitRepository.GetTheFisrtUser();
+        var habitData = _habitRepository.GetByUserId(user.Id);
+        var model = _habitService.GenerateHabitList(habitData);
+        return View(model);
     }
 
     [HttpPost]
+    [Authorize]
+    public IActionResult EditHabit(HabitTrackerViewModel habitTracker)
+    {
+        var updateHabit = habitTracker.EditHabit;
+        if (updateHabit.Id == 0)
+        {
+            return View(habitTracker);
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(habitTracker);
+        }
+        
+        _habitService.EditHabit(updateHabit);
+        return RedirectToAction(nameof(HabitTracker));
+    }
+
+    [HttpPost]
+    [Authorize]
     public IActionResult TogglePoint(int habitId, int dayOfWeek)
     {
         var habit = _habitRepository.Get(habitId);
         if (habit == null)
         {
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(HabitTracker));
         }
         
         _habitDoneDatesRepository.ChangeDayPointStatus(habit.Id, dayOfWeek);
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(HabitTracker));
     }
 }

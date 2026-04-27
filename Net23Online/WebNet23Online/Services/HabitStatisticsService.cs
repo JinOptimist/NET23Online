@@ -23,7 +23,9 @@ public class HabitStatisticsService : IHabitStatisticsService
                     Title = habit.Title,
                     DaysInMonth = daysInMonth,
                     DoneCountInMonth = doneCount,
-                    Percent = (float)doneCount / daysInMonth * 100
+                    Percent = (float)doneCount / habit.MonthGoal * 100,
+                    UserId = habit.UserId,
+                    MonthGoal = habit.MonthGoal,
                 };
             }).ToList()
         };

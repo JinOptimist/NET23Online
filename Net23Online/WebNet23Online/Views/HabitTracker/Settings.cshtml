@@ -1,86 +1,39 @@
-@using WebNet23Online.Models.HabitTracker
-@model HabitTrackerViewModel
 @{
     Layout = "_LayoutHabitTracker";
 }
 
 <link rel="stylesheet" href="/css/habit-tracker/settings.css">
 
-<div class="tracker">
-    <div class="tracker-title">Настройки</div>
+<div class="settings-wrap">
+    <h2 class="settings-title">Настройки привычек</h2>
+    <p class="settings-sub">Управляйте своими привычками</p>
 
-    <div class="settings-container">
-
-        <div class="settings-card">
-            <div class="settings-card-header">
-                <span class="settings-icon">＋</span>
-                <h3>Добавить привычку</h3>
+    <div class="settings-grid">
+        <div class="s-card">
+            <div class="s-icon add">➕</div>
+            <div>
+                <div class="s-label">Добавить</div>
+                <div class="s-desc">Создайте новую привычку и задайте цель на месяц</div>
             </div>
-            <form method="post" action="/HabitTracker/CreateHabit">
-                <div class="form-group">
-                    <label>Название</label>
-                    <input type="text" name="Title" class="input-field" placeholder="Например: Йога 15 мин" />
-                </div>
-                <div class="form-group">
-                    <label>Цель — дней в месяц</label>
-                    <input type="number" name="MonthGoal" class="input-field" min="1" max="31" placeholder="Например: 20" />
-                </div>
-                <button type="submit" class="btn-action btn-add">Создать</button>
-            </form>
+            <a asp-action="CreateHabit" class="s-btn add">Создать →</a>
         </div>
 
-        <div class="settings-card">
-            <div class="settings-card-header">
-                <span class="settings-icon">✕</span>
-                <h3>Удалить привычку</h3>
+        <div class="s-card">
+            <div class="s-icon del">🗑️</div>
+            <div>
+                <div class="s-label">Удалить</div>
+                <div class="s-desc">Удалите привычку, которую больше не отслеживаете</div>
             </div>
-            <form method="post" action="/HabitTracker/DeleteHabit">
-                <div class="form-group">
-                    <label>Выберите привычку</label>
-                    <select name="Id" class="input-field">
-                        <option value="">— выберите —</option>
-                        @foreach (var habit in Model.Habits)
-                        {
-                            <option value="@habit.Id">@habit.Title</option>
-                        }
-                    </select>
-                </div>
-                <button type="submit" class="btn-action btn-delete">Удалить</button>
-            </form>
+            <a asp-action="DeleteHabit" class="s-btn del">Удалить →</a>
         </div>
 
-        <div class="settings-card">
-            <div class="settings-card-header">
-                <span class="settings-icon">✎</span>
-                <h3>Редактировать привычку</h3>
+        <div class="s-card">
+            <div class="s-icon edit">🖊️</div>
+            <div>
+                <div class="s-label">Редактировать</div>
+                <div class="s-desc">Измените название или цель существующей привычки</div>
             </div>
-            <form method="post" action="/HabitTracker/EditHabit">
-                <div class="form-group">
-                    <label>Выберите привычку</label>
-                    <select name="Id" class="input-field" id="edit-select">
-                        <option value="">— выберите —</option>
-                        @foreach (var habit in Model.Habits)
-                        {
-                            <option value="@habit.Id" 
-                                    data-title="@habit.Title"
-                                    data-goal="@habit.MonthGoal">@habit.Title</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-group" id="edit-fields" style="display:none">
-                    <label>Новое название</label>
-                    <input type="text" name="Title" class="input-field" id="edit-title" />
-                </div>
-                <div class="form-group" id="edit-goal-field" style="display:none">
-                    <label>Цель — дней в месяц</label>
-                    <input type="number" name="MonthGoal" class="input-field" id="edit-goal" min="1" max="31" />
-                </div>
-                <button type="submit" class="btn-action btn-edit" id="edit-btn" style="display:none">Сохранить</button>
-            </form>
+            <a asp-action="EditHabit" class="s-btn edit">Изменить →</a>
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script src="/js/habit-tracker/settings.js"></script>
-}

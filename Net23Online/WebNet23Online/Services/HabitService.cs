@@ -1,10 +1,28 @@
 using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.HabitTracker;
 
 namespace WebNet23Online.Services;
 
 public class HabitService : IHabitService
 {
+    private readonly IHabitRepository _habitRepository;
+
+    public HabitService(IHabitRepository _habitRepository)
+    {
+        this._habitRepository = _habitRepository;
+    }
+    
+    public HabitViewModel GenerateHabit(HabitData habit)
+    {
+        return new HabitViewModel
+        {
+            Id = habit.Id,
+            Title = habit.Title,
+            MonthGoal = habit.MonthGoal,
+            UserId = habit.User.Id
+        };
+    }
     public HabitTrackerViewModel GenerateHabitList(List<HabitData> habitData)
     {
         return new HabitTrackerViewModel
@@ -13,7 +31,8 @@ public class HabitService : IHabitService
             {
                 Id = habit.Id,
                 Title = habit.Title,
-                MonthGoal = habit.MonthGoal
+                MonthGoal = habit.MonthGoal,
+                UserId = habit.User.Id
             }).ToList()
         };
     }
@@ -26,6 +45,7 @@ public class HabitService : IHabitService
                 Id = habit.Id,
                 Title = habit.Title,
                 MonthGoal = habit.MonthGoal,
+                UserId = habit.User.Id,
                 WeekResults = GenerateWeekResult(habit.CompletedDates
                     .Select(x=> x.DateOfCompletion)
                     .ToList())
@@ -34,7 +54,6 @@ public class HabitService : IHabitService
         };
         return modelHabitTracker;
     }
-
     private List<bool> GenerateWeekResult(List<DateTime> results)
     {
         var today = DateTime.Today;
@@ -50,26 +69,7 @@ public class HabitService : IHabitService
                 .Contains(weekStart.AddDays(day)))
             .ToList();
     }
-    
-    public void EnsureDefaultHabits(UserData user, List<HabitData> habitData)
-    {
-        if (habitData.Any())
-        {
-            return;
-        }
-
-        var defaultHabits = new List<string> { "Спорт 30 мин", "Программирование 1 час", "Вода 2л" };
-    
-        foreach (var title in defaultHabits)
-        {
-            habitData.Add(new HabitData
-            {
-                Title = title,
-                User = user,
-            });
-        }
-    }
-    public HabitData CreateHabit(HabitViewModel modelHabit, UserData user)
+    public HabitData CreateHabit(HabitViewModel modelHabit)
     {
         //поймет ли навигационное поле, что я имею ввиду?
         var habit = new HabitData()
@@ -77,19 +77,28 @@ public class HabitService : IHabitService
             Title = modelHabit.Title,
             MonthGoal = modelHabit.MonthGoal,
             CompletedDates = new List<HabitDoneDatesData>(),
-            User = user,
+            UserId = modelHabit.UserId,
         };
 
         return habit;
     }
-
     public bool IsHabitHasTitle(HabitViewModel  habit)
     {
-        return string.IsNullOrEmpty(habit.Title);
+        return !string.IsNullOrEmpty(habit.Title);
     }
-    
-    public bool IsHabitUnique(List<string> habitTitles, HabitViewModel  habit)
+    public bool IsHabitUnique(List<string> habitTitles, string habitTitle)
     {
-        return habitTitles.Any(h => h == habit.Title);
+        return !habitTitles.Contains(habitTitle);
+    }
+    public void EditHabit(HabitViewModel updateHabit)
+    {
+        var habitData = new HabitData
+        {
+            Id = updateHabit.Id,
+            Title = updateHabit.Title,
+            MonthGoal = updateHabit.MonthGoal,
+        };
+    
+        _habitRepository.EditHabit(habitData);
     }
 }

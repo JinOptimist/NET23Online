@@ -1,47 +1,124 @@
-@model WebNet23Online.Models.HabitTracker.HabitTrackerViewModel
+﻿@using WebNet23Online.Models.HabitTracker
+
 @{
     Layout = "_LayoutHabitTracker";
 }
 
-<link rel="stylesheet" href="/css/habit-tracker/main.css">
+<link rel="stylesheet" href="/css/habit-tracker/welcome.css">
 
+<div class="welcome-page">
 
-<div class="tracker">
-    <div class="tracker-title">Трекер задач на неделю</div>
-    <div class="tracker-date">Сегодня - </div>
-    
-    <div class="table-tracker">
-      <div class="tracker-header">
-        <div class="habit-label-cell"></div>
-        <div class="day-cell">Пн</div>
-        <div class="day-cell">Вт</div>
-        <div class="day-cell">Ср</div>
-        <div class="day-cell">Чт</div>
-        <div class="day-cell">Пт</div>
-        <div class="day-cell">Сб</div>
-        <div class="day-cell">Вс</div>
-      </div>
-
-      @for(int i = 0; i < Model.Habits.Count; i++)
-      {
-        var habit = Model.Habits[i];
-        <div class="tracker-row">
-          <div class="habit-name">@habit.Title</div>
-          @for(var d = 0; d < 7; d++)
-          {
-            <div class="dot-cell">
-              <span class="dot color-@(i % 4) @(habit.WeekResults[d] ? "active" : "")" 
-                    data-habit-id="@habit.Id" 
-                    data-day-index="@d">
-              </span>
+    <!-- Hero секция -->
+    <header class="welcome-hero">
+        <div class="hero-content">
+            <div class="hero-left">
+                <h1 class="hero-title">
+                    Привычки,<br>которые остаются
+                </h1>
+                <p class="hero-subtitle">
+                    Красивый и простой трекер привычек,<br>
+                    созданный с любовью к эстетике и дисциплине
+                </p>
+                <div class="hero-buttons">
+                    <a href="@Url.Action("HabitTracker", "HabitTracker")" class="btn-primary">Начать отслеживать</a>
+                    <a href="#features" class="btn-secondary">Узнать возможности</a>
+                </div>
             </div>
-          }
+
+            <div class="hero-visual">
+                <div class="mockup">
+                    <img src="/images/habit-tracker/habit-mockup.png" alt="Habit Tracker Preview" class="mockup-img">
+                </div>
+            </div>
         </div>
-      }
-    </div>
+    </header>
+
+    <!-- Особенности -->
+    <section id="features" class="features-section">
+        <div class="section-header">
+            <h2>Возможности Habit Tracker</h2>
+            <p>Всё, что нужно для формирования устойчивых привычек</p>
+        </div>
+
+        <div class="features-grid">
+
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Недельный трекер</h3>
+                <p>Удобная таблица на неделю с цветными точками. Один клик — и привычка отмечена.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Месячная статистика</h3>
+                <p>Прогресс-бары и точный процент выполнения цели за текущий месяц.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h3>Дневник привычек</h3>
+                <p>Красивый календарь. Нажимай на любой день и оставляй заметки о своём дне.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3>Создание и редактирование</h3>
+                <p>Добавляй новые привычки, задавай цель (дней в месяц) и легко редактируй.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🗑️</div>
+                <h3>Удаление привычек</h3>
+                <p>Если привычка больше не актуальна — удали её в два клика.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Нежный дизайн</h3>
+                <p>Мягкие розовые тона, плавные анимации и внимание к каждой детали.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Как это работает -->
+    <section class="how-it-works">
+        <div class="section-header">
+            <h2>Как это работает?</h2>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <h3>Добавь привычку</h3>
+                    <p>Придумай название и укажи, сколько дней в месяц хочешь её выполнять.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <h3>Отмечай ежедневно</h3>
+                    <p>Кликай по цветным точкам в недельном трекере.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <h3>Следи за прогрессом</h3>
+                    <p>Смотри статистику и веди дневник настроения и мыслей.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Готова начать менять свою жизнь?</h2>
+            <p>Присоединяйся к тысячам девушек, которые уже формируют прекрасные привычки</p>
+            <a href="@Url.Action("HabitTracker", "HabitTracker")" class="btn-primary large">Открыть мой трекер →</a>
+        </div>
+    </section>
+
 </div>
-
-@section Scripts {
-    <script src="/js/habit-tracker/main.js"></script>
-}
-
