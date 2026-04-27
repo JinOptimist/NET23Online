@@ -199,7 +199,6 @@ main.pb-3 {
 }
 
 .genre-filter-chip {
-    /* Make genre chips visually consistent with site buttons */
     display: inline-flex;
     align-items: center;
     justify-content: center;
