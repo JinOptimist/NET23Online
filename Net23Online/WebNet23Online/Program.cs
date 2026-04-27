@@ -7,6 +7,8 @@ using WebNet23Online.Data.Repositories.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
+using WebNet23Online.Data.Repositories.Interfaces.Steam;
+using WebNet23Online.Data.Repositories.Steam;
 using WebNet23Online.Services;
 using WebNet23Online.Services.DelightBistro;
 using WebNet23Online.Services.Interfaces;
@@ -118,10 +120,11 @@ builder.Services.AddScoped<IGenreOfRockBandsRepository, GenreOfRockBandsReposito
 builder.Services.AddScoped<ILittleLemonReservationRepository, LittleLemonReservationRepository>();
 builder.Services.AddScoped<ILittleLemonGuestRepository, LittleLemonGuestRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRockLegendsGenresRepository, RockLegendsGenresRepository>();
 
 builder.Services.AddScoped<IGameRepository, GameRepository>();
-builder.Services.AddScoped<IRockLegendsGenresRepository, RockLegendsGenresRepository>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
+builder.Services.AddScoped<IGameGenreRepository, GameGenreRepository>();
 
 builder.Services.AddHttpContextAccessor();
 

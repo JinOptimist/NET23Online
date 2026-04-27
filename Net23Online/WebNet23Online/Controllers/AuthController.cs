@@ -45,6 +45,7 @@ namespace WebNet23Online.Controllers
             {
                 new Claim(AuthService.COOCKIE_ID_KEY, user.Id.ToString()),
                 new Claim(AuthService.COOCKIE_ROLE_KEY, user.Role.ToString()),
+                new Claim(AuthService.COOCKIE_NAME_KEY, user.Name),
                 new Claim(ClaimTypes.AuthenticationMethod, AuthService.AUTH_KEY)
             };
 
