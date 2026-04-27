@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebNet23Online.Data;
 using WebNet23Online.Data.Models;
@@ -45,12 +46,14 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult CreateMenu()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult CreateMenu(CreateMenuViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -63,12 +66,14 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult CreateIngredient()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult CreateIngredient(CreateIngredientViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -82,6 +87,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult FoodBuilderData(int id)
         {
             if (id > 0)
@@ -98,6 +104,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult FoodBuilderData(CreateFoodItemViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -117,6 +124,7 @@ namespace WebNet23Online.Controllers
             return RedirectToAction(nameof(AllFoodItems));
         }
 
+        [Authorize]
         public IActionResult AllFoodItems()
         {
 

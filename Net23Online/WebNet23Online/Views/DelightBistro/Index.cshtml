@@ -1,7 +1,7 @@
 ﻿@using WebNet23Online.Models.DelightBistro;
 
 @{
-    Layout = "_LayoutimagesDelightBistro";
+    Layout = "_LayoutDelightBistro";
 }
 @model List<MenuTypeViewModel>
 
@@ -30,81 +30,88 @@
             if ((category.FoodItems).Any())
             {
                 <div class="type-of-food">
-                    <div class="type-name center">@category.Name</div>
-                    <div class="menu">
-
-                        @foreach (var foodItem in category.FoodItems)
-                        {
-                            <div class="food-item" item-id="@foodItem.Id">
-                                <div class="image-container">
-                                    <a href="\DelightBistro\FoodBuilderData?id=@foodItem.Id"><img src=@foodItem.ImgURL alt=@foodItem.Name /></a>
+                    <div class="type-name center">
+                        @category.Name @if(category.Creator!=null) {
+                        <div> (Creator: @category.Creator)</div>
+                    }
+                </div>
+                <div class="menu">
+                    @foreach (var foodItem in category.FoodItems)
+                    {
+                        <div class="food-item" item-id="@foodItem.Id">
+                            @if (foodItem.Creator != null)
+                            {
+                                <div> Creator: @foodItem.Creator</div>
+                            }
+                            <div class="image-container">
+                                <a href="\DelightBistro\FoodBuilderData?id=@foodItem.Id"><img src=@foodItem.ImgURL alt=@foodItem.Name /></a>
+                            </div>
+                            <div class="name-price-btn">
+                                <div class="name-price">
+                                    <div class="food-name">@foodItem.Name</div>
+                                    <div class="price">@foodItem.Price р</div>
                                 </div>
-                                <div class="name-price-btn">
-                                    <div class="name-price">
-                                        <div class="food-name">@foodItem.Name</div>
-                                        <div class="price">@foodItem.Price р</div>
-                                    </div>
-                                    <div class="btnright">
-                                        <button class="add-button colorbtn">+</button>
-                                    </div>
-                                </div>
-                                <div class="recept">
-                                    <ul>
-                                        @if (foodItem.Ingredients is not null)
-                                        {
-                                            @foreach (var ingredient in foodItem.Ingredients)
-                                            {
-                                                <li>@ingredient</li>
-                                            }
-                                        }
-                                    </ul>
+                                <div class="btnright">
+                                    <button class="add-button colorbtn">+</button>
                                 </div>
                             </div>
-                        }
-                    </div>
+                            <div class="recept">
+                                <ul>
+                                    @if (foodItem.Ingredients is not null)
+                                    {
+                                        @foreach (var ingredient in foodItem.Ingredients)
+                                        {
+                                            <li>@ingredient</li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    }
                 </div>
-            }
+            </div>
         }
-    </div>
+    }
+</div>
         
-    <aside class="right-bar">
-        <div class="form-field">
-            <form method="post">
-                <div class="userName">Username</div>
-                <input type="text"
-                       name="username"
-                       placeholder="Введите логин"
-                       required />
+<aside class="right-bar">
+    <div class="form-field">
+        <form method="post">
+            <div class="userName">Username</div>
+            <input type="text"
+                   name="username"
+                   placeholder="Введите логин"
+                   required />
 
-                <div>Password</div>
-                <input type="password"
-                       name="userPassword"
-                       placeholder="Введите пароль"
-                       required />
-                <button type="submit">Войти</button>
-            </form>
-        </div>
+            <div>Password</div>
+            <input type="password"
+                   name="userPassword"
+                   placeholder="Введите пароль"
+                   required />
+            <button type="submit">Войти</button>
+        </form>
+    </div>
 
-        <ul class="navigation">
-            <li><a href="\DelightBistro\Index">Все меню</a> </li>
+    <ul class="navigation">
+        <li><a href="\DelightBistro\Index">Все меню</a> </li>
 
-            @foreach (var menu in Model)
-            {
-                <li><a href="\DelightBistro\Index?menutype=@menu.Name">@menu.Name</a> </li>
+        @foreach (var menu in Model)
+        {
+            <li><a href="\DelightBistro\Index?menutype=@menu.Name">@menu.Name</a> </li>
 
-            }
-            <br>
+        }
+        <br>
             
-            <br>
-            <li><a href="\DelightBistro\CreateMenu">Создать меню</a> </li>
-            <li><a href="\DelightBistro\CreateIngredient">Создать ингредиенты</a> </li>
-            <li><a href="\DelightBistro\FoodBuilderData">Создать Блюдо</a> </li>
-            <br>
-            <li><a href="\DelightBistro\AllFoodItems">Все блюда</a> </li>
+        <br>
+        <li><a href="\DelightBistro\CreateMenu">Создать меню</a> </li>
+        <li><a href="\DelightBistro\CreateIngredient">Создать ингредиенты</a> </li>
+        <li><a href="\DelightBistro\FoodBuilderData">Создать Блюдо</a> </li>
+        <br>
+        <li><a href="\DelightBistro\AllFoodItems">Все блюда</a> </li>
 
 
 
-        </ul>
-    </aside>
+    </ul>
+</aside>
 </div>
 
