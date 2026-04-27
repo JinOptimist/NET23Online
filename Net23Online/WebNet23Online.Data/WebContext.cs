@@ -49,13 +49,29 @@ namespace WebNet23Online.Data
                 .WithOne(x => x.Studio)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<ZooData>()
-                .HasMany(x => x.AnimalSpecies)
-                .WithMany(x => x.ZooData);
-
             modelBuilder.Entity<AnimalFamilyData>()
                 .HasMany(x => x.Species)
-                .WithOne(x => x.AnimalFamily);
+                .WithOne(x => x.AnimalFamily)
+                .HasForeignKey(x => x.AnimalFamilyId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ZooData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedByMeZoos)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<AnimalFamilyData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedByMeAnimalFamilies)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<AnimalSpeciesData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedByMeAnimalSpecies)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UserData>()
                 .HasOne(x => x.UserProfile)

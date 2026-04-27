@@ -1,4 +1,5 @@
 using WebNet23Online.Data.Enums;
+using WebNet23Online.Data.Models.AnimalWorld;
 using WebNet23Online.Data.Models.Steam;
 
 namespace WebNet23Online.Data.Models
@@ -17,8 +18,11 @@ namespace WebNet23Online.Data.Models
         public virtual List<IngredientData> CreatedIngredients { get; set; } = new();
         public virtual List<FoodItemData> CreatedFoodItems { get; set; } = new();
         public virtual List<MenuData> CreatedMenus { get; set; } = new();
+        public virtual List<ZooData> CreatedByMeZoos { get; set; }
+        public virtual List<AnimalFamilyData> CreatedByMeAnimalFamilies { get; set; }
+        public virtual List<AnimalSpeciesData> CreatedByMeAnimalSpecies { get; set; }
 
-        
+
 
         public virtual List<HabitData> Habits { get; set; }
         public virtual List<HabitTrackerDiaryData> DiaryEntries { get; set; }
