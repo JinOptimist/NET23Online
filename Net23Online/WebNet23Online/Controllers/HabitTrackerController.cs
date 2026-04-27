@@ -20,16 +20,14 @@ public class HabitTrackerController : Controller
     
     private IHabitRepository _habitRepository;
     private IHabitDoneDatesRepository _habitDoneDatesRepository;
-    private IUserRepository _userRepository;
     private IHabitDiaryRepository _diaryRepository;
     public HabitTrackerController(IHabitService habitService, IHabitStatisticsService statisticsService,
-        IHabitRepository habitRepository, IUserRepository userRepository, IHabitDiaryRepository diaryRepository,
+        IHabitRepository habitRepository, IHabitDiaryRepository diaryRepository,
         IHabitDoneDatesRepository habitDoneDatesRepository, IAuthService authService)
     {
         _habitService = habitService;
         _statisticsService = statisticsService;
         _habitRepository = habitRepository;
-        _userRepository = userRepository;
         _diaryRepository = diaryRepository;
         _habitDoneDatesRepository = habitDoneDatesRepository;
         _authService = authService;
@@ -113,14 +111,6 @@ public class HabitTrackerController : Controller
         if (!ModelState.IsValid)
         {
             return View(habit);
-        }
-        
-        var habitTitles = _habitRepository.GetTitlesByUserId(habit.UserId);
-        
-        if (!_habitService.IsHabitHasTitle(habit)
-            || !_habitService.IsHabitUnique(habitTitles, habit.Title))
-        {
-            return RedirectToAction(nameof(HabitTracker));
         }
         
         var newHabit = _habitService.CreateHabit(habit);

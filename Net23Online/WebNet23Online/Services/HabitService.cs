@@ -1,16 +1,19 @@
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.HabitTracker;
+using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services;
 
 public class HabitService : IHabitService
 {
     private readonly IHabitRepository _habitRepository;
+    private readonly IAuthService _authService;
 
-    public HabitService(IHabitRepository _habitRepository)
+    public HabitService(IHabitRepository _habitRepository, IAuthService authService)
     {
         this._habitRepository = _habitRepository;
+        _authService = authService;
     }
     
     public HabitViewModel GenerateHabit(HabitData habit)
@@ -85,14 +88,6 @@ public class HabitService : IHabitService
 
         return habit;
     }
-    public bool IsHabitHasTitle(HabitViewModel  habit)
-    {
-        return !string.IsNullOrEmpty(habit.Title);
-    }
-    public bool IsHabitUnique(List<string> habitTitles, string habitTitle)
-    {
-        return !habitTitles.Contains(habitTitle);
-    }
     public void EditHabit(HabitViewModel updateHabit)
     {
         var habitData = new HabitData
@@ -103,5 +98,10 @@ public class HabitService : IHabitService
         };
     
         _habitRepository.EditHabit(habitData);
+    }
+    public bool IsHabitTitleUniq(string title)
+    {
+        var userId = _authService.GetUserId();
+        return _habitRepository.IsHabitTitleUniq(title, userId);
     }
 }

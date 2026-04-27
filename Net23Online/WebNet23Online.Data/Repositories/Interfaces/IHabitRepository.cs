@@ -12,5 +12,5 @@ public interface IHabitRepository : IBaseRepository<HabitData>
     List<HabitData> AddDefaultHabits(int userId);
     void EditHabit(HabitData habitData);
     List<string> GetTitlesByUserId(int userId);
-    bool IsHabitTitleUniq(string title);
+    bool IsHabitTitleUniq(string title, int userId);
 }

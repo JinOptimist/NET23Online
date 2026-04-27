@@ -19,11 +19,10 @@ public class HabitDoneDatesRepository : BaseRepository<HabitDoneDatesData>, IHab
         if (targetDateDone == null)
         {
             var habit = _context.Habits.FirstOrDefault(x => x.Id == habitId);
-            
-            //проверка
+
             if (habit == null)
             {
-                Console.WriteLine($"there is no habits with id {habitId}");
+                throw new ArgumentNullException("Привычка не найдена");
             }
             
             Add(new HabitDoneDatesData

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Services;
 
 namespace WebNet23Online.Models.CustomValidatioAttributes;
 
@@ -12,8 +13,8 @@ public class IsHabitTitleUniqAttribute : ValidationAttribute
             return ValidationResult.Success;
         }
 
-        var repository = validationContext.GetRequiredService<IHabitRepository>();
-        if (!repository.IsHabitTitleUniq(title))
+        var habitService = validationContext.GetRequiredService<IHabitService>();
+        if (!habitService.IsHabitTitleUniq(title))
         {
             return new ValidationResult(
                 string.IsNullOrEmpty(ErrorMessage) 

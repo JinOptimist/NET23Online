@@ -9,7 +9,7 @@ public interface IHabitService
     HabitTrackerViewModel GenerateHabitList(List<HabitData> habitData);
     HabitTrackerViewModel GenerateHabitTrackerWithResults(List<HabitData> habitData);
     HabitData CreateHabit(HabitViewModel modelHabit);
-    bool IsHabitHasTitle(HabitViewModel habit);
-    bool IsHabitUnique(List<string> habitTitles,  string habitTitle);
     void EditHabit(HabitViewModel updateHabit);
+    bool IsHabitTitleUniq(string title);
+
 }
