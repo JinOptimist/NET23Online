@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
+using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
 using WebNet23Online.Models.DelightBistro;
@@ -104,7 +105,8 @@ namespace WebNet23Online.Services.DelightBistro
                 MenuType = foodItemData.MenuData?.Name ?? "Общее меню",
                 Ingredients = foodItemData.IngredientsList
                 .Select(fi => fi.Name).ToList(),
-                Creator = foodItemData.Creator?.Name
+                Creator = foodItemData.Creator?.Name,
+                CreatorId = foodItemData.CreatorId,
             };
 
             return foodItemViewModel;
@@ -159,6 +161,29 @@ namespace WebNet23Online.Services.DelightBistro
             var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas, foodItemData);
 
             return allIngredientVM;
+        }
+
+        public void DeleteFoodItem(int id)
+        {
+            var fooditem = _foodItemRepository.Get(id);
+            if (fooditem != null)
+            {
+                _foodItemRepository.Remove(fooditem);
+            }
+        }
+
+        public AllFoodItemWithPermissionViewModel GetFoodsWithPermission(List<FoodItemViewModel> foodItemsViewModel)
+        {
+            var currentUser = _authService.GetUser()!;
+            var viewModel = new AllFoodItemWithPermissionViewModel()
+            {
+                FoodItems = foodItemsViewModel,
+                CurrentUserId = currentUser.Id,
+                IsAdmin = currentUser.Role == UserRole.Admin
+            };
+
+
+            return viewModel;
         }
     }
 }

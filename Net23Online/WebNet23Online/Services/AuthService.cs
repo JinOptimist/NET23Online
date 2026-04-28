@@ -15,7 +15,7 @@ namespace WebNet23Online.Services
         private IHttpContextAccessor _httpContextAccessor;
         private readonly IUserRepository _userRepository;
 
-        public AuthService(IHttpContextAccessor httpContextAccessor, 
+        public AuthService(IHttpContextAccessor httpContextAccessor,
             IUserRepository userRepository)
         {
             _httpContextAccessor = httpContextAccessor;
@@ -35,7 +35,7 @@ namespace WebNet23Online.Services
             var userId = int.Parse(userIdStr);
             return userId;
         }
-    
+
         public UserData? GetUser()
         {
             var userId = GetUserId();
@@ -59,7 +59,8 @@ namespace WebNet23Online.Services
         /// <exception cref="InvalidOperationException"></exception>
         public UserRole GetRole()
         {
-            if (!IsAuthenticated()) {
+            if (!IsAuthenticated())
+            {
                 throw new InvalidOperationException();
             }
             var roleStr = _httpContextAccessor.HttpContext!.User.Claims
@@ -78,6 +79,18 @@ namespace WebNet23Online.Services
 
             var role = GetRole();
             return role == UserRole.Moderator || role == UserRole.Admin;
+        }
+
+        public bool IsCurrentUserAtLeastEmployee()
+        {
+            if (!IsAuthenticated())
+            {
+                return false;
+            }
+            var role = GetRole();
+            return role == UserRole.Admin 
+                || role == UserRole.Moderator 
+                || role == UserRole.Employee;
         }
     }
 }

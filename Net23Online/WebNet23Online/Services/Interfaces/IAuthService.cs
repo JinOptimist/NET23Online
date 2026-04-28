@@ -10,5 +10,6 @@ namespace WebNet23Online.Services.Interfaces
         int GetUserId();
         bool IsAuthenticated();
         bool AtLeastModerator();
+        bool IsCurrentUserAtLeastEmployee();
     }
 }

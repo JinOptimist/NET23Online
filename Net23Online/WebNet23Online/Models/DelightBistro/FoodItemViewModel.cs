@@ -12,5 +12,6 @@ namespace WebNet23Online.Models.DelightBistro
         public string? MenuType { get; set; }
         public List<string> Ingredients { get; set; }
         public string? Creator { get; set; }
+        public int? CreatorId { get; set; }
     }
 }
