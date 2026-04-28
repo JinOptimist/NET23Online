@@ -4,6 +4,7 @@
     {
         User = 1,
         Moderator = 10,
-        Admin = 99
+        Admin = 99,
+        RockBandOwner = 6
     }
 }

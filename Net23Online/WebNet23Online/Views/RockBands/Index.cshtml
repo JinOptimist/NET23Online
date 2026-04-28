@@ -66,64 +66,90 @@
             </div>
         }
 
-        <section class="preferences_music edit_band_genres_form">
-            <div class="preferences_music_title">
-                <h2>Редактировать жанры существующих групп</h2>
-                <p class="add_band_form_hint">Выбери группу, затем отметь жанры и нажми “Сохранить”.</p>
-            </div>
-            <div class="preferences_music_items edit_band_genres_panel">
-                <form method="get" asp-controller="RockBands" asp-action="Index" class="edit_band_genres_toolbar">
-                    @foreach (var id in Model.SelectedGenreIds)
-                    {
-                        <input type="hidden" name="genreIds" value="@id" />
-                    }
-                    <div class="edit_band_genres_field">
-                        
-                        <select id="select_band" class="edit_band_genres_select" name="editBandId">
-                            <option value="">Выберите группу</option>
-                            @foreach (var b in Model.Bands)
-                            {
-                                <option value="@b.Id" selected="@(Model.EditBandId == b.Id)">@b.Name</option>
-                            }
-                        </select>
-                    </div>
-                    <button type="submit" class="add_band_submit">Открыть</button>
-                </form>
+        @if (Model.CanEditRockBandGenres)
+        {
+            <section class="preferences_music edit_band_genres_form">
+                <div class="preferences_music_title">
+                    <h2>Редактировать жанры существующих групп</h2>
+                    <p class="add_band_form_hint">Выбери группу, затем отметь жанры и нажми “Сохранить”.</p>
+                </div>
+                <div class="preferences_music_items edit_band_genres_panel">
+                    <form method="get" asp-controller="RockBands" asp-action="Index" class="edit_band_genres_toolbar">
+                        @foreach (var id in Model.SelectedGenreIds)
+                        {
+                            <input type="hidden" name="genreIds" value="@id" />
+                        }
+                        <div class="edit_band_genres_field">
 
-                @{
-                    var editBand = Model.EditBandId.HasValue
-                        ? Model.Bands.FirstOrDefault(x => x.Id == Model.EditBandId.Value)
-                        : null;
-                }
-
-                @if (editBand != null)
-                {
-                    <form method="post" asp-controller="RockBands" asp-action="UpdateGenres" class="edit_band_genres_item">
-                        <input type="hidden" name="bandId" value="@editBand.Id" />
-                        <div class="edit_band_genres_header">
-                            <strong>@editBand.Name</strong>
+                            <select id="select_band" class="edit_band_genres_select" name="editBandId">
+                                <option value="">Выберите группу</option>
+                                @foreach (var b in Model.Bands)
+                                {
+                                    <option value="@b.Id" selected="@(Model.EditBandId == b.Id)">@b.Name</option>
+                                }
+                            </select>
                         </div>
-                        <div class="genre_filter_list genre_filter_list_compact">
-                            @foreach (var g in Model.Genres)
-                            {
-                                var inputId = $"edit_{editBand.Id}_{g.Id}";
-                                var isChecked = editBand.GenreIds != null && editBand.GenreIds.Contains(g.Id);
-                                <input class="genre_filter_checkbox"
-                                       type="checkbox"
-                                       id="@inputId"
-                                       name="selectedGenreIds"
-                                       value="@g.Id"
-                                       @(isChecked ? "checked" : null) />
-                                <label class="genre_filter_chip" for="@inputId">@g.Name</label>
-                            }
-                        </div>
-                        <div class="edit_band_genres_actions">
-                            <button type="submit" class="add_band_submit">Сохранить</button>
-                        </div>
+                        <button type="submit" class="add_band_submit">Открыть</button>
                     </form>
-                }
-            </div>
-        </section>
+
+                    @{
+                        var editBand = Model.EditBandId.HasValue
+                            ? Model.Bands.FirstOrDefault(x => x.Id == Model.EditBandId.Value)
+                            : null;
+                    }
+
+                    @if (editBand != null)
+                    {
+                        <form method="post" asp-controller="RockBands" asp-action="UpdateGenres" class="edit_band_genres_item">
+                            <input type="hidden" name="bandId" value="@editBand.Id" />
+                            <div class="edit_band_genres_header">
+                                <strong>@editBand.Name</strong>
+                            </div>
+                            <div class="genre_filter_list genre_filter_list_compact">
+                                @foreach (var g in Model.Genres)
+                                {
+                                    var inputId = $"edit_{editBand.Id}_{g.Id}";
+                                    var isChecked = editBand.GenreIds != null && editBand.GenreIds.Contains(g.Id);
+                                    <input class="genre_filter_checkbox"
+                                           type="checkbox"
+                                           id="@inputId"
+                                           name="selectedGenreIds"
+                                           value="@g.Id"
+                                           @(isChecked ? "checked" : null) />
+                                    <label class="genre_filter_chip" for="@inputId">@g.Name</label>
+                                }
+                            </div>
+                            <div class="edit_band_genres_actions">
+                                <button type="submit" class="add_band_submit">Сохранить</button>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </section>
+        }
+        else if (Model.IsUserAuth)
+        {
+            <section class="preferences_music edit_band_genres_form">
+                <div class="preferences_music_title">
+                    <h2>Редактировать жанры существующих групп</h2>
+                    <p class="add_band_form_hint">Редактирование жанров доступно только пользователям с ролью владельца раздела групп.</p>
+                </div>
+            </section>
+        }
+        else
+        {
+            <section class="preferences_music edit_band_genres_form">
+                <div class="preferences_music_title">
+                    <h2>Редактировать жанры существующих групп</h2>
+                    <p class="add_band_form_hint">
+                        Чтобы редактировать жанры, нужно
+                        <a asp-controller="Auth" asp-action="Login">войти</a>
+                        или
+                        <a asp-controller="Auth" asp-action="Registration">зарегистрироваться</a>.
+                    </p>
+                </div>
+            </section>
+        }
 
         <section class="preferences_music add_band_form">
             <div class="preferences_music_title">
