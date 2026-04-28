@@ -12,7 +12,7 @@ namespace WebNet23Online.Data.Models
         public virtual List<UserData> MyFriends { get; set; }
         public virtual List<UserData> WhoIsMyFriends { get; set; }
         public virtual UserProfileData? UserProfile { get; set; }
-        
+        public virtual List<RockBandsData>? RockBand { get; set; }
         public virtual List<HabitData> Habits { get; set; }
         public virtual List<HabitTrackerDiaryData> DiaryEntries { get; set; }
     }

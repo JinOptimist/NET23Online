@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebNet23Online.Services;
 using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
 
@@ -9,10 +8,12 @@ namespace WebNet23Online.Controllers
     public class RockBandsController : Controller
     {
         private readonly IRockBandsService _rockBandsService;
+        private readonly IAuthService _authService;
 
-        public RockBandsController(IRockBandsService rockBandsService)
+        public RockBandsController(IRockBandsService rockBandsService, IAuthService authService)
         {
             _rockBandsService = rockBandsService;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -27,6 +28,7 @@ namespace WebNet23Online.Controllers
 
             var viewModel = new RockBandsIndexViewModel
             {
+                IsUserAuth = _authService.IsAuthenticated(),
                 Bands = _rockBandsService.GetBands(selectedGenreIds),
                 Genres = genres,
                 SelectedGenreIds = selectedGenreIds,
@@ -45,6 +47,7 @@ namespace WebNet23Online.Controllers
                 var genres = _rockBandsService.GetGenres();
                 var startViewModel = new RockBandsIndexViewModel
                 {
+                    IsUserAuth = _authService.IsAuthenticated(),
                     Bands = _rockBandsService.GetBands(Array.Empty<int>()),
                     Genres = genres,
                     SelectedGenreIds = Array.Empty<int>(),
@@ -54,9 +57,7 @@ namespace WebNet23Online.Controllers
                 return View(startViewModel);
             }
 
-            var userIdStr = User.FindFirst(AuthService.COOCKIE_ID_KEY)?.Value;
-            var createdByUserId = int.Parse(userIdStr!);
-            
+            var createdByUserId = _authService.GetUserId();
             _rockBandsService.AddBand(band, createdByUserId);
             return RedirectToAction(nameof(Index));
         }
