@@ -13,30 +13,30 @@
 
 <main>
 
-    <div class="rock_bands_page">
-        <section class="genre_filter">
-            <div class="preferences_music_title">
+    <div class="rock-bands-page">
+        <section class="genre-filter">
+            <div class="preferences-music-title">
                 <h2>Выбери то, что предпочитаешь ты:</h2>
             </div>
 
             <form method="get" asp-controller="RockBands" asp-action="Index">
-                <div class="genre_filter_list">
+                <div class="genre-filter-list">
                     @foreach (var g in Model.Genres)
                     {
                         var inputId = $"genre_{g.Id}";
-                        <input class="genre_filter_checkbox"
+                        <input class="genre-filter-checkbox"
                                type="checkbox"
                                id="@inputId"
                                name="genreIds"
                                value="@g.Id"
                                @(g.IsSelected ? "checked" : null) />
-                        <label class="genre_filter_chip" for="@inputId">@g.Name</label>
+                        <label class="genre-filter-chip" for="@inputId">@g.Name</label>
                     }
                 </div>
 
-                <div class="genre_filter_actions">
-                    <button type="submit" class="add_band_submit">Показать</button>
-                    <a class="add_band_submit" asp-controller="RockBands" asp-action="Index">Сбросить</a>
+                <div class="genre-filter-actions">
+                    <button type="submit" class="add-band-submit">Показать</button>
+                    <a class="add-band-submit" asp-controller="RockBands" asp-action="Index">Сбросить</a>
                 </div>
             </form>
         </section>
@@ -44,7 +44,7 @@
         @foreach (var band in Model.Bands)
         {
             <div class="band">
-                <div class="band_thumb">
+                <div class="band-thumb">
                     @if (!string.IsNullOrWhiteSpace(band.ImageUrl))
                     {
                         <img src="@band.ImageUrl" alt="@band.Name" width="640" height="360" loading="lazy" referrerpolicy="no-referrer">
@@ -54,9 +54,13 @@
                         <img alt="@band.Name">
                     }
                 </div>
-                <div class="band_body">
+                <div class="band-body">
                     <h2>@band.Name</h2>
                     <p>@band.Description</p>
+                    @if (!string.IsNullOrWhiteSpace(band.CreatedByUserName))
+                    {
+                        <p><strong>Создано пользователем:</strong> @band.CreatedByUserName</p>
+                    }
 
                     @if (band.Genres != null && band.Genres.Count > 0)
                     {
@@ -66,22 +70,22 @@
             </div>
         }
 
-        @if (Model.CanEditRockBandGenres)
+        @if (Model.IsUserAuth)
         {
-            <section class="preferences_music edit_band_genres_form">
-                <div class="preferences_music_title">
+            <section class="preferences-music edit-band-genres-form">
+                <div class="preferences-music-title">
                     <h2>Редактировать жанры существующих групп</h2>
-                    <p class="add_band_form_hint">Выбери группу, затем отметь жанры и нажми “Сохранить”.</p>
+                    <p class="add-band-form-hint">Выбери группу, затем отметь жанры и нажми “Сохранить”.</p>
                 </div>
-                <div class="preferences_music_items edit_band_genres_panel">
-                    <form method="get" asp-controller="RockBands" asp-action="Index" class="edit_band_genres_toolbar">
+                <div class="preferences-music-items edit-band-genres-panel">
+                    <form method="get" asp-controller="RockBands" asp-action="Index" class="edit-band-genres-toolbar">
                         @foreach (var id in Model.SelectedGenreIds)
                         {
                             <input type="hidden" name="genreIds" value="@id" />
                         }
-                        <div class="edit_band_genres_field">
+                        <div class="edit-band-genres-field">
 
-                            <select id="select_band" class="edit_band_genres_select" name="editBandId">
+                            <select id="select_band" class="edit-band-genres-select" name="editBandId">
                                 <option value="">Выберите группу</option>
                                 @foreach (var b in Model.Bands)
                                 {
@@ -89,7 +93,7 @@
                                 }
                             </select>
                         </div>
-                        <button type="submit" class="add_band_submit">Открыть</button>
+                        <button type="submit" class="add-band-submit">Открыть</button>
                     </form>
 
                     @{
@@ -100,48 +104,39 @@
 
                     @if (editBand != null)
                     {
-                        <form method="post" asp-controller="RockBands" asp-action="UpdateGenres" class="edit_band_genres_item">
+                        <form method="post" asp-controller="RockBands" asp-action="UpdateGenres" class="edit-band-genres-item">
                             <input type="hidden" name="bandId" value="@editBand.Id" />
-                            <div class="edit_band_genres_header">
+                            <div class="edit-band-genres-header">
                                 <strong>@editBand.Name</strong>
                             </div>
-                            <div class="genre_filter_list genre_filter_list_compact">
+                            <div class="genre-filter-list genre-filter-list-compact">
                                 @foreach (var g in Model.Genres)
                                 {
                                     var inputId = $"edit_{editBand.Id}_{g.Id}";
                                     var isChecked = editBand.GenreIds != null && editBand.GenreIds.Contains(g.Id);
-                                    <input class="genre_filter_checkbox"
+                                    <input class="genre-filter-checkbox"
                                            type="checkbox"
                                            id="@inputId"
                                            name="selectedGenreIds"
                                            value="@g.Id"
                                            @(isChecked ? "checked" : null) />
-                                    <label class="genre_filter_chip" for="@inputId">@g.Name</label>
+                                    <label class="genre-filter-chip" for="@inputId">@g.Name</label>
                                 }
                             </div>
-                            <div class="edit_band_genres_actions">
-                                <button type="submit" class="add_band_submit">Сохранить</button>
+                            <div class="edit-band-genres-actions">
+                                <button type="submit" class="add-band-submit">Сохранить</button>
                             </div>
                         </form>
                     }
                 </div>
             </section>
         }
-        else if (Model.IsUserAuth)
-        {
-            <section class="preferences_music edit_band_genres_form">
-                <div class="preferences_music_title">
-                    <h2>Редактировать жанры существующих групп</h2>
-                    <p class="add_band_form_hint">Редактирование жанров доступно только пользователям с ролью владельца раздела групп.</p>
-                </div>
-            </section>
-        }
         else
         {
-            <section class="preferences_music edit_band_genres_form">
-                <div class="preferences_music_title">
+            <section class="preferences-music edit-band-genres-form">
+                <div class="preferences-music-title">
                     <h2>Редактировать жанры существующих групп</h2>
-                    <p class="add_band_form_hint">
+                    <p class="add-band-form-hint">
                         Чтобы редактировать жанры, нужно
                         <a asp-controller="Auth" asp-action="Login">войти</a>
                         или
@@ -151,47 +146,64 @@
             </section>
         }
 
-        <section class="preferences_music add_band_form">
-            <div class="preferences_music_title">
-                <h2>Добавить группу</h2>
-                <p class="add_band_form_hint">Новая карточка появится в списке в том же формате, что и остальные.</p>
-            </div>
-            <div class="preferences_music_items add_band_form_panel">
-                <form method="post" class="add_band_form_fields">
-                    <div class="add_band_field">
-                        <label for="band-name">Название</label>
-                        <input id="band-name" type="text" asp-for="BandBlock.Name" placeholder="Например, Arctic Monkeys" autocomplete="off" />
-                        @Html.ValidationMessageFor(m => m.BandBlock.Name)
-                    </div>
-                    <div class="add_band_field">
-                        <label for="band-description">Описание</label>
-                        <textarea id="band-description" asp-for="BandBlock.Description" placeholder="Коротко о группе и звучании" rows="4"></textarea>
-                        @Html.ValidationMessageFor(m => m.BandBlock.Description)
-                    </div>
-                    <div class="add_band_field">
-                        <label for="band-image">Ссылка на фото в интернете</label>
-                        <input id="band-image" type="text" inputmode="url" asp-for="BandBlock.ImageUrl" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
-                        <span class="add_band_field_help">Вставьте прямой URL картинки. Поле можно оставить пустым.</span>
-                        @Html.ValidationMessageFor(m => m.BandBlock.ImageUrl)
-                    </div>
-                    <div class="add_band_field">
-                        <label>Жанры</label>
-                        <div class="genre_filter_list genre_filter_list_compact">
-                            @foreach (var g in Model.Genres)
-                            {
-                                var inputId = $"add_genre_{g.Id}";
-                                <input class="genre_filter_checkbox"
-                                       type="checkbox"
-                                       id="@inputId"
-                                       name="BandBlock.SelectedGenreIds"
-                                       value="@g.Id" />
-                                <label class="genre_filter_chip" for="@inputId">@g.Name</label>
-                            }
+        @if (Model.IsUserAuth)
+        {
+            <section class="preferences-music add-band-form">
+                <div class="preferences-music-title">
+                    <h2>Добавить группу</h2>
+                    <p class="add-band-form-hint">Новая карточка появится в списке в том же формате, что и остальные.</p>
+                </div>
+                <div class="preferences-music-items add-band-form-panel">
+                    <form method="post" class="add-band-form-fields">
+                        <div class="add-band-field">
+                            <label for="band-name">Название</label>
+                            <input id="band-name" type="text" asp-for="BandBlock.Name" placeholder="Например, Arctic Monkeys" autocomplete="off" />
+                            @Html.ValidationMessageFor(m => m.BandBlock.Name)
                         </div>
-                    </div>
-                    <button type="submit" class="add_band_submit">Добавить в список</button>
-                </form>
-            </div>
-        </section>
+                        <div class="add-band-field">
+                            <label for="band-description">Описание</label>
+                            <textarea id="band-description" asp-for="BandBlock.Description" placeholder="Коротко о группе и звучании" rows="4"></textarea>
+                            @Html.ValidationMessageFor(m => m.BandBlock.Description)
+                        </div>
+                        <div class="add-band-field">
+                            <label for="band-image">Ссылка на фото в интернете</label>
+                            <input id="band-image" type="text" inputmode="url" asp-for="BandBlock.ImageUrl" placeholder="https://site.com/path/to/photo.jpg" spellcheck="false" autocomplete="off" />
+                            <span class="add-band-field-help">Вставьте прямой URL картинки. Поле можно оставить пустым.</span>
+                            @Html.ValidationMessageFor(m => m.BandBlock.ImageUrl)
+                        </div>
+                        <div class="add-band-field">
+                            <label>Жанры</label>
+                            <div class="genre-filter-list genre-filter-list-compact">
+                                @foreach (var g in Model.Genres)
+                                {
+                                    var inputId = $"add_genre_{g.Id}";
+                                    <input class="genre-filter-checkbox"
+                                           type="checkbox"
+                                           id="@inputId"
+                                           name="BandBlock.SelectedGenreIds"
+                                           value="@g.Id" />
+                                    <label class="genre-filter-chip" for="@inputId">@g.Name</label>
+                                }
+                            </div>
+                        </div>
+                        <button type="submit" class="add-band-submit">Добавить в список</button>
+                    </form>
+                </div>
+            </section>
+        }
+        else
+        {
+            <section class="preferences-music add-band-form">
+                <div class="preferences-music-title">
+                    <h2>Добавить группу</h2>
+                    <p class="add-band-form-hint">
+                        Чтобы добавлять группы, нужно
+                        <a asp-controller="Auth" asp-action="Login">войти</a>
+                        или
+                        <a asp-controller="Auth" asp-action="Registration">зарегистрироваться</a>.
+                    </p>
+                </div>
+            </section>
+        }
     </div>
 </main>
