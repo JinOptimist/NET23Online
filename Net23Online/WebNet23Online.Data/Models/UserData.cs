@@ -7,6 +7,9 @@ namespace WebNet23Online.Data.Models
     public class UserData : BaseModel
     {
         public string Name { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName {  get; set; }
+        public string? Mobilephone { get; set; }
         public string Password { get; set; }
         public UserRole Role { get; set; }
         public int? UserProfileId { get; set; }

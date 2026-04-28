@@ -124,5 +124,11 @@ namespace WebNet23Online.Controllers
 
             return View();
         }
+
+        [Authorize]
+        public IActionResult Zoos()
+        {
+            return View(_animalWorldService.GetAllZoos());
+        }
     }
 }

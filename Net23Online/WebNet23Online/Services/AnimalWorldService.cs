@@ -133,5 +133,10 @@ namespace WebNet23Online.Services
             _zooRepository.AddAnimalSpecies(zooId, animalSpeciesId);
             return true;
         }
+
+        public List<ZooViewModel> GetAllZoos()
+        {
+            return _animalWorldMapper.FromZooDataToZooViewModel(_zooRepository.GetAllWithAnimalSpecies());
+        }
     }
 }
