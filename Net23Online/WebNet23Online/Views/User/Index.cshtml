@@ -1,0 +1,13 @@
+﻿@using WebNet23Online.Models.User
+@model UserIndexViewModel
+
+@foreach (var user in Model.Users)
+{
+    <div>
+        @user.Name 
+        @if (Model.IsCurrentUserAdmin)
+        {
+            <a href="/User/DeleteUser?id=@user.Id">X</a>
+        }
+    </div>
+}

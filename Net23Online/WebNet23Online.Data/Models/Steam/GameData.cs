@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebNet23Online.Data.Enums.Steam;
 
 namespace WebNet23Online.Data.Models.Steam
 {
@@ -11,8 +10,14 @@ namespace WebNet23Online.Data.Models.Steam
         public int? PublisherId {  get; set; }
         [Precision(18, 2)]
         public decimal Price { get; set; }
-        public GameGenre Genre { get; set; }      
+        public int? CreatedByUserId { get; set; }
+        public int? ModifiedByUserId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
 
+        public virtual UserData CreatedByUser { get; set; }
+        public virtual UserData ModifiedByUser { get; set; }
         public virtual PublisherData Publisher { get; set; } 
+        public virtual List<GameGenreData> GameGenres { get; set; }
     }
 }

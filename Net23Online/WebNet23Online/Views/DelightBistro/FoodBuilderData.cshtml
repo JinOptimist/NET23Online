@@ -51,26 +51,11 @@
                 {
                     <div>
                         <input type="checkbox" name="SelectedIngredientsId"
-                               value="@inredient.Id" />
+                               value="@inredient.Id" @(inredient.IsSelected ? "checked" : "") />
                         <label>@inredient.Name</label>
                     </div>
                 }
-                @* @for (int i = 0; i < Model.Ingredients.Count; i++)
-                {
-                    <div>
-                        <input type="checkbox"
-                               id="ingredient_@Model.Ingredients[i].Id"
-                               name="Ingredients[@i].IsSelected"
-                               value="true"
-                        @(Model.Ingredients[i].IsSelected ? "checked" : "") />
-                        <label for="ingredient_@Model.Ingredients[i].Id">
-                            @Model.Ingredients[i].Name
-                        </label>
-                        <input type="hidden"
-                               name="Ingredients[@i].Id"
-                               value="@Model.Ingredients[i].Id" />
-                    </div>
-                } *@
+                
             </div>
         </div>
         

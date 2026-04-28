@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 using WebNet23Online.Data.Models;
-using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
 using WebNet23Online.Models.DelightBistro;
 using WebNet23Online.Services.Interfaces;
-using static System.Net.WebRequestMethods;
 
 namespace WebNet23Online.Services.DelightBistro
 {
@@ -15,12 +13,14 @@ namespace WebNet23Online.Services.DelightBistro
         private IMenuRepository _menuRepository;
         private IIngredientsRepository _ingredientsRepository;
         private IIngredientGenerator _ingredientGenerator;
-        public FoodItemGenerator(IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository, IIngredientGenerator ingredientGenerator)
+        private IAuthService _authService;
+        public FoodItemGenerator(IFoodItemRepository foodItemRepository, IMenuRepository menuRepository, IIngredientsRepository ingredientsRepository, IIngredientGenerator ingredientGenerator, IAuthService authService)
         {
             _foodItemRepository = foodItemRepository;
             _menuRepository = menuRepository;
             _ingredientsRepository = ingredientsRepository;
             _ingredientGenerator = ingredientGenerator;
+            _authService = authService;
         }
         public void FeelDataBase()
         {
@@ -53,6 +53,7 @@ namespace WebNet23Online.Services.DelightBistro
             {
                 menuData = _menuRepository.Get(viewModel.MenuId.Value);
             }
+
             var newFoodItemData = new FoodItemData()
             {
                 Name = viewModel.Name,
@@ -60,9 +61,9 @@ namespace WebNet23Online.Services.DelightBistro
                 ImgURL = viewModel.ImgURL,
 
                 MenuData = menuData,
-                IngredientsList = selectedIngredients
+                IngredientsList = selectedIngredients,
+                Creator = _authService.GetUser()
             };
-
             _foodItemRepository.Add(newFoodItemData);
         }
 
@@ -81,8 +82,7 @@ namespace WebNet23Online.Services.DelightBistro
                 menuData = _menuRepository.Get(viewModel.MenuId.Value);
             }
 
-            var changedFoodItemData = _foodItemRepository.Get(viewModel.Id);
-            changedFoodItemData.IngredientsList.Clear();
+            var changedFoodItemData = _foodItemRepository.GetByIdIncludeMenuAndIngredients(viewModel.Id);
 
             changedFoodItemData.Name = viewModel.Name;
             changedFoodItemData.Price = viewModel.Price;
@@ -103,8 +103,8 @@ namespace WebNet23Online.Services.DelightBistro
                 ImgURL = foodItemData.ImgURL,
                 MenuType = foodItemData.MenuData?.Name ?? "Общее меню",
                 Ingredients = foodItemData.IngredientsList
-                .Select(fi => fi.Name).ToList()
-
+                .Select(fi => fi.Name).ToList(),
+                Creator = foodItemData.Creator?.Name
             };
 
             return foodItemViewModel;
@@ -134,7 +134,7 @@ namespace WebNet23Online.Services.DelightBistro
                 SelectedIngredientsId = foodItemData.IngredientsList
                 .Select(x => x.Id).ToList(),
 
-                Ingredients = ChekBoxIngredients(),
+                Ingredients = ChekBoxIngredients(foodItemData),
                 Menus = SelectMenu()
             };
 
@@ -143,9 +143,9 @@ namespace WebNet23Online.Services.DelightBistro
 
         public List<SelectListItem> SelectMenu()
         {
-            var selectMenu = _menuRepository.GetAll();
+            var allMenuData = _menuRepository.GetAll();
             var menuListItems = new List<SelectListItem>();
-            menuListItems.AddRange(selectMenu.Select(x => new SelectListItem
+            menuListItems.AddRange(allMenuData.Select(x => new SelectListItem
             {
                 Text = x.Name,
                 Value = x.Id.ToString()
@@ -153,10 +153,11 @@ namespace WebNet23Online.Services.DelightBistro
             return menuListItems;
         }
 
-        public List<CreateIngredientViewModel> ChekBoxIngredients()
+        public List<CreateIngredientViewModel> ChekBoxIngredients(FoodItemData foodItemData = null)
         {
             var allIngredientsDatas = _ingredientsRepository.GetAll();
-            var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas);
+            var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas, foodItemData);
+
             return allIngredientVM;
         }
     }

@@ -19,5 +19,6 @@ namespace WebNet23Online.Models.DelightBistro
         public List<CreateIngredientViewModel> Ingredients { get; set; } = new();
         public int? MenuId { get; set; }
         public List<SelectListItem> Menus { get; set; } = new();
+
     }
 }

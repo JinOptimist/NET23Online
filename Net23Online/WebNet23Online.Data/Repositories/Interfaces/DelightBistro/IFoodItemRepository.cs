@@ -6,5 +6,6 @@ namespace WebNet23Online.Data.Repositories.Interfaces.DelightBistro
     public interface IFoodItemRepository : IDelightBistroRepository<FoodItemData>, IBaseRepository<FoodItemData>
     {
         List<FoodItemData> GetAllIncludeMenuAndIngredients();
+        FoodItemData? GetByIdIncludeMenuAndIngredients(int id);
     }
 }

@@ -19,5 +19,14 @@ namespace WebNet23Online.Data.Repositories
         {
             return !_dbSet.Any(x => x.Name == name);
         }
+
+        public FoodItemData? GetByIdIncludeMenuAndIngredients(int id)
+        {
+            var foodItemInclude = _dbSet
+                .Include(x => x.MenuData)
+                .Include(x => x.IngredientsList)
+                .FirstOrDefault(x => x.Id == id);
+            return foodItemInclude;
+        }
     }
 }

@@ -8,7 +8,10 @@
     <section class="section">
         <div class="game-header">
             <a class="btn" href="/Steam/Catalog">← Back to Catalog</a>
-            <a class="btn btn--edit" href="/Steam/EditGame/@Model.Id">✎ Edit Game</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn--edit" href="/Steam/EditGame/@Model.Id">✎ Edit Game</a>
+            }
         </div>
     </section>
 
@@ -23,7 +26,11 @@
                 <h1 class="game-title">@Model.Title</h1>
 
                 <div class="game-meta">
-                    <span class="game-genre">@Model.Genre</span>
+                    @foreach(var genre in Model.Genres)
+                    {
+                        <span class="game-genre">@genre</span>
+                    }
+                    
                     @if (!string.IsNullOrEmpty(Model.PublisherName))
                     {
                         <span class="game-publisher">@Model.PublisherName</span>

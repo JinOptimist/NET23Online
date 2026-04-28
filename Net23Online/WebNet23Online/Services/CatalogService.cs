@@ -1,9 +1,8 @@
-﻿
-using WebNet23Online.Data.Enums.Steam;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 using WebNet23Online.Data.HelperModels;
 using WebNet23Online.Data.Models.Steam;
-using WebNet23Online.Data.Repositories.Interfaces;
-
+using WebNet23Online.Data.Repositories.Interfaces.Steam;
 using WebNet23Online.Models.Steam;
 
 using WebNet23Online.Services.Interfaces;
@@ -14,11 +13,21 @@ namespace WebNet23Online.Services
     {
         private readonly IGameRepository _gameRepository;
         private readonly IPublisherRepository _publisherRepository;
+        private readonly IGameGenreRepository _gameGenreRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IAuthService _authService;
 
-        public CatalogService(IGameRepository gameRepository, IPublisherRepository publisherRepository)
+        public CatalogService(IGameRepository gameRepository,
+            IPublisherRepository publisherRepository,
+            IGameGenreRepository gameGenreRepository,
+            IHttpContextAccessor httpContextAccessor,
+            IAuthService authService)
         {
             _gameRepository = gameRepository;
             _publisherRepository = publisherRepository;
+            _gameGenreRepository = gameGenreRepository;
+            _httpContextAccessor = httpContextAccessor;
+            _authService = authService;
         }
 
         public SteamHomeViewModel GetGamesForHomePage()
@@ -33,7 +42,7 @@ namespace WebNet23Online.Services
                        Description = g.Description,
                        ImageUrl = g.ImageUrl,
                        Price = g.Price,
-                       Genre = g.Genre.ToString(),
+                       Genres = g.GameGenres.Select(genre => genre.Name).ToList()
                    })
                    .ToList(),
 
@@ -45,7 +54,7 @@ namespace WebNet23Online.Services
                        Description = g.Description,
                        ImageUrl = g.ImageUrl,
                        Price = g.Price,
-                       Genre = g.Genre.ToString(),
+                       Genres = g.GameGenres.Select(genre => genre.Name).ToList()
                    })
                    .ToList()
             };
@@ -57,17 +66,15 @@ namespace WebNet23Online.Services
         {
             filter ??= new CatalogFilterViewModel();
 
-            var genres = Enum.GetValues(typeof(GameGenre))
-                             .Cast<GameGenre>()
-                             .ToList();
+            var genres = _gameGenreRepository.GetAll();
 
-            var repoFilter = new GameFilter
+            var repositoryFilter = new GameFilter
             {
-                Genre = ParseGenre(filter.Genre),
+                GenreId = filter.GenreId,
                 MaxPrice = filter.MaxPrice
             };
 
-            var games = _gameRepository.GetFiltered(repoFilter);
+            var games = _gameRepository.GetFilteredWithGenres(repositoryFilter);
 
             return new CatalogViewModel
             {
@@ -80,10 +87,10 @@ namespace WebNet23Online.Services
                         Description = g.Description,
                         ImageUrl = g.ImageUrl,
                         Price = g.Price,
-                        Genre = g.Genre.ToString(),
+                        Genres = g.GameGenres.Select(gg => gg.Name).ToList(),
                     })
                     .ToList(),
-                Genres = genres
+                GameGenres = GetListItemsWithGameGenres()
             };
         }
 
@@ -93,26 +100,67 @@ namespace WebNet23Online.Services
             {
                 throw new ArgumentNullException(nameof(viewModel), "Game data cannot be null");
             }
- 
+            
+            var currentUserId = _authService.GetUserId();
+
             var gameEntity = new GameData
             {
                 Title = viewModel.Title,
                 Description = viewModel.Description,
                 ImageUrl = viewModel.ImageUrl,
                 Price = viewModel.Price,
-                Genre = viewModel.Genre,
-                PublisherId = viewModel.PublisherId //?
+                GameGenres = new List<GameGenreData>(),
+                PublisherId = viewModel.PublisherId,
+                CreatedByUserId = currentUserId,
+                ModifiedByUserId = currentUserId,
+                CreatedAt = DateTime.UtcNow
             };
 
-            //по сути,  то же самое PublisherId = viewModel.PublisherId???
-            //if (viewModel.PublisherId is not null 
-            //    && viewModel.PublisherId > 0)
-            //{
-            //    var publisher = _publisherRepository.Get(viewModel.PublisherId.Value);
-            //    gameEntity.Publisher = publisher;
-            //}
+            if (viewModel.SelectedGenreIds != null && viewModel.SelectedGenreIds.Any())
+            {
+                var genres = _gameGenreRepository.GetByIds(viewModel.SelectedGenreIds);
+                foreach (var genre in genres)
+                {
+                    gameEntity.GameGenres.Add(genre);
+                }
+            }
 
             _gameRepository.Add(gameEntity);
+        }
+
+        public List<SelectListItem> GetListItemsWithPublishers()
+        {
+            var publishers = _publisherRepository.GetAll();
+            var publisherListItems = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "SelectPublisher",
+                    Value = ""
+                }
+            };
+
+            publisherListItems.AddRange(publishers.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }));
+
+            return publisherListItems;
+        }
+
+        public List<SelectListItem> GetListItemsWithGameGenres()
+        {
+            var gameGenres = _gameGenreRepository.GetAll();
+            var gameGenresListItems = new List<SelectListItem>();
+
+            gameGenresListItems.AddRange(gameGenres.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }));
+
+            return gameGenresListItems;
         }
 
         public List<PublisherData> GetPublishers()
@@ -121,39 +169,47 @@ namespace WebNet23Online.Services
             return publishers;
         }
 
+        public List<GameGenreData> GetGameGenres()
+        {
+            var gameGenres = _gameGenreRepository.GetAll();
+            return gameGenres;
+        }
+
         public GameData GetGameDetails(int id)
         {
-            var game = _gameRepository.GetGameWithPublisher(id);
+            var game = _gameRepository.GetGameWithPublisherAndGenres(id);
             return game;
         }
 
         public void UpdateGame(EditGameViewModel viewModel)
         {
-            var game = _gameRepository.Get(viewModel.Id);
+            var game = _gameRepository.GetGameWithPublisherAndGenres(viewModel.Id);
 
             if (game == null)
             {
                 throw new ArgumentException($"Game not found");
             }
 
+            var currentUserId = _authService.GetUserId();
+
             game.Title = viewModel.Title;
             game.Description = viewModel.Description;
             game.ImageUrl = viewModel.ImageUrl;
             game.Price = viewModel.Price;
-            game.Genre = viewModel.Genre;
             game.PublisherId = viewModel.PublisherId;
+            game.ModifiedByUserId = currentUserId;
+            game.ModifiedAt = DateTime.UtcNow;
+
+            if (viewModel.SelectedGenreIds != null && viewModel.SelectedGenreIds.Any())
+            {
+                var genres = _gameGenreRepository.GetByIds(viewModel.SelectedGenreIds);
+                foreach (var genre in genres)
+                {
+                    game.GameGenres.Add(genre);
+                }
+            }
 
             _gameRepository.Update(game);
         }
-
-        private GameGenre? ParseGenre(string genreString)
-        {
-            if (string.IsNullOrEmpty(genreString) || genreString == "All")
-            {
-                return null;
-            }
-
-            return Enum.TryParse<GameGenre>(genreString, out var genre) ? genre : null;
-        }      
     }
 }

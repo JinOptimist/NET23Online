@@ -9,7 +9,10 @@
             <h1 class="page-title">Catalog</h1>
             <div class="catalog-actions">
                 <p><a class="btn" href="/Steam/Index">← Back to store</a></p>
-                <a class="btn btn--primary" href="/Steam/AddGame">+ Add New Game</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary" href="/Steam/AddGame">+ Add New Game</a>
+                }
             </div>
         </div>
     </section>
@@ -17,23 +20,29 @@
     <section class="section">
         <h2 class="section-title">Filter</h2>
         <form method="post">
-            <label>
-                Genre
-                <select name="Genre">
-                    @foreach (var genre in Model.Genres)
+            <div class="form-group">
+                <label>Genre</label>
+                <select name="GenreId" class="form-control">
+                    <option value="">-- All genres --</option>
+                    @foreach (var genre in Model.GameGenres)
                     {
-                        var isSelected = string.Equals(Model.Filter.Genre, genre.ToString(), StringComparison.OrdinalIgnoreCase)
-                        || (genre.ToString() == "All" && string.IsNullOrWhiteSpace(Model.Filter.Genre));
-
-                        <option value="@genre" selected="@isSelected">@genre</option>
+                        <option value="@genre.Value" selected="@(Model.Filter.GenreId?.ToString() == genre.Value ? "selected" : null)">
+                            @genre.Text
+                        </option>
                     }
                 </select>
-            </label>
-            <label>
-                Max price
-                <input type="number" name="MaxPrice" step="0.01" value="@Model.Filter.MaxPrice.ToString()" />
-            </label>
-            <button type="submit" class="btn">Apply</button>
+            </div>
+
+            <div class="form-group">
+                <label>Max price</label>
+                <input type="number" name="MaxPrice" step="0.01" class="form-control"
+                       value="@Model.Filter.MaxPrice" />
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary">Apply</button>
+                <a href="/Steam/Catalog" class="btn">Reset</a>
+            </div>
         </form>
     </section>
 
@@ -49,9 +58,14 @@
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">@game.Title</h3>
-                        @if (!string.IsNullOrWhiteSpace(game.Genre))
+                        @if (game.Genres != null && game.Genres.Any())
                         {
-                            <p class="feature-text">@game.Genre</p>
+                            <div class="feature-genres">
+                                @foreach (var genre in game.Genres)
+                                {
+                                    <span class="game-genre">@genre</span>
+                                }
+                            </div>
                         }
                         <div class="card-footer">
                             <span class="price">$@game.Price.ToString("0.00")</span>
