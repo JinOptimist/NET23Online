@@ -60,5 +60,10 @@ namespace WebNet23Online.Data.Repositories.Steam
                 .FirstOrDefault(g => g.Id == id);
             return gameData;
         }
+
+        public bool IsTitleFree(string title, int excludeGameId = 0)
+        {
+            return!_dbSet.Any(x => x.Title == title && x.Id != excludeGameId);
+        }    
     }
 }

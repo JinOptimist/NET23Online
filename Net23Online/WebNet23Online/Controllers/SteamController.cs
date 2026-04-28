@@ -5,7 +5,6 @@ using WebNet23Online.Models.Steam;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
-
 namespace WebNet23Online.Controllers
 {
     public class SteamController : Controller
