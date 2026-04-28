@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
@@ -15,14 +16,17 @@ namespace WebNet23Online.Controllers
         private IAnimeGirlService _animeGirlService;
         private IAnimeGirlRepository _animeGirlRepository;
         private IAnimeRepository _animeRepository;
+        private IAuthService _authService;
 
         public AnimeGirlController(IAnimeGirlService animeGirlGenerator,
             IAnimeGirlRepository animeGirlRepository,
-            IAnimeRepository animeRepository)
+            IAnimeRepository animeRepository,
+            IAuthService authService)
         {
             _animeGirlService = animeGirlGenerator;
             _animeGirlRepository = animeGirlRepository;
             _animeRepository = animeRepository;
+            _authService = authService;
         }
 
         //    /AnimeGirl/Index
@@ -37,13 +41,15 @@ namespace WebNet23Online.Controllers
             var mainViewModel = new MainIndexViewModel
             {
                 AnimeGirls = viewModels,
-                Animes = animeViewModels
+                Animes = animeViewModels,
+                CanDeleteGirl = _authService.AtLeastModerator()
             };
 
             return View(mainViewModel);
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult CreateGirl()
         {
             var viewModel = new CreateAnimeGirlViewModel
@@ -55,6 +61,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult CreateGirl(CreateAnimeGirlViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -88,12 +95,14 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult CreateAnime()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult CreateAnime(CreateAnimeViewModel viewModel)
         {
             var anime = new AnimeData

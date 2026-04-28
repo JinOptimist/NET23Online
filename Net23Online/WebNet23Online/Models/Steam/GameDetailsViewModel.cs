@@ -1,5 +1,4 @@
-﻿using WebNet23Online.Data.Enums.Steam;
-
+﻿
 namespace WebNet23Online.Models.Steam
 {
     public class GameDetailsViewModel
@@ -9,7 +8,8 @@ namespace WebNet23Online.Models.Steam
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
         public decimal Price { get; set; }
-        public GameGenre Genre { get; set; }
+
+        public List<string> Genres {  get; set; }
         public string? PublisherName { get; set; }
         public int? PublisherId { get; set; }
     }

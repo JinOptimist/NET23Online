@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebNet23Online.Data.Models.RockLegendsGenres>
+﻿@model WebNet23Online.Models.RockLegendsPortal.SortByGenreViewModel
 @{
     Layout = "_LayoutRockLegends";
 }
@@ -11,14 +11,12 @@
             <p>Связать группу с жанром</p>
             <form asp-action="LinkGroupToGenre" method="post">
                 <div class="poll-controls">
-                    <select name="bandId" class="form-control">
-                        @foreach (var band in ViewBag.AllBands)
-                        {
-                            <option value="@band.Id">@band.GroupNames</option>
-                        }
-                    </select>
-                    <select name="genreId" class="form-control">
-                        @foreach (var genre in Model)
+                    @* Вместо ручного цикла используем выпадающий список из модели *@
+                    @Html.DropDownListFor(x => x.SelectedBandId, Model.Bands, new { @class = "form-control" })
+                    
+                    @* Для жанров используем список из Model.Genres *@
+                    <select asp-for="SelectedGenreId" class="form-control">
+                        @foreach (var genre in Model.Genres)
                         {
                             <option value="@genre.Id">@genre.Name</option>
                         }
@@ -29,7 +27,8 @@
         </div>
 
         <div class="genres-list" style="width: 100%; max-width: 800px;">
-            @foreach (var genre in Model)
+            @* Теперь цикл идет по Model.Genres, которые лежат внутри нашей основной вью-модели *@
+            @foreach (var genre in Model.Genres)
             {
                 <div class="genre-item" style="margin-bottom: 10px;">
                     <button class="poll-button" style="width: 100%; text-align: left; background: #222;"

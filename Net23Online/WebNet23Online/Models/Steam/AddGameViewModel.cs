@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
-using WebNet23Online.Data.Enums.Steam;
 using WebNet23Online.Models.CustomValidatioAttributes.Steam;
 
 namespace WebNet23Online.Models.Steam
@@ -24,14 +23,10 @@ namespace WebNet23Online.Models.Steam
         [Required]
         [MaxPrice]
         public decimal Price { get; set; }
-
-        [Required]
-        public GameGenre Genre { get; set; }
-
         public int? PublisherId {  get; set; }
+        public List<int> SelectedGenreIds { get; set; } = new();
 
-        public List<GameGenre> Genres { get; set; } = new List<GameGenre>();
+        public List<SelectListItem> AllGenres { get; set; } = new ();
         public List<SelectListItem> Publishers { get; set; } = new();
     }
 }
-

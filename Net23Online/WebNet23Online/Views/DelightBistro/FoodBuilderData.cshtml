@@ -1,0 +1,69 @@
+﻿@using WebNet23Online.Models.DelightBistro;
+
+@{
+    Layout = "_LayoutimagesDelightBistro";
+}
+@model CreateFoodItemViewModel
+
+<link rel="stylesheet" href="\css\delight-bistro\style.css" />
+
+<div class="create-food-box">
+    <div class="form-title">
+        Добавьте блюдо. Заполните все поля в форме
+    </div>
+    @if (Model.Id > 0)
+    {
+        <div class="change-food">
+            <div class="change-food">
+                <img src=@Model.ImgURL alt=@Model.Name />
+            </div>
+        </div>
+    }
+
+    <form method="post">
+        <div class="input-box">
+            <div>Название блюда</div>
+            @Html.TextBoxFor(x => x.Name, new { type = "text", required = "required", placeholder = "Имя блюда" })
+            @Html.ValidationMessageFor(x => x.Name)
+
+        </div>
+        <div class="input-box">
+            <div>Цена блюда</div>
+            @Html.TextBoxFor(x => x.Price, new { type = "number", required = "required", placeholder = "Стоимость" })
+            @Html.ValidationMessageFor(x => x.Price)
+        </div>
+        <div class="input-radio-box">
+            <div class="radio-box-title">
+                Выберите тип меню
+            </div>
+            <div class="radio-box-container">
+                <div class="radio-box">
+                    @Html.DropDownListFor(x => x.MenuId, Model.Menus, "Выберите меню")
+
+                </div>
+                
+            </div>
+            <div class="input-box">
+                <div>
+                    Выберите ингредиенты
+                </div>
+                @foreach (var inredient in Model.Ingredients)
+                {
+                    <div>
+                        <input type="checkbox" name="SelectedIngredientsId"
+                               value="@inredient.Id" @(inredient.IsSelected ? "checked" : "") />
+                        <label>@inredient.Name</label>
+                    </div>
+                }
+                
+            </div>
+        </div>
+        
+        <div class="input-box url-box">
+            @Html.TextBoxFor(x => x.ImgURL, new { type = "string", placeholder = "Добавьте URL изображения" })
+            @Html.ValidationMessageFor(x => x.ImgURL)
+        </div>
+        <div class="food-create-button"><button type="submit">Добавить блюдо</button></div>
+    </form>
+
+</div>

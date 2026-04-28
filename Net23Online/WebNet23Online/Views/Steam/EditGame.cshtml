@@ -55,14 +55,14 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.Genre, "Genre")
-                <select id="Genre" name="Genre" class="form-control" required>
-                    @foreach (var genre in Model.Genres)
+                @Html.LabelFor(x => x.SelectedGenreIds, "Genres")
+                <select id="SelectedGenreIds" name="SelectedGenreIds" class="form-control" multiple required>
+                    @foreach (var genre in Model.AllGenres)
                     {
-                        var isSelected = genre == Model.Genre;
-                        <option value="@genre" selected="@isSelected">@genre</option>
+                        <option value="@genre.Value">@genre.Text</option>
                     }
                 </select>
+                <small class="form-text text-muted">Hold Ctrl to select multiple genres</small>
             </div>
 
             <div class="form-group">

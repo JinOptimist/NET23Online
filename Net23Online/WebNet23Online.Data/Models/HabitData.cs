@@ -3,9 +3,9 @@ namespace WebNet23Online.Data.Models;
 public class HabitData : BaseModel
 {
     public string Title { get; set; } 
-    public string ColorOfDot { get; set; }
+    public int MonthGoal  { get; set; }
     
-    public List<bool> WeekResults { get; set; }
-    public int DoneCount { get; set; }
-    public double Percent { get; set; }   
+    public int UserId { get; set; }  
+    public virtual UserData User { get; set; }
+    public virtual List<HabitDoneDatesData> CompletedDates { get; set; } = new List<HabitDoneDatesData>();
 }

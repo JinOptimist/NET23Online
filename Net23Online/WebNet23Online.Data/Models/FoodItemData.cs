@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace WebNet23Online.Data.Models
 {
-    public class FoodItemData:BaseModel
+    public class FoodItemData : BaseModel
     {
         public string Name { get; set; }
         public int Price { get; set; }
-        public string MenuType { get; set; }
         public string? ImgURL { get; set; }
-        public string Ingredients { get; set; }
+
+        public virtual MenuData? MenuData { get; set; }
+        public virtual List<IngredientData> IngredientsList { get; set; } = new();
+        // Предпочтительно ли иметь ключ CreatorId?
+        public int? CreatorId { get; set; }
+        public virtual UserData? Creator { get; set; }
     }
 }

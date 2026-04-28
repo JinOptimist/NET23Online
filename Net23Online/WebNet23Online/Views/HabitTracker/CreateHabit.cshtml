@@ -1,25 +1,53 @@
 @using WebNet23Online.Models.HabitTracker
 @model HabitViewModel
+
 @{
     Layout = "_LayoutHabitTracker";
 }
 
-<link rel="stylesheet"href="/css/habit-tracker/createHabit.css">
+<link rel="stylesheet" href="/css/habit-tracker/settings.css">
 
-<div class="habit-form-card">
-    <h2>Новая привычка</h2>
+<div class="tracker">
+    <div class="tracker-title">Добавить привычку</div>
+
+    <div class="settings-container">
+
+        <div class="settings-card">
+            <div class="settings-card-header">
+                <span class="settings-icon">＋</span>
+                <h3>Добавить привычку</h3>
+            </div>
+
+            <form method="post">
+                @Html.HiddenFor(x => x.UserId)
+                <div class="form-group">
+                    <label>Название</label>
+                    <div>
+                        @Html.TextBoxFor(x => x.Title, new { placeholder = "Например: Йога 15мин", type = "text" })
+                        @Html.ValidationMessageFor(x => x.Title)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Цель — дней в месяц</label>
+                    <div>
+                        @Html.TextBoxFor(x => x.MonthGoal, new { type = "number", placeholder = "От 1 до 31", @class = "input-field" })
+                        @Html.ValidationMessageFor(x => x.MonthGoal)
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-action btn-add">Создать</button>
+            </form>
             
-    <form method="post">
-        <div class="form-group">
-            <label>Название</label>
-            @Html.TextBoxFor(x => x.Title, new { 
-                @class = "input-field", 
-                placeholder = "Например: Йога 15 мин" 
-            })
         </div>
+    </div>
+</div>
 
-        <button type="submit" class="btn-submit">Создать привычку</button>
-    </form>
+@section Scripts
+{
+    <script src="/js/habit-tracker/settings.js"></script>
 
-    <a href="/HabitTracker/Index" class="back-link">Вернуться к списку</a>
-</div> 
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

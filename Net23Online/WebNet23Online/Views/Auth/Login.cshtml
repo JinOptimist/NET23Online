@@ -1,0 +1,19 @@
+﻿@using WebNet23Online.Models.Auth;
+
+@model LoginViewModel
+
+<div>
+    <form method="post">
+        <div>
+            @Html.TextBoxFor(x => x.Login, new { placeholder = "Login" })
+            @Html.ValidationMessageFor(x => x.Login)
+        </div>
+        <div>
+            @Html.TextBoxFor(x => x.Password, new { placeholder = "Password" })
+            @Html.ValidationMessageFor(x => x.Password)
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+</div>

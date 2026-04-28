@@ -4,5 +4,9 @@ namespace WebNet23Online.Data.Repositories.Interfaces
 {
     public interface IUserRepository : IBaseRepository<UserData>
     {
+        UserData GetFirst();
+        UserData? GetByNameAndPassword(string login, string password);
+        bool IsNameUniq(string login);
+        void Registration(UserData user);
     }
 }

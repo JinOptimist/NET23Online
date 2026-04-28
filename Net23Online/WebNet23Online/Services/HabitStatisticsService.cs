@@ -1,18 +1,35 @@
+using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories;
 using WebNet23Online.Models.HabitTracker;
 
 namespace WebNet23Online.Services;
 
 public class HabitStatisticsService : IHabitStatisticsService
 {
-    public void CreateStatisticsInfo(HabitTrackerViewModel model)
+    public HabitTrackerViewModel CreateStatisticsInfo(List<HabitData> habitData)
     {
-        foreach (var habit in model.Habits)
+        var today = DateTime.Today;
+        var daysInMonth = DateTime.DaysInMonth(today.Year, today.Month);
+
+        return new HabitTrackerViewModel
         {
-            var doneCount = habit.WeekResults.Count(x => x);
-            var percent = (float)doneCount / 7 * 100;
-            
-            habit.DoneCount = doneCount;
-            habit.Percent = percent;
-        }
+            Habits = habitData.Select(habit =>
+            {
+                var doneCount = habit.CompletedDates?.Count ?? 0;
+
+                return new HabitViewModel
+                {
+                    Id = habit.Id,
+                    Title = habit.Title,
+                    DaysInMonth = daysInMonth,
+                    DoneCountInMonth = doneCount,
+                    Percent = habit.MonthGoal > 0 
+                        ? (float)doneCount / habit.MonthGoal * 100 
+                        : 0,
+                    UserId = habit.UserId,
+                    MonthGoal = habit.MonthGoal,
+                };
+            }).ToList()
+        };
     }
 }

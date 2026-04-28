@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Data.Repositories.Interfaces.Steam;
 
 namespace WebNet23Online.Models.CustomValidatioAttributes.Steam
 {
