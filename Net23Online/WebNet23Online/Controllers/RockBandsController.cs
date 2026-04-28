@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Models.RockBands;
 using WebNet23Online.Services.Interfaces;
 
@@ -7,10 +8,12 @@ namespace WebNet23Online.Controllers
     public class RockBandsController : Controller
     {
         private readonly IRockBandsService _rockBandsService;
+        private readonly IAuthService _authService;
 
-        public RockBandsController(IRockBandsService rockBandsService)
+        public RockBandsController(IRockBandsService rockBandsService, IAuthService authService)
         {
             _rockBandsService = rockBandsService;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -25,6 +28,7 @@ namespace WebNet23Online.Controllers
 
             var viewModel = new RockBandsIndexViewModel
             {
+                IsUserAuth = _authService.IsAuthenticated(),
                 Bands = _rockBandsService.GetBands(selectedGenreIds),
                 Genres = genres,
                 SelectedGenreIds = selectedGenreIds,
@@ -34,6 +38,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Index(RockBandsIndexViewModel viewModel)
         {
             var band = viewModel.BandBlock;
@@ -42,6 +47,7 @@ namespace WebNet23Online.Controllers
                 var genres = _rockBandsService.GetGenres();
                 var startViewModel = new RockBandsIndexViewModel
                 {
+                    IsUserAuth = _authService.IsAuthenticated(),
                     Bands = _rockBandsService.GetBands(Array.Empty<int>()),
                     Genres = genres,
                     SelectedGenreIds = Array.Empty<int>(),
@@ -51,11 +57,13 @@ namespace WebNet23Online.Controllers
                 return View(startViewModel);
             }
 
-            _rockBandsService.AddBand(band);
+            var createdByUserId = _authService.GetUserId();
+            _rockBandsService.AddBand(band, createdByUserId);
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult UpdateGenres(int bandId, int[] selectedGenreIds)
         {
             _rockBandsService.UpdateBandGenres(bandId, selectedGenreIds);

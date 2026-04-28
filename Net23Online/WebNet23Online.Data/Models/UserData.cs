@@ -20,6 +20,7 @@ namespace WebNet23Online.Data.Models
 
         
 
+        public virtual List<RockBandsData>? RockBand { get; set; }
         public virtual List<HabitData> Habits { get; set; }
         public virtual List<HabitTrackerDiaryData> DiaryEntries { get; set; }
 

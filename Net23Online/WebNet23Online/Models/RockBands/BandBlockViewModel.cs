@@ -6,6 +6,7 @@ namespace WebNet23Online.Models.RockBands
     public class BandBlockViewModel
     {
         public int Id { get; set; }
+        public string? CreatedByUserName { get; set; }
 
         [IsUniqBandName(ErrorMessage = "Such a group already exists")]
         public string Name { get; set; } = string.Empty;
