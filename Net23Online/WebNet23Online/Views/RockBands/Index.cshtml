@@ -70,7 +70,7 @@
             </div>
         }
 
-        @if (Model.IsUserAuth)
+        @if (Model.CanEditRockBandGenres)
         {
             <section class="preferences-music edit-band-genres-form">
                 <div class="preferences-music-title">
@@ -128,6 +128,15 @@
                             </div>
                         </form>
                     }
+                </div>
+            </section>
+        }
+        else if (Model.IsUserAuth)
+        {
+            <section class="preferences-music edit-band-genres-form">
+                <div class="preferences-music-title">
+                    <h2>Редактировать жанры существующих групп</h2>
+                    <p class="add-band-form-hint">Редактирование жанров доступно только пользователям с ролью владельца раздела групп.</p>
                 </div>
             </section>
         }
