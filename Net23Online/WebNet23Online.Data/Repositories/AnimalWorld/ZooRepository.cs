@@ -29,5 +29,10 @@ namespace WebNet23Online.Data.Repositories.AnimalWorld
             zoo.AnimalSpecies.Add(animalSpecies);
             _context.SaveChanges();
         }
+
+        public List<ZooData> GetAllWithAnimalSpecies()
+        {
+            return _dbSet.Include(zoo => zoo.AnimalSpecies).ToList();
+        }
     }
 }

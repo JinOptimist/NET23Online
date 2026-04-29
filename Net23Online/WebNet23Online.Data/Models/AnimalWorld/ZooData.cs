@@ -8,6 +8,10 @@
 
         public string Description { get; set; }
 
+        public int UserId { get; set; }
+
         public virtual List<AnimalSpeciesData> AnimalSpecies { get; set; }
+
+        public virtual UserData Creator { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace WebNet23Online.Models.AnimalWorld
         [Required]
         public int AnimalFamilyId { get; set; }
 
-        public List<SelectListItem> AnimalFamilyNames { get; set; }
+        public List<SelectListItem>? AnimalFamilyNames { get; set; }
 
         [Required]
         public string NativeRange { get; set; }
