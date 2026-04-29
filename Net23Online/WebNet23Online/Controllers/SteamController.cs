@@ -1,21 +1,28 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+using WebNet23Online.Controllers.CustomAuthAttribute;
+using WebNet23Online.Controllers.CustomAuthAttribute.Steam;
+using WebNet23Online.Data.Enums;
 using WebNet23Online.Models.Steam;
-using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
 {
+    [Authorize]
     public class SteamController : Controller
     {
         private readonly ICatalogService _catalogService;
+        private readonly IAuthService _authService;
 
-        public SteamController(ICatalogService catalogService)
+
+        public SteamController(ICatalogService catalogService,
+            IAuthService authService)
         {
             _catalogService = catalogService;
+            _authService = authService;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var viewModel = _catalogService.GetGamesForHomePage();
@@ -24,23 +31,27 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Catalog()
         {
             var model = _catalogService.GetCatalog();
+            model.IsUserAtLeastModerator = _authService.AtLeastModerator();
 
             return View(model);
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Catalog(CatalogFilterViewModel filter)
         {
             var model = _catalogService.GetCatalog(filter);
+            model.IsUserAtLeastModerator = _authService.AtLeastModerator();
 
             return View(model);
         }
 
         [HttpGet]
-        [Authorize]
+        [IsModerator]
         public IActionResult AddGame()
         {    
             var viewModel = new AddGameViewModel
@@ -53,7 +64,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [IsModerator]
         public IActionResult AddGame(AddGameViewModel viewModel)
         {
             _catalogService.AddGame(viewModel);
@@ -62,6 +73,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GameDetails(int id)
         {
             var gameData = _catalogService.GetGameDetails(id);
@@ -82,14 +94,15 @@ namespace WebNet23Online.Controllers
                     .Select(g => g.Name)
                     .ToList(),
                 PublisherName = gameData.Publisher?.Name ?? "Unknown",
-                PublisherId = gameData.PublisherId
+                PublisherId = gameData.PublisherId,
+                IsUserAtLeastModerator =_authService.AtLeastModerator()
             };
 
             return View(viewModel);
         }
 
         [HttpGet]
-        [Authorize]
+        [EditForCreatorWithRequiredRole]
         public IActionResult EditGame(int id)
         {
             var game = _catalogService.GetGameDetails(id);
@@ -115,12 +128,20 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [EditForCreatorWithRequiredRole]
         public IActionResult EditGame(EditGameViewModel viewModel)
         {
             _catalogService.UpdateGame(viewModel);
 
             return RedirectToAction(nameof(GameDetails), new { id = viewModel.Id });
+        }
+
+        [HttpGet]
+        [DeleteWithRoleAndTimeRestriction(AllowedDaysForCreator = 7, RequiredRoleForCreator = UserRole.Moderator)]
+        public IActionResult DeleteGame(int id)
+        {
+            _catalogService.DeleteGame(id);
+            return RedirectToAction(nameof(Catalog));
         }
     }
 }
