@@ -12,6 +12,7 @@ public interface IAuthService
     string? GetUserName();
     bool IsAuthenticated();
     bool AtLeastModerator();
+    bool IsCurrentUserAtLeastEmployee();
     Language GetLanguage();
     void SignIn(UserData user);
 }

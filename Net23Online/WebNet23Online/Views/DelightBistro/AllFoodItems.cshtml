@@ -3,7 +3,7 @@
 @{
     Layout = "_LayoutimagesDelightBistro";
 }
-@model List<FoodItemViewModel>
+@model AllFoodItemWithPermissionViewModel
 
 <link rel="stylesheet" href="\css\delight-bistro\style.css" />
  
@@ -29,7 +29,7 @@
             <div class="type-name center">Все блюда</div>
             <div class="menu">
 
-                @foreach (var food in Model)
+                @foreach (var food in Model.FoodItems)
                 {
                     <div class="food-item" item-id="@food.Id">
                         <div class="image-container">
@@ -39,6 +39,15 @@
                             <div class="name-price">
                                 <div class="food-name">@food.Name</div>
                                 <div class="price">@food.Price р</div>
+                                @if (food.CanDelete)
+                                {
+                                    <form action="/DelightBistro/DeleteFoodItem" method="post">
+                                        <input type="hidden" name="id" value="@food.Id" />
+                                        <button type="submit" title="Удалить">Delete</button>
+                                    </form>
+
+                                    @* <a href="\DelightBistro\DeleteFoodItem?id=@food.Id" title="Удалить">Delete</a> *@
+                                }
                             </div>
                             <div class="btnright">
                                 <button class="add-button colorbtn">+</button>
