@@ -11,6 +11,8 @@ namespace WebNet23Online.Data.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Url { get; set; }
+        public int? CreatedByUserId { get; set; }
+        public virtual UserData? CreatedByUser { get; set; }
         public virtual ICollection<RockBandGenreData> RockBandGenres { get; set; } = new List<RockBandGenreData>();
     }
 }

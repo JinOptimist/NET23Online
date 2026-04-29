@@ -1,3 +1,5 @@
+@using WebNet23Online.Services.Interfaces
+@inject IAuthService authService
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +17,14 @@
         <div class="header-links">
             <a class="header-link" href="/">На главную</a>
             <a class="header-link" href="/AnimalWorld/Index">Мир животных</a>
-            <a class="header-link" href="/AnimalWorld/Add">Добавить данные</a>
+            @if (authService.IsAuthenticated())
+            {
+                <a class="header-link" href="/AnimalWorld/Zoos">Бронирование</a>
+            }
+            @if (authService.AtLeastModerator())
+            {
+                <a class="header-link" href="/AnimalWorld/Add">Добавить данные</a>
+            }
             <a class="header-link" href="">Интересные факты</a>
         </div>
     </div>

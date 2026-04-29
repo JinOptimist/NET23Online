@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using System.Globalization;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.AnimeGirl;
@@ -10,7 +11,6 @@ using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
 {
-
     public class AnimeGirlController : Controller
     {
         private IAnimeGirlService _animeGirlService;

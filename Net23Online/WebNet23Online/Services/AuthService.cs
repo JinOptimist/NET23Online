@@ -1,4 +1,6 @@
-﻿using WebNet23Online.Data.Enums;
+﻿using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Services.Interfaces;
@@ -11,6 +13,7 @@ namespace WebNet23Online.Services
         public const string COOCKIE_ID_KEY = "Id";
         public const string COOCKIE_ROLE_KEY = "Role";
         public const string COOCKIE_NAME_KEY = "UserName";
+        public const string COOCKIE_LANGUAGE_KEY = "Language";
 
         private IHttpContextAccessor _httpContextAccessor;
         private readonly IUserRepository _userRepository;
@@ -47,6 +50,15 @@ namespace WebNet23Online.Services
             return _userRepository.Get(userId);
         }
 
+        public string? GetUserName()
+        {
+            var userName = _httpContextAccessor.HttpContext!.User?.Claims
+                .FirstOrDefault(x => x.Type == COOCKIE_NAME_KEY)
+                ?.Value;
+
+            return userName;
+        }
+
         public bool IsAuthenticated()
         {
             return _httpContextAccessor?.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
@@ -79,6 +91,41 @@ namespace WebNet23Online.Services
 
             var role = GetRole();
             return role == UserRole.Moderator || role == UserRole.Admin;
+        }
+
+        public Language GetLanguage()
+        {
+            if (!IsAuthenticated())
+            {
+                return Language.English;
+            }
+
+            var languageStr = _httpContextAccessor.HttpContext!.User.Claims
+                .First(x => x.Type == COOCKIE_LANGUAGE_KEY)
+                .Value;
+            var language = Enum.Parse<Language>(languageStr);
+            return language;
+        }
+
+        public void SignIn(UserData user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(COOCKIE_ID_KEY, user.Id.ToString()),
+                new Claim(COOCKIE_ROLE_KEY, user.Role.ToString()),
+                new Claim(COOCKIE_NAME_KEY, user.Name),
+                new Claim(COOCKIE_LANGUAGE_KEY, user.Language.ToString()),
+                new Claim(ClaimTypes.AuthenticationMethod, AUTH_KEY)
+            };
+
+            var identity = new ClaimsIdentity(claims, AUTH_KEY);
+
+            var principal = new ClaimsPrincipal(identity);
+
+            _httpContextAccessor
+                .HttpContext!
+                .SignInAsync(AUTH_KEY, principal)
+                .Wait();
         }
 
         public bool IsCurrentUserAtLeastEmployee()

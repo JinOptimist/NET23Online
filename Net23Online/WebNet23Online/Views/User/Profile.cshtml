@@ -1,0 +1,14 @@
+﻿@using WebNet23Online.Models.User
+@model UserProfileViewModel
+
+<div>
+    @Model.UserName (@Model.UserId)
+</div>
+<div>
+    <form action="/User/ChangeLanguage" method="post">
+        @Html.HiddenFor(x => x.UserId)
+        @Model.Language.ToString()
+        @Html.DropDownList("language", Model.Languages)
+        <button>Update language</button>
+    </form>
+</div>

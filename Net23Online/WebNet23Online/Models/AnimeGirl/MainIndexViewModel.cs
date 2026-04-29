@@ -1,4 +1,6 @@
-﻿namespace WebNet23Online.Models.AnimeGirl
+﻿using System.Collections;
+
+namespace WebNet23Online.Models.AnimeGirl
 {
     public class MainIndexViewModel
     {

@@ -5,6 +5,7 @@
         User = 1,
         Employee = 9,
         Moderator = 10,
-        Admin = 99
+        Admin = 99,
+        RockBandOwner = 6
     }
 }

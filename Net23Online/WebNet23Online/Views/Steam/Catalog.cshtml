@@ -1,4 +1,5 @@
 @using WebNet23Online.Models.Steam
+@using WebNet23Online.Services
 @model CatalogViewModel
 @{
     Layout = "_LayoutSteam";
@@ -9,7 +10,7 @@
             <h1 class="page-title">Catalog</h1>
             <div class="catalog-actions">
                 <p><a class="btn" href="/Steam/Index">← Back to store</a></p>
-                @if (User.Identity.IsAuthenticated)
+                @if (Model.IsUserAtLeastModerator)
                 {
                     <a class="btn btn-primary" href="/Steam/AddGame">+ Add New Game</a>
                 }

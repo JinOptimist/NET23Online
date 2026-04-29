@@ -1,4 +1,5 @@
 ﻿@using WebNet23Online.Models.AnimeGirl
+@using WebNet23Online.Localizations
 @model MainIndexViewModel
 @{
     Layout = "_LayoutAnime";
@@ -14,8 +15,8 @@
 <div class="bg-blobs" aria-hidden="true"></div>
 
 <header class="site-header">
-    <p class="tagline">Личная страничка</p>
-    <h1>Аниме, игры и книги</h1>
+    <p class="tagline">@AnimeGirl.Index_Header_TagLine</p>
+    <h1>@AnimeGirl.Index_Header</h1>
     <p class="lead">Здесь собираю то, что нравится: пока подробно про аниме — игры и книги добавлю позже.</p>
     <a href="/AnimeGirl/Index?count=1">The only one</a>
     <a href="/AnimeGirl/Index?count=2">Two is enought</a>

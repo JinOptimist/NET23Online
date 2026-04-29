@@ -5,9 +5,11 @@ namespace WebNet23Online.Models.RockLegendsPortal
 {
     public class SortByGenreViewModel
     {
-        public List<RockLegendsGenres> Genres { get; set; } = new();
+        public List<RockLegendsGenreItemViewModel> Genres { get; set; } = new();
         public List<SelectListItem> Bands { get; set; } = new();
         public int SelectedBandId { get; set; }
         public int SelectedGenreId { get; set; }
+        public bool IsCurrentUserAdmin { get; set; }
+
     }
 }

@@ -9,6 +9,7 @@ using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
 using WebNet23Online.Data.Repositories.Interfaces.Steam;
 using WebNet23Online.Data.Repositories.Steam;
+using WebNet23Online.MiddlewareServices;
 using WebNet23Online.Services;
 using WebNet23Online.Services.DelightBistro;
 using WebNet23Online.Services.Interfaces;
@@ -137,14 +138,6 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-/*builder.Services.AddScoped<IAnimeGirlGenerator, AnimeGirlGenerator>();
-builder.Services.AddScoped<IEpicMeanlessPhraseGenerator, EpicMeanlessPhraseGenerator>();
-builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
-
-builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
-builder.Services.AddSingleton<IMazeService, MazeService>();*/
-
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -153,6 +146,8 @@ app.UseRouting();
 
 app.UseAuthentication();    // Who Am I?
 app.UseAuthorization();     // May I?
+
+app.UseMiddleware<MyLocalizationMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
