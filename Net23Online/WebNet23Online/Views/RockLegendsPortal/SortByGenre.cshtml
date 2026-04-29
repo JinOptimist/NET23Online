@@ -11,44 +11,51 @@
             <p>Связать группу с жанром</p>
             <form asp-action="LinkGroupToGenre" method="post">
                 <div class="poll-controls">
-                    @* Вместо ручного цикла используем выпадающий список из модели *@
-                    @Html.DropDownListFor(x => x.SelectedBandId, Model.Bands, new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.SelectedBandId, Model.Bands, "Выберите группу", new { @class = "form-control" })
                     
-                    @* Для жанров используем список из Model.Genres *@
-                    <select asp-for="SelectedGenreId" class="form-control">
-                        @foreach (var genre in Model.Genres)
-                        {
-                            <option value="@genre.Id">@genre.Name</option>
-                        }
-                    </select>
+                    @Html.DropDownListFor(x => x.SelectedGenreId,
+                        Model.Genres.Select(g => new SelectListItem { Text = g.Name, Value = g.Id.ToString() }),
+                        "Выберите жанр",
+                        new { @class = "form-control" })
+
                     <button type="submit" class="poll-button">Связать</button>
                 </div>
             </form>
         </div>
 
         <div class="genres-list" style="width: 100%; max-width: 800px;">
-            @* Теперь цикл идет по Model.Genres, которые лежат внутри нашей основной вью-модели *@
             @foreach (var genre in Model.Genres)
             {
-                <div class="genre-item" style="margin-bottom: 10px;">
-                    <button class="poll-button" style="width: 100%; text-align: left; background: #222;"
+                <div class="genre-item" style="margin-bottom: 15px; display: flex; gap: 10px;">
+        
+                    <button class="poll-button genre-toggle-button" style="flex-grow: 1;"
                             onclick="toggleGenre('@genre.Id')">
-                        @genre.Name (Групп: @genre.Groups.Count)
+                        @genre.Name (Групп: @genre.BandNames.Count)
                     </button>
-                    
-                    <div id="genre-@genre.Id" style="display: none; background: rgba(0,0,0,0.5); padding: 15px; border-left: 3px solid #ff0000;">
-                        @if (genre.Groups.Any())
+
+                    @if (Model.IsCurrentUserAdmin)
+                    {
+                        <form asp-action="DeleteGenre" asp-route-id="@genre.Id" method="post"
+                              onsubmit="return confirm('Удалить жанр и все связи?')">
+                            <button type="submit" class="poll-button delete-genre-btn">
+                                ❌
+                            </button>
+                        </form>
+                    }
+                </div>
+    
+                <div id="genre-@genre.Id" class="genre-content-box">
+                    @if (genre.BandNames.Any())
+                    {
+                        foreach (var bandName in genre.BandNames)
                         {
-                            foreach (var group in genre.Groups)
-                            {
-                                <div style="color: #fff; padding: 5px 0;">🎸 @group.GroupNames</div>
-                            }
+                            <div class="band-name-item">🎸 @bandName</div>
                         }
-                        else
-                        {
-                            <div style="color: #666;">В этом жанре пока нет групп.</div>
-                        }
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="empty-genre-msg">В этом жанре пока нет групп.</div>
+                    }
                 </div>
             }
         </div>
