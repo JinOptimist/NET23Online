@@ -33,7 +33,6 @@ namespace WebNet23Online.Controllers
             {
                 IsUserAuth = isAuth,
                 CanEditRockBandGenres = isAuth && _authService.GetRole() == UserRole.RockBandOwner,
-                IsUserAuth = _authService.IsAuthenticated(),
                 Bands = _rockBandsService.GetBands(selectedGenreIds),
                 Genres = genres,
                 SelectedGenreIds = selectedGenreIds,
@@ -53,7 +52,6 @@ namespace WebNet23Online.Controllers
                 var isAuth = _authService.IsAuthenticated();
                 var startViewModel = new RockBandsIndexViewModel
                 {
-                    IsUserAuth = _authService.IsAuthenticated(),
                     IsUserAuth = isAuth,
                     CanEditRockBandGenres = isAuth && _authService.GetRole() == UserRole.RockBandOwner,
                     Bands = _rockBandsService.GetBands(Array.Empty<int>()),
@@ -71,7 +69,6 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [Authorize]
         [IsRockBandOwner]
         public IActionResult UpdateGenres(int bandId, int[] selectedGenreIds)
