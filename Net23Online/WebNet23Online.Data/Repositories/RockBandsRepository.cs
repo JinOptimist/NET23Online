@@ -40,6 +40,7 @@ namespace WebNet23Online.Data.Repositories
         public List<RockBandsData> GetAllWithGenres()
         {
             return _dbSet
+                .Include(b => b.CreatedByUser)
                 .Include(b => b.RockBandGenres)
                 .ThenInclude(bg => bg.Genre)
                 .OrderBy(b => b.Id)
@@ -53,6 +54,7 @@ namespace WebNet23Online.Data.Repositories
                 return GetAllWithGenres();
             }
             return _dbSet
+                .Include(b => b.CreatedByUser)
                 .Include(b => b.RockBandGenres)
                 .ThenInclude(bg => bg.Genre)
                 .Where(b => b.RockBandGenres.Any(bg => genreIds.Contains(bg.GenreId)))
