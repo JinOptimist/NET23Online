@@ -8,6 +8,7 @@ namespace WebNet23Online.Services.Interfaces
         UserRole GetRole();
         UserData? GetUser();
         int GetUserId();
+        string? GetUserName();
         bool IsAuthenticated();
         bool AtLeastModerator();
     }

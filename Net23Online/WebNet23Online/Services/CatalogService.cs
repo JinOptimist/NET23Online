@@ -100,7 +100,7 @@ namespace WebNet23Online.Services
             {
                 throw new ArgumentNullException(nameof(viewModel), "Game data cannot be null");
             }
-            
+
             var currentUserId = _authService.GetUserId();
 
             var gameEntity = new GameData
@@ -210,6 +210,30 @@ namespace WebNet23Online.Services
             }
 
             _gameRepository.Update(game);
+        }
+
+        public void DeleteGame(int id)
+        {
+            var game = _gameRepository.Get(id);
+
+            if (game == null)
+            {
+                throw new ArgumentException($"Game not found");
+            }
+
+            _gameRepository.Remove(game);
+        }
+
+        public bool IsUserCreatorOfTheGame(int userId, int gameId)
+        {
+            var game = _gameRepository.Get(gameId);
+
+            if (game == null)
+            {
+                throw new ArgumentException($"Game not found");
+            }
+
+            return userId == game.CreatedByUserId;
         }
     }
 }

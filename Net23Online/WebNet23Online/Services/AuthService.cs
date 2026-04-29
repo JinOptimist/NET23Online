@@ -47,6 +47,15 @@ namespace WebNet23Online.Services
             return _userRepository.Get(userId);
         }
 
+        public string? GetUserName()
+        {
+            var userName = _httpContextAccessor.HttpContext!.User?.Claims
+                .FirstOrDefault(x => x.Type == COOCKIE_NAME_KEY)
+                ?.Value;
+
+            return userName;
+        }
+
         public bool IsAuthenticated()
         {
             return _httpContextAccessor?.HttpContext?.User?.Identity?.IsAuthenticated ?? false;

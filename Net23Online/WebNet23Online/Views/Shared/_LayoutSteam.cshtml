@@ -1,5 +1,7 @@
 ﻿@using System.Security.Claims
 @using WebNet23Online.Services
+@using WebNet23Online.Services.Interfaces
+@inject IAuthService authService
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,9 +33,9 @@
                 <a class="install" href="/install">Install Steam</a>
 
                 <div class="auth-buttons">
-                    @if (User.Identity.IsAuthenticated)
+                    @if (authService.IsAuthenticated())
                     {
-                        <span class="username">Welcome, @User.FindFirstValue(AuthService.COOCKIE_NAME_KEY)!</span>
+                        <span class="username">Welcome, @authService.GetUserName()!</span>
                         <a class="logout-btn" href="/Auth/Logout">Logout</a>
                     }
                     else

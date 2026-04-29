@@ -13,7 +13,9 @@ namespace WebNet23Online.Services.Interfaces
         GameData GetGameDetails(int id);
         void AddGame(AddGameViewModel viewModel);
         void UpdateGame(EditGameViewModel viewModel);
+        void DeleteGame(int id);
         List<SelectListItem> GetListItemsWithPublishers();
         List<SelectListItem> GetListItemsWithGameGenres();
+        bool IsUserCreatorOfTheGame(int userId, int gameId);
     }
 }
