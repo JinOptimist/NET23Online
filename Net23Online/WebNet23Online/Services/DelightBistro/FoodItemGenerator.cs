@@ -175,11 +175,18 @@ namespace WebNet23Online.Services.DelightBistro
         public AllFoodItemWithPermissionViewModel GetFoodsWithPermission(List<FoodItemViewModel> foodItemsViewModel)
         {
             var currentUser = _authService.GetUser()!;
+            var isAdmin = currentUser?.Role == UserRole.Admin;
+            var currentUserId = currentUser?.Id;
+
+            foreach (var item in foodItemsViewModel)
+            {
+                item.CanDelete = isAdmin || (currentUserId != null && item.CreatorId == currentUserId);
+            }
+
             var viewModel = new AllFoodItemWithPermissionViewModel()
             {
                 FoodItems = foodItemsViewModel,
-                CurrentUserId = currentUser.Id,
-                IsAdmin = currentUser.Role == UserRole.Admin
+                IsAdmin = isAdmin,
             };
 
 

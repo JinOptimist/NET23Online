@@ -39,7 +39,7 @@
                             <div class="name-price">
                                 <div class="food-name">@food.Name</div>
                                 <div class="price">@food.Price р</div>
-                                @if (Model.IsAdmin || food.CreatorId == Model.CurrentUserId)
+                                @if (food.CanDelete)
                                 {
                                     <form action="/DelightBistro/DeleteFoodItem" method="post">
                                         <input type="hidden" name="id" value="@food.Id" />
