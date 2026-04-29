@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebNet23Online.Controllers.CustomAuthAttribute;
 using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.User;
+using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
@@ -14,7 +17,7 @@ namespace WebNet23Online.Controllers
         public IAuthService _authService;
         public IUserRepository _userRepository;
 
-        public UserController(IAuthService authService, 
+        public UserController(IAuthService authService,
             IUserRepository userRepository)
         {
             _authService = authService;
@@ -29,14 +32,50 @@ namespace WebNet23Online.Controllers
             var viewModel = new UserIndexViewModel
             {
                 Users = usersFromDb
-                    .Select(x => new UserViewModel { 
-                        Id = x.Id, 
+                    .Select(x => new UserViewModel
+                    {
+                        Id = x.Id,
                         Name = x.Name,
                     }).ToList(),
                 IsCurrentUserAdmin = currentUser.Role == UserRole.Admin,
             };
 
             return View(viewModel);
+        }
+
+        public IActionResult Profile()
+        {
+            var currentUserLanguage = _authService.GetLanguage();
+            var allLanguagesList = Enum
+                .GetNames<Language>()
+                .Select(x => new SelectListItem
+                {
+                    Text = x,
+                    Value = x,
+                    Selected = x == currentUserLanguage.ToString()
+                })
+                .ToList();
+
+            var viewModel = new UserProfileViewModel
+            {
+                UserId = _authService.GetUserId(),
+                UserName = _authService.GetUserName() ?? "unnamed",
+                Language = currentUserLanguage,
+                Languages = allLanguagesList
+            };
+            return View(viewModel);
+        }
+
+        public IActionResult ChangeLanguage(int userId, Language language)
+        {
+            _userRepository.UpdateLanguage(userId, language);
+            var user = _authService.GetUser();
+
+            HttpContext.SignOutAsync().Wait();
+
+            _authService.SignIn(user);
+
+            return RedirectToAction(nameof(Profile));
         }
 
         [IsAdmin]

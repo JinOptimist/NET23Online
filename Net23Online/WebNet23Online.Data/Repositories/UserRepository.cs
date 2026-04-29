@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 
@@ -36,6 +37,7 @@ namespace WebNet23Online.Data.Repositories
             var hash = GetHashOfPassword(user.Password);
             user.Password = hash;
             user.Role = Enums.UserRole.User;
+            user.Language = Enums.Language.English;
 
             _dbSet.Add(user);
             _context.SaveChanges();
@@ -49,6 +51,13 @@ namespace WebNet23Online.Data.Repositories
 
             password = password.Replace("a", "o");
             return password.Substring(0, password.Length - 1);
+        }
+
+        public void UpdateLanguage(int userId, Language language)
+        {
+            var user = _dbSet.First(x => x.Id == userId);
+            user.Language = language;
+            _context.SaveChanges();
         }
     }
 }

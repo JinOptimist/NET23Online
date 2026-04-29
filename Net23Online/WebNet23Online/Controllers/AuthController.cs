@@ -1,21 +1,23 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Security.Claims;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.Auth;
 using WebNet23Online.Services;
+using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
 {
     public class AuthController : Controller
     {
         private IUserRepository _userRepository;
+        private IAuthService _authService;
 
-        public AuthController(IUserRepository userRepository)
+        public AuthController(IUserRepository userRepository, 
+            IAuthService authService)
         {
             _userRepository = userRepository;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -41,21 +43,7 @@ namespace WebNet23Online.Controllers
                 return View(viewModel);
             }
 
-            var claims = new List<Claim>
-            {
-                new Claim(AuthService.COOCKIE_ID_KEY, user.Id.ToString()),
-                new Claim(AuthService.COOCKIE_ROLE_KEY, user.Role.ToString()),
-                new Claim(AuthService.COOCKIE_NAME_KEY, user.Name),
-                new Claim(ClaimTypes.AuthenticationMethod, AuthService.AUTH_KEY)
-            };
-
-            var identity = new ClaimsIdentity(claims, AuthService.AUTH_KEY);
-
-            var principal = new ClaimsPrincipal(identity);
-
-            HttpContext
-                .SignInAsync(AuthService.AUTH_KEY, principal)
-                .Wait();
+            _authService.SignIn(user);
 
             return RedirectToAction("Index", "Home");
         }

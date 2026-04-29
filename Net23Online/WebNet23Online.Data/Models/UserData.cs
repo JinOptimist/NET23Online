@@ -12,6 +12,7 @@ namespace WebNet23Online.Data.Models
         public string? Mobilephone { get; set; }
         public string Password { get; set; }
         public UserRole Role { get; set; }
+        public Language Language { get; set; }
         public int? UserProfileId { get; set; }
 
         public virtual List<UserData> MyFriends { get; set; }
