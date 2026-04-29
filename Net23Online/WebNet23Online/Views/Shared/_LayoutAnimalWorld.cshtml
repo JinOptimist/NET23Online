@@ -19,6 +19,10 @@
             <a class="header-link" href="/AnimalWorld/Index">Мир животных</a>
             @if (authService.IsAuthenticated())
             {
+                <a class="header-link" href="/AnimalWorld/Zoos">Бронирование</a>
+            }
+            @if (authService.AtLeastModerator())
+            {
                 <a class="header-link" href="/AnimalWorld/Add">Добавить данные</a>
             }
             <a class="header-link" href="">Интересные факты</a>
