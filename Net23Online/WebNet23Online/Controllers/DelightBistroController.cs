@@ -145,6 +145,7 @@ namespace WebNet23Online.Controllers
 
         [Authorize]
         [IsEmployee]
+        [HttpPost]
         public IActionResult DeleteFoodItem(int id = 0)
         {
             _foodItemGenerator.DeleteFoodItem(id);

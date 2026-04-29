@@ -41,7 +41,12 @@
                                 <div class="price">@food.Price р</div>
                                 @if (Model.IsAdmin || food.CreatorId == Model.CurrentUserId)
                                 {
-                                    <a href="\DelightBistro\DeleteFoodItem?id=@food.Id" title="Удалить">Delete</a>
+                                    <form action="/DelightBistro/DeleteFoodItem" method="post">
+                                        <input type="hidden" name="id" value="@food.Id" />
+                                        <button type="submit" title="Удалить">Delete</button>
+                                    </form>
+
+                                    @* <a href="\DelightBistro\DeleteFoodItem?id=@food.Id" title="Удалить">Delete</a> *@
                                 }
                             </div>
                             <div class="btnright">
