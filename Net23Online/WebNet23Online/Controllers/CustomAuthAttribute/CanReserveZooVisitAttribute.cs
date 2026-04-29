@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using WebNet23Online.Data.Enums;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers.CustomAuthAttribute
@@ -14,10 +13,9 @@ namespace WebNet23Online.Controllers.CustomAuthAttribute
                 .RequestServices
                 .GetRequiredService<IAuthService>();
             var user = authService.GetUser();
-            if (string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.LastName) || string.IsNullOrEmpty(user.Mobilephone))
+            if (string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName) || string.IsNullOrEmpty(user.Mobilephone))
             {
-                context.Result = ((Controller)context.Controller)
-                    .RedirectToAction("ReservationsDenied", "Tickets");
+                context.Result = ((Controller)context.Controller).RedirectToAction("ReservationsDenied", "Tickets");
                 return;
             }
 
