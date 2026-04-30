@@ -29,10 +29,7 @@
                 @if (zoo.AnimalSpecies.Any())
                 {
                     <p><strong>Виды животных:</strong></p>
-                    @foreach (var animalSpecies in zoo.AnimalSpecies)
-                    {
-                        <p>@animalSpecies.AnimalSpeciesName</p>
-                    }
+                    @string.Join(", ", zoo.AnimalSpecies.Select(a => a.AnimalSpeciesName))
                 }
             </div>
         }
