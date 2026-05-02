@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebNet23Online.Controllers.CustomAuthAttribute;
 using WebNet23Online.Data.Enums;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.User;
 using WebNet23Online.Services;
@@ -66,9 +67,18 @@ namespace WebNet23Online.Controllers
             return View(viewModel);
         }
 
-        public IActionResult ChangeLanguage(int userId, Language language)
+        [HttpPost]
+        public IActionResult UpdateProfile(UserProfileViewModel viewModel)
         {
-            _userRepository.UpdateLanguage(userId, language);
+            UserData userData = new UserData
+            {
+                Id = viewModel.UserId,
+                FirstName = viewModel.FirstName,
+                LastName = viewModel.LastName,
+                Mobilephone = viewModel.Mobilephone,
+                Language = viewModel.Language,
+            };
+            _userRepository.UpdateProfile(userData);
             var user = _authService.GetUser();
 
             HttpContext.SignOutAsync().Wait();

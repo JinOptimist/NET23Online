@@ -5,7 +5,7 @@
     @Model.UserName (@Model.UserId)
 </div>
 <div>
-    <form action="/User/ChangeLanguage" method="post">
+    <form action="/User/UpdateProfile" method="post">
         @Html.HiddenFor(x => x.UserId)
         <div>
             <p>Имя:</p>
@@ -22,7 +22,7 @@
             @Html.TextBoxFor(m => m.Mobilephone, new { @class = "form-input", type = "text" })
         </div>
         @Model.Language.ToString()
-        @Html.DropDownList("language", Model.Languages)
-        <button>Update language</button>
+        @Html.DropDownListFor(m => m.Language, Model.Languages)
+        <button>Save changes</button>
     </form>
 </div>
