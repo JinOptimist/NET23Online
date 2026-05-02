@@ -4,7 +4,7 @@
     Layout = "_LayoutAnimalWorld";
 }
 
-<title>@AnimalWorld.AnimalWorld</title>
+<title>@AnimalWorld.AnimalWorldTitle</title>
 
 <div class="main-place">
     <div class="green-title">
@@ -29,8 +29,8 @@
                 <p>@zoo.Description</p>
                 @if (zoo.AnimalSpecies.Any())
                 {
-                    <p><strong>@AnimalWorld.AnimalSpecies:</strong></p>
-                    @string.Join(", ", zoo.AnimalSpecies.Select(a => a.AnimalSpeciesName))
+                    <p><strong>@AnimalWorld.AnimalFamilies:</strong></p>
+                    @string.Join(", ", zoo.AnimalFamilies.Select(a => a.AnimalFamilyName))
                 }
             </div>
         }

@@ -177,7 +177,7 @@
   <data name="AnimalSpeciesZoosLinksSetup" xml:space="preserve">
     <value>Setting up connections between parks and animal species</value>
   </data>
-  <data name="AnimalWorld" xml:space="preserve">
+  <data name="AnimalWorldTitle" xml:space="preserve">
     <value>World of animals</value>
   </data>
   <data name="BookNow" xml:space="preserve">

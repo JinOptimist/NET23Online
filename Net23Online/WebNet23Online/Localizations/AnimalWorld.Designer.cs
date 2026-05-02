@@ -243,9 +243,9 @@ namespace WebNet23Online.Localizations {
         /// <summary>
         ///   Looks up a localized string similar to World of animals.
         /// </summary>
-        public static string AnimalWorld {
+        public static string AnimalWorldTitle {
             get {
-                return ResourceManager.GetString("AnimalWorld", resourceCulture);
+                return ResourceManager.GetString("AnimalWorldTitle", resourceCulture);
             }
         }
         

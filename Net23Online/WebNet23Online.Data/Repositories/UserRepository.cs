@@ -60,7 +60,9 @@ namespace WebNet23Online.Data.Repositories
             user.FirstName = userData.FirstName;
             user.LastName = userData.LastName;
             user.Mobilephone = userData.Mobilephone;
-            _dbSet.Update(user);
+            Update(user);
+            //_dbSet.Update(user);
+            //_context.SaveChanges();
         }
     }
 }
