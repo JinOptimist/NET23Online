@@ -180,6 +180,12 @@
   <data name="AnimalWorldTitle" xml:space="preserve">
     <value>Мир животных</value>
   </data>
+  <data name="BackToZoos" xml:space="preserve">
+    <value>Вернуться к списку зоопарков</value>
+  </data>
+  <data name="Booked" xml:space="preserve">
+    <value>Забронировано</value>
+  </data>
   <data name="BookNow" xml:space="preserve">
     <value>Забронировать</value>
   </data>
@@ -219,6 +225,9 @@
   <data name="NoAnimalSpecies" xml:space="preserve">
     <value>Пока нет данных о видах животных.</value>
   </data>
+  <data name="NoBooked" xml:space="preserve">
+    <value>Бронирование недоступно</value>
+  </data>
   <data name="NoZoos" xml:space="preserve">
     <value>Пока нет данных о зоопарках</value>
   </data>
@@ -239,6 +248,15 @@
   </data>
   <data name="SpeciesName" xml:space="preserve">
     <value>Название вида</value>
+  </data>
+  <data name="VisitBooked" xml:space="preserve">
+    <value>Посещение забронировано</value>
+  </data>
+  <data name="VisitBookedCompleteMessage" xml:space="preserve">
+    <value>Посещение зоопарка забронировано. При покупке билета используйте Имя, фамилию и номер телефона из вашей учётной записи.</value>
+  </data>
+  <data name="VisitBookedDenyMessage" xml:space="preserve">
+    <value>Не удалось продолжить бронирование. Для бронирования необходимо заполнить профиль: имя, фамилию и номер телефона. После обновления данных профиля попробуйте снова.</value>
   </data>
   <data name="Zoo" xml:space="preserve">
     <value>Зоопарк</value>

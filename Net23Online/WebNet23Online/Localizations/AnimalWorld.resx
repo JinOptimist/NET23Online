@@ -180,6 +180,12 @@
   <data name="AnimalWorldTitle" xml:space="preserve">
     <value>World of animals</value>
   </data>
+  <data name="BackToZoos" xml:space="preserve">
+    <value>Return to the list of zoos</value>
+  </data>
+  <data name="Booked" xml:space="preserve">
+    <value>Booked</value>
+  </data>
   <data name="BookNow" xml:space="preserve">
     <value>Book now</value>
   </data>
@@ -219,6 +225,9 @@
   <data name="NoAnimalSpecies" xml:space="preserve">
     <value>There is no data on animal species yet.</value>
   </data>
+  <data name="NoBooked" xml:space="preserve">
+    <value>Reservations are not available.</value>
+  </data>
   <data name="NoZoos" xml:space="preserve">
     <value>There is no data on zoos yet</value>
   </data>
@@ -239,6 +248,15 @@
   </data>
   <data name="SpeciesName" xml:space="preserve">
     <value>Species name</value>
+  </data>
+  <data name="VisitBooked" xml:space="preserve">
+    <value>The visit is booked.</value>
+  </data>
+  <data name="VisitBookedCompleteMessage" xml:space="preserve">
+    <value>Your zoo visit is booked. Please use the first name, last name, and phone number from your account to purchase your ticket.</value>
+  </data>
+  <data name="VisitBookedDenyMessage" xml:space="preserve">
+    <value>Unable to continue your booking. To book, you must complete your profile: first name, last name, and phone number. Please try again after updating your profile information.</value>
   </data>
   <data name="Zoo" xml:space="preserve">
     <value>Zoo</value>

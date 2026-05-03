@@ -250,6 +250,24 @@ namespace WebNet23Online.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return to the list of zoos.
+        /// </summary>
+        public static string BackToZoos {
+            get {
+                return ResourceManager.GetString("BackToZoos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Booked.
+        /// </summary>
+        public static string Booked {
+            get {
+                return ResourceManager.GetString("Booked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Book now.
         /// </summary>
         public static string BookNow {
@@ -367,6 +385,15 @@ namespace WebNet23Online.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reservations are not available..
+        /// </summary>
+        public static string NoBooked {
+            get {
+                return ResourceManager.GetString("NoBooked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is no data on zoos yet.
         /// </summary>
         public static string NoZoos {
@@ -426,6 +453,33 @@ namespace WebNet23Online.Localizations {
         public static string SpeciesName {
             get {
                 return ResourceManager.GetString("SpeciesName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The visit is booked..
+        /// </summary>
+        public static string VisitBooked {
+            get {
+                return ResourceManager.GetString("VisitBooked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your zoo visit is booked. Please use the first name, last name, and phone number from your account to purchase your ticket..
+        /// </summary>
+        public static string VisitBookedCompleteMessage {
+            get {
+                return ResourceManager.GetString("VisitBookedCompleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to continue your booking. To book, you must complete your profile: first name, last name, and phone number. Please try again after updating your profile information..
+        /// </summary>
+        public static string VisitBookedDenyMessage {
+            get {
+                return ResourceManager.GetString("VisitBookedDenyMessage", resourceCulture);
             }
         }
         

@@ -7,22 +7,22 @@
 <div>
     <form action="/User/UpdateProfile" method="post">
         @Html.HiddenFor(x => x.UserId)
-        <div>
-            <p>Имя:</p>
+        <p>
+            First name:<br />
             @Html.TextBoxFor(m => m.FirstName, new { @class = "form-input", type = "text" })
-        </div>
-
-        <div>
-            <p>Фамилия:</p>
+        </p>
+        <p>
+            Last name:<br />
             @Html.TextBoxFor(m => m.LastName, new { @class = "form-input", type = "text" })
-        </div>
-
-        <div>
-            <p>Телефон:</p>
+        </p>
+        <p>
+            Phone number:<br />
             @Html.TextBoxFor(m => m.Mobilephone, new { @class = "form-input", type = "text" })
-        </div>
-        @Model.Language.ToString()
-        @Html.DropDownListFor(m => m.Language, Model.Languages)
+        </p>
+        <p>
+            @Model.Language.ToString()
+            @Html.DropDownListFor(m => m.Language, Model.Languages)
+        </p>
         <button>Save changes</button>
     </form>
 </div>
