@@ -8,7 +8,7 @@
     <form action="/User/ChangeLanguage" method="post">
         @Html.HiddenFor(x => x.UserId)
         @Model.Language.ToString()
-        @Html.DropDownListFor(m => m.Language, Model.Languages)
+        @Html.DropDownList("language", Model.Languages)
         <p>
             First name:<br />
             @Html.TextBoxFor(m => m.FirstName, new { @class = "form-input", type = "text" })
