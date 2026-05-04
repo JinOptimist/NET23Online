@@ -5,6 +5,13 @@
     @Model.UserName (@Model.UserId)
 </div>
 <div>
+    <img src="@Model.AvatarUrl" class="avatar"/>
+    <form action="/User/UpdateAvatar" method="post" enctype="multipart/form-data">
+        <input type="file" name="avatar" />
+        <button>Update avatar</button>
+    </form>
+</div>
+<div>
     <form action="/User/ChangeLanguage" method="post">
         @Html.HiddenFor(x => x.UserId)
         @Model.Language.ToString()

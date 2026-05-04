@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.IO;
 using WebNet23Online.Controllers.CustomAuthAttribute;
 using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.User;
-using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
@@ -16,12 +16,15 @@ namespace WebNet23Online.Controllers
     {
         public IAuthService _authService;
         public IUserRepository _userRepository;
+        public IWebHostEnvironment _webHostEnvironment;
 
         public UserController(IAuthService authService,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IWebHostEnvironment webHostEnvironment)
         {
             _authService = authService;
             _userRepository = userRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [IsModerator]
@@ -61,7 +64,8 @@ namespace WebNet23Online.Controllers
                 UserId = _authService.GetUserId(),
                 UserName = _authService.GetUserName() ?? "unnamed",
                 Language = currentUserLanguage,
-                Languages = allLanguagesList
+                Languages = allLanguagesList,
+                AvatarUrl = _authService.GetUser().AvatarUrl
             };
             return View(viewModel);
         }
@@ -78,10 +82,50 @@ namespace WebNet23Online.Controllers
             return RedirectToAction(nameof(Profile));
         }
 
+        [Authorize]
+        public IActionResult UpdateAvatar(IFormFile avatar)
+        {
+            var user = _authService.GetUser()!;
+            var userId = user.Id;
+            var pathToWwwRootFolder = _webHostEnvironment.WebRootPath;
+            var pathToFolder = "images\\avatars";
+            var fileName = $"avatar-{userId}.jpg";
+
+            var path = Path.Combine(pathToWwwRootFolder, pathToFolder, fileName);
+
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                avatar.CopyTo(fileStream); // copy to our PC
+            }
+
+            user.AvatarUrl = $"/images/avatars/{fileName}";
+            _userRepository.Update(user);
+
+            return RedirectToAction(nameof(Profile));
+        }
+
         [IsAdmin]
         public IActionResult DeleteUser()
         {
             return RedirectToAction(nameof(Index));
+        }
+
+
+        public IActionResult GenerateReport()
+        {
+            var path = System.IO.Path.GetTempFileName();
+            using(var file = System.IO.File.CreateText(path))
+            {
+                file.WriteLine($"Id,Name,Language");
+                var users = _userRepository.GetAll();
+                foreach (var user in users)
+                {
+                    file.WriteLine($"{user.Id},{user.Name},{user.Language}");
+                }
+            }
+
+            var fileStrem = new FileStream(path, FileMode.Open);
+            return File(fileStrem, "text/csv");
         }
     }
 }
