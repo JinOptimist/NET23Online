@@ -44,6 +44,36 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DelightBistro.De.resx</DependentUpon>
     </Compile>
+    <Compile Update="Localizations\Steam\AddGamePage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddGamePage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Steam\CatalogPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CatalogPage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Steam\EditGamePage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EditGamePage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Steam\GameDetailsPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GameDetailsPage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Steam\Mainpage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Mainpage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Steam\SteamShared.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SteamShared.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -73,6 +103,30 @@
     <EmbeddedResource Update="Localizations\DelightBistro.De.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DelightBistro.De.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Steam\AddGamePage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddGamePage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Steam\CatalogPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CatalogPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Steam\EditGamePage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditGamePage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Steam\GameDetailsPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GameDetailsPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Steam\Mainpage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Mainpage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Steam\SteamShared.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SteamShared.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
