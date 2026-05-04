@@ -87,6 +87,23 @@ namespace WebNet23Online.Controllers
         [HttpPost]
         public IActionResult Reservation(LittleLemonReservationViewModel viewModel )
         {
+            if(!ModelState.IsValid)
+            {
+                var hero = new LittleLemonHeroSectionViewModel
+                {
+                    CallToActionHref = (Url.Action("Index", "LittleLemon") + "#menu") ?? "/LittleLemon/Index#menu",
+                    CallToActionText = "Order For Delivery",
+                    HeroImageUrl = "/images/little-lemon/images/restauranfood.jpg",
+                    HeroImageAlt = "Signature Mediterranean platter at Little Lemon"
+                };
+                var pageModel = new LittleLemonReservationPageViewModel
+                {
+                    Hero = hero,
+                    Reservation = viewModel
+                };
+
+                return View(pageModel);
+            }
             var reservationId = _littleLemonReservationService.CreateReservation(viewModel);
             return RedirectToAction(nameof(Confirmation), new { reservationId });
 
