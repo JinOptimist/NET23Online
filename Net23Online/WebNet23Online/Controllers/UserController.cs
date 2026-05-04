@@ -68,18 +68,29 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        public IActionResult ChangeLanguage(int userId, Language language)
+        {
+            _userRepository.UpdateLanguage(userId, language);
+            var user = _authService.GetUser();
+
+            HttpContext.SignOutAsync().Wait();
+
+            _authService.SignIn(user);
+
+            return RedirectToAction(nameof(Profile));
+        }
+
+        [HttpPost]
         public IActionResult UpdateProfile(UserProfileViewModel viewModel)
         {
-            UserData userData = new UserData
-            {
-                Id = viewModel.UserId,
-                FirstName = viewModel.FirstName,
-                LastName = viewModel.LastName,
-                Mobilephone = viewModel.Mobilephone,
-                Language = viewModel.Language,
-            };
-            _userRepository.UpdateProfile(userData);
             var user = _authService.GetUser();
+            user.Id = viewModel.UserId;
+            user.FirstName = viewModel.FirstName;
+            user.LastName = viewModel.LastName;
+            user.Mobilephone = viewModel.Mobilephone;
+            user.Language = viewModel.Language;
+            _userRepository.UpdateProfile(user);
+            //var user = _authService.GetUser();
 
             HttpContext.SignOutAsync().Wait();
 
