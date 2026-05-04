@@ -9,7 +9,7 @@ namespace WebNet23Online.Data.Repositories.Interfaces
         UserData? GetByNameAndPassword(string login, string password);
         bool IsNameUniq(string login);
         void Registration(UserData user);
-        public void UpdateLanguage(int userId, Language language);
+        void UpdateLanguage(int userId, Language language);
         void UpdateProfile(UserData userData);
     }
 }
