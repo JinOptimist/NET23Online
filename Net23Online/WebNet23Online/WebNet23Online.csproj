@@ -25,6 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Localizations\AnimalWorld.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AnimalWorld.resx</DependentUpon>
+    </Compile>
     <Compile Update="Localizations\AnimeGirl.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -78,6 +83,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Localizations\AnimalWorld.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AnimalWorld.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Localizations\AnimeGirl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AnimeGirl.Designer.cs</LastGenOutput>

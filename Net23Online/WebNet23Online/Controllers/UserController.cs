@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.IO;
 using WebNet23Online.Controllers.CustomAuthAttribute;
 using WebNet23Online.Data.Enums;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.User;
 using WebNet23Online.Services.Interfaces;
@@ -70,6 +71,7 @@ namespace WebNet23Online.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
         public IActionResult ChangeLanguage(int userId, Language language)
         {
             _userRepository.UpdateLanguage(userId, language);
@@ -100,6 +102,25 @@ namespace WebNet23Online.Controllers
 
             user.AvatarUrl = $"/images/avatars/{fileName}";
             _userRepository.Update(user);
+
+            return RedirectToAction(nameof(Profile));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProfile(UserProfileViewModel viewModel)
+        {
+            var user = _authService.GetUser();
+            user.Id = viewModel.UserId;
+            user.FirstName = viewModel.FirstName;
+            user.LastName = viewModel.LastName;
+            user.Mobilephone = viewModel.Mobilephone;
+            user.Language = viewModel.Language;
+            _userRepository.UpdateProfile(user);
+            //var user = _authService.GetUser();
+
+            HttpContext.SignOutAsync().Wait();
+
+            _authService.SignIn(user);
 
             return RedirectToAction(nameof(Profile));
         }

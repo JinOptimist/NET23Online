@@ -19,3 +19,20 @@
         <button>Update language</button>
     </form>
 </div>
+<div>
+    <form action="/User/UpdateProfile" method="post">
+        <p>
+            First name:<br />
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-input", type = "text" })
+        </p>
+        <p>
+            Last name:<br />
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-input", type = "text" })
+        </p>
+        <p>
+            Phone number:<br />
+            @Html.TextBoxFor(m => m.Mobilephone, new { @class = "form-input", type = "text" })
+        </p>
+        <button>Save changes</button>
+    </form>
+</div>
