@@ -95,7 +95,7 @@ builder.Services.AddScoped<IIngredientGenerator, IngredientGenerator>();
 //HabitTracker DI
 builder.Services.AddScoped<IHabitService, HabitService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
-
+builder.Services.AddScoped<IHabitTrackerProfileRepository, HabitTrackerProfileRepository>();
 
 //JapaneseDomesticMarker DI
 builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
