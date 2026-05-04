@@ -286,6 +286,15 @@ namespace WebNet23Online.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Music that inspires.
+        /// </summary>
+        public static string Index_Header_Description {
+            get {
+                return ResourceManager.GetString("Index_Header_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Index_Header_Home {

@@ -192,6 +192,9 @@
   <data name="Index_Header" xml:space="preserve">
     <value>My favorite bands</value>
   </data>
+  <data name="Index_Header_Description" xml:space="preserve">
+    <value>Music that inspires</value>
+  </data>
   <data name="Index_Header_Home" xml:space="preserve">
     <value>Home</value>
   </data>

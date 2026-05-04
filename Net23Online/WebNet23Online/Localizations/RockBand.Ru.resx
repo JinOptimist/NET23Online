@@ -193,6 +193,9 @@
   <data name="Index_Header" xml:space="preserve">
     <value>Мои любимые группы</value>
   </data>
+  <data name="Index_Header_Description" xml:space="preserve">
+    <value>Музыка, которая вдохновляет</value>
+  </data>
   <data name="Index_Header_Home" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
