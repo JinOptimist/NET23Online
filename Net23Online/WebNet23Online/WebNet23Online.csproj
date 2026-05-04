@@ -29,10 +29,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AnimeGirl.resx</DependentUpon>
     </Compile>
+    <Compile Update="Localizations\DelightBistro.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DelightBistro.resx</DependentUpon>
+    </Compile>
     <Compile Update="Localizations\Home.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Home.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\DelightBistro.De.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DelightBistro.De.resx</DependentUpon>
     </Compile>
     <Compile Update="Localizations\Steam\AddGamePage.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -71,9 +81,28 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AnimeGirl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\DelightBistro.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DelightBistro.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\DelightBistro.Ru.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Home.De.resx">
+      <LastGenOutput>Home.De.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Localizations\Home.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Home.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\DelightBistro.De.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DelightBistro.De.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Localizations\Steam\AddGamePage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
