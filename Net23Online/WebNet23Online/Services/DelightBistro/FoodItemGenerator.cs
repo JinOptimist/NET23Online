@@ -42,18 +42,8 @@ namespace WebNet23Online.Services.DelightBistro
 
         public void CreateFoodItemData(CreateFoodItemViewModel viewModel)
         {
-            var selectedIngredients = new List<IngredientData>();
-            if (!viewModel.SelectedIngredientsId.IsNullOrEmpty())
-            {
-                selectedIngredients = _ingredientsRepository.GetAll()
-                    .Where(x => viewModel.SelectedIngredientsId.Contains(x.Id)).ToList();
-            }
-
-            MenuData menuData = null;
-            if (viewModel.MenuId != null)
-            {
-                menuData = _menuRepository.Get(viewModel.MenuId.Value);
-            }
+            var selectedIngredients = GetSelectedIngredients(viewModel);
+            var selectedMenu = GetSelectedMenu(viewModel);
 
             var newFoodItemData = new FoodItemData()
             {
@@ -61,7 +51,7 @@ namespace WebNet23Online.Services.DelightBistro
                 Price = viewModel.Price,
                 ImgURL = viewModel.ImgURL,
 
-                MenuData = menuData,
+                MenuData = selectedMenu,
                 IngredientsList = selectedIngredients,
                 Creator = _authService.GetUser()
             };
@@ -70,25 +60,15 @@ namespace WebNet23Online.Services.DelightBistro
 
         public void ChangeFoodItemData(CreateFoodItemViewModel viewModel)
         {
-
-            var selectedIngredients = new List<IngredientData>();
-            if (!viewModel.SelectedIngredientsId.IsNullOrEmpty())
-            {
-                selectedIngredients = _ingredientsRepository.GetAll()
-                    .Where(x => viewModel.SelectedIngredientsId.Contains(x.Id)).ToList();
-            }
-            MenuData menuData = null;
-            if (viewModel.MenuId != null)
-            {
-                menuData = _menuRepository.Get(viewModel.MenuId.Value);
-            }
+            var selectedIngredients = GetSelectedIngredients(viewModel);
+            var selectedMenu = GetSelectedMenu(viewModel);
 
             var changedFoodItemData = _foodItemRepository.GetByIdIncludeMenuAndIngredients(viewModel.Id);
 
             changedFoodItemData.Name = viewModel.Name;
             changedFoodItemData.Price = viewModel.Price;
             changedFoodItemData.ImgURL = viewModel.ImgURL;
-            changedFoodItemData.MenuData = menuData;
+            changedFoodItemData.MenuData = selectedMenu;
             changedFoodItemData.IngredientsList = selectedIngredients;
 
             _foodItemRepository.Update(changedFoodItemData);
@@ -118,7 +98,7 @@ namespace WebNet23Online.Services.DelightBistro
             {
                 var createFoodItemVM = new CreateFoodItemViewModel()
                 {
-                    Menus = SelectMenu(),
+                    Menus = SelectMenuList(),
                     Ingredients = ChekBoxIngredients()
                 };
 
@@ -137,13 +117,13 @@ namespace WebNet23Online.Services.DelightBistro
                 .Select(x => x.Id).ToList(),
 
                 Ingredients = ChekBoxIngredients(foodItemData),
-                Menus = SelectMenu()
+                Menus = SelectMenuList()
             };
 
             return viewModel;
         }
 
-        public List<SelectListItem> SelectMenu()
+        public List<SelectListItem> SelectMenuList()
         {
             var allMenuData = _menuRepository.GetAll();
             var menuListItems = new List<SelectListItem>();
@@ -161,6 +141,28 @@ namespace WebNet23Online.Services.DelightBistro
             var allIngredientVM = _ingredientGenerator.GenerateIngredients(allIngredientsDatas, foodItemData);
 
             return allIngredientVM;
+        }
+
+        private List<IngredientData> GetSelectedIngredients(CreateFoodItemViewModel viewModel)
+        {
+            var selectedIngredients = new List<IngredientData>();
+            if (!viewModel.SelectedIngredientsId.IsNullOrEmpty())
+            {
+                selectedIngredients = _ingredientsRepository.GetAll()
+                    .Where(x => viewModel.SelectedIngredientsId.Contains(x.Id)).ToList();
+            }
+
+            return selectedIngredients;
+        }
+
+        private MenuData GetSelectedMenu(CreateFoodItemViewModel viewModel)
+        {
+            MenuData menuData = null;
+            if (viewModel.MenuId != null)
+            {
+                menuData = _menuRepository.Get(viewModel.MenuId.Value);
+            }
+            return menuData;
         }
 
         public void DeleteFoodItem(int id)
