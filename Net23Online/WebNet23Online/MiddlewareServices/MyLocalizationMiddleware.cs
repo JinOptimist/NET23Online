@@ -42,7 +42,7 @@ public class MyLocalizationMiddleware
 
         // before controller
 
-        _next.Invoke(context);
+        await _next.Invoke(context);
 
         // after controller
     }
