@@ -6,6 +6,7 @@ namespace WebNet23Online.Models.User
     public class UserProfileViewModel
     {
         public int UserId { get; set; }
+        public string AvatarUrl { get; set; }
         public string UserName { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
