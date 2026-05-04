@@ -34,6 +34,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Home.resx</DependentUpon>
     </Compile>
+    <Compile Update="Localizations\RockLegendsPortal.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RockLegendsPortal.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +49,10 @@
     <EmbeddedResource Update="Localizations\Home.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Home.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\RockLegendsPortal.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RockLegendsPortal.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
