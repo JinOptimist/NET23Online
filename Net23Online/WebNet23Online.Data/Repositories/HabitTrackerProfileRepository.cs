@@ -14,26 +14,15 @@ public class HabitTrackerProfileRepository : BaseRepository<HabitTrackerProfileD
 
     public void BlockUser(int userId)
     {
-        var profile = GetOrCreate(userId);
+        var profile = GetByUserId(userId);
         profile.IsBlocked = true;
         Update(profile);
     }
 
     public void UnblockUser(int userId)
     {
-        var profile = GetOrCreate(userId);
+        var profile = GetByUserId(userId);
         profile.IsBlocked = false;
         Update(profile);
-    }
-
-    private HabitTrackerProfileData GetOrCreate(int userId)
-    {
-        var profile = GetByUserId(userId);
-        if (profile == null)
-        {
-            profile = new HabitTrackerProfileData { UserId = userId };
-            Add(profile);
-        }
-        return profile;
     }
 }

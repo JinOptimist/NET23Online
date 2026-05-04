@@ -45,6 +45,7 @@ public class HabitTrackerController : Controller
     }
     
     [HttpGet]
+    [Authorize]
     [IsNotBlockedInTracker]
     public IActionResult HabitTracker()
     {
@@ -196,6 +197,7 @@ public class HabitTrackerController : Controller
     [IsModerator]
     public IActionResult AdminPanel()
     {
+        //переделаю, можно не смотреть:)
         var habits = _habitRepository.GetAll();
     
         var model = new HabitAdminStatisticViewModel
@@ -219,6 +221,7 @@ public class HabitTrackerController : Controller
     [IsModerator]
     public IActionResult UserList()
     {
+        //переделаю, можно не смотреть:)
         var users = _userRepository.GetAll();
         var profiles = _habitTrackerProfileRepository.GetAll();
     
