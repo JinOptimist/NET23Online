@@ -5,7 +5,6 @@ namespace WebNet23Online.Models.LittleLemon
     public class LittleLemonReservationViewModel
     {
 
-        public int GuestId { get; set; }
         [Required(ErrorMessage = "Please enter a valid Name")]
         [StringLength(30, MinimumLength = 3, ErrorMessage = "Name must be between 3 and 30 characters.")]
         public string? GuestName { get; set; }
