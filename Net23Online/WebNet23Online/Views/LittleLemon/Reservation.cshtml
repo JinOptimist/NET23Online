@@ -4,33 +4,23 @@
 	Layout = "_LayoutLittleLemon";
 }
 <title>Reservation</title>
-@Html.Partial("_LittleLemonHeroSection", Model.Hero)
+@Html.Partial("_LittleLemonHeroSection", Model.Hero!)
 <section class="booking-section">
 	<h2>Choose Your Loving Place!</h2>
 	
-	<form class="booking-form" method="post" asp-controller="LittleLemon" asp-action="CreateGuest">
+	
+	<form class="booking-form" method="post" asp-controller="LittleLemon" asp-action="Reservation">
+		<div asp-validation-summary="All" class="booking-validation-summary"></div>
 		<div>
 			<label for="guest-name">Create new guest (name):</label>
 			<input type="text" id="guest-name" asp-for="Reservation.GuestName" required />
-			<div asp-validation-for="Reservation.GuestName"></div>
-		</div>
-		<input type="submit" value="Create guest and get GuestId" class="btn" />
-	</form>
-	<form class="booking-form" method="post" asp-controller="LittleLemon" asp-action="Reservation">
-		<div>
-			<label for="guest-id">Guest Id :</label>
-			<input type="number"
-				   id="guest-id"
-				   name="GuestId"
-				   min="1"
-				   value="@(Model.Reservation.GuestId > 0 ? Model.Reservation.GuestId : null)"
-				   required />
+			<span asp-validation-for="Reservation.GuestName" class="field-validation-error"></span>
 		</div>
 		<div>
 			
 			<label for="reserve-date">Choose Date:</label>
 			<input type="date" id="reserve-date" asp-for="Reservation.ReservationDateOnly" required />
-			<div asp-validation-for="Reservation.ReservationDateOnly"></div>
+			<span asp-validation-for="Reservation.ReservationDateOnly" class="field-validation-error"></span>
 		</div>
 		<div>
 			<label for="reserve-time">Choose Time:</label>
@@ -42,7 +32,7 @@
 				<option value="21:00">21:00</option>
 				<option value="22:00">22:00</option>
 			</select>
-			<div asp-validation-for="Reservation.AvailableTimesOnly"></div>
+			<span asp-validation-for="Reservation.AvailableTimesOnly" class="field-validation-error"></span>
 		</div>
 		<div>
 			<label for="guests">Number of Guests:</label>
@@ -53,7 +43,7 @@
 				   id="guests"
 				   asp-for="Reservation.NumberOfGuests"
 				   required />
-			<div asp-validation-for="Reservation.NumberOfGuests"></div>
+			<span asp-validation-for="Reservation.NumberOfGuests" class="field-validation-error"></span>
 		</div>
 		<div>
 			<label for="seating">Seating preference:</label>
@@ -63,7 +53,7 @@
 				<option value="patio">Patio / outdoor</option>
 				<option value="window">Window table (if available)</option>
 			</select>
-			<div asp-validation-for="Reservation.SeatingPreference"></div>
+			<span asp-validation-for="Reservation.SeatingPreference" class="field-validation-error"></span>
 		</div>
 		<div>
 			<label for="occasion">Occasion:</label>
@@ -74,7 +64,7 @@
 					<option value="anniversary">Anniversary</option>
 					<option value="other">Other</option>
 				</select>
-				<div asp-validation-for="Reservation.Occasion"></div>
+				<span asp-validation-for="Reservation.Occasion" class="field-validation-error"></span>
 			</div>
 
 		</div>
@@ -82,7 +72,7 @@
 			<label for="text-area"> Do You want to add anything else ? </label>
 			<textarea asp-for="Reservation.UserComments" id="text-area" cols="2" rows="3" placeholder="Remember, be nice!"
 					  required></textarea>
-			<div asp-validation-for="Reservation.UserComments"></div>
+			<span asp-validation-for="Reservation.UserComments" class="field-validation-error"></span>
 		</div>
 		<input type="submit" value="Make your reservation" class="btn" />
 	</form>

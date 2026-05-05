@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Primitives;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 namespace WebNet23Online.Models.CustomValidatioAttributes
 {
     public class AllowedStringValuesAttribute : ValidationAttribute
@@ -19,9 +18,15 @@ namespace WebNet23Online.Models.CustomValidatioAttributes
         }
         public override bool IsValid(object? value)
         {
-            ArgumentNullException.ThrowIfNull(value);
-            var stringValue = value as string;
-            ArgumentNullException.ThrowIfNull(stringValue, "AllowedStringValuesAttribute must be used on string fields");
+            if (value is null)
+            {
+                return false;
+            }
+
+            if (value is not string stringValue)
+            {
+                return false;
+            }
 
             return _allowedStringValues.Contains(stringValue);
         }

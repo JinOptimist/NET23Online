@@ -45,7 +45,7 @@ namespace WebNet23Online.Controllers
             return View(pageModel);
         }
 
-        
+
         [HttpGet]
         public IActionResult Subscribe()
         {
@@ -63,7 +63,8 @@ namespace WebNet23Online.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Reservation(int guestId)
+        [HttpGet]
+        public IActionResult Reservation()
         {
             var hero = new LittleLemonHeroSectionViewModel
             {
@@ -74,7 +75,7 @@ namespace WebNet23Online.Controllers
             };
             var reservation = new LittleLemonReservationViewModel
             {
-                GuestId = guestId 
+                GuestName = string.Empty
             };
             var pageModel = new LittleLemonReservationPageViewModel
             {
@@ -85,9 +86,9 @@ namespace WebNet23Online.Controllers
             return View(pageModel);
         }
         [HttpPost]
-        public IActionResult Reservation(LittleLemonReservationViewModel viewModel )
+        public IActionResult Reservation(LittleLemonReservationPageViewModel viewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var hero = new LittleLemonHeroSectionViewModel
                 {
@@ -99,23 +100,23 @@ namespace WebNet23Online.Controllers
                 var pageModel = new LittleLemonReservationPageViewModel
                 {
                     Hero = hero,
-                    Reservation = viewModel
+                    Reservation = viewModel.Reservation ?? new LittleLemonReservationViewModel()
                 };
 
                 return View(pageModel);
             }
-            var reservationId = _littleLemonReservationService.CreateReservation(viewModel);
-            return RedirectToAction(nameof(Confirmation), new { reservationId });
 
+            var reservationId = _littleLemonReservationService.CreateReservation(viewModel.Reservation);
+            return RedirectToAction(nameof(Confirmation), new { reservationId });
         }
 
         [HttpPost]
         public IActionResult CreateGuest(string guestName)
         {
-                var guestId = _littleLemonReservationService.CreateGuest(guestName);
-                
-                return RedirectToAction(nameof(Reservation), new { guestId });
-            
+            var guestId = _littleLemonReservationService.CreateGuest(guestName);
+
+            return RedirectToAction(nameof(Reservation));
+
         }
 
         [HttpPost]

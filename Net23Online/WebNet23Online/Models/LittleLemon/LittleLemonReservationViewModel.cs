@@ -12,6 +12,7 @@ namespace WebNet23Online.Models.LittleLemon
 
         [MinMaxCheck(1, 10, ErrorMessage = "Number of guests must be between 1 and 10.")]
         public int NumberOfGuests { get; set; }
+        [Required(ErrorMessage = "Please select a seating preference.")]
         [AllowedStringValues("no-preference", "indoor", "patio", "window")]
         public string? SeatingPreference { get; set; }
         [Required(ErrorMessage = "Please select a reservation time.")]

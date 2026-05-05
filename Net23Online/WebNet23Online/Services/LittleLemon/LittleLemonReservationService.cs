@@ -7,20 +7,20 @@ namespace WebNet23Online.Services.LittleLemon
 {
     public class LittleLemonReservationService: ILittleLemonReservationService
     {
-        private ILittleLemonReservationRepository _reservationDataRepo;
-        private ILittleLemonGuestRepository _guestDataRepo;
+        private ILittleLemonReservationRepository _reservationDataRepository;
+        private ILittleLemonGuestRepository _guestDataRepository;
 
         public LittleLemonReservationService(
-            ILittleLemonReservationRepository reservationDataRepo,
-            ILittleLemonGuestRepository guestDataRepo)
+            ILittleLemonReservationRepository reservationDataRepository,
+            ILittleLemonGuestRepository guestDataRepository)
         {
-            _reservationDataRepo = reservationDataRepo;
-            _guestDataRepo = guestDataRepo;
+            _reservationDataRepository = reservationDataRepository;
+            _guestDataRepository = guestDataRepository;
         }
 
         public int CreateGuest(string guestName)
         {
-            var existingGuest = _guestDataRepo.GetAll()
+            var existingGuest = _guestDataRepository.GetAll()
                 .FirstOrDefault(x => string.Equals(x.Name, guestName));
 
             if (existingGuest != null)
@@ -33,20 +33,20 @@ namespace WebNet23Online.Services.LittleLemon
                 Name = guestName
             };
 
-            _guestDataRepo.Add(newGuest);
+            _guestDataRepository.Add(newGuest);
             return newGuest.Id;
         }
 
         public int CreateReservation(LittleLemonReservationViewModel viewModel)
         {
 
-
-            var guest = _guestDataRepo.Get(viewModel.GuestId);
+            var guestId = CreateGuest(viewModel.GuestName!);
+            var guest = _guestDataRepository.Get(guestId);
             
 
             var reservationData = new LittleLemonData
             {
-                GuestId = guest.Id,
+                GuestId = guest!.Id,
                 NumberOfGuests = viewModel.NumberOfGuests,
                 SeatingPreference = viewModel.SeatingPreference,
                 AvailableTimesOnly = viewModel.AvailableTimesOnly,
@@ -54,19 +54,18 @@ namespace WebNet23Online.Services.LittleLemon
                 Occasion = viewModel.Occasion,
                 UserComments = viewModel.UserComments,
             };
-            _reservationDataRepo.Add(reservationData);
+            _reservationDataRepository.Add(reservationData);
             return reservationData.Id;
         }
 
         public LittleLemonReservationViewModel GetReservationViewModelById(int id)
         {
-            var reservationDataById = _reservationDataRepo.Get(id);
-            var guest = _guestDataRepo.Get(reservationDataById.GuestId);
+            var reservationDataById = _reservationDataRepository.Get(id);
+            var guest = _guestDataRepository.Get(reservationDataById!.GuestId);
 
             return new LittleLemonReservationViewModel
             {
-                GuestId = reservationDataById.GuestId,
-                GuestName = guest.Name,
+                GuestName = guest!.Name,
                 NumberOfGuests = reservationDataById.NumberOfGuests,
                 SeatingPreference = reservationDataById.SeatingPreference,
                 AvailableTimesOnly = reservationDataById.AvailableTimesOnly,
@@ -78,8 +77,8 @@ namespace WebNet23Online.Services.LittleLemon
 
         public bool LinkReservationToGuest(int reservationId, int guestId)
         {
-            var reservation = _reservationDataRepo.Get(reservationId);
-            var guest = _guestDataRepo.Get(guestId);
+            var reservation = _reservationDataRepository.Get(reservationId);
+            var guest = _guestDataRepository.Get(guestId);
 
             if (reservation == null || guest == null)
             {
@@ -87,7 +86,7 @@ namespace WebNet23Online.Services.LittleLemon
             }
 
             reservation.GuestId = guestId;
-            _reservationDataRepo.Update(reservation);
+            _reservationDataRepository.Update(reservation);
             return true;
         }
     }
