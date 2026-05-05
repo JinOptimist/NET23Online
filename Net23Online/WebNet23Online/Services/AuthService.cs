@@ -17,12 +17,14 @@ namespace WebNet23Online.Services
 
         private IHttpContextAccessor _httpContextAccessor;
         private readonly IUserRepository _userRepository;
+        private readonly IHabitTrackerProfileRepository _habitTrackerProfileRepository;
 
         public AuthService(IHttpContextAccessor httpContextAccessor,
-            IUserRepository userRepository)
+            IUserRepository userRepository, IHabitTrackerProfileRepository  habitTrackerProfileRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
+            _habitTrackerProfileRepository =  habitTrackerProfileRepository;
         }
 
         public int GetUserId()
@@ -138,6 +140,24 @@ namespace WebNet23Online.Services
             return role == UserRole.Admin 
                 || role == UserRole.Moderator 
                 || role == UserRole.Employee;
+        }
+        
+        public bool IsUser()
+        {
+            if (!IsAuthenticated() || GetRole() != UserRole.User)
+            {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        public bool IsBlockedInTracker()
+        {
+            var userId = GetUserId();
+    
+            var profile = _habitTrackerProfileRepository.GetByUserId(userId);
+            return profile?.IsBlocked ?? false;
         }
     }
 }
