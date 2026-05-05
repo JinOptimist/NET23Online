@@ -1,4 +1,6 @@
 ﻿@using WebNet23Online.Models.LittleLemon
+@using WebNet23Online.Services.Interfaces
+@inject IAuthService authService
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +29,14 @@
 					<li><a href="/LittleLemon/Reservation">Reservation</a></li>
 					<li><a href="#">Order Online</a></li>
 					<li><a href="#footer">Contact</a></li>
-					<li><a href="#">Login</a></li>
+					@if (authService.IsAuthenticated())
+					{
+						<li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
+					}
+					else
+					{
+						<li><a asp-controller="Auth" asp-action="Login">Login</a></li>
+					}
 				</ul>
 			</nav>
 		</div>
