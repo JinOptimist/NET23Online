@@ -31,7 +31,14 @@ namespace WebNet23Online.Services
             var zoos = _animalWorldMapper.FromZooDataToZooViewModel(_zooRepository.GetRandomElements());
             var animalFamilies = _animalWorldMapper.FromAnimalFamilyDataToAnimalFamilyViewModel(_animalFamilyRepository.GetRandomElements());
             var animalSpecies = _animalWorldMapper.FromAnimalSpeciesDataToAnimalSpeciesViewModel(_animalSpeciesRepository.GetRandomElements());
-            animalSpecies.ForEach(a => a.Url = string.IsNullOrEmpty(a.Url) ? "/images/animal-world/default.jpg" : a.Url);
+            foreach (var animal in animalSpecies)
+            {
+                if (string.IsNullOrEmpty(animal.Url))
+                {
+                    animal.Url = "/images/animal-world/default.jpg";
+                }
+            }
+
             var startPageInfo = new StartPageAnimalWorldInfoViewModel
             {
                 Zoos = zoos,
@@ -123,7 +130,7 @@ namespace WebNet23Online.Services
             {
                 var pathToWwwRootFolder = _webHostEnvironment.WebRootPath;
                 var pathToFolder = "images\\animal-world";
-                var fileName = $"{DateTime.Now:yyyy-MM-dd-HH-mm-ss}animal-{user.Name}.jpg";
+                var fileName = $"{DateTime.Now:yyyy-MM-dd-HH-mm-ss}-animal-{user.Name}.jpg";
                 url = $"/images/animal-world/{fileName}";
                 var path = Path.Combine(pathToWwwRootFolder, pathToFolder, fileName);
                 using (var animalSpeciesImage = new FileStream(path, FileMode.Create))
