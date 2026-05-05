@@ -34,6 +34,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasIndex("ZooDataId");
 
+                    b.ToTable("BindZooAndAnimalSpecies", (string)null);
                     b.ToTable("AnimalSpeciesDataZooData");
                 });
 
@@ -113,8 +114,14 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AnimalFamilies");
                     b.ToTable("AnimalFamilies");
                 });
 
@@ -141,10 +148,16 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AnimalFamilyId");
 
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AnimalSpecies");
                     b.ToTable("AnimalSpecies");
                 });
 
@@ -164,12 +177,18 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ZooName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Zoos");
                     b.ToTable("Zoos");
                 });
 
@@ -383,6 +402,7 @@ namespace WebNet23Online.Data.Migrations
 
                     b.HasIndex("CreatorId");
 
+                    b.ToTable("Ingredients");
                     b.ToTable("Ingredients");
                 });
 
@@ -747,6 +767,21 @@ namespace WebNet23Online.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mobilephone")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -870,15 +905,45 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WebNet23Online.Data.Models.AnimalWorld.AnimalFamilyData", b =>
+                {
+                    b.HasOne("WebNet23Online.Data.Models.UserData", "Creator")
+                        .WithMany("CreatedByMeAnimalFamilies")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimalWorld.AnimalSpeciesData", b =>
                 {
                     b.HasOne("WebNet23Online.Data.Models.AnimalWorld.AnimalFamilyData", "AnimalFamily")
                         .WithMany("Species")
                         .HasForeignKey("AnimalFamilyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("WebNet23Online.Data.Models.UserData", "Creator")
+                        .WithMany("CreatedByMeAnimalSpecies")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("AnimalFamily");
+
+                    b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.AnimalWorld.ZooData", b =>
+                {
+                    b.HasOne("WebNet23Online.Data.Models.UserData", "Creator")
+                        .WithMany("CreatedByMeZoos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimeData", b =>
@@ -1097,6 +1162,14 @@ namespace WebNet23Online.Data.Migrations
 
             modelBuilder.Entity("WebNet23Online.Data.Models.UserData", b =>
                 {
+                    b.Navigation("CreatedByMeAnimalFamilies");
+
+                    b.Navigation("CreatedByMeAnimalSpecies");
+
+                    b.Navigation("CreatedByMeZoos");
+
+                    b.Navigation("CreatedFoodItems");
+
                     b.Navigation("CreatedFoodItems");
 
                     b.Navigation("CreatedGames");
