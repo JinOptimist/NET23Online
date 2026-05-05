@@ -49,7 +49,6 @@ namespace WebNet23Online.Controllers
             if (Image != null)
             {
                 band.PhotoOfTheBand = Image;
-                ModelState.Remove("BandBlock.ImageUrl");
             }
             if (!ModelState.IsValid)
             {
