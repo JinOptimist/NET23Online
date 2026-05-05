@@ -13,6 +13,8 @@ namespace WebNet23Online.Models.AnimalWorld
 
         public IFormFile AnimalSpeciesImage { get; set; }
 
+        public string? Url { get; set; }
+
         [Required]
         public int AnimalFamilyId { get; set; }
 

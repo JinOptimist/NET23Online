@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Models.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Models.AnimalWorld;
@@ -13,14 +14,16 @@ namespace WebNet23Online.Services
         private IAnimalSpeciesRepository _animalSpeciesRepository;
         private IAnimalWorldMapper _animalWorldMapper;
         private IAuthService _authService;
+        private IWebHostEnvironment _webHostEnvironment;
 
-        public AnimalWorldService(IZooRepository zooRepository, IAnimalFamilyRepository animalFamilyRepository, IAnimalSpeciesRepository animalSpeciesRepository, IAnimalWorldMapper animalWorldMapper, IAuthService authService)
+        public AnimalWorldService(IZooRepository zooRepository, IAnimalFamilyRepository animalFamilyRepository, IAnimalSpeciesRepository animalSpeciesRepository, IAnimalWorldMapper animalWorldMapper, IAuthService authService, IWebHostEnvironment webHostEnvironment)
         {
             _zooRepository = zooRepository;
             _animalFamilyRepository = animalFamilyRepository;
             _animalSpeciesRepository = animalSpeciesRepository;
             _animalWorldMapper = animalWorldMapper;
             _authService = authService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public StartPageAnimalWorldInfoViewModel GetStartInfo()
@@ -114,9 +117,24 @@ namespace WebNet23Online.Services
         {
             var user = _authService.GetUser();
             var animalFamily = _animalFamilyRepository.Get(viewModel.AnimalFamilyId);
+            var url = "/images/animal-world/default.jpg";
+            if (viewModel.AnimalSpeciesImage != null)
+            {
+                var pathToWwwRootFolder = _webHostEnvironment.WebRootPath;
+                var pathToFolder = "images\\animal-world";
+                var fileName = $"{DateTime.Now:yyyy-MM-dd-HH-mm-ss}animal-{user.Name}.jpg";
+                url = $"/images/animal-world/{fileName}";
+                var path = Path.Combine(pathToWwwRootFolder, pathToFolder, fileName);
+                using (var animalSpeciesImage = new FileStream(path, FileMode.Create))
+                {
+                    viewModel.AnimalSpeciesImage.CopyTo(animalSpeciesImage);
+                }
+            }
+
             var animalSpeciesData = new AnimalSpeciesData
             {
                 AnimalSpeciesName = viewModel.AnimalSpeciesName,
+                AnimalSpeciesUrl = url,
                 NativeRange = viewModel.NativeRange,
                 Description = viewModel.Description,
                 AnimalFamily = animalFamily,

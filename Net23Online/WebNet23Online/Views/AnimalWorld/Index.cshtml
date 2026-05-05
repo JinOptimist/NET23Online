@@ -67,9 +67,14 @@
         @foreach (var species in Model.AnimalSpecies)
         {
             <div class="animal entity-card">
-                <h3>@species.AnimalSpeciesName</h3>
-                <p><strong>@AnimalWorld.Habitat:</strong> @species.NativeRange</p>
-                <p>@species.Description</p>
+                <div class="animal entity-image">
+                    <img src="@species.Url" />
+                </div>
+                <div>
+                    <h3>@species.AnimalSpeciesName</h3>
+                    <p><strong>@AnimalWorld.Habitat:</strong> @species.NativeRange</p>
+                    <p>@species.Description</p>
+                </div>
             </div>
         }
     }

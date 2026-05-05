@@ -58,6 +58,10 @@ body {
     margin: 10px 0;
     border-left: 5px solid #4caf50;
     border-radius: 10px;
+
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
 }
 
 .find-animal {
@@ -95,13 +99,27 @@ body {
     border-radius: 8px;
 }
 
+.file-input {
+    background-color: white;
+    cursor: pointer;
+}
+
 .entity-card {
     margin-bottom: 14px;
 }
 
-    .entity-card h3 {
-        margin-top: 0;
-    }
+.entity-image {
+    flex-shrink: 0;
+    width: 180px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.entity-card h3 {
+    margin-top: 0;
+}
 
 .empty-list-note {
     font-style: italic;
