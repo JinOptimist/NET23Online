@@ -12,6 +12,7 @@ namespace WebNet23Online.Services
             {
                 ZooName = zoo.ZooName,
                 Address = zoo.Address,
+                AnimalFamilies = FromAnimalFamilyDataToAnimalFamilyViewModel(zoo.AnimalSpecies.Select(s => s.AnimalFamily).DistinctBy(s => s.AnimalFamilyName).ToList()),
                 AnimalSpecies = FromAnimalSpeciesDataToAnimalSpeciesViewModel(zoo.AnimalSpecies),
                 Description = zoo.Description,
             });

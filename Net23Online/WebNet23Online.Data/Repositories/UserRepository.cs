@@ -59,5 +59,17 @@ namespace WebNet23Online.Data.Repositories
             user.Language = language;
             _context.SaveChanges();
         }
+
+        public void UpdateProfile(UserData userData)
+        {
+            //var user = _dbSet.First(x => x.Id == userData.Id);
+            //user.Language = userData.Language;
+            //user.FirstName = userData.FirstName;
+            //user.LastName = userData.LastName;
+            //user.Mobilephone = userData.Mobilephone;
+            Update(userData);
+            //_dbSet.Update(user);
+            //_context.SaveChanges();
+        }
     }
 }
