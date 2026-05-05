@@ -16,4 +16,10 @@
 		<li>Occasion: @Model.Reservation.Occasion</li>
 		<li>Notes: @Model.Reservation.UserComments</li>
 	</ul>
+	@if (Model.CanSeeHistory)
+	{
+		<div>
+			<a class="btn" asp-controller="LittleLemon" asp-action="History">History</a>
+		</div>
+	}
 </section>

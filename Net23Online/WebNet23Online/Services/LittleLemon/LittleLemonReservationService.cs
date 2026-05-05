@@ -3,19 +3,24 @@ using WebNet23Online.Services.Interfaces.LittleLemon;
 using WebNet23Online.Models.LittleLemon;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Models;
+using WebNet23Online.Services.Interfaces;
+using WebNet23Online.Data.Enums;
 namespace WebNet23Online.Services.LittleLemon
 {
-    public class LittleLemonReservationService: ILittleLemonReservationService
+    public class LittleLemonReservationService : ILittleLemonReservationService
     {
         private ILittleLemonReservationRepository _reservationDataRepository;
         private ILittleLemonGuestRepository _guestDataRepository;
+        private IAuthService _authService;
 
         public LittleLemonReservationService(
             ILittleLemonReservationRepository reservationDataRepository,
-            ILittleLemonGuestRepository guestDataRepository)
+            ILittleLemonGuestRepository guestDataRepository,
+            IAuthService authService)
         {
             _reservationDataRepository = reservationDataRepository;
             _guestDataRepository = guestDataRepository;
+            _authService = authService;
         }
 
         public int CreateGuest(string guestName)
@@ -42,17 +47,21 @@ namespace WebNet23Online.Services.LittleLemon
 
             var guestId = CreateGuest(viewModel.GuestName!);
             var guest = _guestDataRepository.Get(guestId);
-            
-
+            var role = _authService.GetRole();
+            var isAdmin = role == UserRole.Admin;
+            var isUser = role == UserRole.User;
             var reservationData = new LittleLemonData
             {
                 GuestId = guest!.Id,
                 NumberOfGuests = viewModel.NumberOfGuests,
-                SeatingPreference = viewModel.SeatingPreference,
+                SeatingPreference = isAdmin || isUser
+                    ? viewModel.SeatingPreference
+                    : "no-preference",
                 AvailableTimesOnly = viewModel.AvailableTimesOnly,
                 ReservationDateOnly = viewModel.ReservationDateOnly,
                 Occasion = viewModel.Occasion,
                 UserComments = viewModel.UserComments,
+                CreatedByUserId = isAdmin || isUser ? _authService.GetUserId() : null,
             };
             _reservationDataRepository.Add(reservationData);
             return reservationData.Id;
@@ -89,5 +98,41 @@ namespace WebNet23Online.Services.LittleLemon
             _reservationDataRepository.Update(reservation);
             return true;
         }
+        public List<LittleLemonReservationHistoryItemViewModel> GetReservationHistoryForCurrentUser()
+        {
+            var userId = _authService.GetUserId();
+            var role = _authService.GetRole();
+            var reservations = _reservationDataRepository.GetAll();
+            if (role == UserRole.User)
+            {
+                reservations = reservations
+                    .Where(reservationData => reservationData.CreatedByUserId == userId)
+                    .ToList();
+            }
+            var reservationHistory = reservations
+                .OrderByDescending(reservationData => reservationData.Id)
+                .Select(reservationData =>
+                {
+                    var guest = _guestDataRepository.Get(reservationData.GuestId);
+                    return new LittleLemonReservationHistoryItemViewModel
+                    {
+                        ReservationId = reservationData.Id,
+                        Reservation = new LittleLemonReservationViewModel
+                        {
+                            GuestName = guest!.Name,
+                            NumberOfGuests = reservationData.NumberOfGuests,
+                            SeatingPreference = reservationData.SeatingPreference,
+                            AvailableTimesOnly = reservationData.AvailableTimesOnly,
+                            ReservationDateOnly = reservationData.ReservationDateOnly,
+                            Occasion = reservationData.Occasion,
+                            UserComments = reservationData.UserComments,
+                        }
+                    };
+                })
+         .ToList();
+            return reservationHistory;
+        }
+
     }
 }
+

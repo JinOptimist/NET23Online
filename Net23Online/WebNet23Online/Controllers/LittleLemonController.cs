@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using WebNet23Online.Controllers.CustomAuthAttribute;
 using WebNet23Online.Models.LittleLemon;
 using WebNet23Online.Services.Interfaces;
 using WebNet23Online.Services.Interfaces.LittleLemon;
@@ -63,7 +64,7 @@ namespace WebNet23Online.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet]
+        [CanAccessLittleLemonReservation]
         public IActionResult Reservation()
         {
             var hero = new LittleLemonHeroSectionViewModel
@@ -86,6 +87,7 @@ namespace WebNet23Online.Controllers
             return View(pageModel);
         }
         [HttpPost]
+        [CanAccessLittleLemonReservation]
         public IActionResult Reservation(LittleLemonReservationPageViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -120,6 +122,7 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        [CanAccessLittleLemonReservation]
         public IActionResult LinkReservationToGuest(int reservationId, int guestId)
         {
             var isLinked = _littleLemonReservationService.LinkReservationToGuest(reservationId, guestId);
@@ -130,7 +133,7 @@ namespace WebNet23Online.Controllers
 
             return RedirectToAction(nameof(Confirmation), new { reservationId });
         }
-
+        [CanAccessLittleLemonReservation]
         public IActionResult Confirmation(int reservationId)
         {
             var reservation = _littleLemonReservationService.GetReservationViewModelById(reservationId);
@@ -138,6 +141,7 @@ namespace WebNet23Online.Controllers
             {
                 return RedirectToAction(nameof(Reservation));
             }
+
             var hero = new LittleLemonHeroSectionViewModel
             {
                 CallToActionHref = (Url.Action("Index", "LittleLemon") + "#menu") ?? "/LittleLemon/Index#menu",
@@ -149,8 +153,28 @@ namespace WebNet23Online.Controllers
             {
                 Hero = hero,
                 Reservation = reservation,
+                CanSeeHistory = true
             };
             return View(pageModel);
         }
+        [CanAccessLittleLemonReservation]
+        public IActionResult History()
+        {
+            var hero = new LittleLemonHeroSectionViewModel
+            {
+                CallToActionHref = (Url.Action("Index", "LittleLemon") + "#menu") ?? "/LittleLemon/Index#menu",
+                CallToActionText = "Order For Delivery",
+                HeroImageUrl = "/images/little-lemon/images/restauranfood.jpg",
+                HeroImageAlt = "Signature Mediterranean platter at Little Lemon"
+            };
+            var reservations = _littleLemonReservationService.GetReservationHistoryForCurrentUser();
+            var pageModel = new LittleLemonHistoryPageViewModel
+            {
+                Hero = hero,
+                Reservations = reservations,
+            };
+            return View(pageModel);
+        }
+
     }
 }
