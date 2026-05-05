@@ -43,9 +43,14 @@ namespace WebNet23Online.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Index(RockBandsIndexViewModel viewModel)
+        public IActionResult Index(RockBandsIndexViewModel viewModel, IFormFile? Image)
         {
             var band = viewModel.BandBlock;
+            if (Image != null)
+            {
+                band.PhotoOfTheBand = Image;
+                ModelState.Remove("BandBlock.ImageUrl");
+            }
             if (!ModelState.IsValid)
             {
                 var genres = _rockBandsService.GetGenres();
