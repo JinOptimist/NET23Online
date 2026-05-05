@@ -31,7 +31,7 @@ namespace WebNet23Online.Services
             var zoos = _animalWorldMapper.FromZooDataToZooViewModel(_zooRepository.GetRandomElements());
             var animalFamilies = _animalWorldMapper.FromAnimalFamilyDataToAnimalFamilyViewModel(_animalFamilyRepository.GetRandomElements());
             var animalSpecies = _animalWorldMapper.FromAnimalSpeciesDataToAnimalSpeciesViewModel(_animalSpeciesRepository.GetRandomElements());
-            animalSpecies.ForEach(a => a.Url ??= "/images/animal-world/default.jpg");
+            animalSpecies.ForEach(a => a.Url = string.IsNullOrEmpty(a.Url) ? "/images/animal-world/default.jpg" : a.Url);
             var startPageInfo = new StartPageAnimalWorldInfoViewModel
             {
                 Zoos = zoos,
