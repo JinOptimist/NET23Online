@@ -17,6 +17,25 @@
     </article>
 
     <article class="content-news">
+        <div class="title-form">Открытие дрифт сезона 2026, Раубичи</div>
+        <p class="date">19 апреля 2026</p>
+        <p>
+            Это было шумно! Это было дымно! Это было круто! Сезон дрифта объявляю официально открытым! Не знаю, сколько комплектов  резины ребятам пришлось сменить за все заезды,
+            но то, что сегодня отлетали шины и колеса - факт!
+            <br>Отлетали и бампера, и капоты… Некоторые пилоты уж слишком близко познакомились со стенами и бетонными блоками.
+        </p>
+        <p>
+            Фотографиями всего фурора не передать, можно только пытаться. Поэтому, делюсь своими самыми любимыми фотокарточками
+        </p>
+        <div class="container-content">
+            <img src="~/images/japanese-domestic-market/raubichi-1.JPG" class="img-content" />
+            <img src="~/images/japanese-domestic-market/raubichi-2.JPG" class="img-content" />
+        </div>
+       
+    </article>
+
+
+    <article class="content-news">
         <div class="title-form">Тачки Пикник в Лиде</div>
         <p class="date">30 августа 2025</p>
         <p>
@@ -26,12 +45,32 @@
         <a href="https://www.youtube.com/shorts/6t5NKz8a564" class="btn-watch" target="_blank"
            title="tachki-picnik-2025">Смотреть, как это было</a>
     </article>
-
-    <article class="content-news">
-        <div class="title-form">Дрифт по незапланированно мокрому покрытию</div>
-        <p class="date">25 мая 2025</p>
-        <a href="https://youtube.com/shorts/btkMHkLOrJ8?si=9A7t5hIahdI79LLQ" class="btn-watch"
-           target="_blank" title="tachki-picnik-2025">Смотреть, как это было</a>
+    <div class="container-content">
+        <img src="~/images/japanese-domestic-market/lida-1.jpg" class="img-content" />
+        <img src="~/images/japanese-domestic-market/lida-3.jpg" class="img-content" />
+        <img src="~/images/japanese-domestic-market/lida-2.jpg" class="img-content" />
+    </div>
+    <div class="pop-up">
+        <span>&times;</span>
+        <img src="~/images/japanese-domestic-market/lida-1.jpg" alt="">
+        </div>
+        <div>
+            <a href="https://www.youtube.com/shorts/6t5NKz8a564" class="btn-watch"
+               target="_blank" title="tachki-picnik-2025">Смотреть, как это было</a>
+        </div>
     </article>
+</div>
+<script>
+    document.querySelectorAll('.container-content img').forEach(img =>{
+        img.onclick = () =>{
+            document.querySelector('.pop-up').style.display = 'block';
+            document.querySelector('.pop-up img').src = img.getAttribute('src')
+        }
+    });
+
+    document.querySelector('.pop-up span').onclick = () =>{
+        document.querySelector('.pop-up').style.display = 'none';
+    }
+</script>
 
 </div>
