@@ -14,6 +14,8 @@ namespace WebNet23Online.Data.Models
         public string ReservationDateOnly { get; set; }
         public string Occasion { get; set; }
         public string UserComments { get; set; }
+        public int? CreatedByUserId { get; set; }
+        public virtual UserData? CreatedByUser { get; set; }
         public int GuestId { get; set; }
         public virtual LittleLemonGuestData Guest { get; set; }
     }
