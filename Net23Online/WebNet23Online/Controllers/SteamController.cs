@@ -5,6 +5,7 @@ using WebNet23Online.Controllers.CustomAuthAttribute.Steam;
 using WebNet23Online.Data.Enums;
 using WebNet23Online.Models.Steam;
 using WebNet23Online.Services.Interfaces;
+using WebNet23Online.Services.Interfaces.Steam;
 
 namespace WebNet23Online.Controllers
 {
