@@ -206,13 +206,13 @@ namespace WebNet23Online.Services.DelightBistro
             return viewModel;
         }
 
-        public void GetImgFile(CreateFoodItemViewModel viewModel, FoodItemData FoodItemData)
+        private void GetImgFile(CreateFoodItemViewModel viewModel, FoodItemData foodItemData)
         {
             if (viewModel.Image != null)
             {
                 var pathToWwwRotFolder = _webHostEnvironment.WebRootPath;
                 var pathToFolder = "images\\delight-bistro\\";
-                var fileName = $"fooditem-{FoodItemData.Id}.jpg";
+                var fileName = $"fooditem-{foodItemData.Id}.jpg";
                 var path = Path.Combine(pathToWwwRotFolder, pathToFolder, fileName);
 
                 using (var foodItemImgFile = new FileStream(path, FileMode.Create))
@@ -220,8 +220,8 @@ namespace WebNet23Online.Services.DelightBistro
                     viewModel.Image.CopyTo(foodItemImgFile);
                 }
 
-                FoodItemData.ImgURL = $"/images/delight-bistro/{fileName}";
-                _foodItemRepository.Update(FoodItemData);
+                foodItemData.ImgURL = $"/images/delight-bistro/{fileName}";
+                _foodItemRepository.Update(foodItemData);
             }
         }
 
@@ -242,8 +242,11 @@ namespace WebNet23Online.Services.DelightBistro
                         (foodItem.IngredientsList
                         .Select(x => x.Name)));
 
-                    file.WriteLine($"{foodItem.Id},{foodName},{foodItem.Price},{foodItem.ImgURL ?? ""}," +
-                        $"{foodItem.MenuData?.Name ?? ""},{foodItemName}");
+                    file.WriteLine($"{foodItem.Id},"
+                        + $"{foodName},{foodItem.Price},"
+                        + $"{foodItem.ImgURL ?? ""},"
+                        + $"{foodItem.MenuData?.Name ?? ""},"
+                        + $"{foodItemName}");
                 }
             }
             var fileStream = new FileStream(path, FileMode.Open);
