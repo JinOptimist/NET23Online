@@ -8,7 +8,7 @@ namespace WebNet23Online.Data.Repositories
     public class UserRepository : BaseRepository<UserData>, IUserRepository
     {
         public UserRepository(WebContext context) : base(context) { }
-        
+
         public UserData GetFirst()
         {
             return _dbSet
@@ -70,6 +70,16 @@ namespace WebNet23Online.Data.Repositories
             Update(userData);
             //_dbSet.Update(user);
             //_context.SaveChanges();
+        }
+
+        public void DeleteUser(int userId)
+        {
+            var user = _dbSet.FirstOrDefault(x => x.Id == userId);
+            if (user != null)
+            {
+                _dbSet.Remove(user);
+                _context.SaveChanges();
+            }
         }
     }
 }
