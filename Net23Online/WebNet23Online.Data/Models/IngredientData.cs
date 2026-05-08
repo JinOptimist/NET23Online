@@ -1,4 +1,6 @@
-﻿namespace WebNet23Online.Data.Models
+﻿using WebNet23Online.Data.DataModels;
+
+namespace WebNet23Online.Data.Models
 {
     public class IngredientData : BaseModel
     {
@@ -8,5 +10,6 @@
         public virtual List<FoodItemData> FoodItems { get; set; } = new();
         public int? CreatorId { get; set; }
         public virtual UserData? Creator { get; set; }
+        public virtual ICollection<FoodItemIngredient> FoodItemIngredients { get; set; } = new List<FoodItemIngredient>();
     }
 }

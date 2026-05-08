@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebNet23Online.Data.DataModels;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Models.AnimalWorld;
 using WebNet23Online.Data.Models.Steam;
@@ -108,21 +109,33 @@ namespace WebNet23Online.Data
                 .HasMany(x => x.IngredientsList)
                 .WithMany(x => x.FoodItems);
 
-            modelBuilder.Entity<MenuData>() //User relation
+            modelBuilder.Entity<MenuData>()
                 .HasOne(x => x.Creator)
                 .WithMany(x => x.CreatedMenus)
                 .HasForeignKey(x => x.CreatorId);
 
-            modelBuilder.Entity<FoodItemData>() //User relation
+            modelBuilder.Entity<FoodItemData>()
                .HasOne(x => x.Creator)
                .WithMany(x => x.CreatedFoodItems)
                .HasForeignKey(x => x.CreatorId);
 
-            modelBuilder.Entity<IngredientData>() //User relation
+            modelBuilder.Entity<IngredientData>()
                .HasOne(x => x.Creator)
                .WithMany(x => x.CreatedIngredients)
                .HasForeignKey(x => x.CreatorId);
 
+            modelBuilder.Entity<FoodItemIngredient>() // дополнительная таблица
+                .HasKey(x=> new {x.FoodItemId, x.IngredientId});
+
+            modelBuilder.Entity<FoodItemIngredient>()
+                .HasOne(x => x.FoodItem)
+                .WithMany(x => x.FoodItemIngredients)
+                .HasForeignKey(x => x.FoodItemId);
+
+            modelBuilder.Entity<FoodItemIngredient>()
+               .HasOne(x => x.Ingredient)
+               .WithMany(x => x.FoodItemIngredients)
+               .HasForeignKey(x => x.IngredientId);
 
             modelBuilder.Entity<RockLegendsData>()
                 .HasOne(x => x.Genres)

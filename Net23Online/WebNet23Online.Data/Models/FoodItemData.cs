@@ -1,4 +1,6 @@
-﻿namespace WebNet23Online.Data.Models
+﻿using WebNet23Online.Data.DataModels;
+
+namespace WebNet23Online.Data.Models
 {
     public class FoodItemData : BaseModel
     {
@@ -11,5 +13,7 @@
         // Предпочтительно ли иметь ключ CreatorId?
         public int? CreatorId { get; set; }
         public virtual UserData? Creator { get; set; }
+        public virtual ICollection<FoodItemIngredient> FoodItemIngredients { get; set; } = new List<FoodItemIngredient>();
+
     }
 }
