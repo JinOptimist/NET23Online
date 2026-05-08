@@ -159,5 +159,22 @@ namespace WebNet23Online.Controllers
 
             return File(fileStream, "text/csv");
         }
+
+        [Authorize]
+        [IsEmployee]
+        public IActionResult AllIngredients()
+        {
+            var allIngredientsViewModel = _ingredientGenerator.GetAllIngredientWithCreatorViewModel();
+            return View(allIngredientsViewModel);
+        }
+        [Authorize]
+        [IsEmployee]
+        [HttpPost]
+        public IActionResult DeleteIngredient(int id = 0)
+        {
+            _ingredientGenerator.DeleteIngredient(id);
+
+            return RedirectToAction(nameof(AllIngredients));
+        }
     }
 }

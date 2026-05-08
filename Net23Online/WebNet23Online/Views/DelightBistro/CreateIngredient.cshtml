@@ -7,11 +7,15 @@
 
 <link rel="stylesheet" href="\css\delight-bistro\style.css" />
 <div class="create-food-box">
-    <div class="form-title">Введите имя для ингредиента</div>
+    <div class="form-title">Создание ингредиента</div>
     <form method="post">
         <div class="input-box">
+            <div>Название ингредиента</div>
             @Html.TextBoxFor(x => x.Name, new { type = "text", required = "required", placeholder = "Name" })
             @Html.ValidationMessageFor(x => x.Name)
+            <div>Цена</div>
+            @Html.TextBoxFor(x => x.Price, new { type = "number", required = "required", placeholder = "Price" })
+
         </div>
 
         <div class="food-create-button">

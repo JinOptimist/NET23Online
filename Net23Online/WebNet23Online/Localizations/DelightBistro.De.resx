@@ -121,7 +121,7 @@
     <value>Menü erstellen</value>
   </data>
   <data name="Index_Create_ingredient" xml:space="preserve">
-    <value>Zutaten erstellen</value>
+    <value>Zutaten bestandteil</value>
   </data>
   <data name="Index_Create_dish" xml:space="preserve">
     <value>Bereiten Sie ein Gericht zu</value>

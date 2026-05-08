@@ -1,4 +1,5 @@
-﻿using WebNet23Online.Data.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
 
 namespace WebNet23Online.Data.Repositories
@@ -9,6 +10,11 @@ namespace WebNet23Online.Data.Repositories
         public bool IsNameFree(string name)
         {
             return !_dbSet.Any(x => x.Name == name);
+        }
+        public List <IngredientData> GetAllIngredientsWithCreator()
+        {
+            var allIngredientsWithCreator = _dbSet.Include(x => x.Creator);
+            return allIngredientsWithCreator.ToList();
         }
     }
 }

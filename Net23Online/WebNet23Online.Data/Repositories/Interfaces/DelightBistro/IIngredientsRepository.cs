@@ -5,6 +5,6 @@ namespace WebNet23Online.Data.Repositories.Interfaces.DelightBistro
 {
     public interface IIngredientsRepository : IDelightBistroRepository<IngredientData>, IBaseRepository<IngredientData>
     {
-
+        List<IngredientData> GetAllIngredientsWithCreator();
     }
 }

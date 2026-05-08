@@ -1,0 +1,55 @@
+﻿@using WebNet23Online.Models.DelightBistro;
+
+@{
+    Layout = "_LayoutimagesDelightBistro";
+}
+@model List<IngredientViewModel>
+
+<link rel="stylesheet" href="\css\delight-bistro\style.css" />
+ 
+<header class="head-menu">
+    <div class="logo-container">
+        <div class="logo">
+            <img src="/images/delight-bistro/logo.png" alt="logo" />
+        </div>
+        <div class="logo-name">Logo name</div>
+    </div>
+    <div class="main-info center">
+        <div class="head-menu-item">Info</div>
+        <div class="head-menu-item">Head menu</div>
+    </div>
+</header>
+
+<div class="layout">
+    <div class="plate">
+                
+        <div class="type-of-food">
+            <div class="type-name center">Все Ингредиенты</div>
+            <div class="menu">
+
+                @foreach (var ingredient in Model)
+                {
+                    <div class="food-item" item-id="@ingredient.Id">
+                        <div>@ingredient.Name</div>
+                        <div>@ingredient.Price</div>
+                        <div>Creator: @ingredient.CretorName</div>
+                        <div>
+                            <form action="/DelightBistro/DeleteIngredient" method="post">
+                                <input type="hidden" name="id" value="@ingredient.Id" />
+                                <button type="submit" title="Удалить">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+        
+    <aside class="right-bar">
+        
+        <ul class="navigation">
+            <li><a href="\DelightBistro\Index">Главная страница</a> </li>
+        </ul>
+    </aside>
+</div>
+

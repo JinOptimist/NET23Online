@@ -56,11 +56,40 @@ namespace WebNet23Online.Services.DelightBistro
             var ingredientData = new IngredientData
             {
                 Name = ingredient.Name,
-                Creator = _authService.GetUser()
+                Price = ingredient.Price,
+                Creator = _authService.GetUser(),
             };
 
             _ingredientsRepository.Add(ingredientData);
         }
+        public List<IngredientViewModel> GetAllIngredientWithCreatorViewModel()
+        {
+            var allIngredientsWithCreatorDatas = _ingredientsRepository.GetAllIngredientsWithCreator();
+            var allIngredientsWithCreatorViewModel = allIngredientsWithCreatorDatas
+                .Select(ConvertToIngredientViewModel)
+                .ToList();
+            return allIngredientsWithCreatorViewModel;
+        }
 
+        public IngredientViewModel ConvertToIngredientViewModel(IngredientData ingredientData)
+        {
+            var ingredientViewModel = new IngredientViewModel
+            {
+                Id = ingredientData.Id,
+                Name = ingredientData.Name,
+                CretorName = ingredientData.Creator?.Name ?? "No name"
+            };
+
+            return ingredientViewModel;
+        }
+
+        public void DeleteIngredient(int id)
+        {
+            var ingredientData = _ingredientsRepository.Get(id);
+            if (ingredientData != null)
+            {
+                _ingredientsRepository.Remove(ingredientData);
+            }
+        }
     }
 }
