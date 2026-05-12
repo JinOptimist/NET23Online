@@ -35,5 +35,7 @@ namespace WebNet23Online.Data.Models
 
         public virtual List<GameData> CreatedGames { get; set; }
         public virtual List<GameData> ModifiedGames { get; set; }
+
+        public virtual List<TicketData> MyTickets { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace WebNet23Online.Data
         public DbSet<AnimalFamilyData> AnimalFamilies { get; set; }
         public DbSet<AnimalSpeciesData> AnimalSpecies { get; set; }
         public DbSet<ZooData> Zoos { get; set; }
+        public DbSet<TicketData> Ticket { get; set; }
         public DbSet<LittleLemonData> LittleLemon { get; set; }
         public DbSet<LittleLemonGuestData> LittleLemonGuests { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
@@ -73,6 +74,18 @@ namespace WebNet23Online.Data
                 .HasOne(x => x.Creator)
                 .WithMany(x => x.CreatedByMeZoos)
                 .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TicketData>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.MyTickets)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TicketData>()
+                .HasOne(x => x.Zoo)
+                .WithMany()
+                .HasForeignKey(x => x.ZooId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<AnimalSpeciesData>()
