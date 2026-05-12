@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Controllers.CustomAuthAttribute;
+using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Services.Interfaces;
 
@@ -17,9 +18,10 @@ namespace WebNet23Online.Controllers
         }
 
         [CanReserveZooVisit]
+        [HttpPost]
         public IActionResult ZooReservations(string zooName)
         {
-            _ticketService.Book(zooName);
+            _ticketService.Book(zooName, TicketType.ZooVisit);
             return View();
         }
 

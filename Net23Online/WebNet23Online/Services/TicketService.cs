@@ -1,4 +1,5 @@
-﻿using WebNet23Online.Data.Models;
+﻿using WebNet23Online.Data.Enums;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Services.Interfaces;
@@ -18,7 +19,7 @@ namespace WebNet23Online.Services
             _zooRepository = zooRepository;
         }
 
-        public void Book (string zooName)
+        public void Book (string zooName, TicketType type)
         {
             var user = _authService.GetUser();
             var zoo = _zooRepository.GetElementByName(zooName);
@@ -26,6 +27,7 @@ namespace WebNet23Online.Services
             {
                 User = user,
                 Zoo = zoo,
+                TicketType = type,
                 EventDate = DateTime.UtcNow.AddMonths(1),
                 UniqueKey = Guid.NewGuid().ToString()
             };
