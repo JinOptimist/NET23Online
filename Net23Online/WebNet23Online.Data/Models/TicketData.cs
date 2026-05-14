@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebNet23Online.Data.Enums;
+﻿using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models.AnimalWorld;
 
 namespace WebNet23Online.Data.Models

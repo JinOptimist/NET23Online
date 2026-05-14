@@ -18,7 +18,7 @@ namespace WebNet23Online.Data
         public DbSet<AnimalFamilyData> AnimalFamilies { get; set; }
         public DbSet<AnimalSpeciesData> AnimalSpecies { get; set; }
         public DbSet<ZooData> Zoos { get; set; }
-        public DbSet<TicketData> Ticket { get; set; }
+        public DbSet<TicketData> Tickets { get; set; }
         public DbSet<LittleLemonData> LittleLemon { get; set; }
         public DbSet<LittleLemonGuestData> LittleLemonGuests { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }

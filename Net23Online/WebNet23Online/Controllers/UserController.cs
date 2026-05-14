@@ -18,14 +18,17 @@ namespace WebNet23Online.Controllers
         public IAuthService _authService;
         public IUserRepository _userRepository;
         public IWebHostEnvironment _webHostEnvironment;
+        private ITicketService _ticketService;
 
         public UserController(IAuthService authService,
             IUserRepository userRepository,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            ITicketService ticketService)
         {
             _authService = authService;
             _userRepository = userRepository;
             _webHostEnvironment = webHostEnvironment;
+            _ticketService = ticketService;
         }
 
         [IsModerator]
@@ -60,13 +63,18 @@ namespace WebNet23Online.Controllers
                 })
                 .ToList();
 
+            var userId = _authService.GetUserId();
+            var zooTickets = _ticketService.GetUserZooTickets(userId);
+
             var viewModel = new UserProfileViewModel
             {
                 UserId = _authService.GetUserId(),
                 UserName = _authService.GetUserName() ?? "unnamed",
                 Language = currentUserLanguage,
                 Languages = allLanguagesList,
-                AvatarUrl = _authService.GetUser().AvatarUrl
+                AvatarUrl = _authService.GetUser().AvatarUrl,
+                ZooTickets = zooTickets,
+                CanShowZooTickets = zooTickets.Any()
             };
             return View(viewModel);
         }

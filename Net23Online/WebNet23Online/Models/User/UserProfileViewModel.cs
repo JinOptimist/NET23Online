@@ -13,5 +13,7 @@ namespace WebNet23Online.Models.User
         public string? Mobilephone { get; set; }
         public Language Language { get; set; }
         public List<SelectListItem> Languages { get; set; } = new();
+        public List<ZooTicketsViewModel>? ZooTickets { get; set; }
+        public bool CanShowZooTickets { get; set; }
     }
 }

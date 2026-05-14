@@ -2,6 +2,7 @@
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
+using WebNet23Online.Models;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services
@@ -19,7 +20,7 @@ namespace WebNet23Online.Services
             _zooRepository = zooRepository;
         }
 
-        public void Book (string zooName, TicketType type)
+        public void Book(string zooName, TicketType type)
         {
             var user = _authService.GetUser();
             var zoo = _zooRepository.GetElementByName(zooName);
@@ -33,6 +34,19 @@ namespace WebNet23Online.Services
             };
             
             _ticketRepository.Add(ticketData);
+        }
+
+        public List<ZooTicketsViewModel> GetUserZooTickets(int userId)
+        {
+            var zooTicketsData = _ticketRepository.GetUserZooTickets(userId);
+            var zooTicketsViewModel = zooTicketsData.Select(x => new ZooTicketsViewModel
+            {
+                UniqueKey = x.UniqueKey,
+                ZooName = x.Zoo.ZooName,
+                IsUsed = x.IsUsed,
+                EventDate = x.EventDate,
+            }).ToList();
+            return zooTicketsViewModel;
         }
     }
 }

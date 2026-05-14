@@ -130,6 +130,9 @@ builder.Services.AddScoped<IGameGenreRepository, GameGenreRepository>();
 builder.Services.AddScoped<IJdmRepository, JdmRepository>();
 builder.Services.AddScoped<IJdmManufacturerRepository, JdmManufacturerRepository>();
 
+builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
