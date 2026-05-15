@@ -63,18 +63,13 @@ namespace WebNet23Online.Controllers
                 })
                 .ToList();
 
-            var userId = _authService.GetUserId();
-            var zooTickets = _ticketService.GetUserZooTickets(userId);
-
             var viewModel = new UserProfileViewModel
             {
                 UserId = _authService.GetUserId(),
-                UserName = _authService.GetUserName() ?? "unnamed",
+                UserName = _authService.GetUserName(),
                 Language = currentUserLanguage,
                 Languages = allLanguagesList,
                 AvatarUrl = _authService.GetUser().AvatarUrl,
-                ZooTickets = zooTickets,
-                CanShowZooTickets = zooTickets.Any()
             };
             return View(viewModel);
         }

@@ -1,4 +1,4 @@
-﻿namespace WebNet23Online.Models
+﻿namespace WebNet23Online.Models.Tickets
 {
     public class ZooTicketsViewModel
     {

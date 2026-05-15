@@ -1,6 +1,6 @@
 ﻿using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
-using WebNet23Online.Models;
+using WebNet23Online.Models.Tickets;
 
 namespace WebNet23Online.Services.Interfaces
 {

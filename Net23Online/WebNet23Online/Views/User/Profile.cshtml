@@ -38,38 +38,3 @@
         <button>Save changes</button>
     </form>
 </div>
-@if (Model.CanShowZooTickets)
-{
-    <div class="tickets-container">
-        <div class="tickets-title">Zoo tickets</div>
-        @foreach (var ticket in Model.ZooTickets)
-        {
-            <div class="ticket-item">
-                <div class="ticket-info">
-                    <div class="ticket-zoo">@ticket.ZooName</div>
-                    <div class="ticket-date">@ticket.EventDate</div>
-                </div>
-                <div class="ticket-qrcode" data-qr-value="@ticket.UniqueKey"></div>
-            </div>
-        }
-    </div>
-}
-<script src="~/js/qrcode.js"></script>
-<script>
-        document.addEventListener("DOMContentLoaded", function () {
-        const qrElements = document.querySelectorAll('.ticket-qrcode');
-        qrElements.forEach(element => {
-            const qrText = element.getAttribute('data-qr-value');
-            if (qrText) {
-                new QRCode(element, {
-                    text: qrText,
-                    width: 100,
-                    height: 100,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                });
-            }
-        });
-    });
-</script>

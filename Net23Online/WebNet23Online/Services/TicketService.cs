@@ -2,7 +2,7 @@
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
-using WebNet23Online.Models;
+using WebNet23Online.Models.Tickets;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services

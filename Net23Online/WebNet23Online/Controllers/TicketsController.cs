@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebNet23Online.Controllers.CustomAuthAttribute;
 using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
+using WebNet23Online.Models.Tickets;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers
@@ -11,10 +12,24 @@ namespace WebNet23Online.Controllers
     public class TicketsController : Controller
     {
         private ITicketService _ticketService;
+        private IAuthService _authService;
 
-        public TicketsController(ITicketService ticketService)
+        public TicketsController(ITicketService ticketService, IAuthService authService)
         {
             _ticketService = ticketService;
+            _authService = authService;
+        }
+
+        public IActionResult AllMyTickets()
+        {
+            var userId = _authService.GetUserId();
+            var zooTickets = _ticketService.GetUserZooTickets(userId);
+            var viewModel = new AllTicketsViewModel
+            {
+                CanShowZooTickets = zooTickets.Any(),
+                ZooTickets = zooTickets,
+            };
+            return View(viewModel);
         }
 
         [CanReserveZooVisit]
@@ -25,7 +40,7 @@ namespace WebNet23Online.Controllers
             return View();
         }
 
-        public IActionResult ReservationsDenied()
+        public IActionResult ZooReservationsDenied()
         {
             return View();
         }
