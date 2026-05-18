@@ -12,6 +12,7 @@ namespace WebNet23Online.Controllers
     public class AuthController : Controller
     {
         private IUserRepository _userRepository;
+        //ориолитлотло
 
         public AuthController(IUserRepository userRepository)
         {
