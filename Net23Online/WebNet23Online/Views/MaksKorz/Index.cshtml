@@ -1,5 +1,5 @@
-﻿@using WebNet23Online.Models.Maks_Korz
-@model DataUser
+﻿@using WebNet23Online.Data.Models
+@using WebNet23Online.Models.Maks_Korz
 <link rel="stylesheet" href="/css/Korz/site.css">
 <head>
     <title>HTML Login Form</title>
@@ -7,7 +7,6 @@
     <div class="main">
         <h1>Authorization</h1>
         <h3>Enter your login credentials</h3>
-        @* <input name="widthOLD" type="number" placeholder="width" /> *@
         <form method="post">
             <label>
                 Username:
@@ -30,4 +29,7 @@
                 </button>
             </div>
         </form>
+    <div>
+        <a href="/MaksKorz/Location">Временная для добавления локации</a>
+    </div>
     </div>

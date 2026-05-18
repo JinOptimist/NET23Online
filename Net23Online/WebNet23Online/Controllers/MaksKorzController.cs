@@ -1,53 +1,95 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebNet23Online.Data;
+using WebNet23Online.Data.Models.MaksKorz;
+using WebNet23Online.Data.Repositories.MaksKorz;
 using WebNet23Online.Models.Maks_Korz;
 
 namespace WebNet23Online.Controllers
 {
     public class MaksKorzController : Controller
     {
-        DataUser user = new DataUser();
-        Authorization authorization = new Authorization();
+        private IDataUserForMaksKorzRepository _dataUserMK;
+        private ILocationConcertRepository _locationConcert;
+        private static int saveTicket;
+        public MaksKorzController(IDataUserForMaksKorzRepository dataUserMK, 
+            ILocationConcertRepository locationConcert)
+        {
+            _dataUserMK = dataUserMK;
+            _locationConcert = locationConcert;
+        }
+        [HttpGet]
+        public IActionResult FormUser()
+        {
+            return View(_locationConcert.GetAll());
+        }
+        [HttpGet]
+        //.Where(c=>c.Id==saveTicket).ToList()
+        public IActionResult ByeTicket()
+        {
+            return View(_locationConcert.GetAll().Where(c => c.Id == saveTicket).ToList());
+        }
+        //ByeTicket
+        [HttpPost]
+        public IActionResult ByeTicket(DataUserCardForMaksKorz cardForMaksKorz)
+        {
+            var addCardForUser = new DataUserCardForMaksKorz
+            {
+                //NumberCard = cardForMaksKorz.NumberCard,
+                CVV = cardForMaksKorz.CVV,
+                BestBeforeDate = cardForMaksKorz.BestBeforeDate,
+                NumberCard = new BankCardEncryption(cardForMaksKorz.NumberCard).ToString()//не знаю как правильно присвоить
+            };
+            return View();
+        }
+        [HttpGet]
+        public IActionResult GetIDUser(string? ID)
+        {
+            saveTicket = int.Parse(ID);
+            return RedirectToAction("ByeTicket");
+        }
+        //[HttpPost]
+        //public IActionResult FormUser(string? ID)
+        //{
+        //    var saveTicket = ID;
+        //    return View();
+        //}
         public IActionResult Index()
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult FormUser()
-        {
-            var resulDataNow = "";
-            if(authorization.GetDataNow() == "Morning")
-            {
-                resulDataNow = "Good Morning, " + user.LastName;
-            }
-            if (authorization.GetDataNow() == "Afternoon")
-            {
-                resulDataNow = "Good Afternoon, " + user.LastName;
-            }
-            if (authorization.GetDataNow() == "Evening")
-            {
-                resulDataNow = "Good Evening, " + user.LastName;
-            }
+        public IActionResult Location()
+        { 
             return View();
         }
         [HttpPost]
-        public IActionResult Index(string LastName, int Age, string Country)
+        public IActionResult Location(Location data)
         {
-            var status = new StatusUser();
-            user.LastName = LastName;
-            user.Age = Age;
-            user.Country = Country;
-            status.User = user;
-            authorization.AddNewUser(user);
-            if (Age < 18)
+            var addNewLocation = new Location
             {
-                status.Status = "Не совершенолетний!";
-            }
-            else
+                Country = data.Country,
+                NameStadium = data.NameStadium,
+                Capacity = data.Capacity
+            };
+            _locationConcert.Add(addNewLocation);
+            return RedirectToAction("FormUser");
+        }
+        [HttpPost]
+        public IActionResult Index(DataUserForMaksKorz data)
+        {
+            bool contains = _dataUserMK.Contains(data);
+            if (contains)
             {
-                status.Status = "Cовершенолетний!";
+                return RedirectToAction("FormUser");
             }
+            var addNewUserForMK = new DataUserForMaksKorz
+            {
+                LastName = data.LastName,
+                Country = data.Country,
+                Age = data.Age
+            };
+            _dataUserMK.Add(addNewUserForMK);
+            //return RedirectToAction("FormUser");
             return View("/Views/MaksKorz/FormUser.cshtml");
-            //return View();
         }
     }
 }
