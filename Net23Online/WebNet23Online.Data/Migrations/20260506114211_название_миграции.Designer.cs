@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebNet23Online.Data;
 
@@ -11,9 +12,11 @@ using WebNet23Online.Data;
 namespace WebNet23Online.Data.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20260506114211_название_миграции")]
+    partial class название_миграции
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -414,81 +417,6 @@ namespace WebNet23Online.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LittleLemonGuests");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.MaksKorz.Concert", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("DataConcert")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DataUserForKorzId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EndTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LlocationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Price")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StartTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DataUserForKorzId");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("LlocationId");
-
-                    b.ToTable("ConcertMK");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.MaksKorz.DataUserCardForMaksKorz", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("BestBeforeDate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CVV")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DataUserForKorzId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NumberCard")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DataUserForKorzId");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("DataUserCardForMK");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.MaksKorz.DataUserForMaksKorz", b =>
@@ -974,36 +902,6 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Guest");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.MaksKorz.Concert", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.MaksKorz.DataUserForMaksKorz", "DataUserForKorz")
-                        .WithMany()
-                        .HasForeignKey("DataUserForKorzId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebNet23Online.Data.Models.MaksKorz.Location", "Llocation")
-                        .WithMany()
-                        .HasForeignKey("LlocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DataUserForKorz");
-
-                    b.Navigation("Llocation");
-                });
-
-            modelBuilder.Entity("WebNet23Online.Data.Models.MaksKorz.DataUserCardForMaksKorz", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.MaksKorz.DataUserForMaksKorz", "DataUserForKorz")
-                        .WithMany()
-                        .HasForeignKey("DataUserForKorzId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DataUserForKorz");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.MaksKorz.Location", b =>

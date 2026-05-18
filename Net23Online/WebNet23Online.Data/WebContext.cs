@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Models.AnimalWorld;
+using WebNet23Online.Data.Models.MaksKorz;
 using WebNet23Online.Data.Models.Steam;
 
 namespace WebNet23Online.Data
@@ -34,7 +35,10 @@ namespace WebNet23Online.Data
         public DbSet<SlayTheSpire2HeroesData> SlayTheSpire2Heroes { get; set; }
         public DbSet<PublisherData> Publishers { get; set; }
         public DbSet<DataUserForMaksKorz> DataUserMK { get; set; }
-
+        public DbSet<TicketForMK> TicketMK { get; set; }
+        public DbSet<Location> LocationMK { get; set; }
+        public DbSet<Concert> ConcertMK { get; set; }
+        public DbSet<DataUserCardForMaksKorz> DataUserCardForMK { get; set; }
         public WebContext(DbContextOptions<WebContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -124,7 +128,22 @@ namespace WebNet23Online.Data
             modelBuilder.Entity<DataUserForMaksKorz>()
                 .HasIndex(x => x.Id)
                 .IsUnique();
-
+            modelBuilder.Entity<Location>()
+                .HasIndex(x => x.Id)
+                .IsUnique();
+            modelBuilder.Entity<Concert>()
+               .HasIndex(x => x.Id)
+               .IsUnique();
+            modelBuilder.Entity<DataUserCardForMaksKorz>()
+               .HasIndex(x => x.Id)
+               .IsUnique();
+            modelBuilder.Entity<TicketForMK>()
+                .HasIndex(x => x.Id)
+                .IsUnique();
+            modelBuilder.Entity<DataUserForMaksKorz>()
+                .HasMany(x => x.Ticket);
+            modelBuilder.Entity<TicketForMK>()
+                .HasMany(x => x.LocationConcertForMK);
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -1,4 +1,4 @@
-﻿using WebNet23Online.Data.Models;
+﻿using WebNet23Online.Data.Models.MaksKorz;
 
 namespace WebNet23Online.Models.Maks_Korz
 {

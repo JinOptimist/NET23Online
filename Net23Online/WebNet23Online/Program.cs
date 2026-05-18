@@ -7,6 +7,7 @@ using WebNet23Online.Data.Repositories.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
+using WebNet23Online.Data.Repositories.MaksKorz;
 using WebNet23Online.Services;
 using WebNet23Online.Services.DelightBistro;
 using WebNet23Online.Services.Interfaces;
@@ -122,6 +123,7 @@ builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IRockLegendsGenresRepository, RockLegendsGenresRepository>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 builder.Services.AddScoped<IDataUserForMaksKorzRepository, DataUserForMaksKorzRepository>();
+builder.Services.AddScoped<ILocationConcertRepository, LocationConcertRepository>();
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();

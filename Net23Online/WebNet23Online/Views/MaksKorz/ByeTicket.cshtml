@@ -1,0 +1,31 @@
+﻿@using WebNet23Online.Data.Models
+@using WebNet23Online.Data.Models.MaksKorz
+@using WebNet23Online.Models.Maks_Korz
+@model List<Location>
+<link rel="stylesheet" href="/css/korz/site.css">
+@foreach (var location in Model)
+{
+    <h1>@location.Country *** @location.NameStadium</h1>
+}
+<form method="post" asp-controller="MaksKorz" asp-action="ByeTicket">
+    <label>
+        Number Card:
+    </label>
+    <input type="text" name="NumberCard"
+           placeholder="Enter your Number Card" required>
+    <label>
+        CVV:
+    </label>
+    <input type="number" name="CVV"
+           placeholder="Enter your CVV" required>
+    <label>
+        Best Before Date:
+    </label>
+    <input type="text" name="BestBeforeDate"
+           placeholder="Enter your Best Before Date" required>
+    <div class="wrap">
+        <button type="submit">
+            Submit
+        </button>
+    </div>
+</form>

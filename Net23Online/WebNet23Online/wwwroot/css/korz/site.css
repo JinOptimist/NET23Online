@@ -11,6 +11,19 @@ html {
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
+.centerT
+{
+    text-align:center;
+    vertical-align:middle;
+}
+.element {
+    width: 400px;
+    height: 60px;
+    border-radius: 15px;
+    background-color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid darkorange;
+}
 
 html {
   position: relative;
@@ -40,10 +53,14 @@ body {
     text-align: center;
 }
 
+
 h1 {
     color: darkorange;
-}
 
+}
+p {
+
+}
 label {
     display: block;
     width: 100%;
@@ -76,9 +93,20 @@ button {
     width: 100%;
     font-size: 16px;
 }
-
+.button-left {
+    float: left;
+    width: 45px;
+    margin: 0 2px
+}
+.buttons {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 100px;
+}
 .wrap {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align:right
 }

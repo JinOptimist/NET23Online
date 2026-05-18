@@ -1,6 +1,6 @@
-﻿using WebNet23Online.Data.Models;
+﻿using WebNet23Online.Data.Models.MaksKorz;
 
-namespace WebNet23Online.Data.Repositories.Interfaces
+namespace WebNet23Online.Data.Repositories.MaksKorz
 {
     public interface IDataUserForMaksKorzRepository
     {

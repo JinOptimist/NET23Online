@@ -42,11 +42,11 @@ namespace WebNet23Online.Services.DelightBistro
         public void CreateFoodItemData(CreateFoodItemViewModel viewModel)
         {
             var selectedIngredients = new List<IngredientData>();
-            if (!viewModel.SelectedIngredientsId.IsNullOrEmpty())
-            {
-                selectedIngredients = _ingredientsRepository.GetAll()
-                    .Where(x => viewModel.SelectedIngredientsId.Contains(x.Id)).ToList();
-            }
+            //if (!viewModel.SelectedIngredientsId.IsNullOrEmpty())
+            //{
+            //    selectedIngredients = _ingredientsRepository.GetAll()
+            //        .Where(x => viewModel.SelectedIngredientsId.Contains(x.Id)).ToList();
+            //}
 
             MenuData menuData = null;
             if (viewModel.MenuId != null)
@@ -70,11 +70,11 @@ namespace WebNet23Online.Services.DelightBistro
         {
 
             var selectedIngredients = new List<IngredientData>();
-            if (!viewModel.SelectedIngredientsId.IsNullOrEmpty())
-            {
-                selectedIngredients = _ingredientsRepository.GetAll()
-                    .Where(x => viewModel.SelectedIngredientsId.Contains(x.Id)).ToList();
-            }
+            //if (!viewModel.SelectedIngredientsId.IsNullOrEmpty())
+            //{
+            //    selectedIngredients = _ingredientsRepository.GetAll()
+            //        .Where(x => viewModel.SelectedIngredientsId.Contains(x.Id)).ToList();
+            //}
             MenuData menuData = null;
             if (viewModel.MenuId != null)
             {
