@@ -11,6 +11,7 @@ namespace WebNet23Online.Controllers
         private IDataUserForMaksKorzRepository _dataUserMK;
         private ILocationConcertRepository _locationConcert;
         private static int saveTicket;
+            //12345
         public MaksKorzController(IDataUserForMaksKorzRepository dataUserMK, 
             ILocationConcertRepository locationConcert)
         {
