@@ -13,6 +13,7 @@ namespace WebNet23Online.Controllers
     {
         private IUserRepository _userRepository;
         //ориолитлотло
+        //12345
 
         public AuthController(IUserRepository userRepository)
         {
