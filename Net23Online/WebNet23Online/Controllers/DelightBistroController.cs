@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebNet23Online.Controllers.CustomAuthAttribute;
 using WebNet23Online.Data;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories;
@@ -45,12 +47,16 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [IsModerator]
         public IActionResult CreateMenu()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
+        [IsModerator]
         public IActionResult CreateMenu(CreateMenuViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -63,12 +69,16 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [IsModerator]
         public IActionResult CreateIngredient()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
+        [IsModerator]
         public IActionResult CreateIngredient(CreateIngredientViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -82,11 +92,13 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [IsModerator]
         public IActionResult FoodBuilderData(int id)
         {
             if (id > 0)
             {
-                var changedFoodItemData = _foodItemRepository.Get(id);
+                var changedFoodItemData = _foodItemRepository.GetByIdIncludeMenuAndIngredients(id);
 
                 var viewModel = _foodItemGenerator.ConvertToCreateFoodItemVM(changedFoodItemData);
                 return View(viewModel);
@@ -98,11 +110,13 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [IsModerator]
         public IActionResult FoodBuilderData(CreateFoodItemViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                viewModel.Menus = _foodItemGenerator.SelectMenu();
+                viewModel.Menus = _foodItemGenerator.SelectMenuList();
                 viewModel.Ingredients = _foodItemGenerator.ChekBoxIngredients();
                 return View(viewModel);
             }
@@ -117,15 +131,33 @@ namespace WebNet23Online.Controllers
             return RedirectToAction(nameof(AllFoodItems));
         }
 
+        [Authorize]
+        [IsEmployee]
         public IActionResult AllFoodItems()
         {
-
             var foodItemsData = _foodItemRepository.GetAllIncludeMenuAndIngredients();
-            var viewModel = foodItemsData.Select(_foodItemGenerator.ConvertToFoodItemVM).ToList();
+            var foodItemsViewModel = foodItemsData.Select(_foodItemGenerator.ConvertToFoodItemVM).ToList();
+
+            var viewModel = _foodItemGenerator.GetFoodsWithPermission(foodItemsViewModel);
 
             return View(viewModel);
         }
 
+        [Authorize]
+        [IsEmployee]
+        [HttpPost]
+        public IActionResult DeleteFoodItem(int id = 0)
+        {
+            _foodItemGenerator.DeleteFoodItem(id);
 
+            return RedirectToAction(nameof(AllFoodItems));
+        }
+
+        public IActionResult GenerateTable()
+        {
+            var fileStream = _foodItemGenerator.GenerateTable();
+
+            return File(fileStream, "text/csv");
+        }
     }
 }

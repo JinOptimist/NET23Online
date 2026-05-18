@@ -29,4 +29,8 @@
     <PackageReference Include="Microsoft.Graph" Version="5.104.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enums\Steam\" />
+  </ItemGroup>
+
 </Project>

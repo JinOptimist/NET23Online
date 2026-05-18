@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebNet23Online.Controllers.CustomAuthAttribute;
 using WebNet23Online.Models.AnimalWorld;
 using WebNet23Online.Services.Interfaces;
 
@@ -18,18 +20,24 @@ namespace WebNet23Online.Controllers
             return View(_animalWorldService.GetStartInfo());
         }
 
+        [Authorize]
+        [IsModerator]
         public IActionResult Add()
         {
             return View();
         }
 
         [HttpGet]
+        [Authorize]
+        [IsModerator]
         public IActionResult AddZoo()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
+        [IsModerator]
         public IActionResult AddZoo(ZooViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -46,12 +54,16 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [IsModerator]
         public IActionResult AddFamily()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
+        [IsModerator]
         public IActionResult AddFamily(AnimalFamilyViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -68,12 +80,16 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [IsModerator]
         public IActionResult AddSpecies()
         {
             return View(_animalWorldService.GetAnimalSpeciesPageInfo());
         }
 
         [HttpPost]
+        [Authorize]
+        [IsModerator]
         public IActionResult AddSpecies(AnimalSpeciesViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -91,12 +107,16 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [IsModerator]
         public IActionResult BindZooAndAnimalSpecies()
         {
             return View(_animalWorldService.GetBingZooAndAnimalSpeciesInfo());
         }
 
         [HttpPost]
+        [Authorize]
+        [IsModerator]
         public IActionResult BindZooAndAnimalSpecies(BindZooWithAnimalSpeciesViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -113,6 +133,12 @@ namespace WebNet23Online.Controllers
             }
 
             return View();
+        }
+
+        [Authorize]
+        public IActionResult Zoos()
+        {
+            return View(_animalWorldService.GetAllZoos());
         }
     }
 }

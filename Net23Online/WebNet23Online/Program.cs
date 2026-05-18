@@ -7,11 +7,12 @@ using WebNet23Online.Data.Repositories.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
-using WebNet23Online.Data.Repositories.MaksKorz;
+
 using WebNet23Online.Services;
 using WebNet23Online.Services.DelightBistro;
 using WebNet23Online.Services.Interfaces;
 using WebNet23Online.Services.Interfaces.LittleLemon;
+using WebNet23Online.Services.Interfaces.Steam;
 using WebNet23Online.Services.LittleLemon;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -96,8 +97,8 @@ builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
 
 
 //JapaneseDomesticMarker DI
-builder.Services.AddSingleton<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
-builder.Services.AddSingleton<IJDMCatalogGenerator, JDMCatalogGenerator>();
+builder.Services.AddScoped<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
+builder.Services.AddScoped<IJDMCatalogGenerator, JDMCatalogGenerator>();
 
 // Repositories
 builder.Services.AddScoped<IZooRepository, ZooRepository>();
@@ -119,11 +120,10 @@ builder.Services.AddScoped<IGenreOfRockBandsRepository, GenreOfRockBandsReposito
 builder.Services.AddScoped<ILittleLemonReservationRepository, LittleLemonReservationRepository>();
 builder.Services.AddScoped<ILittleLemonGuestRepository, LittleLemonGuestRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddScoped<IGameRepository, GameRepository>();
-builder.Services.AddScoped<IRockLegendsGenresRepository, RockLegendsGenresRepository>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
-builder.Services.AddScoped<IDataUserForMaksKorzRepository, DataUserForMaksKorzRepository>();
-builder.Services.AddScoped<ILocationConcertRepository, LocationConcertRepository>();
+
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
@@ -135,14 +135,6 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-/*builder.Services.AddScoped<IAnimeGirlGenerator, AnimeGirlGenerator>();
-builder.Services.AddScoped<IEpicMeanlessPhraseGenerator, EpicMeanlessPhraseGenerator>();
-builder.Services.AddScoped<IRandomBuilder, RandomBuilder>();
-
-builder.Services.AddSingleton<IMazeBuilder, MazeBuilder>();
-builder.Services.AddSingleton<IMazeService, MazeService>();*/
-
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -151,6 +143,8 @@ app.UseRouting();
 
 app.UseAuthentication();    // Who Am I?
 app.UseAuthorization();     // May I?
+
+app.UseMiddleware<MyLocalizationMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

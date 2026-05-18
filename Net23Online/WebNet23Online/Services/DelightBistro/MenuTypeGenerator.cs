@@ -11,11 +11,13 @@ namespace WebNet23Online.Services.DelightBistro
     {
         private IMenuRepository _menuRepository;
         private IFoodItemGenerator _foodItemGenerator;
+        private IAuthService _authService;
 
-        public MenuTypeGenerator(IMenuRepository menuRepository, IFoodItemGenerator foodItemGenerator)
+        public MenuTypeGenerator(IMenuRepository menuRepository, IFoodItemGenerator foodItemGenerator, IAuthService authService)
         {
             _menuRepository = menuRepository;
             _foodItemGenerator = foodItemGenerator;
+            _authService = authService;
         }
 
         public void FeelDataBase()
@@ -35,6 +37,7 @@ namespace WebNet23Online.Services.DelightBistro
             var menuData = new MenuData
             {
                 Name = viewModel.Name,
+                Creator = _authService.GetUser()
             };
 
             _menuRepository.Add(menuData);
@@ -49,7 +52,8 @@ namespace WebNet23Online.Services.DelightBistro
                 Name = menuData.Name,
                 FoodItems = (menuData.FoodItems ?? new List<FoodItemData>())
                     .Select(_foodItemGenerator.ConvertToFoodItemVM)
-                    .ToList()
+                    .ToList(),
+                Creator = menuData.Creator?.Name,
             };
         }
 

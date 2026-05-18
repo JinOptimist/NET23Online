@@ -18,133 +18,20 @@ namespace WebNet23Online.Data
         public DbSet<HabitTrackerDiaryData> DiaryEntries { get; set; }
         public DbSet<AnimalFamilyData> AnimalFamilies { get; set; }
         public DbSet<AnimalSpeciesData> AnimalSpecies { get; set; }
-        public DbSet<ZooData> Zoos {  get; set; }
+        public DbSet<ZooData> Zoos { get; set; }
         public DbSet<LittleLemonData> LittleLemon { get; set; }
         public DbSet<LittleLemonGuestData> LittleLemonGuests { get; set; }
         public DbSet<RockBandsData> RockBand { get; set; }
-        public DbSet<FoodItemData> FoodItems { get; set; } 
-        public DbSet<IngredientData> Ingredients { get; set; } 
-        public DbSet<MenuData> Menus { get; set; } 
+        public DbSet<FoodItemData> FoodItems { get; set; }
+        public DbSet<IngredientData> Ingredients { get; set; }
+        public DbSet<MenuData> Menus { get; set; }
         public DbSet<GenreOfRockBandsData> RockBandGenresDictionary { get; set; }
         public DbSet<RockBandGenreData> RockBandGenres { get; set; }
 
         public DbSet<RockLegendsData> RockLegends { get; set; }
         public DbSet<RockLegendsGenres> RockLegendsGenres { get; set; }
 
-        public DbSet<GameData> Games { get; set; }
         public DbSet<SlayTheSpire2HeroesData> SlayTheSpire2Heroes { get; set; }
+
+        public DbSet<GameData> Games { get; set; }
         public DbSet<PublisherData> Publishers { get; set; }
-        public DbSet<DataUserForMaksKorz> DataUserMK { get; set; }
-        public DbSet<TicketForMK> TicketMK { get; set; }
-        public DbSet<Location> LocationMK { get; set; }
-        public DbSet<Concert> ConcertMK { get; set; }
-        public DbSet<DataUserCardForMaksKorz> DataUserCardForMK { get; set; }
-        public WebContext(DbContextOptions<WebContext> options) : base(options) { }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<AnimeData>()
-                .HasMany(x => x.Heroes)
-                .WithMany(x => x.Animes);
-
-            modelBuilder.Entity<AnimeStudioData>()
-                .HasMany(x => x.Animes)
-                .WithOne(x => x.Studio)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<ZooData>()
-                .HasMany(x => x.AnimalSpecies)
-                .WithMany(x => x.ZooData);
-
-            modelBuilder.Entity<AnimalFamilyData>()
-                .HasMany(x => x.Species)
-                .WithOne(x => x.AnimalFamily);
-
-            modelBuilder.Entity<UserData>()
-                .HasOne(x => x.UserProfile)
-                .WithOne(x => x.User)
-                .HasForeignKey<UserData>(x => x.UserProfileId);
-
-            modelBuilder.Entity<UserData>()
-                .HasMany(x => x.MyFriends)
-                .WithMany(x => x.WhoIsMyFriends);
-
-            modelBuilder.Entity<HabitData>()
-                .HasMany(x => x.CompletedDates)
-                .WithOne(x => x.Habit);
-
-            modelBuilder.Entity<UserData>()
-                .HasMany(x => x.DiaryEntries)
-                .WithOne(x => x.User);
-            
-            modelBuilder.Entity<UserData>()
-                .HasMany(x => x.Habits)
-                .WithOne(x => x.User);
-
-            //Delight Bistro
-            modelBuilder.Entity<MenuData>()
-                .HasMany(x => x.FoodItems)
-                .WithOne(x => x.MenuData);
-
-            modelBuilder.Entity<FoodItemData>()
-                .HasMany(x => x.IngredientsList)
-                .WithMany(x => x.FoodItems);
-
-
-            modelBuilder.Entity<RockLegendsData>()
-                .HasOne(x => x.Genres)
-                .WithMany(x => x.Groups)
-                .HasForeignKey(x => x.RockLegendsGenresId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<GameData>()
-               .HasOne(x => x.Publisher)
-               .WithMany(x => x.Games)
-               .HasForeignKey(x => x.PublisherId);
-
-
-            modelBuilder.Entity<LittleLemonData>()
-                .HasOne(x => x.Guest)
-                .WithMany(x => x.Reservations)
-                .HasForeignKey(x => x.GuestId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<RockBandGenreData>()
-                .HasKey(x => new { x.RockBandId, x.GenreId });
-
-            modelBuilder.Entity<RockBandGenreData>()
-                .HasOne(x => x.RockBand)
-                .WithMany(x => x.RockBandGenres)
-                .HasForeignKey(x => x.RockBandId);
-
-            modelBuilder.Entity<RockBandGenreData>()
-                .HasOne(x => x.Genre)
-                .WithMany(x => x.RockBandGenres)
-                .HasForeignKey(x => x.GenreId);
-
-            modelBuilder.Entity<GenreOfRockBandsData>()
-                .HasIndex(x => x.Name)
-                .IsUnique();
-            modelBuilder.Entity<DataUserForMaksKorz>()
-                .HasIndex(x => x.Id)
-                .IsUnique();
-            modelBuilder.Entity<Location>()
-                .HasIndex(x => x.Id)
-                .IsUnique();
-            modelBuilder.Entity<Concert>()
-               .HasIndex(x => x.Id)
-               .IsUnique();
-            modelBuilder.Entity<DataUserCardForMaksKorz>()
-               .HasIndex(x => x.Id)
-               .IsUnique();
-            modelBuilder.Entity<TicketForMK>()
-                .HasIndex(x => x.Id)
-                .IsUnique();
-            modelBuilder.Entity<DataUserForMaksKorz>()
-                .HasMany(x => x.Ticket);
-            modelBuilder.Entity<TicketForMK>()
-                .HasMany(x => x.LocationConcertForMK);
-            base.OnModelCreating(modelBuilder);
-        }
-    }
-}

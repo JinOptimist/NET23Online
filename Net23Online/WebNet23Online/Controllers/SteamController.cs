@@ -1,21 +1,29 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using WebNet23Online.Data.Enums.Steam;
+using WebNet23Online.Controllers.CustomAuthAttribute;
+using WebNet23Online.Controllers.CustomAuthAttribute.Steam;
+using WebNet23Online.Data.Enums;
 using WebNet23Online.Models.Steam;
 using WebNet23Online.Services.Interfaces;
-
+using WebNet23Online.Services.Interfaces.Steam;
 
 namespace WebNet23Online.Controllers
 {
+    [Authorize]
     public class SteamController : Controller
     {
         private readonly ICatalogService _catalogService;
+        private readonly IAuthService _authService;
 
-        public SteamController(ICatalogService catalogService)
+
+        public SteamController(ICatalogService catalogService,
+            IAuthService authService)
         {
             _catalogService = catalogService;
+            _authService = authService;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var viewModel = _catalogService.GetGamesForHomePage();
@@ -24,61 +32,55 @@ namespace WebNet23Online.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Catalog()
         {
             var model = _catalogService.GetCatalog();
+            model.IsUserAtLeastModerator = _authService.AtLeastModerator();
 
             return View(model);
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Catalog(CatalogFilterViewModel filter)
         {
             var model = _catalogService.GetCatalog(filter);
+            model.IsUserAtLeastModerator = _authService.AtLeastModerator();
 
             return View(model);
         }
 
         [HttpGet]
+        [IsModerator]
         public IActionResult AddGame()
-        {
-            var publishers = _catalogService.GetPublishers();
-            var publisherListItems = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text = "SelectPublisher",
-                    Value = ""
-                }
-            };
-
-            publisherListItems.AddRange(publishers.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }));
-
+        {    
             var viewModel = new AddGameViewModel
             {
-                AllGenres = Enum.GetValues(typeof(GameGenre))
-                                .Cast<GameGenre>()
-                                .Where(g => g != GameGenre.All)
-                                .ToList(),
-                Publishers = publisherListItems
+                AllGenres = _catalogService.GetListItemsWithGameGenres(),
+                Publishers = _catalogService.GetListItemsWithPublishers()
             };
 
             return View(viewModel);
         }
 
         [HttpPost]
+        [IsModerator]
         public IActionResult AddGame(AddGameViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                viewModel.AllGenres = _catalogService.GetListItemsWithGameGenres();
+                viewModel.Publishers = _catalogService.GetListItemsWithPublishers();
+                return View(viewModel);
+            }
             _catalogService.AddGame(viewModel);
-
+           
             return RedirectToAction(nameof(Catalog));
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GameDetails(int id)
         {
             var gameData = _catalogService.GetGameDetails(id);
@@ -95,15 +97,19 @@ namespace WebNet23Online.Controllers
                 Description = gameData.Description,
                 ImageUrl = gameData.ImageUrl,
                 Price = gameData.Price,
-                Genre = gameData.Genre,
+                Genres = gameData.GameGenres
+                    .Select(g => g.Name)
+                    .ToList(),
                 PublisherName = gameData.Publisher?.Name ?? "Unknown",
-                PublisherId = gameData.PublisherId
+                PublisherId = gameData.PublisherId,
+                IsUserAtLeastModerator =_authService.AtLeastModerator()
             };
 
             return View(viewModel);
         }
 
         [HttpGet]
+        [EditForCreatorWithRequiredRole]
         public IActionResult EditGame(int id)
         {
             var game = _catalogService.GetGameDetails(id);
@@ -113,24 +119,6 @@ namespace WebNet23Online.Controllers
                 return NotFound();
             }
 
-            var publishers = _catalogService.GetPublishers();
-
-            var publisherListItems = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text = "Select Publisher",
-                    Value = ""
-                }
-            };
-
-            publisherListItems.AddRange(publishers.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString(),
-                Selected = x.Id == game.PublisherId
-            }));
-
             var viewModel = new EditGameViewModel
             {
                 Id = game.Id,
@@ -138,24 +126,36 @@ namespace WebNet23Online.Controllers
                 Description = game.Description,
                 ImageUrl = game.ImageUrl,
                 Price = game.Price,
-                Genre = game.Genre,
                 PublisherId = game.PublisherId,
-                AllGenres = Enum.GetValues(typeof(GameGenre))
-                                .Cast<GameGenre>()
-                                .Where(g => g != GameGenre.All)
-                                .ToList(),
-                Publishers = publisherListItems
+                AllGenres = _catalogService.GetListItemsWithGameGenres(),
+                Publishers = _catalogService.GetListItemsWithPublishers()
             };
 
             return View(viewModel);
         }
 
         [HttpPost]
+        [EditForCreatorWithRequiredRole]
         public IActionResult EditGame(EditGameViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                viewModel.AllGenres = _catalogService.GetListItemsWithGameGenres();
+                viewModel.Publishers = _catalogService.GetListItemsWithPublishers();
+                return View(viewModel);
+            }
+
             _catalogService.UpdateGame(viewModel);
 
             return RedirectToAction(nameof(GameDetails), new { id = viewModel.Id });
+        }
+
+        [HttpGet]
+        [DeleteWithRoleAndTimeRestriction(AllowedDaysForCreator = 7, RequiredRoleForCreator = UserRole.Moderator)]
+        public IActionResult DeleteGame(int id)
+        {
+            _catalogService.DeleteGame(id);
+            return RedirectToAction(nameof(Catalog));
         }
     }
 }

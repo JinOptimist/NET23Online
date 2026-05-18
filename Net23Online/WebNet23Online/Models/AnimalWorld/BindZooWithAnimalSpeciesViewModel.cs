@@ -11,8 +11,8 @@ namespace WebNet23Online.Models.AnimalWorld
         [Required]
         public int AnimalSpeciesId { get; set; }
 
-        public List<SelectListItem> Zoos { get; set; }
+        public List<SelectListItem> Zoos { get; set; } = new();
 
-        public List<SelectListItem> AnimalSpecies { get; set; }
+        public List<SelectListItem> AnimalSpecies { get; set; } = new();
     }
 }

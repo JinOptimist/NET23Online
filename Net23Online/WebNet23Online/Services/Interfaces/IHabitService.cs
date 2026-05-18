@@ -5,9 +5,11 @@ namespace WebNet23Online.Services;
 
 public interface IHabitService
 {
-    HabitTrackerViewModel GenerateHabitTracker(List<HabitData> habitData);
-    void EnsureDefaultHabits(UserData user, List<HabitData> habitData);
-    HabitData CreateHabit(HabitViewModel modelHabit, UserData user);
-    bool IsHabitHasTitle(HabitViewModel habit);
-    bool IsHabitUnique(HabitTrackerViewModel model, HabitViewModel habit);
+    HabitViewModel GenerateHabit(HabitData habit);
+    HabitTrackerViewModel GenerateHabitList(List<HabitData> habitData);
+    HabitTrackerViewModel GenerateHabitTrackerWithResults(List<HabitData> habitData);
+    HabitData CreateHabit(HabitViewModel modelHabit);
+    void EditHabit(HabitViewModel updateHabit);
+    bool IsHabitTitleUniq(string title, int habitId);
+
 }

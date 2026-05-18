@@ -1,27 +1,67 @@
 using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Models.HabitTracker;
+using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services;
 
 public class HabitService : IHabitService
 {
-    public HabitTrackerViewModel GenerateHabitTracker(List<HabitData> habitData)
+    private readonly IHabitRepository _habitRepository;
+    private readonly IAuthService _authService;
+
+    public HabitService(IHabitRepository _habitRepository, IAuthService authService)
     {
-        var modelHabitTracker = new HabitTrackerViewModel()
+        this._habitRepository = _habitRepository;
+        _authService = authService;
+    }
+    
+    public HabitViewModel GenerateHabit(HabitData habit)
+    {
+        return new HabitViewModel
+        {
+            Id = habit.Id,
+            Title = habit.Title,
+            MonthGoal = habit.MonthGoal,
+            UserId = habit.User.Id
+        };
+    }
+    public HabitTrackerViewModel GenerateHabitList(List<HabitData> habitData)
+    {
+        if (habitData == null)
+        {
+            throw new Exception("habitData is null");
+        }
+        
+        return new HabitTrackerViewModel
         {
             Habits = habitData.Select(habit => new HabitViewModel
             {
                 Id = habit.Id,
                 Title = habit.Title,
-                WeekResults = GenerateWeekResult(habit.CompletedDates
+                MonthGoal = habit.MonthGoal,
+                UserId = habit.UserId,
+            }).ToList()
+        };
+    }
+    public HabitTrackerViewModel GenerateHabitTrackerWithResults(List<HabitData> habitData)
+    {
+        return new HabitTrackerViewModel()
+        {
+            Habits = habitData.Select(habit => new HabitViewModel
+            {
+                Id = habit.Id,
+                Title = habit.Title,
+                MonthGoal = habit.MonthGoal,
+                UserId = habit.UserId,
+                WeekResults = GenerateWeekResult(habit.CompletedDates?
                     .Select(x=> x.DateOfCompletion)
-                    .ToList())
-                
+                    .ToList()
+                ?? new List<DateTime>()
+                )
             }).ToList(),
         };
-        return modelHabitTracker;
     }
-
     private List<bool> GenerateWeekResult(List<DateTime> results)
     {
         var today = DateTime.Today;
@@ -37,45 +77,31 @@ public class HabitService : IHabitService
                 .Contains(weekStart.AddDays(day)))
             .ToList();
     }
-    
-    public void EnsureDefaultHabits(UserData user, List<HabitData> habitData)
+    public HabitData CreateHabit(HabitViewModel modelHabit)
     {
-        if (habitData.Any())
-        {
-            return;
-        }
-
-        var defaultHabits = new List<string> { "Спорт 30 мин", "Программирование 1 час", "Вода 2л" };
-    
-        foreach (var title in defaultHabits)
-        {
-            habitData.Add(new HabitData
-            {
-                Title = title,
-                User = user,
-            });
-        }
-    }
-    public HabitData CreateHabit(HabitViewModel modelHabit, UserData user)
-    {
-        //поймет ли навигационное поле, что я имею ввиду?
         var habit = new HabitData()
         {
             Title = modelHabit.Title,
-            CompletedDates = new List<HabitDoneDatesData>(),
-            User = user,
+            MonthGoal = modelHabit.MonthGoal,
+            UserId = modelHabit.UserId,
         };
 
         return habit;
     }
-
-    public bool IsHabitHasTitle(HabitViewModel  habit)
+    public void EditHabit(HabitViewModel updateHabit)
     {
-        return string.IsNullOrEmpty(habit.Title);
-    }
+        var habitData = new HabitData
+        {
+            Id = updateHabit.Id,
+            Title = updateHabit.Title,
+            MonthGoal = updateHabit.MonthGoal,
+        };
     
-    public bool IsHabitUnique(HabitTrackerViewModel model, HabitViewModel  habit)
+        _habitRepository.EditHabit(habitData);
+    }
+    public bool IsHabitTitleUniq(string title, int habitId)
     {
-        return model.Habits.Any(h => h.Title == habit.Title);
+        var userId = _authService.GetUserId();
+        return _habitRepository.IsHabitTitleUniq(title, userId, habitId);
     }
 }

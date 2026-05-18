@@ -20,7 +20,7 @@
         </div>
     }
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="input-box">
             <div>Название блюда</div>
             @Html.TextBoxFor(x => x.Name, new { type = "text", required = "required", placeholder = "Имя блюда" })
@@ -51,30 +51,18 @@
                 {
                     <div>
                         <input type="checkbox" name="SelectedIngredientsId"
-                               value="@inredient.Id" />
+                               value="@inredient.Id" @(inredient.IsSelected ? "checked" : "") />
                         <label>@inredient.Name</label>
                     </div>
                 }
-                @* @for (int i = 0; i < Model.Ingredients.Count; i++)
-                {
-                    <div>
-                        <input type="checkbox"
-                               id="ingredient_@Model.Ingredients[i].Id"
-                               name="Ingredients[@i].IsSelected"
-                               value="true"
-                        @(Model.Ingredients[i].IsSelected ? "checked" : "") />
-                        <label for="ingredient_@Model.Ingredients[i].Id">
-                            @Model.Ingredients[i].Name
-                        </label>
-                        <input type="hidden"
-                               name="Ingredients[@i].Id"
-                               value="@Model.Ingredients[i].Id" />
-                    </div>
-                } *@
+                
             </div>
         </div>
         
         <div class="input-box url-box">
+            <div class="input-box url-box">
+                <input type="file" name="Image" />
+            </div>
             @Html.TextBoxFor(x => x.ImgURL, new { type = "string", placeholder = "Добавьте URL изображения" })
             @Html.ValidationMessageFor(x => x.ImgURL)
         </div>

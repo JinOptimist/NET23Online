@@ -1,0 +1,57 @@
+@using WebNet23Online.Models.HabitTracker
+@model HabitTrackerViewModel
+
+@{
+    Layout = "_LayoutHabitTracker";
+}
+
+<link rel="stylesheet" href="/css/habit-tracker/settings.css">
+
+<div class="settings-container">
+    <div class="settings-card">
+        <div class="settings-card-header">
+            <span class="settings-icon">✎</span>
+            <h3>Редактирование привычки</h3>
+        </div>
+
+        <div class="form-group">
+            <label>Выберите привычку</label>
+            <select id="habitSelect" class="input-field">
+                <option value="">— выберите —</option>
+                @foreach (var habit in Model.Habits)
+                {
+                    <option value="@habit.Id"
+                            data-title="@habit.Title"
+                            data-goal="@habit.MonthGoal">
+                        @habit.Title
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="edit-divider"></div>
+
+        <form method="post">
+            @Html.HiddenFor(x => x.EditHabit.Id)
+            
+            <div class="form-group">
+                <label>Название</label>
+                @Html.TextBoxFor(x => x.EditHabit.Title, new { @class = "input-field" })
+                @Html.ValidationMessageFor(x => x.EditHabit.Title)
+            </div>
+
+            <div class="form-group">
+                <label>Цель — дней в месяц</label>
+                @Html.TextBoxFor(x => x.EditHabit.MonthGoal, new { type = "number", @class = "input-field" })
+                @Html.ValidationMessageFor(x => x.EditHabit.MonthGoal)
+            </div>
+
+            <button type="submit" class="btn-action btn-edit">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="/js/habit-tracker/editHabit.js"></script>
+}

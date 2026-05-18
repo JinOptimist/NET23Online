@@ -22,6 +22,11 @@ public class HabitRepository : BaseRepository<HabitData>, IHabitRepository
         }
         return _context.Users.First();
     }
+    
+    public bool UserHasHabits(int userId)
+    {
+        return _context.Habits.Any(h => h.UserId == userId);
+    }
 
     public List<HabitData> GetByUserId(int userId)
     {
@@ -54,5 +59,50 @@ public class HabitRepository : BaseRepository<HabitData>, IHabitRepository
                 .Where(d => d.DateOfCompletion >= monthStart && d.DateOfCompletion < monthEnd))
             .Where(x => x.User.Id == userId)
             .ToList();
+    }
+
+    public List<HabitData> AddDefaultHabits(int userId)
+    {
+        var habitData = new List<HabitData>();
+        var defaultHabits = new List<string> { "Спорт 30 мин", "Вода 2л" };
+        
+        foreach (var title in defaultHabits)
+        {
+            var habit = new HabitData()
+            {
+                Title = title,
+                MonthGoal = 30, //default
+                UserId = userId
+            };
+            habitData.Add(habit);
+            _dbSet.Add(habit);
+            _context.SaveChanges();
+        }
+        return habitData;
+    }
+        
+    public void EditHabit(HabitData habitData)
+    {
+        var habit = _dbSet.FirstOrDefault(x => x.Id  == habitData.Id);
+        if (habit == null)
+        {
+            return;
+        }
+        habit.Title = habitData.Title;
+        habit.MonthGoal = habitData.MonthGoal;
+        Update(habit);
+    }
+    
+    public List<string> GetTitlesByUserId(int userId)
+    {
+        return _dbSet
+            .Where(x => x.UserId == userId )
+            .Select(x => x.Title)
+            .ToList();
+    }
+    
+    public bool IsHabitTitleUniq(string title, int userId, int habitId)
+    {
+        return !_dbSet.Any(x =>x.UserId == userId && x.Title == title && x.Id != habitId);
     }
 }

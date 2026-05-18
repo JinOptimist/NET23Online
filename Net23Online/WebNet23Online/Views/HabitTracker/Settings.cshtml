@@ -1,0 +1,39 @@
+@{
+    Layout = "_LayoutHabitTracker";
+}
+
+<link rel="stylesheet" href="/css/habit-tracker/settings.css">
+
+<div class="settings-wrap">
+    <h2 class="settings-title">Настройки привычек</h2>
+    <p class="settings-sub">Управляйте своими привычками</p>
+
+    <div class="settings-grid">
+        <div class="s-card">
+            <div class="s-icon add">➕</div>
+            <div>
+                <div class="s-label">Добавить</div>
+                <div class="s-desc">Создайте новую привычку и задайте цель на месяц</div>
+            </div>
+            <a asp-action="CreateHabit" class="s-btn add">Создать →</a>
+        </div>
+
+        <div class="s-card">
+            <div class="s-icon del">🗑️</div>
+            <div>
+                <div class="s-label">Удалить</div>
+                <div class="s-desc">Удалите привычку, которую больше не отслеживаете</div>
+            </div>
+            <a asp-action="DeleteHabit" class="s-btn del">Удалить →</a>
+        </div>
+
+        <div class="s-card">
+            <div class="s-icon edit">🖊️</div>
+            <div>
+                <div class="s-label">Редактировать</div>
+                <div class="s-desc">Измените название или цель существующей привычки</div>
+            </div>
+            <a asp-action="EditHabit" class="s-btn edit">Изменить →</a>
+        </div>
+    </div>
+</div>

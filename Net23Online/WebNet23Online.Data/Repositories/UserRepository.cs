@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 
@@ -7,7 +8,7 @@ namespace WebNet23Online.Data.Repositories
     public class UserRepository : BaseRepository<UserData>, IUserRepository
     {
         public UserRepository(WebContext context) : base(context) { }
-        
+
         public UserData GetFirst()
         {
             return _dbSet
@@ -36,6 +37,7 @@ namespace WebNet23Online.Data.Repositories
             var hash = GetHashOfPassword(user.Password);
             user.Password = hash;
             user.Role = Enums.UserRole.User;
+            user.Language = Enums.Language.English;
 
             _dbSet.Add(user);
             _context.SaveChanges();
@@ -49,6 +51,25 @@ namespace WebNet23Online.Data.Repositories
 
             password = password.Replace("a", "o");
             return password.Substring(0, password.Length - 1);
+        }
+
+        public void UpdateLanguage(int userId, Language language)
+        {
+            var user = _dbSet.First(x => x.Id == userId);
+            user.Language = language;
+            _context.SaveChanges();
+        }
+
+        public void UpdateProfile(UserData userData)
+        {
+            //var user = _dbSet.First(x => x.Id == userData.Id);
+            //user.Language = userData.Language;
+            //user.FirstName = userData.FirstName;
+            //user.LastName = userData.LastName;
+            //user.Mobilephone = userData.Mobilephone;
+            Update(userData);
+            //_dbSet.Update(user);
+            //_context.SaveChanges();
         }
     }
 }

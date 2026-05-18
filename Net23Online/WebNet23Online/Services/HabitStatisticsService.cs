@@ -15,7 +15,7 @@ public class HabitStatisticsService : IHabitStatisticsService
         {
             Habits = habitData.Select(habit =>
             {
-                var doneCount = habit.CompletedDates.Count;
+                var doneCount = habit.CompletedDates?.Count ?? 0;
 
                 return new HabitViewModel
                 {
@@ -23,7 +23,11 @@ public class HabitStatisticsService : IHabitStatisticsService
                     Title = habit.Title,
                     DaysInMonth = daysInMonth,
                     DoneCountInMonth = doneCount,
-                    Percent = (float)doneCount / daysInMonth * 100
+                    Percent = habit.MonthGoal > 0 
+                        ? (float)doneCount / habit.MonthGoal * 100 
+                        : 0,
+                    UserId = habit.UserId,
+                    MonthGoal = habit.MonthGoal,
                 };
             }).ToList()
         };

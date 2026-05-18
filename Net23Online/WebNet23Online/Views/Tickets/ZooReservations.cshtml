@@ -1,0 +1,20 @@
+﻿@using WebNet23Online.Localizations
+@{
+    Layout = "_LayoutAnimalWorld";
+}
+
+<title>@AnimalWorld.VisitBooked</title>
+
+<div class="main-place">
+    <div class="green-title">
+        <h2>@AnimalWorld.Booked</h2>
+    </div>
+    <hr class="green-line">
+
+    <div class="animal entity-card">
+        <p>@AnimalWorld.VisitBookedCompleteMessage</p>
+        <div class="button-group">
+            <a href="/AnimalWorld/Zoos">@AnimalWorld.BackToZoos</a>
+        </div>
+    </div>
+</div>

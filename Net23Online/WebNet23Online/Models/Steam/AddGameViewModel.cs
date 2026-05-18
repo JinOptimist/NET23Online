@@ -1,19 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using WebNet23Online.Data.Enums.Steam;
+using System.ComponentModel.DataAnnotations;
+using WebNet23Online.Models.CustomValidatioAttributes.Steam;
 
 namespace WebNet23Online.Models.Steam
 {
     public class AddGameViewModel
     {
+        [Required]
+        [UniqueGameTitle]
+        [NoSpecialCharacters]
+        [StringLength(100, ErrorMessage = "Title cannot exceed 100 characters")]
         public string Title { get; set; } = string.Empty;
-        public string ImageUrl { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public decimal Price { get; set; }
-        public GameGenre Genre { get; set; }
-        public int? PublisherId {  get; set; }
 
-        public List<GameGenre> AllGenres { get; set; } = new List<GameGenre>();
+        [Required]
+        [ValidateImageUrl]
+        public string ImageUrl { get; set; } = string.Empty;
+
+        [Required]
+        [NoSpecialCharacters]
+        public string Description { get; set; } = string.Empty;
+
+        [Required]
+        [MaxPrice]
+        public decimal Price { get; set; }
+        public int? PublisherId {  get; set; }
+        public List<int> SelectedGenreIds { get; set; } = new();
+
+        public List<SelectListItem> AllGenres { get; set; } = new ();
         public List<SelectListItem> Publishers { get; set; } = new();
     }
 }
-

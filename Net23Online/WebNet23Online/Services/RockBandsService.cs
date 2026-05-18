@@ -10,13 +10,16 @@ namespace WebNet23Online.Services
     {
         private IRockBandsRepository _rockBandsRepository;
         private IGenreOfRockBandsRepository _genreOfRockBandsRepository;
+        private IWebHostEnvironment _webHostEnvironment;
 
         public RockBandsService(
             IRockBandsRepository rockBandsRepository,
-            IGenreOfRockBandsRepository genreOfRockBandsRepository)
+            IGenreOfRockBandsRepository genreOfRockBandsRepository,
+            IWebHostEnvironment webHostEnvironment)
         {
             _rockBandsRepository = rockBandsRepository;
             _genreOfRockBandsRepository = genreOfRockBandsRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public List<BandBlockViewModel> GetBands(int[]? genreIds = null)
@@ -33,6 +36,7 @@ namespace WebNet23Online.Services
                        Name = b.Name,
                        Description = b.Description,
                        ImageUrl = string.IsNullOrWhiteSpace(b.Url) ? null : b.Url,
+                       CreatedByUserName = b.CreatedByUser != null ? b.CreatedByUser.Name : null,
                        GenreIds = b.RockBandGenres.Select(bg => bg.GenreId).ToList(),
                        Genres = b.RockBandGenres
                             .Select(bg => bg.Genre.Name)
@@ -56,7 +60,7 @@ namespace WebNet23Online.Services
                 .ToList();
         }
 
-        public void AddBand(BandBlockViewModel viewModel)
+        public void AddBand(BandBlockViewModel viewModel, int createdByUserId)
         {
             if (viewModel == null || string.IsNullOrWhiteSpace(viewModel.Name))
             {
@@ -68,6 +72,19 @@ namespace WebNet23Online.Services
                 .Distinct()
                 .ToArray();
 
+            if (viewModel.PhotoOfTheBand != null)
+            {
+                var pathToWwwRootFolder = _webHostEnvironment.WebRootPath;
+                var pathToFolder = "images\\rock-bands";
+                var fileName = $"band-{viewModel.Name.Trim()}.jpg";
+                var path = Path.Combine(pathToWwwRootFolder, pathToFolder, fileName);
+                using (var rockBandPhotoFile = new FileStream(path, FileMode.Create))
+                {
+                    viewModel.PhotoOfTheBand.CopyTo(rockBandPhotoFile);
+                }
+                viewModel.ImageUrl = $"/images/rock-bands/{fileName}";
+            }
+            
             var newBand = new RockBandsData
             {
                 Name = viewModel.Name.Trim(),
@@ -75,6 +92,7 @@ namespace WebNet23Online.Services
                 Url = string.IsNullOrWhiteSpace(viewModel.ImageUrl)
                     ? string.Empty
                     : viewModel.ImageUrl.Trim(),
+                CreatedByUserId = createdByUserId > 0 ? createdByUserId : null,
                 RockBandGenres = genreIds
                     .Select(id => new RockBandGenreData { GenreId = id })
                     .ToList(),

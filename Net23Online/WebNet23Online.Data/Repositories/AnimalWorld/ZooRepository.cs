@@ -14,7 +14,7 @@ namespace WebNet23Online.Data.Repositories.AnimalWorld
 
         public List<ZooData> GetRandomElements()
         {
-            return _dbSet.Include(zoo => zoo.AnimalSpecies).OrderBy(r => Guid.NewGuid()).Take(START_PAGE_COUNT_ANIMAL_SPECIES).ToList();
+            return _dbSet.Include(zoo => zoo.AnimalSpecies).ThenInclude(species => species.AnimalFamily).OrderBy(r => Guid.NewGuid()).Take(START_PAGE_COUNT_ANIMAL_SPECIES).ToList();
         }
 
         public ZooData GetElementByName(string name)
@@ -28,6 +28,11 @@ namespace WebNet23Online.Data.Repositories.AnimalWorld
             var animalSpecies = _context.AnimalSpecies.First(animalSpecies => animalSpecies.Id == animalSpeciesId);
             zoo.AnimalSpecies.Add(animalSpecies);
             _context.SaveChanges();
+        }
+
+        public List<ZooData> GetAllWithAnimalSpecies()
+        {
+            return _dbSet.Include(zoo => zoo.AnimalSpecies).ThenInclude(species => species.AnimalFamily).ToList();
         }
     }
 }

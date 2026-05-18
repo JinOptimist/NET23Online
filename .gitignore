@@ -419,3 +419,9 @@ FodyWeavers.xsd
 
 # Local file of JetBrains products 
 .idea/
+
+#Local files of github agents
+.github/
+
+# Ignore steam user avatars
+**/wwwroot/images/steam/avatars/
