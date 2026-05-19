@@ -18,14 +18,17 @@ namespace WebNet23Online.Controllers
         public IAuthService _authService;
         public IUserRepository _userRepository;
         public IWebHostEnvironment _webHostEnvironment;
+        private ITicketService _ticketService;
 
         public UserController(IAuthService authService,
             IUserRepository userRepository,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            ITicketService ticketService)
         {
             _authService = authService;
             _userRepository = userRepository;
             _webHostEnvironment = webHostEnvironment;
+            _ticketService = ticketService;
         }
 
         [IsModerator]
@@ -63,10 +66,10 @@ namespace WebNet23Online.Controllers
             var viewModel = new UserProfileViewModel
             {
                 UserId = _authService.GetUserId(),
-                UserName = _authService.GetUserName() ?? "unnamed",
+                UserName = _authService.GetUserName(),
                 Language = currentUserLanguage,
                 Languages = allLanguagesList,
-                AvatarUrl = _authService.GetUser().AvatarUrl
+                AvatarUrl = _authService.GetUser().AvatarUrl,
             };
             return View(viewModel);
         }

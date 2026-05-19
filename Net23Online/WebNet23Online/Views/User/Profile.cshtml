@@ -1,11 +1,13 @@
 ﻿@using WebNet23Online.Models.User
 @model UserProfileViewModel
 
+<link rel="stylesheet" href="~/css/user/tickets.css" asp-append-version="true" />
+
 <div>
     @Model.UserName (@Model.UserId)
 </div>
 <div>
-    <img src="@Model.AvatarUrl" class="avatar"/>
+    <img src="@Model.AvatarUrl" class="avatar" />
     <form action="/User/UpdateAvatar" method="post" enctype="multipart/form-data">
         <input type="file" name="avatar" />
         <button>Update avatar</button>

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 
@@ -12,6 +14,11 @@ namespace WebNet23Online.Data.Repositories
     {
         public TicketRepository(WebContext context) : base(context)
         {
+        }
+
+        public List<TicketData> GetUserZooTickets(int userId)
+        {
+            return _dbSet.Where(x => x.UserId == userId && x.TicketType == TicketType.ZooVisit).Include(x => x.Zoo).ToList();
         }
     }
 }
