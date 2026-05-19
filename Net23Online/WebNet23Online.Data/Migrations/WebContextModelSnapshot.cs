@@ -52,21 +52,6 @@ namespace WebNet23Online.Data.Migrations
                     b.ToTable("AnimeDataAnimeGirlData");
                 });
 
-            modelBuilder.Entity("FoodItemDataIngredientData", b =>
-                {
-                    b.Property<int>("FoodItemsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IngredientsListId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FoodItemsId", "IngredientsListId");
-
-                    b.HasIndex("IngredientsListId");
-
-                    b.ToTable("FoodItemDataIngredientData");
-                });
-
             modelBuilder.Entity("GameDataGameGenreData", b =>
                 {
                     b.Property<int>("GameGenresId")
@@ -95,6 +80,26 @@ namespace WebNet23Online.Data.Migrations
                     b.HasIndex("WhoIsMyFriendsId");
 
                     b.ToTable("UserDataUserData");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.DataModels.FoodItemIngredientData", b =>
+                {
+                    b.Property<int>("FoodItemDataId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IngredientDataId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("QuantityOfIngredients")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(10m);
+
+                    b.HasKey("FoodItemDataId", "IngredientDataId");
+
+                    b.HasIndex("IngredientDataId");
+
+                    b.ToTable("FoodItemIngredientDatas", (string)null);
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimalWorld.AnimalFamilyData", b =>
@@ -280,8 +285,8 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -397,6 +402,9 @@ namespace WebNet23Online.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -859,21 +867,6 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FoodItemDataIngredientData", b =>
-                {
-                    b.HasOne("WebNet23Online.Data.Models.FoodItemData", null)
-                        .WithMany()
-                        .HasForeignKey("FoodItemsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebNet23Online.Data.Models.IngredientData", null)
-                        .WithMany()
-                        .HasForeignKey("IngredientsListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("GameDataGameGenreData", b =>
                 {
                     b.HasOne("WebNet23Online.Data.Models.Steam.GameGenreData", null)
@@ -902,6 +895,25 @@ namespace WebNet23Online.Data.Migrations
                         .HasForeignKey("WhoIsMyFriendsId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.DataModels.FoodItemIngredientData", b =>
+                {
+                    b.HasOne("WebNet23Online.Data.Models.FoodItemData", "FoodItemData")
+                        .WithMany("FoodItemIngredientDatas")
+                        .HasForeignKey("FoodItemDataId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebNet23Online.Data.Models.IngredientData", "IngredientData")
+                        .WithMany("FoodItemIngredientDatas")
+                        .HasForeignKey("IngredientDataId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FoodItemData");
+
+                    b.Navigation("IngredientData");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimalWorld.AnimalFamilyData", b =>
@@ -1117,6 +1129,11 @@ namespace WebNet23Online.Data.Migrations
             modelBuilder.Entity("WebNet23Online.Data.Models.AnimeStudioData", b =>
                 {
                     b.Navigation("Animes");
+                });
+
+            modelBuilder.Entity("WebNet23Online.Data.Models.FoodItemData", b =>
+                {
+                    b.Navigation("FoodItemIngredientDatas");
                 });
 
             modelBuilder.Entity("WebNet23Online.Data.Models.GenreOfRockBandsData", b =>

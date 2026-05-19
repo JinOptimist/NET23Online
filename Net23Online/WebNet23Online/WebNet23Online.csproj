@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\rock-legends-portal\" />
     <Folder Include="wwwroot\temp\" />
   </ItemGroup>
 
@@ -69,6 +68,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Mainpage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Steam\ProfilePage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProfilePage.resx</DependentUpon>
     </Compile>
     <Compile Update="Localizations\Steam\SteamShared.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -136,6 +140,10 @@
     <EmbeddedResource Update="Localizations\Steam\Mainpage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Mainpage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Steam\ProfilePage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProfilePage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Localizations\Steam\SteamShared.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
