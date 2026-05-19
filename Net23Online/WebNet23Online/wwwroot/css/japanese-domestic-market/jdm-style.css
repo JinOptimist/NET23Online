@@ -314,3 +314,7 @@ output {
             border-radius: 50%;
             cursor: pointer;
         }
+
+        .text-comment {
+            width: 1000px;
+        }
