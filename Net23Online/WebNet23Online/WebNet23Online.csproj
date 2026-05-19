@@ -147,6 +147,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Mainpage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Steam\ProfilePage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProfilePage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Localizations\Steam\SteamShared.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SteamShared.Designer.cs</LastGenOutput>
