@@ -33,6 +33,7 @@ namespace WebNet23Online.Data.Models
         public virtual HabitTrackerProfileData? HabitTrackerProfile { get; set; }
         public virtual List<HabitData> Habits { get; set; }
         public virtual List<HabitTrackerDiaryData> DiaryEntries { get; set; }
+        public virtual List<HabitTrChatMessageData> HabitTrChatMessages { get; set; }
 
         public virtual List<GameData> CreatedGames { get; set; }
         public virtual List<GameData> ModifiedGames { get; set; }

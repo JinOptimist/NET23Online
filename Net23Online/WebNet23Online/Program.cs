@@ -101,6 +101,7 @@ builder.Services.AddScoped<IIngredientGenerator, IngredientGenerator>();
 //HabitTracker DI
 builder.Services.AddScoped<IHabitService, HabitService>();
 builder.Services.AddScoped<IHabitStatisticsService, HabitStatisticsService>();
+builder.Services.AddScoped<IHabitChatService, HabitChatService>();
 
 //JapaneseDomesticMarker DI
 builder.Services.AddScoped<IJapaneseDomesticMarketGenerator, JapaneseDomesticMarketGenerator>();
@@ -117,6 +118,7 @@ builder.Services.AddScoped<IHabitRepository, HabitRepository>();
 builder.Services.AddScoped<IHabitDoneDatesRepository, HabitDoneDatesRepository>();
 builder.Services.AddScoped<IHabitDiaryRepository, HabitDiaryRepository>();
 builder.Services.AddScoped<IHabitTrackerAdminRepository, HabitTrackerAdminRepository>();
+builder.Services.AddScoped<IHabitChatRepository, HabitChatRepository>();
 builder.Services.AddScoped<ISlayTheSpire2HeroesRepository, SlayTheSpire2HeroesRepository>();
 builder.Services.AddScoped<ISlayTheSpire2HeroesCardsRepository, SlayTheSpire2HeroesCardsRepository>();
 builder.Services.AddScoped<IRockLegendsRepository, RockLegendsRepository>();
@@ -171,6 +173,7 @@ app.UseAuthorization();     // May I?
 app.UseMiddleware<MyLocalizationMiddleware>();
 
 app.MapHub<AnimeHub>("/my-hub/anime");
+app.MapHub<HabitChatHub>("/my-hub/habit-tracker-chat");
 
 app.MapControllerRoute(
     name: "default",
