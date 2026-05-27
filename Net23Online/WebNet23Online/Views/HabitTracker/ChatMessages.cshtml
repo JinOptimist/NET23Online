@@ -1,0 +1,41 @@
+@model List<WebNet23Online.Models.HabitTracker.ChatMessageViewModel>
+@{
+    Layout = "_LayoutHabitTracker";
+}
+
+<link rel="stylesheet" href="/css/habit-tracker/chat.css">
+
+<div class="tracker">
+    <div class="tracker-title">Общий чат</div>
+
+    <div class="chat-wrap">
+        <input type="hidden" id="currentUserId" value="@ViewBag.CurrentUserId" />
+        <input type="hidden" id="currentUserName" value="@ViewBag.CurrentUserName" />
+        
+        <div class="chat-messages" id="chatMessages">
+            @foreach (var message in Model)
+            {
+                <div class="message-row @(message.IsMine ? "mine" : "theirs")">
+                    <div class="message-bubble">
+                        @if (!message.IsMine)
+                        {
+                            <div class="message-author">@message.AuthorName</div>
+                        }
+                        <div class="message-text">@message.MessageContent</div>
+                        <div class="message-time">@message.SendingTime.ToString("HH:mm")</div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="messageInput" class="chat-input" placeholder="Напиши сообщение..."/>
+            <button id="sendButton" class="chat-send-btn">Отправить</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="/js/habit-tracker/chat.js"></script>
+}

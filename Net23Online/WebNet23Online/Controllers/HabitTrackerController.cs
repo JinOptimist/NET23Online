@@ -7,6 +7,7 @@ using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories;
 using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Data.Repositories.Interfaces.HabitTracker;
 using WebNet23Online.Models.HabitTracker;
 using WebNet23Online.Services;
 using WebNet23Online.Services.Interfaces;
@@ -20,13 +21,16 @@ public class HabitTrackerController : Controller
     private IHabitService _habitService;
     private IHabitStatisticsService _statisticsService;
     private readonly IAuthService _authService;
+    private readonly IHabitChatService _habitChatService;
     
     private IHabitRepository _habitRepository;
     private IHabitDoneDatesRepository _habitDoneDatesRepository;
     private IHabitDiaryRepository _diaryRepository;
+    private IHabitChatRepository _habitChatRepository;
     public HabitTrackerController(IHabitService habitService, IHabitStatisticsService statisticsService,
         IHabitRepository habitRepository, IHabitDiaryRepository diaryRepository,
-        IHabitDoneDatesRepository habitDoneDatesRepository, IAuthService authService)
+        IHabitDoneDatesRepository habitDoneDatesRepository, IAuthService authService,
+        IHabitChatRepository habitChatRepository, IHabitChatService habitChatService)
     {
         _habitService = habitService;
         _statisticsService = statisticsService;
@@ -34,6 +38,8 @@ public class HabitTrackerController : Controller
         _diaryRepository = diaryRepository;
         _habitDoneDatesRepository = habitDoneDatesRepository;
         _authService = authService;
+        _habitChatRepository = habitChatRepository;
+        _habitChatService = habitChatService;
     }
 
     public IActionResult Index()
@@ -199,6 +205,20 @@ public class HabitTrackerController : Controller
 
         var fileStream = new FileStream(path, FileMode.Open);
         return File(fileStream, "text/csv", "habits_report.csv");
+    }
+
+    [HttpGet]
+    public IActionResult ChatMessages()
+    {
+        var userId = _authService.GetUserId();
+        var userName = _authService.GetUserName();
+        var messagesData = _habitChatRepository.GetAllWithUsers();
+
+        var model = _habitChatService.GenerateChatMessages(messagesData, userId);
+        
+        ViewBag.CurrentUserId = userId;
+        ViewBag.CurrentUserName = userName;
+        return View(model);
     }
     
 }

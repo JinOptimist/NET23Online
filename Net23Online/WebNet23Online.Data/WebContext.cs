@@ -16,6 +16,7 @@ namespace WebNet23Online.Data
         public DbSet<HabitTrackerProfileData> HabitTrackerProfile { get; set; }
         public DbSet<HabitData> Habits { get; set; }
         public DbSet<HabitDoneDatesData> HabitDoneDates { get; set; }
+        public DbSet<HabitTrChatMessageData> HabitTrChatMessages { get; set; }
         public DbSet<HabitTrackerDiaryData> DiaryEntries { get; set; }
         public DbSet<AnimalFamilyData> AnimalFamilies { get; set; }
         public DbSet<AnimalSpeciesData> AnimalSpecies { get; set; }
@@ -124,6 +125,7 @@ namespace WebNet23Online.Data
                 .HasMany(x => x.MyFriends)
                 .WithMany(x => x.WhoIsMyFriends);
 
+            //HabitTracker
             modelBuilder.Entity<HabitData>()
                 .HasMany(x => x.CompletedDates)
                 .WithOne(x => x.Habit);
@@ -138,6 +140,10 @@ namespace WebNet23Online.Data
 
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.Habits)
+                .WithOne(x => x.User);
+            
+            modelBuilder.Entity<UserData>()
+                .HasMany(x => x.HabitTrChatMessages)
                 .WithOne(x => x.User);
 
             //Delight Bistro

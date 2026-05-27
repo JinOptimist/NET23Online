@@ -6,8 +6,6 @@ namespace WebNet23Online.Data.Repositories;
 
 public class HabitDiaryRepository : BaseRepository<HabitTrackerDiaryData>, IHabitDiaryRepository
 {
-    private IHabitDiaryRepository _habitDiaryRepository;
-    
     public HabitDiaryRepository(WebContext webContext) : base(webContext)
     {
     }
