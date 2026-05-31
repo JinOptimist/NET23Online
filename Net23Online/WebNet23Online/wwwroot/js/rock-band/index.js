@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    init();
+
     const $bandName = $('#band-name');
     if ($bandName.length) {
         const $nameBlock = $bandName.closest('.name-block');
@@ -49,11 +51,11 @@ $(document).ready(function () {
 
     $(".band-list").on("click", ".band-like-btn:not(:disabled)", function (e) {
         e.stopPropagation();
-    
+
         const $btn = $(this);
         const bandId = $btn.data("band-id");
         const $count = $btn.siblings(".band-like-count");
-    
+
         $.post(`/api/RockBands/AddLike?bandId=${bandId}`)
             .done(function (result) {
                 $count.text(result.likeCount);
@@ -65,4 +67,41 @@ $(document).ready(function () {
                 alert("Не удалось поставить лайк");
             });
     });
+
+    $('.create-concert-button').click(function () {
+        const requestUrl = `https://localhost:7034/AddRockBandConcert`;
+        const nameOfBand = $('.concert-band-name-input').val();
+        const date = $('.concert-date-input').val();
+
+        const data = { nameOfBand, date: new Date(date).toISOString() };
+
+        $.ajax({
+            type: 'POST',
+            url: requestUrl,
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+        }).done(function (concert) {
+            drawConcert(concert);
+        });
+    });
+
+    function init() {
+        const url = `https://localhost:7034/GetRockBandConcerts`;
+        $.get(url)
+            .done(function (rockBandConcerts) {
+                rockBandConcerts.forEach((concert) => {
+                    drawConcert(concert);
+                });
+            });
+    }
+
+    function drawConcert(concert) {
+        const concertContainer = $('.section-concerts-catalog .concerts-catalog-grid');
+        const divForConcert = $('.section-concerts-catalog .concert-catalog-card.template').clone();
+        divForConcert.removeClass('template');
+        divForConcert.find('.concert-catalog-card__band').text(concert.nameOfBand);
+        divForConcert.find('.concert-catalog-card__date').text(concert.date);
+        concertContainer.append(divForConcert);
+    }
+
 });

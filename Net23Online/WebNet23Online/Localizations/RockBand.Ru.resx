@@ -217,4 +217,19 @@
   <data name="Index_Title" xml:space="preserve">
     <value>Любимые рок группы</value>
   </data>
+  <data name="Index_Concerts_Header" xml:space="preserve">
+    <value>Концерты групп</value>
+  </data>
+  <data name="Index_Concerts_Band_Name" xml:space="preserve">
+    <value>Название группы</value>
+  </data>
+  <data name="Index_Concerts_Band_Placeholder" xml:space="preserve">
+    <value>например, Metallica</value>
+  </data>
+  <data name="Index_Concerts_Date" xml:space="preserve">
+    <value>Дата и время концерта</value>
+  </data>
+  <data name="Index_Concerts_Add_Button" xml:space="preserve">
+    <value>Добавить концерт</value>
+  </data>
 </root>

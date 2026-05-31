@@ -86,6 +86,36 @@
             }
         </section>
 
+        <section class="preferences-music section-concerts-catalog" id="concerts-catalog" aria-labelledby="concerts-catalog-title">
+            <div class="preferences-music-title">
+                <h2 id="concerts-catalog-title">@RockBand.Index_Concerts_Header</h2>
+            </div>
+            <div class="preferences-music-items concerts-catalog-panel">
+                <div class="concerts-catalog-grid">
+                    <article class="concert-catalog-card create-new-concert">
+                        <div class="concert-catalog-card__body">
+                            <div class="add-band-field">
+                                <label for="concert-band-name">@RockBand.Index_Concerts_Band_Name</label>
+                                <input id="concert-band-name" type="text" class="concert-band-name-input" placeholder="@RockBand.Index_Concerts_Band_Placeholder" autocomplete="off" />
+                            </div>
+                            <div class="add-band-field">
+                                <label for="concert-date">@RockBand.Index_Concerts_Date</label>
+                                <input id="concert-date" type="datetime-local" class="concert-date-input" />
+                            </div>
+                            <button type="button" class="add-band-submit create-concert-button">@RockBand.Index_Concerts_Add_Button</button>
+                        </div>
+                    </article>
+
+                    <article class="concert-catalog-card template" data-id="***">
+                        <div class="concert-catalog-card__body">
+                            <h3 class="concert-catalog-card__band">***</h3>
+                            <p class="concert-catalog-card__date">***</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         @if (Model.CanEditRockBandGenres)
         {
             <section class="preferences-music edit-band-genres-form">
