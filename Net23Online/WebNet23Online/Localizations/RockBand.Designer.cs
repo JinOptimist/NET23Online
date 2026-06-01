@@ -356,5 +356,35 @@ namespace WebNet23Online.Localizations {
                 return ResourceManager.GetString("Index_Title", resourceCulture);
             }
         }
+        
+        public static string Index_Concerts_Header {
+            get {
+                return ResourceManager.GetString("Index_Concerts_Header", resourceCulture);
+            }
+        }
+        
+        public static string Index_Concerts_Band_Name {
+            get {
+                return ResourceManager.GetString("Index_Concerts_Band_Name", resourceCulture);
+            }
+        }
+        
+        public static string Index_Concerts_Band_Placeholder {
+            get {
+                return ResourceManager.GetString("Index_Concerts_Band_Placeholder", resourceCulture);
+            }
+        }
+        
+        public static string Index_Concerts_Date {
+            get {
+                return ResourceManager.GetString("Index_Concerts_Date", resourceCulture);
+            }
+        }
+        
+        public static string Index_Concerts_Add_Button {
+            get {
+                return ResourceManager.GetString("Index_Concerts_Add_Button", resourceCulture);
+            }
+        }
     }
 }
