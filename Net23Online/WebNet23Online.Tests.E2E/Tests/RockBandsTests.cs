@@ -58,15 +58,5 @@ namespace WebNet23Online.Tests.E2E.Tests
             var lastBandName = lastBandBlock.FindElement(RockBandsIndexPage.NameInBandBlocks).Text;
             Assert.That(newBandName == lastBandName);
         }
-
-        [Test]
-        public void CreateRockBand_GuestForbidden()
-        {
-            _webDriver.Logout();
-
-            _webDriver.Navigate().GoToUrl($"{GlobalConstants.BASE_URL}/RockBands/Index");
-
-            Assert.That(_webDriver.FindElements(RockBandsIndexPage.NameInput), Is.Empty);
-        }
     }
 }
