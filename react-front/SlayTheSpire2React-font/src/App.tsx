@@ -1,30 +1,18 @@
-import { useState } from 'react'
-import { RelicList } from './components/relic-list'
-import './App.css'
+import { Route, Routes, useParams } from 'react-router-dom'
+import { HomePage } from './pages/home-page'
+import { RelicDetailPage } from './pages/relic-detail-page'
+
+const RelicDetailRoute = function () {
+  const { id } = useParams()
+  return <RelicDetailPage key={id} />
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-
-        <div>
-          <h1>Hello World!</h1>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Click me {count}
-        </button>
-      </section>
-
-      <RelicList />
-
-      <section id="spacer"></section>
-    </>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/relics/:id" element={<RelicDetailRoute />} />
+    </Routes>
   )
 }
 

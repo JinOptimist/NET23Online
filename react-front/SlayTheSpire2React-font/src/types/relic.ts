@@ -3,10 +3,14 @@ export interface Relic {
   name: string
   urlImage: string
   rarity: string
+  description: string
+  characters: string
 }
 
 export interface CreateRelicPayload {
   name: string
   urlImage: string
   rarity: string
+  description: string
+  characters: string
 }
