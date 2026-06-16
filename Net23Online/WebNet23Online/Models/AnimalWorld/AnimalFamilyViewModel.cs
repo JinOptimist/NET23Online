@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Models.CustomValidatioAttributes.AnimalWorld;
 
 namespace WebNet23Online.Models.AnimalWorld
@@ -6,7 +7,7 @@ namespace WebNet23Online.Models.AnimalWorld
     public class AnimalFamilyViewModel
     {
         [Required]
-        [AnimalFamilyUniqueName]
+        [UniqueName(typeof(IAnimalFamilyRepository))]
         public string AnimalFamilyName { get; set; }
 
         [Required]
