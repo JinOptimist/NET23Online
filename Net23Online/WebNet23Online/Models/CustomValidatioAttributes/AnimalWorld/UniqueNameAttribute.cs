@@ -1,44 +1,62 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection;
+using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 
 namespace WebNet23Online.Models.CustomValidatioAttributes.AnimalWorld
 {
     public class UniqueNameAttribute : ValidationAttribute
     {
-        private Type _repositoryType;
-        private const string METHOD_NAME = "GetElementByName";
+        private Type _dataType;
 
-        public UniqueNameAttribute(Type repositoryType)
+        public UniqueNameAttribute(Type dataType)
         {
-            _repositoryType = repositoryType;
+            _dataType = dataType;
         }
 
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             var name = value as string;
-            var repository = validationContext.GetRequiredService(_repositoryType);
-            var method = _repositoryType.GetMethod(METHOD_NAME);
-            if (method == null)
+            var targetInterface = typeof(IAnimalWorldRepository<>).MakeGenericType(_dataType);
+            IServiceProvider serviceProvider = validationContext;
+            var repository = serviceProvider.GetService(targetInterface);
+            if (repository == null)
             {
-                foreach (var interfaceType in _repositoryType.GetInterfaces())
+                var implementationType = _dataType.Assembly.GetTypes()
+                    .FirstOrDefault(t => t.IsClass && !t.IsAbstract && targetInterface.IsAssignableFrom(t));
+                if (implementationType != null)
                 {
-                    method = interfaceType.GetMethod(METHOD_NAME);
-                    if (method != null)
+                    var registeredInterface = implementationType.GetInterfaces()
+                        .FirstOrDefault(i => serviceProvider.GetService(i) != null);
+                    if (registeredInterface != null)
                     {
-                        break;
+                        repository = serviceProvider.GetService(registeredInterface);
+                    }
+                    else
+                    {
+
+                        repository = serviceProvider.GetService(implementationType);
                     }
                 }
             }
 
+            if (repository == null)
+            {
+                return new ValidationResult($"Не удалось автоматически найти метод");
+            }
+
+            var nameableInterfaceType = typeof(INameableRepository<>).MakeGenericType(_dataType);
+            var method = nameableInterfaceType.GetMethod(nameof(INameableRepository<BaseModel>.GetElementByName));
+
             if (method == null)
             {
-                return new ValidationResult("Отсутствует метод");
+                return new ValidationResult("Метод проверки уникальности не найден.");
             }
 
             var result = method.Invoke(repository, new object[] { name });
+
             if (result != null)
             {
-                return new ValidationResult("Такое имя уже используется");
+                return new ValidationResult(ErrorMessage ?? "Такое имя уже используется");
             }
 
             return ValidationResult.Success;

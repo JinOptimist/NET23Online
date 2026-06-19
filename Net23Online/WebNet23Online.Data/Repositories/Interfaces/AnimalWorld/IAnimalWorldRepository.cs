@@ -2,10 +2,8 @@
 
 namespace WebNet23Online.Data.Repositories.Interfaces.AnimalWorld
 {
-    public interface IAnimalWorldRepository<DataModel> : IBaseRepository<DataModel> where DataModel : BaseModel
+    public interface IAnimalWorldRepository<DataModel> : IBaseRepository<DataModel>, INameableRepository<DataModel> where DataModel : BaseModel
     {
         List<DataModel> GetRandomElements();
-
-        DataModel GetElementByName(string name);
     }
 }
