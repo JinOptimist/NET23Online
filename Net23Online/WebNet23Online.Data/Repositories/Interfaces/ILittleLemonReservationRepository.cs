@@ -4,5 +4,6 @@ namespace WebNet23Online.Data.Repositories.Interfaces
 {
     public interface ILittleLemonReservationRepository : IBaseRepository<LittleLemonData>
     {
+        List<LittleLemonData> GetByUnsentReminders();
     }
 }

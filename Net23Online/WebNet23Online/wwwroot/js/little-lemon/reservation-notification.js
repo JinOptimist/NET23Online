@@ -1,60 +1,84 @@
 
 $(document).ready(function () {
-    const { hub, ready } = window.littleLemonSignalR;
+  const { hub, ready } = window.littleLemonSignalR;
     const $container = $('.notifications');
 
-    ready.then(function () {
-        hub.on(
+  ready.then(function () {
+    hub.on(
             'NewReservationCreated',
-            function (
-                reservationId,
-                guestName,
-                reservationDate,
-                time,
-                numberOfGuests,
-                seating,
-                occasion,
-                userComments,
+      function (
+        reservationId,
+        guestName,
+        reservationDate,
+        time,
+        numberOfGuests,
+        seating,
+        occasion,
+        userComments,
                 cakePhotoUrl
-            ) {
-                showReservationNotification(
-                    {
-                        reservationId,
-                        guestName,
-                        reservationDate,
-                        time,
-                        numberOfGuests,
-                        seating,
-                        occasion,
-                        userComments,
-                        cakePhotoUrl,
-                    },
+      ) {
+        showReservationNotification(
+          {
+            reservationId,
+            guestName,
+            reservationDate,
+            time,
+            numberOfGuests,
+            seating,
+            occasion,
+            userComments,
+            cakePhotoUrl,
+          },
                     $container
-                );
-            }
         );
-    });
+      },
+    );
+
+    hub.on(
+      "ReservationReminder",
+      function (
+        reservationId,
+        guestName,
+        reservationDate,
+        time,
+        numberOfGuests,
+      ) {
+        const reminderData = {
+          reservationId,
+          guestName,
+          reservationDate,
+          time,
+          numberOfGuests,
+          seating: "",
+          occasion: "",
+          userComments: "Your table is coming up soon.",
+          title: `Reminder: reservation #${reservationId} in 1 hour`,
+        };
+        showReservationNotification(reminderData, $container);
+      },
+    );
+  });
 });
 const autoHideMs = 9000;
 
 function setNotificationField($root, name, text) {
-    $root.find(`[data-field="${name}"]`).text(text);
+  $root.find(`[data-field="${name}"]`).text(text);
 }
 
 function dismissReservationNotification($root, autoHideTimer) {
-    clearTimeout(autoHideTimer);
-    $root.fadeOut(500, function () {
-        $root.remove();
-    });
+  clearTimeout(autoHideTimer);
+  $root.fadeOut(500, function () {
+    $root.remove();
+  });
 }
 
 function showReservationNotification(data, $container) {
     const template = $('#reservation-notification-template')[0];
-    const $root = $(template.content.firstElementChild.cloneNode(true));
+  const $root = $(template.content.firstElementChild.cloneNode(true));
 
-    $root
+  $root
         .find('.notification-title')
-        .text(`New reservation #${data.reservationId} from ${data.guestName}`);
+    .text(`New reservation #${data.reservationId} from ${data.guestName}`);
 
     setNotificationField($root, 'name', `Name: ${data.guestName}`);
     setNotificationField($root, 'date', `Date: ${data.reservationDate}`);
@@ -64,18 +88,18 @@ function showReservationNotification(data, $container) {
     setNotificationField($root, 'occasion', `Occasion: ${data.occasion}`);
     setNotificationField($root, 'notes', `Notes: ${data.userComments || ''}`);
 
-    if (data.cakePhotoUrl) {
+  if (data.cakePhotoUrl) {
         $root.find('[data-field="cake"]').prop('hidden', false);
         $root.find('[data-field="cake"] img').attr('src', data.cakePhotoUrl);
-    }
+  }
 
-    $container.append($root);
+  $container.append($root);
 
-    const autoHideTimer = setTimeout(function () {
-        dismissReservationNotification($root, autoHideTimer);
-    }, autoHideMs);
+  const autoHideTimer = setTimeout(function () {
+    dismissReservationNotification($root, autoHideTimer);
+  }, autoHideMs);
 
     $root.on('click', function () {
-        dismissReservationNotification($root, autoHideTimer);
-    });
+    dismissReservationNotification($root, autoHideTimer);
+  });
 }

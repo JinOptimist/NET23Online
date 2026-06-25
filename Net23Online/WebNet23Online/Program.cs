@@ -165,6 +165,7 @@ builder.Services.AddScoped<ICommentsService, CommentsService>();
 builder.Services.AddScoped<ICommentsMapper, CommentMapper>();
 
 builder.Services.AddHostedService<NotificationBackgroundService>();
+builder.Services.AddHostedService<LittleLemonReminderBackgroundService>();
 builder.Services.AddQuartz(q =>
 {
     var jobKey = new JobKey("ZooPromotions");

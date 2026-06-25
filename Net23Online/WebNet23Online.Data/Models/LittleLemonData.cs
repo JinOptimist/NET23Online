@@ -19,5 +19,6 @@ namespace WebNet23Online.Data.Models
         public int GuestId { get; set; }
         public virtual LittleLemonGuestData Guest { get; set; }
         public string? CakePhotoUrl { get; set; }
+        public bool IsReminderSent { get; set; } = false;
     }
 }

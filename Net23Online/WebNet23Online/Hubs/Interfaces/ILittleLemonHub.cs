@@ -14,5 +14,12 @@ namespace WebNet23Online.Hubs.Interfaces
             string? cakePhotoUrl);
 
         Task ReceivePrivateMessage(int senderUserId, string senderName, string message);
+
+        Task ReservationReminder(
+            int reservationId,
+            string guestName,
+            string reservationDate,
+            string time,
+            int numberOfGuests);
     }
 }

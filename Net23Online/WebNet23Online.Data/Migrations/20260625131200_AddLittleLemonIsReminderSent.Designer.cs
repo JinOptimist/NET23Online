@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebNet23Online.Data;
 
@@ -11,9 +12,11 @@ using WebNet23Online.Data;
 namespace WebNet23Online.Data.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20260625131200_AddLittleLemonIsReminderSent")]
+    partial class AddLittleLemonIsReminderSent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,6 +193,10 @@ namespace WebNet23Online.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("int")
+                        .HasColumnName("UserId");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -201,17 +208,15 @@ namespace WebNet23Online.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ZooId")
-                        .HasColumnType("int");
+                    b.Property<int>("VenueId")
+                        .HasColumnType("int")
+                        .HasColumnName("ZooId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CreatorId");
 
-                    b.HasIndex("ZooId");
+                    b.HasIndex("VenueId");
 
                     b.ToTable("Promotions");
                 });
@@ -1353,13 +1358,13 @@ namespace WebNet23Online.Data.Migrations
                 {
                     b.HasOne("WebNet23Online.Data.Models.UserData", "Creator")
                         .WithMany("Promotions")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("WebNet23Online.Data.Models.AnimalWorld.ZooData", "Venue")
                         .WithMany("Promotions")
-                        .HasForeignKey("ZooId")
+                        .HasForeignKey("VenueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
