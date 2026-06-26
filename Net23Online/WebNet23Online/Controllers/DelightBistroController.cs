@@ -182,6 +182,7 @@ namespace WebNet23Online.Controllers
         {
             return View();
         }
+
         public IActionResult GetFoodItemTableViewModel(IQueryable<FoodItemData> querySource,
             string? sortBy,
             string? direction,

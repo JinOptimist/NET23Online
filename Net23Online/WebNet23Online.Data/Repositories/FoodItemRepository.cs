@@ -136,8 +136,6 @@ namespace WebNet23Online.Data.Repositories
             return filteredAndSortedSource.ToList();
         }
 
-
-
         private MemberExpression GetIncludedProperty(Expression expression, string propertyPath)
         {
             // [MenuType, Name]
@@ -159,8 +157,6 @@ namespace WebNet23Online.Data.Repositories
             //MenuType.Name
             return (MemberExpression)currentExpression;
         }
-
-
-    }
+            }
 }
 
