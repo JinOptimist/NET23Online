@@ -18,5 +18,6 @@ namespace WebNet23Online.Services.Interfaces
         void DeleteFoodItem(int id);
         FileStream GenerateTable();
         List<FoodItemStatsViewModel> GetFoodItemStatsViewModels();
+        List<FoodItemTableViewModel> GetFoodItemTableViewModel(IQueryable<FoodItemData> querySource, string? sortBy, string? direction, string? filterBy = null, string? filterValue = null, string? filterType = null);
     }
 }

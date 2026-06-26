@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using WebNet23Online.Controllers.CustomAuthAttribute;
+using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
 using WebNet23Online.Hubs;
 using WebNet23Online.Hubs.Interfaces;
@@ -181,6 +182,20 @@ namespace WebNet23Online.Controllers
         {
             return View();
         }
-
+        public IActionResult GetFoodItemTableViewModel(IQueryable<FoodItemData> querySource,
+            string? sortBy,
+            string? direction,
+            string? filterBy = null,
+            string? filterValue = null,
+            string? filterType = null)
+        {
+            var foodItemTableViewModel = _foodItemGenerator.GetFoodItemTableViewModel(querySource,
+            sortBy,
+            direction,
+            filterBy = null,
+            filterValue = null,
+            filterType = null);
+            return View(foodItemTableViewModel);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 using WebNet23Online.Data.Enums;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
@@ -285,6 +286,33 @@ namespace WebNet23Online.Services.DelightBistro
             }).ToList();
 
             return allFoodItemStatsViewModel;
+        }
+
+        public List<FoodItemTableViewModel> GetFoodItemTableViewModel(IQueryable<FoodItemData> querySource,
+            string? sortBy,
+            string? direction,
+            string? filterBy = null,
+            string? filterValue = null,
+            string? filterType = null)
+        {
+            var foodItemDatas = _foodItemRepository.GetSortedAndFilteredFoodItemData(querySource,
+            sortBy,
+            direction,
+            filterBy = null,
+            filterValue = null,
+            filterType = null);
+
+            var foodItemTableViewModel = foodItemDatas.Select(fi => new FoodItemTableViewModel
+            {
+                Id = fi.Id,
+                Name = fi.Name,
+
+                MenuName = fi.MenuData.Name,
+                //IngredientCount = fi.IngredientsList.Count(),
+                CreatorName = fi.Creator.Name,
+            }).ToList();
+
+            return foodItemTableViewModel;
         }
     }
 }

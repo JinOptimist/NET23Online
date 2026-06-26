@@ -9,5 +9,6 @@ namespace WebNet23Online.Data.Repositories.Interfaces.DelightBistro
         List<FoodItemData> GetAllIncludeMenuAndIngredients();
         FoodItemData? GetByIdIncludeMenuAndIngredientsLinks(int id);
         List<FoodItemStatsDataModel> GetFoodItemStats();
+        List<FoodItemData> GetSortedAndFilteredFoodItemData(IQueryable<FoodItemData> querySource, string? sortBy, string? direction, string? filterBy = null, string? filterValue = null, string? filterType = null);
     }
 }
