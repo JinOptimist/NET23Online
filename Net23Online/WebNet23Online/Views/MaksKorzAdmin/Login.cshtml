@@ -1,0 +1,43 @@
+﻿@using WebNet23Online.Data.Models.MaksKorz
+@using WebNet23Online.Models.Auth
+@using WebNet23Online.Models.Maks_Korz
+@* @model DataUserForMaksKorz это мое*@
+
+@model LoginViewModel 
+
+<link rel="stylesheet" href="/css/Korz/site.css">
+<head>
+    <title>HTML Login Form</title>
+</head>
+    <div class="main">
+    <h1>Enter your login ADMIN</h1>
+        <h3>Admin 1901</h3>
+        <form method="post">
+            @* <label>
+                Username:
+            </label>
+            <input type="text" name="Login"
+                   placeholder="Enter your Username" required>
+            <label>
+                Password:
+            </label>
+            <input type="password" name="Password"
+               placeholder="Enter your Password" required>
+            <div class="wrap">
+                <button type="submit">
+                    Submit
+                </button>
+            </div> *@
+            <div>
+                @Html.TextBoxFor(x=>x.Login)
+                @Html.ValidationMessageFor(x => x.Login)
+            </div>
+        <div>
+            @Html.TextBoxFor(x => x.Password)
+            @Html.ValidationMessageFor(x => x.Password)
+        </div>
+        <button type="submit">
+            Submit
+        </button>
+        </form>
+    </div>

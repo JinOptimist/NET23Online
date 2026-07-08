@@ -7,6 +7,7 @@ using WebNet23Online.Data.Repositories.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Data.Repositories.Interfaces.AnimalWorld;
 using WebNet23Online.Data.Repositories.Interfaces.DelightBistro;
+using WebNet23Online.Data.Repositories.MaksKorz;
 using WebNet23Online.Services;
 using WebNet23Online.Services.DelightBistro;
 using WebNet23Online.Services.Interfaces;
@@ -21,15 +22,22 @@ builder.Services.AddDbContext<WebContext>(op => op.UseSqlServer(connectionString
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//builder.Services
+//    .AddAuthentication(AuthService.AUTH_KEY)
+//    .AddCookie(AuthService.AUTH_KEY, option =>
+//    {
+//        option.LoginPath = "/Auth/Login";
+//        option.AccessDeniedPath = "/Auth/Deny";
+//        option.ExpireTimeSpan = TimeSpan.FromMinutes(13);
+//    });
 builder.Services
     .AddAuthentication(AuthService.AUTH_KEY)
     .AddCookie(AuthService.AUTH_KEY, option =>
     {
-        option.LoginPath = "/Auth/Login";
-        option.AccessDeniedPath = "/Auth/Deny";
+        option.LoginPath = "/MaksKorzAdmin/Login";
+        option.AccessDeniedPath = "/MaksKorzAdmin/Deny";//если доступ запрещен
         option.ExpireTimeSpan = TimeSpan.FromMinutes(13);
     });
-
 builder.Services.AddScoped<ILittleLemonMenuService, LittleLemonMenuService>();
 builder.Services.AddScoped<ILittleLemonTestimonialService, LittleLemonTestimonialService>();
 builder.Services.AddScoped<ILittleLemonSubscribeService, LittleLemonSubscribeService>();
@@ -118,10 +126,12 @@ builder.Services.AddScoped<IGenreOfRockBandsRepository, GenreOfRockBandsReposito
 builder.Services.AddScoped<ILittleLemonReservationRepository, LittleLemonReservationRepository>();
 builder.Services.AddScoped<ILittleLemonGuestRepository, LittleLemonGuestRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<IDataUserForMaksKorzRepository, DataUserForMaksKorzRepository>();
+builder.Services.AddScoped<ILocationConcertRepository, LocationConcertRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IRockLegendsGenresRepository, RockLegendsGenresRepository>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
+builder.Services.AddScoped<IAdminForMaksKorzRepository, AdminForMaksKorzRepository>();
 
 builder.Services.AddHttpContextAccessor();
 

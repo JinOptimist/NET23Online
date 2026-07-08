@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Models.AnimalWorld;
+using WebNet23Online.Data.Models.MaksKorz;
 using WebNet23Online.Data.Models.Steam;
 
 namespace WebNet23Online.Data
@@ -26,7 +27,11 @@ namespace WebNet23Online.Data
         public DbSet<MenuData> Menus { get; set; } 
         public DbSet<GenreOfRockBandsData> RockBandGenresDictionary { get; set; }
         public DbSet<RockBandGenreData> RockBandGenres { get; set; }
-
+        public DbSet<DataUserForMaksKorz> DataUserMK { get; set; }
+        public DbSet<TicketForMaksKorz> MKTicket { get; set; }
+        public DbSet<Location> MKLocation { get; set; }
+        public DbSet<Concert> MKConcert { get; set; }
+        public DbSet<DataUserCardForMaksKorz> MKDataUserCardFor { get; set; }
         public DbSet<RockLegendsData> RockLegends { get; set; }
         public DbSet<RockLegendsGenres> RockLegendsGenres { get; set; }
 

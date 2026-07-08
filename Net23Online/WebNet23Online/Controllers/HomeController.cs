@@ -24,11 +24,13 @@ namespace WebNet23Online.Controllers
 
         public IActionResult Index()
         {
+
             var viewModel = new IndexViewModel();
-            var user = _authService.GetUser();
+            //var user = _authService.GetUser();//      Я ВЕРНУ КАК БЫЛО
+            var user = _authService.GetUser2();
             if (user is not null)
             {
-                viewModel.UserName = user.Name;
+                viewModel.UserName = user.LastName;
                 viewModel.RoleName = user.Role.ToString();
             }
             else

@@ -1,5 +1,8 @@
-﻿using WebNet23Online.Data.Models;
+﻿using WebNet23Online.Data.Enums;
+using WebNet23Online.Data.Models;
+using WebNet23Online.Data.Models.MaksKorz;
 using WebNet23Online.Data.Repositories.Interfaces;
+using WebNet23Online.Data.Repositories.MaksKorz;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Services
@@ -12,12 +15,14 @@ namespace WebNet23Online.Services
 
         private IHttpContextAccessor _httpContextAccessor;
         private readonly IUserRepository _userRepository;
-
+        private readonly IAdminForMaksKorzRepository _adminForMaksKorzRepository;
         public AuthService(IHttpContextAccessor httpContextAccessor, 
-            IUserRepository userRepository)
+            IUserRepository userRepository, IAdminForMaksKorzRepository adminForMaksKorzRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
+            _adminForMaksKorzRepository = adminForMaksKorzRepository;
+
         }
 
         public int GetUserId()
@@ -33,7 +38,28 @@ namespace WebNet23Online.Services
             var userId = int.Parse(userIdStr);
             return userId;
         }
-    
+        public DataUserForMaksKorz? GetUser2()
+        {
+            var userId = GetUserId();
+            if (userId <= 0)
+            {
+                return null;
+            }
+
+            return _adminForMaksKorzRepository.Get(userId);
+        }
+        public UserRole GetRole2()
+        {
+            if(!IsAuthenticated())
+            {
+                throw new InvalidOperationException();
+            }
+            var roleStr = _httpContextAccessor.HttpContext!.User.Claims
+                .First(x => x.Type == COOCKIE_ROLE_KEY)
+                .Value;
+            var role = Enum.Parse<UserRole>(roleStr);
+            return role;
+        }
         public UserData? GetUser()
         {
             var userId = GetUserId();
@@ -48,6 +74,19 @@ namespace WebNet23Online.Services
         public bool IsAuthenticated()
         {
             return _httpContextAccessor?.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
+        }
+
+        public UserRole GetRole()
+        {
+            if (!IsAuthenticated())
+            {
+                throw new InvalidOperationException();
+            }
+            var roleStr = _httpContextAccessor.HttpContext!.User.Claims
+                .First(x => x.Type == COOCKIE_ROLE_KEY)
+                .Value;
+            var role = Enum.Parse<UserRole>(roleStr);
+            return role;
         }
     }
 }

@@ -1,0 +1,46 @@
+﻿@using WebNet23Online.Data.Models
+@using WebNet23Online.Data.Models.MaksKorz
+@using WebNet23Online.Models.Maks_Korz
+@model AllDataUserForMaksKorz
+
+<link rel="stylesheet" href="/css/Korz/site.css">
+<head>
+    <title>HTML Login Form</title>
+</head>
+<div class="main">
+    <h1>Add new Location</h1>
+    <h3>Enter your data for location</h3>
+    <form method="post">
+        <label>
+            Country:
+        </label>
+        <input type="text" name="Country"
+               placeholder="Enter Country" required>
+        <label>
+            NameStadium:
+        </label>
+        <input type="text" name="NameStadium"
+               placeholder="Enter NameStadium" required>
+        <label>
+            Capacity:
+        </label>
+        <input type="number" name="Capacity"
+               placeholder="Enter Capacity" required>
+        <div class="wrap">
+            <button type="submit">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
+@foreach(var user in Model.User)
+{
+    <div> 
+        @if(Model.IsCurrentUserAdmin)
+        {
+            @user.LastName
+            @user.Role
+            <a>ADMIN</a>
+        }
+    </div>
+}
