@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="~/WebNet23Online.styles.css" asp-append-version="true" />
 
     <link rel="stylesheet" href="/css/habit-tracker/main.css">
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body>
@@ -42,6 +46,7 @@
                 <li><a asp-controller="HabitTracker" asp-action="Settings">Настройки</a></li>
                 <li><a asp-area="" asp-controller="HabitTracker" asp-action="Index">Информация</a></li>
                 <li><a asp-area="" asp-controller="Auth" asp-action="Logout">Выйти из аккаунта</a></li>
+                <li><a asp-area="" asp-controller="HabitTracker" asp-action="ChatMessages">Чат</a></li>
             }
             else if (authService.AtLeastModerator())
             {

@@ -1,10 +1,19 @@
 $(document).ready(function() {
+    alert("CHAT JS LOADED");
     
-    const url = 'https://localhost:7284/my-hub/habit-tracker-chat';
+    const url = 'http://localhost:5170/my-hub/habit-tracker-chat';
     const hub = new signalR.HubConnectionBuilder().withUrl(url).build();
     
     hub.on('NewMassageInChat', function(userName, content) {
-        const row = $('<div>').addClass('message-row theirs');
+        const currentUserName = $('#currentUserName').val();
+
+        const isMine = userName === currentUserName;
+
+        const row = $('<div>').addClass(
+            isMine
+                ? 'message-row mine'
+                : 'message-row theirs'
+        );
         const bubble = $('<div>').addClass('message-bubble');
 
         row.append(bubble);
@@ -16,22 +25,27 @@ $(document).ready(function() {
         const time = $('<div>').addClass('message-time');
         time.text(new Date().toLocaleTimeString('ru', {hour: '2-digit', minute:'2-digit'}));
 
-        bubble.append(author);
+        if (!isMine){
+            bubble.append(author);
+        }
         bubble.append(mesText);
         bubble.append(time);
 
         $('#chatMessages').append(row)
     })
-    
-    hub.start();
 
+    console.log(url);
+    hub.start()
+        .then(() => console.log("CONNECTED"))
+        .catch(err => console.error(err));
 
     $('#sendButton').on('click', function() {
         const username = $('#currentUserName').val();
         const userId = $('#currentUserId').val();
         const message = $('#messageInput').val();
         const url = `/api/HabitTrackerApi/SendMessage?username=${username}&message=${message}&userId=${userId}`;
-        $.get(url)
+        $.get(url);
+        $('#messageInput').val('');
     });
     
 })
