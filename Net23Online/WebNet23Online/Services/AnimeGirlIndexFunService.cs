@@ -25,7 +25,7 @@ public class AnimeGirlIndexFunService : IAnimeGirlIndexFunService
 
     if (characterCount > 10)
     {
-      Task.WaitAll(jokeDtoTask, waifuDtoTask, catDtosTask);
+      await Task.WhenAll(jokeDtoTask, waifuDtoTask, catDtosTask);
     }
     else
     {
