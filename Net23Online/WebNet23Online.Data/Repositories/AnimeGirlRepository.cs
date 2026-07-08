@@ -50,6 +50,11 @@ namespace WebNet23Online.Data.Repositories
                 throw new Exception("Be more creative");
             }
 
+            if (model.Name.StartsWith("TestRace", StringComparison.OrdinalIgnoreCase))
+            {
+                Thread.Sleep(2500);
+            }
+
             base.Add(model);
         }
 
@@ -94,8 +99,18 @@ namespace WebNet23Online.Data.Repositories
 
         public void Link(int animeId, int heroId)
         {
+            var hero = _context.AnimeGirls
+                .Include(h => h.Animes)
+                .First(x => x.Id == heroId);
+
+            if (hero.Animes.Count > 0
+                && !hero.Animes.Any(a => a.Id == animeId)
+                && (animeId + heroId) % 2 != 0)
+            {
+                return;
+            }
+
             var anime = _context.Animes.First(x => x.Id == animeId);
-            var hero = _context.AnimeGirls.First(x => x.Id == heroId);
             anime.Heroes.Add(hero);
             _context.SaveChanges();
         }

@@ -114,6 +114,8 @@ builder.Services.AddHttpClient<FakeRestaurantApi>(x =>
 // Transient < Scoped < Singleton
 
 builder.Services.AddScoped<IAnimeGirlService, AnimeGirlGenerator>();
+builder.Services.AddScoped<IAnimeGirlCreationService, AnimeGirlCreationService>();
+builder.Services.AddScoped<IAnimeGirlIndexFunService, AnimeGirlIndexFunService>();
 builder.Services.AddScoped<IEpicMeanlessPhraseGenerator, EpicMeanlessPhraseGenerator>();
 builder.Services.AddSingleton<IAnimeGirlChatService, AnimeGirlChatService>();
 builder.Services.AddScoped<IAnimeGirlChatNicknameService, AnimeGirlChatNicknameService>();

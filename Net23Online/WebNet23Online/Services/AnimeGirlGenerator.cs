@@ -75,5 +75,22 @@ namespace WebNet23Online.Services
             }));
             return animeListItems;
         }
+
+        public HandMadeViewModel BuildHandmadeViewModel()
+        {
+            var minutes = DateTime.Now.Minute;
+            var second = DateTime.Now.Second;
+            if (second == 0 && minutes % 5 == 0)
+            {
+                minutes += 1;
+            }
+
+            return new HandMadeViewModel
+            {
+                Minutes = minutes,
+                Seconds = second,
+                Name = "Ivan"
+            };
+        }
     }
 }

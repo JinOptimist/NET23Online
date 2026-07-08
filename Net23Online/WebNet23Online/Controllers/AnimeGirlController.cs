@@ -5,7 +5,6 @@ using WebNet23Online.Data.Models;
 using WebNet23Online.Data.Repositories.Interfaces;
 using WebNet23Online.Hubs;
 using WebNet23Online.Models.AnimeGirl;
-using WebNet23Online.Services.Apis;
 using WebNet23Online.Services.Interfaces;
 
 namespace WebNet23Online.Controllers;
@@ -16,31 +15,25 @@ public class AnimeGirlController : Controller
     private IAnimeGirlRepository _animeGirlRepository;
     private IAnimeRepository _animeRepository;
     private IAuthService _authService;
-    private IWebHostEnvironment _webHostEnvironment;
     private IHubContext<AnimeHub, IAnimeHub> _animeHub;
-    private JokeApi _jokeApi;
-    private WaifuApi _waifuApi;
-    private CatApi _catApi;
+    private IAnimeGirlIndexFunService _indexFunService;
+    private IAnimeGirlCreationService _creationService;
 
     public AnimeGirlController(IAnimeGirlService animeGirlGenerator,
         IAnimeGirlRepository animeGirlRepository,
         IAnimeRepository animeRepository,
         IAuthService authService,
-        IWebHostEnvironment webHostEnvironment,
         IHubContext<AnimeHub, IAnimeHub> animeHub,
-        JokeApi jokeApi,
-        WaifuApi waifuApi,
-        CatApi catApi)
+        IAnimeGirlIndexFunService indexFunService,
+        IAnimeGirlCreationService creationService)
     {
         _animeGirlService = animeGirlGenerator;
         _animeGirlRepository = animeGirlRepository;
         _animeRepository = animeRepository;
         _authService = authService;
-        _webHostEnvironment = webHostEnvironment;
         _animeHub = animeHub;
-        _jokeApi = jokeApi;
-        _waifuApi = waifuApi;
-        _catApi = catApi;
+        _indexFunService = indexFunService;
+        _creationService = creationService;
     }
 
     //    /AnimeGirl/Index
@@ -51,25 +44,16 @@ public class AnimeGirlController : Controller
 
         var viewModels = _animeGirlService.GenerateList(animeGirlDatas);
         var animeViewModels = _animeGirlService.AnimeMap(animeDatas);
-
-        var jokeDtoTask = _jokeApi.GetJoke();
-        var waifuDtoTask = _waifuApi.GetWaifu();
-        var catDtosTask = _catApi.GetCats(); 
-
-        Task.WaitAll(jokeDtoTask, waifuDtoTask, catDtosTask);
-
-        var jokeDto = jokeDtoTask.Result;
-        var waifuDto = waifuDtoTask.Result;
-        var catDtos = catDtosTask.Result;
+        var funContent = await _indexFunService.LoadAsync(animeGirlDatas.Count);
 
         var mainViewModel = new MainIndexViewModel
         {
             AnimeGirls = viewModels,
             Animes = animeViewModels,
             CanDeleteGirl = _authService.AtLeastModerator(),
-            Cats = catDtos,
-            Joke = jokeDto,
-            Waifu = waifuDto
+            Cats = funContent.Cats,
+            Joke = funContent.Joke,
+            Waifu = funContent.Waifu
         };
 
         return View(mainViewModel);
@@ -120,17 +104,11 @@ public class AnimeGirlController : Controller
 
         if (viewModel.Image != null)
         {
-            var pathToWwwRootFolder = _webHostEnvironment.WebRootPath;
-            var pathToFolder = "images\\anime-girl";
-            var fileName = $"girl-{animeGirlData.Id}.jpg";
-            var path = Path.Combine(pathToWwwRootFolder, pathToFolder, fileName);
-            using (var animeGirlFile = new FileStream(path, FileMode.Create))
-            {
-                viewModel.Image.CopyTo(animeGirlFile);
-            }
-
-            animeGirlData.Url = $"/images/anime-girl/{fileName}";
-            _animeGirlRepository.Update(animeGirlData);
+            _creationService.SaveUploadedImage(
+                viewModel.Image,
+                animeGirlData,
+                viewModel.Url,
+                viewModel.AnimeId);
         }
 
         return RedirectToAction(nameof(Index));
@@ -168,18 +146,7 @@ public class AnimeGirlController : Controller
     //    /AnimeGirl/Handmade
     public IActionResult Handmade()
     {
-        var minutes = DateTime.Now.Minute;
-        var second = DateTime.Now.Second;
-        var name = "Ivan";
-
-        var viewModel = new HandMadeViewModel
-        {
-            Minutes = minutes,
-            Seconds = second,
-            Name = name
-        };
-
-        return View(viewModel);
+        return View(_animeGirlService.BuildHandmadeViewModel());
     }
 
     public IActionResult Delete(int id)
