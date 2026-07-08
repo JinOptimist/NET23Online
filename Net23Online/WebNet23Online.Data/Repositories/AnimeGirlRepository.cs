@@ -103,9 +103,7 @@ namespace WebNet23Online.Data.Repositories
                 .Include(h => h.Animes)
                 .First(x => x.Id == heroId);
 
-            if (hero.Animes.Count > 0
-                && !hero.Animes.Any(a => a.Id == animeId)
-                && (animeId + heroId) % 2 != 0)
+            if (hero.Animes.Any(a => a.Id == animeId))
             {
                 return;
             }
