@@ -146,7 +146,9 @@ public class AnimeGirlController : Controller
     //    /AnimeGirl/Handmade
     public IActionResult Handmade()
     {
-        return View(_animeGirlService.BuildHandmadeViewModel());
+        var model = _animeGirlService.BuildHandmadeViewModel();
+        model.Name = _authService.GetUser()?.Name ?? "Guest";
+        return View(model);
     }
 
     public IActionResult Delete(int id)
