@@ -50,11 +50,6 @@ namespace WebNet23Online.Data.Repositories
                 throw new Exception("Be more creative");
             }
 
-            if (model.Name.StartsWith("TestRace", StringComparison.OrdinalIgnoreCase))
-            {
-                Thread.Sleep(2500);
-            }
-
             base.Add(model);
         }
 
