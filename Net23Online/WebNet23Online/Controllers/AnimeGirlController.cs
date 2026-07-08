@@ -18,6 +18,7 @@ public class AnimeGirlController : Controller
     private IHubContext<AnimeHub, IAnimeHub> _animeHub;
     private IAnimeGirlIndexFunService _indexFunService;
     private IAnimeGirlCreationService _creationService;
+    private static readonly object _lockObject = new object();
 
     public AnimeGirlController(IAnimeGirlService animeGirlGenerator,
         IAnimeGirlRepository animeGirlRepository,
@@ -88,19 +89,24 @@ public class AnimeGirlController : Controller
             Url = viewModel.Url ?? "/images/anime-girl/default.jpg",
         };
 
-        if (!_animeGirlRepository.IsNameFree(viewModel.Name))
+        lock (_lockObject)
         {
-            return View(viewModel);
-        }
+            if (!_animeGirlRepository.IsNameFree(viewModel.Name))
+            {
+                ModelState.AddModelError(nameof(viewModel.Name), Localizations.AnimeGirl.Validation_NameAlreadyUsed);
+                viewModel.Animes = _animeGirlService.GetListItemsWithAnime();
+                return View(viewModel);
+            }
 
-        if (viewModel.AnimeId is not null
-            && viewModel.AnimeId > 0)
-        {
-            var anime = _animeRepository.Get(viewModel.AnimeId.Value);
-            animeGirlData.Animes.Add(anime!);
-        }
+            if (viewModel.AnimeId is not null
+                && viewModel.AnimeId > 0)
+            {
+                var anime = _animeRepository.Get(viewModel.AnimeId.Value);
+                animeGirlData.Animes.Add(anime!);
+            }
 
-        _animeGirlRepository.Add(animeGirlData);
+            _animeGirlRepository.Add(animeGirlData);
+        }
 
         if (viewModel.Image != null)
         {
@@ -155,14 +161,14 @@ public class AnimeGirlController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult TableData(string? sortBy = null, 
-        string? direction = "asc", 
+    public IActionResult TableData(string? sortBy = null,
+        string? direction = "asc",
         string? sortType = "",
         string? sortValue = "")
     {
-        var animeGirlDatas = _animeGirlRepository.GetAllWithExpression(sortBy, 
-            direction, 
-            sortType, 
+        var animeGirlDatas = _animeGirlRepository.GetAllWithExpression(sortBy,
+            direction,
+            sortType,
             sortValue);
         var viewModels = _animeGirlService.GenerateList(animeGirlDatas);
         return View(viewModels);
