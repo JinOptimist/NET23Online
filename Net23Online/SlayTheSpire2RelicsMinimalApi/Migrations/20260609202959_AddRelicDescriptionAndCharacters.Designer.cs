@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SlayTheSpire2RelicsMinimalApi.DbStuff;
 
@@ -10,9 +11,11 @@ using SlayTheSpire2RelicsMinimalApi.DbStuff;
 namespace SlayTheSpire2RelicsMinimalApi.Migrations
 {
     [DbContext(typeof(MiniDbContextSlayTheSpire2Relics))]
-    partial class MiniDbContextSlayTheSpire2RelicsModelSnapshot : ModelSnapshot
+    [Migration("20260609202959_AddRelicDescriptionAndCharacters")]
+    partial class AddRelicDescriptionAndCharacters
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

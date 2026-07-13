@@ -1,0 +1,294 @@
+.relic-detail {
+  --relic-accent: #c9a227;
+  --relic-accent-soft: rgba(201, 162, 39, 0.35);
+  --relic-accent-glow: rgba(201, 162, 39, 0.45);
+  --relic-surface: linear-gradient(165deg, #2a2318 0%, #17130f 55%, #0f0d0a 100%);
+  --relic-frame: linear-gradient(145deg, #8b7340 0%, #c9a227 35%, #5c4a24 100%);
+
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 8px 24px 48px;
+  box-sizing: border-box;
+}
+
+.relic-detail__back {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 28px;
+  padding: 10px 16px;
+  border: 1px solid rgba(201, 162, 39, 0.22);
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #f5f0e6;
+  text-decoration: none;
+  background:
+    radial-gradient(circle at top right, rgba(201, 162, 39, 0.12) 0%, transparent 42%),
+    linear-gradient(165deg, #2a2318 0%, #17130f 55%, #0f0d0a 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 20px rgba(0, 0, 0, 0.22);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.relic-detail__back:hover {
+  border-color: rgba(240, 180, 41, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 10px 24px rgba(0, 0, 0, 0.28),
+    0 0 18px rgba(240, 180, 41, 0.12);
+}
+
+.relic-detail__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.relic-detail__frame {
+  position: relative;
+  width: min(100%, 320px);
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--relic-frame);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.25),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.35),
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 0 36px var(--relic-accent-glow);
+}
+
+.relic-detail__glow {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--relic-accent-soft) 0%, transparent 70%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.relic-detail__poster {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.2) 45%, #120f0c 100%);
+}
+
+.relic-detail__poster img {
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
+}
+
+.relic-detail__no-image {
+  width: 72%;
+  height: 72%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 3rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.relic-detail__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.relic-detail__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f8f4e8;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--relic-accent-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.relic-detail__title {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #f5f0e6;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.relic-detail__panel {
+  margin-bottom: 20px;
+  padding: 20px 22px;
+  border-radius: 18px;
+  background: var(--relic-surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.relic-detail__section-title {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 230, 0.55);
+}
+
+.relic-detail__description {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #f5f0e6;
+  white-space: pre-wrap;
+}
+
+.relic-detail__description--empty {
+  color: rgba(245, 240, 230, 0.45);
+  font-style: italic;
+}
+
+.relic-detail__panel--characters {
+  text-align: center;
+}
+
+.relic-detail__panel--characters .relic-detail__section-title {
+  text-align: center;
+}
+
+.relic-detail__characters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.relic-detail__character {
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: rgba(245, 240, 230, 0.9);
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.relic-detail__character--all {
+  color: #fff8e7;
+  border-color: rgba(240, 180, 41, 0.65);
+  background: linear-gradient(145deg, rgba(139, 105, 20, 0.55) 0%, rgba(255, 212, 90, 0.28) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 18px rgba(240, 180, 41, 0.18);
+}
+
+.relic-detail__delete {
+  margin-top: 8px;
+  padding: 12px 22px;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fecaca;
+  background: rgba(127, 29, 29, 0.35);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.relic-detail__delete:hover:not(:disabled) {
+  background: rgba(153, 27, 27, 0.5);
+  border-color: rgba(248, 113, 113, 0.55);
+}
+
+.relic-detail__delete:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.relic-detail--starter {
+  --relic-accent: #b8c0cc;
+  --relic-accent-soft: rgba(184, 192, 204, 0.35);
+  --relic-accent-glow: rgba(184, 192, 204, 0.3);
+  --relic-frame: linear-gradient(145deg, #7a8088 0%, #c8ced6 35%, #565b62 100%);
+}
+
+.relic-detail--common {
+  --relic-accent: #d4d0c8;
+  --relic-accent-soft: rgba(212, 208, 200, 0.35);
+  --relic-accent-glow: rgba(212, 208, 200, 0.28);
+  --relic-frame: linear-gradient(145deg, #8a8680 0%, #ddd8cf 35%, #5f5b55 100%);
+}
+
+.relic-detail--uncommon {
+  --relic-accent: #5da9ff;
+  --relic-accent-soft: rgba(93, 169, 255, 0.35);
+  --relic-accent-glow: rgba(93, 169, 255, 0.4);
+  --relic-frame: linear-gradient(145deg, #2f5f99 0%, #6eb4ff 35%, #244a78 100%);
+}
+
+.relic-detail--rare {
+  --relic-accent: #f0b429;
+  --relic-accent-soft: rgba(240, 180, 41, 0.4);
+  --relic-accent-glow: rgba(240, 180, 41, 0.45);
+  --relic-frame: linear-gradient(145deg, #8b6914 0%, #ffd45a 35%, #6b4f0f 100%);
+}
+
+.relic-detail--boss {
+  --relic-accent: #57d17a;
+  --relic-accent-soft: rgba(87, 209, 122, 0.35);
+  --relic-accent-glow: rgba(87, 209, 122, 0.4);
+  --relic-frame: linear-gradient(145deg, #2f7040 0%, #7be89a 35%, #245832 100%);
+}
+
+.relic-detail--shop {
+  --relic-accent: #b87cff;
+  --relic-accent-soft: rgba(184, 124, 255, 0.35);
+  --relic-accent-glow: rgba(184, 124, 255, 0.42);
+  --relic-frame: linear-gradient(145deg, #5f3f99 0%, #c89cff 35%, #4a2f78 100%);
+}
+
+.relic-detail--default {
+  --relic-accent: #c084fc;
+  --relic-accent-soft: rgba(192, 132, 252, 0.35);
+  --relic-accent-glow: rgba(192, 132, 252, 0.35);
+  --relic-frame: linear-gradient(145deg, #6b4f99 0%, #c084fc 35%, #4a356f 100%);
+}
+
+@media (max-width: 1024px) {
+  .relic-detail {
+    padding-inline: 16px;
+  }
+
+  .relic-detail__frame {
+    width: min(100%, 260px);
+  }
+}
